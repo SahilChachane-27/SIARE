@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useUser, useFirestore, useCollection } from '@/firebase';
 import { collection, addDoc, deleteDoc, doc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
@@ -11,8 +11,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Trash2, Building2, Tag, Globe, ExternalLink, ArrowLeft } from 'lucide-react';
+import { Plus, Trash2, Building2, Tag, Globe, ExternalLink, ArrowLeft, Image as ImageIcon, X } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ManageJournals() {
   const { user, loading: userLoading } = useUser();
@@ -25,8 +26,9 @@ export default function ManageJournals() {
   const [issn, setIssn] = useState('');
   const [domain, setDomain] = useState('');
   const [link, setLink] = useState('');
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Memoize the query to prevent infinite re-renders
   const journalsQuery = useMemo(() => {
     if (!db) return null;
     return query(collection(db, 'journals'), orderBy('createdAt', 'desc'));
@@ -37,6 +39,25 @@ export default function ManageJournals() {
   useEffect(() => {
     if (!userLoading && !user) router.push('/admin/login');
   }, [user, userLoading, router]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 1024 * 1024) { // 1MB limit for base64 storage
+        toast({
+          variant: "destructive",
+          title: "File too large",
+          description: "Please upload an image smaller than 1MB."
+        });
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleAddJournal = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,10 +70,18 @@ export default function ManageJournals() {
         issn,
         domain,
         link,
+        imageUrl,
         createdAt: serverTimestamp(),
       });
       
-      setName(''); setUniversity(''); setIssn(''); setDomain(''); setLink('');
+      setName(''); 
+      setUniversity(''); 
+      setIssn(''); 
+      setDomain(''); 
+      setLink('');
+      setImageUrl(null);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      
       toast({ title: "Journal Added", description: `${name} has been published successfully.` });
     } catch (error: any) {
       toast({ variant: "destructive", title: "Error", description: error.message });
@@ -84,7 +113,6 @@ export default function ManageJournals() {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-12">
-            {/* Form Column */}
             <div className="lg:col-span-1" data-aos="fade-up">
               <Card className="rounded-funky border-none shadow-2xl p-8 sticky top-32">
                 <h2 className="text-xl font-bold text-primary mb-6 italic">Add New Source</h2>
@@ -97,6 +125,40 @@ export default function ManageJournals() {
                     <label className="text-[10px] font-black uppercase text-primary/40 tracking-widest">University</label>
                     <Input value={university} onChange={(e) => setUniversity(e.target.value)} required placeholder="e.g. VIT PUNE" className="rounded-xl h-12" />
                   </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-primary/40 tracking-widest">Journal Cover Image</label>
+                    <div className="flex flex-col gap-4">
+                      {imageUrl ? (
+                        <div className="relative w-full aspect-video rounded-xl overflow-hidden group shadow-lg">
+                          <Image src={imageUrl} alt="Preview" fill className="object-cover" />
+                          <button 
+                            type="button" 
+                            onClick={() => setImageUrl(null)}
+                            className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                      ) : (
+                        <div 
+                          onClick={() => fileInputRef.current?.click()}
+                          className="w-full aspect-video border-2 border-dashed border-primary/10 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-secondary/50 transition-colors"
+                        >
+                          <ImageIcon className="h-8 w-8 text-primary/20" />
+                          <span className="text-xs font-bold text-primary/40 uppercase">Click to Upload Cover</span>
+                        </div>
+                      )}
+                      <input 
+                        type="file" 
+                        ref={fileInputRef} 
+                        onChange={handleFileChange} 
+                        accept="image/*" 
+                        className="hidden" 
+                      />
+                    </div>
+                  </div>
+
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase text-primary/40 tracking-widest">ISSN</label>
                     <Input value={issn} onChange={(e) => setIssn(e.target.value)} required placeholder="2345-6789" className="rounded-xl h-12" />
@@ -116,7 +178,6 @@ export default function ManageJournals() {
               </Card>
             </div>
 
-            {/* List Column */}
             <div className="lg:col-span-2 space-y-8" data-aos="fade-left">
               <h2 className="text-xl font-bold text-primary italic">Live Catalog {journals && `(${journals.length})`}</h2>
               
@@ -125,13 +186,22 @@ export default function ManageJournals() {
               ) : journals && journals.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {journals.map((journal: any) => (
-                    <Card key={journal.id} className="rounded-funky border-none shadow-xl group hover:shadow-2xl transition-all duration-300">
+                    <Card key={journal.id} className="rounded-funky border-none shadow-xl group hover:shadow-2xl transition-all duration-300 overflow-hidden">
+                      <div className="relative aspect-video w-full bg-secondary">
+                        {journal.imageUrl ? (
+                          <Image src={journal.imageUrl} alt={journal.name} fill className="object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <Building2 className="h-12 w-12 text-primary/10" />
+                          </div>
+                        )}
+                        <Button variant="destructive" size="icon" onClick={() => handleDelete(journal.id)} className="absolute top-4 right-4 rounded-full h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
                       <CardContent className="p-8">
                         <div className="flex justify-between items-start mb-6">
                           <h3 className="text-xl font-bold text-primary font-headline leading-tight">{journal.name}</h3>
-                          <Button variant="destructive" size="icon" onClick={() => handleDelete(journal.id)} className="rounded-full h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
                         </div>
                         <div className="space-y-3">
                           <div className="flex items-center gap-3 text-sm font-bold text-primary/60"><Building2 className="h-4 w-4 text-accent" /> {journal.university}</div>

@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { useCollection, useFirestore } from '@/firebase';
 import { collection, query, orderBy } from 'firebase/firestore';
+import Image from 'next/image';
 
 const categories = [
   { name: 'Engineering', icon: Cpu },
@@ -47,7 +48,6 @@ export default function JournalsPage() {
 
   const db = useFirestore();
   
-  // Memoize the query to prevent infinite re-renders
   const journalsQuery = useMemo(() => {
     if (!db) return null;
     return query(collection(db, 'journals'), orderBy('createdAt', 'desc'));
@@ -129,10 +129,19 @@ export default function JournalsPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {filteredJournals.map((journal: any, index: number) => (
                   <Card key={index} className="overflow-hidden bg-card border-none shadow-xl hover:shadow-2xl transition-all duration-300 rounded-2xl group" data-aos="fade-up" data-aos-delay={index * 100}>
+                    <div className="relative aspect-video w-full bg-secondary">
+                      {journal.imageUrl ? (
+                        <Image src={journal.imageUrl} alt={journal.name} fill className="object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/5 to-accent/5">
+                          <Building2 className="h-16 w-16 text-primary/10" />
+                        </div>
+                      )}
+                    </div>
                     <CardHeader className="p-8">
                       <CardTitle className="text-xl font-bold text-primary font-headline leading-tight italic">{journal.name}</CardTitle>
                     </CardHeader>
-                    <CardContent className="p-8 space-y-4">
+                    <CardContent className="p-8 pt-0 space-y-4">
                       <div className="flex items-center gap-3"><Building2 className="h-4 w-4 text-accent" /><p className="text-sm font-bold text-primary/80">{journal.university}</p></div>
                       <div className="flex items-center gap-3"><Tag className="h-4 w-4 text-accent" /><p className="text-sm font-medium">{journal.issn}</p></div>
                       <div className="pt-6 border-t border-secondary">

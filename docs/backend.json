@@ -37,6 +37,10 @@
           "type": "string",
           "format": "uri",
           "description": "The external URL for the journal."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "The data URI or URL of the journal cover image."
         }
       },
       "required": ["name", "university", "issn", "domain", "link"]
