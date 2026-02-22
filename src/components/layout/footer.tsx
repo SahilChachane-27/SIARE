@@ -16,14 +16,15 @@ const socialLinks = [
 const platformLinks = [
   { href: '/', label: 'Home' },
   { href: '/pricing', label: 'Pricing' },
-  { href: '/pricing#compare', label: 'Compare' },
-  { href: '/journals', label: 'List of Journal' },
+  { href: '/compare', label: 'Compare Plans' },
+  { href: '/journals', label: 'Hosted Journals' },
+  { href: '/admin/login', label: 'Admin Portal' },
 ];
 
 const companyLinks = [
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
-  { href: '#', label: 'Team' },
+  { href: '/team', label: 'Team' },
   { href: '/contact', label: 'Contact' },
 ];
 
