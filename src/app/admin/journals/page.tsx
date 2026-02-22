@@ -23,11 +23,15 @@ import {
   Edit3, 
   Search, 
   ArrowUpDown,
-  Filter
+  Filter,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+const ITEMS_PER_PAGE = 6;
 
 export default function ManageJournals() {
   const { user, loading: userLoading } = useUser();
@@ -48,6 +52,9 @@ export default function ManageJournals() {
   // Filter & Sort State
   const [searchFilter, setSearchFilter] = useState('');
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest' | 'az' | 'za'>('newest');
+  
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
 
   const journalsQuery = useMemo(() => {
     if (!db) return null;
@@ -59,6 +66,11 @@ export default function ManageJournals() {
   useEffect(() => {
     if (!userLoading && !user) router.push('/admin/login');
   }, [user, userLoading, router]);
+
+  // Reset page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchFilter, sortOrder]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -165,6 +177,12 @@ export default function ManageJournals() {
 
     return result;
   }, [journals, searchFilter, sortOrder]);
+
+  const totalPages = Math.ceil(filteredAndSortedJournals.length / ITEMS_PER_PAGE);
+  const paginatedJournals = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredAndSortedJournals.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredAndSortedJournals, currentPage]);
 
   if (userLoading || !user) return null;
 
@@ -289,47 +307,88 @@ export default function ManageJournals() {
               
               {journalsLoading ? (
                 <div className="flex justify-center p-12"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div></div>
-              ) : filteredAndSortedJournals.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {filteredAndSortedJournals.map((journal: any) => (
-                    <Card key={journal.id} className="rounded-funky border-none shadow-xl group hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                      <div className="relative aspect-video w-full bg-secondary">
-                        {journal.imageUrl ? (
-                          <Image src={journal.imageUrl} alt={journal.name} fill className="object-cover" />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <Building2 className="h-12 w-12 text-primary/10" />
+              ) : paginatedJournals.length > 0 ? (
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {paginatedJournals.map((journal: any) => (
+                      <Card key={journal.id} className="rounded-funky border-none shadow-xl group hover:shadow-2xl transition-all duration-300 overflow-hidden">
+                        <div className="relative aspect-video w-full bg-secondary">
+                          {journal.imageUrl ? (
+                            <Image src={journal.imageUrl} alt={journal.name} fill className="object-cover" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <Building2 className="h-12 w-12 text-primary/10" />
+                            </div>
+                          )}
+                          <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                            <Button variant="secondary" size="icon" onClick={() => handleEdit(journal)} className="rounded-full h-8 w-8 bg-white shadow-md">
+                              <Edit3 className="h-4 w-4 text-primary" />
+                            </Button>
+                            <Button variant="destructive" size="icon" onClick={() => handleDelete(journal.id)} className="rounded-full h-8 w-8 shadow-md">
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
                           </div>
-                        )}
-                        <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                          <Button variant="secondary" size="icon" onClick={() => handleEdit(journal)} className="rounded-full h-8 w-8 bg-white shadow-md">
-                            <Edit3 className="h-4 w-4 text-primary" />
-                          </Button>
-                          <Button variant="destructive" size="icon" onClick={() => handleDelete(journal.id)} className="rounded-full h-8 w-8 shadow-md">
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
                         </div>
+                        <CardContent className="p-8">
+                          <div className="flex justify-between items-start mb-6">
+                            <h3 className="text-xl font-bold text-primary font-headline leading-tight">{journal.name}</h3>
+                          </div>
+                          <div className="space-y-3">
+                            <div className="flex items-center gap-3 text-sm font-bold text-primary/60"><Building2 className="h-4 w-4 text-accent" /> {journal.university}</div>
+                            <div className="flex items-center gap-3 text-sm text-foreground/70"><Tag className="h-4 w-4 text-accent" /> {journal.issn}</div>
+                            <div className="flex items-center gap-3 text-sm text-foreground/70"><Globe className="h-4 w-4 text-accent" /> {journal.domain}</div>
+                          </div>
+                          <div className="mt-8 pt-6 border-t border-secondary">
+                            <Button variant="link" asChild className="p-0 h-auto text-primary font-black italic text-sm group-hover:text-accent">
+                              <a href={journal.link} target="_blank" className="flex items-center gap-2 uppercase tracking-widest">
+                                Public Portal <ExternalLink className="h-3 w-3" />
+                              </a>
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                  
+                  {/* Pagination Controls */}
+                  {totalPages > 1 && (
+                    <div className="flex justify-center items-center gap-4 mt-12">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                        disabled={currentPage === 1}
+                        className="rounded-full border-primary/10"
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </Button>
+                      
+                      <div className="flex items-center gap-2">
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                          <Button
+                            key={page}
+                            variant={currentPage === page ? "default" : "ghost"}
+                            size="sm"
+                            onClick={() => setCurrentPage(page)}
+                            className={`w-8 h-8 p-0 rounded-full font-bold ${currentPage === page ? 'bg-primary text-white shadow-lg' : 'text-primary/60'}`}
+                          >
+                            {page}
+                          </Button>
+                        ))}
                       </div>
-                      <CardContent className="p-8">
-                        <div className="flex justify-between items-start mb-6">
-                          <h3 className="text-xl font-bold text-primary font-headline leading-tight">{journal.name}</h3>
-                        </div>
-                        <div className="space-y-3">
-                          <div className="flex items-center gap-3 text-sm font-bold text-primary/60"><Building2 className="h-4 w-4 text-accent" /> {journal.university}</div>
-                          <div className="flex items-center gap-3 text-sm text-foreground/70"><Tag className="h-4 w-4 text-accent" /> {journal.issn}</div>
-                          <div className="flex items-center gap-3 text-sm text-foreground/70"><Globe className="h-4 w-4 text-accent" /> {journal.domain}</div>
-                        </div>
-                        <div className="mt-8 pt-6 border-t border-secondary">
-                          <Button variant="link" asChild className="p-0 h-auto text-primary font-black italic text-sm group-hover:text-accent">
-                            <a href={journal.link} target="_blank" className="flex items-center gap-2 uppercase tracking-widest">
-                              Public Portal <ExternalLink className="h-3 w-3" />
-                            </a>
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                        disabled={currentPage === totalPages}
+                        className="rounded-full border-primary/10"
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  )}
+                </>
               ) : (
                 <Card className="rounded-funky border-dashed border-2 border-primary/10 p-20 text-center">
                   <Filter className="h-12 w-12 text-primary/10 mx-auto mb-4" />
