@@ -36,7 +36,6 @@ export default function ResourcesPage() {
     {
       title: "For Reviewers",
       icon: Users,
-      iconColor: "text-accent",
       items: [
         "Peer Review Policy",
         "Reviewer Evaluation Form",
@@ -92,7 +91,7 @@ export default function ResourcesPage() {
                 <Card key={idx} className="border-none shadow-xl rounded-[30px] overflow-hidden bg-secondary/30" data-aos="fade-up" data-aos-delay={idx * 100}>
                   <CardHeader className="flex flex-col items-center pb-2">
                     <div className="p-4 bg-primary/5 rounded-full mb-4">
-                      <cat.icon className={`h-10 w-10 ${cat.iconColor || 'text-primary'}`} />
+                      <cat.icon className="h-10 w-10 text-primary" />
                     </div>
                     <CardTitle className="text-2xl text-primary font-bold">{cat.title}</CardTitle>
                   </CardHeader>
