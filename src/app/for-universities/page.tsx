@@ -126,9 +126,13 @@ export default function ForUniversitiesPage() {
                   data-aos="fade-up" 
                   data-aos-delay={idx * 100}
                 >
-                  <CardHeader className="flex flex-row items-center gap-5 pb-2">
-                    <span className="text-5xl font-black text-accent/10 font-headline select-none group-hover:text-accent/30 transition-colors duration-500">{step.num}</span>
-                    <CardTitle className="text-xl text-primary font-bold leading-tight group-hover:text-accent transition-colors duration-500">{step.title}</CardTitle>
+                  <CardHeader className="flex flex-col items-start gap-2 pb-2">
+                    <span className="text-6xl font-black text-accent/10 font-headline select-none group-hover:text-accent transition-colors duration-500">
+                      {step.num}
+                    </span>
+                    <CardTitle className="text-xl text-primary font-bold leading-tight group-hover:text-accent transition-colors duration-500">
+                      {step.title}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-foreground/70 text-sm leading-relaxed font-medium">
