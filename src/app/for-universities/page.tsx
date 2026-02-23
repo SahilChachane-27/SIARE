@@ -122,13 +122,13 @@ export default function ForUniversitiesPage() {
               {steps.map((step, idx) => (
                 <Card 
                   key={idx} 
-                  className="border-none shadow-xl rounded-[30px] overflow-hidden bg-secondary/30 transition-all hover:shadow-2xl hover:-translate-y-1" 
+                  className="border-none shadow-xl rounded-[30px] overflow-hidden bg-secondary/30 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group hover:bg-white border border-transparent hover:border-accent/10" 
                   data-aos="fade-up" 
                   data-aos-delay={idx * 100}
                 >
                   <CardHeader className="flex flex-row items-center gap-5 pb-2">
-                    <span className="text-5xl font-black text-accent/10 font-headline select-none">{step.num}</span>
-                    <CardTitle className="text-xl text-primary font-bold leading-tight">{step.title}</CardTitle>
+                    <span className="text-5xl font-black text-accent/10 font-headline select-none group-hover:text-accent/30 transition-colors duration-500">{step.num}</span>
+                    <CardTitle className="text-xl text-primary font-bold leading-tight group-hover:text-accent transition-colors duration-500">{step.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-foreground/70 text-sm leading-relaxed font-medium">
