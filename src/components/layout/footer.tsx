@@ -23,16 +23,10 @@ const quickLinks = [
 ];
 
 const policiesLinks = [
-  { href: '#', label: 'Privacy Policy' },
-  { href: '#', label: 'Hosting Agreement' },
-  { href: '#', label: 'Ethics & Guidelines' },
-  { href: '#', label: 'Accessibility Statement' },
-];
-
-const supportLinks = [
-  { href: '/resources', label: 'Documentation' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/contact', label: 'Help Center' },
+  { href: '/privacy-policy', label: 'Privacy Policy' },
+  { href: '/hosting-agreement', label: 'Hosting Agreement' },
+  { href: '/ethics-guidelines', label: 'Ethics & Guidelines' },
+  { href: '/accessibility-statement', label: 'Accessibility Statement' },
 ];
 
 export function Footer() {
@@ -49,7 +43,7 @@ export function Footer() {
       <div className="container mx-auto px-8 md:px-16 lg:px-32">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           {/* Column 1: Branding & Info */}
-          <div className="space-y-6 lg:col-span-1" data-aos="fade-up">
+          <div className="space-y-6 lg:col-span-2" data-aos="fade-up">
             <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-opacity hover:opacity-80">
                 <BookOpen className="h-8 w-8 text-accent" />
                 <div className="flex flex-col">
@@ -57,10 +51,10 @@ export function Footer() {
                   <span className="text-[11px] font-medium text-accent/80 tracking-[0.2em] uppercase">University Journal Hosting</span>
                 </div>
             </Link>
-            <div className="text-sm leading-relaxed space-y-2">
+            <div className="text-sm leading-relaxed max-w-sm">
               <p>Empowering academic institutions with secure, scalable, and professional journal hosting since 2024.</p>
-              <div className="pt-2">
-                <p className="font-bold text-accent mb-1">Platform Info:</p>
+              <div className="pt-4">
+                <p className="font-bold text-accent mb-1 uppercase text-xs tracking-widest">Platform Info:</p>
                 <ul className="text-xs space-y-1 opacity-80">
                   <li>• Exclusively for Universities</li>
                   <li>• Secure ScholarJMS Hosting</li>
@@ -106,46 +100,30 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 4: Support */}
-          <div data-aos="fade-up" data-aos-delay="300">
-            <h5 className="font-bold text-lg text-primary-foreground mb-4 font-headline">Support</h5>
-            <ul className="space-y-3 text-sm">
-              {supportLinks.map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className="hover:text-accent transition-colors">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 5: Contact & Newsletter */}
-          <div data-aos="fade-up" data-aos-delay="400">
-            <div className="space-y-6">
-              <h5 className="font-bold text-lg text-primary-foreground font-headline">Get in Touch</h5>
-              <div className="text-sm space-y-1">
-                <p>Email: support@technicaljournals.org</p>
-                <p>Mobile: +91 8200385143</p>
-              </div>
-              {isClient && (
-                <div className="space-y-3">
-                  <p className="text-xs uppercase tracking-wider font-bold text-accent">Join Our Newsletter</p>
-                  <form className="flex gap-2">
-                    <Input 
-                      type="email" 
-                      placeholder="Email Address" 
-                      className="bg-primary-foreground/5 text-primary-foreground placeholder:text-primary-foreground/40 border-primary-foreground/10 focus-visible:ring-accent" 
-                    />
-                    <Button type="submit" className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky px-4">Go</Button>
-                  </form>
-                </div>
-              )}
+          {/* Column 4: Contact */}
+          <div data-aos="fade-up" data-aos-delay="300" className="lg:col-span-1">
+            <h5 className="font-bold text-lg text-primary-foreground font-headline mb-4">Get in Touch</h5>
+            <div className="text-sm space-y-4 mb-6">
+              <p className="leading-tight"><span className="text-accent font-bold">Email:</span><br/>support@technicaljournals.org</p>
+              <p className="leading-tight"><span className="text-accent font-bold">Mobile:</span><br/>+91 8200385143</p>
             </div>
+            {isClient && (
+              <div className="space-y-3">
+                <p className="text-[10px] uppercase tracking-widest font-black text-accent">Join Our Newsletter</p>
+                <div className="flex gap-2">
+                  <Input 
+                    type="email" 
+                    placeholder="Email Address" 
+                    className="h-9 text-xs bg-primary-foreground/5 text-primary-foreground placeholder:text-primary-foreground/40 border-primary-foreground/10 focus-visible:ring-accent" 
+                  />
+                  <Button type="submit" size="sm" className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky">Go</Button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="border-t border-primary-foreground/10 pt-8 text-center text-xs tracking-widest text-primary-foreground/40 uppercase" data-aos="fade-up">
+        <div className="border-t border-primary-foreground/10 pt-8 text-center text-[10px] tracking-widest text-primary-foreground/40 uppercase" data-aos="fade-up">
           {isClient && <p>© {year} Technical Journals. All Rights Reserved. Built for Academic Sovereignty.</p>}
         </div>
       </div>
