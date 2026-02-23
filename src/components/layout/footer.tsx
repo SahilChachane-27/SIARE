@@ -22,12 +22,6 @@ const quickLinks = [
   { href: '/contact', label: 'Contact' },
 ];
 
-const platformLinks = [
-  { href: '/compare', label: 'Compare Plans' },
-  { href: '/journals', label: 'Hosted Journals' },
-  { href: '/admin/login', label: 'Admin Portal' },
-];
-
 const companyLinks = [
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
