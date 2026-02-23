@@ -56,15 +56,15 @@ export function Header() {
             </div>
           </Link>
           
-          <nav className="hidden xl:flex items-center space-x-3">
+          <nav className="hidden xl:flex items-center gap-2">
             {navLinks.map((link, idx) => {
               return (
-                <Link key={idx} href={link.href!} className="text-xs 2xl:text-sm font-medium text-white/80 hover:text-white transition-colors">
+                <Link key={idx} href={link.href!} className="text-xs font-medium text-white/80 hover:text-white transition-colors">
                   {link.label}
                 </Link>
               );
             })}
-            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky ml-2 text-xs">
+            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky ml-1 text-[10px] h-8 px-3">
               <Link href="/contact">Begin your Research Journey</Link>
             </Button>
           </nav>
