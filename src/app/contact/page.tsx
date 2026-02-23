@@ -8,10 +8,30 @@ import { Mail, PhoneCall, MapPin, Building } from "lucide-react";
 import { ScrollToTop } from '@/components/layout/scroll-to-top';
 
 const contactOptions = [
-  { icon: Mail, title: "Email Inquiry", text: "support@technicaljournals.org" },
-  { icon: PhoneCall, title: "Project Hotline", text: "+91 8200385143" },
-  { icon: MapPin, title: "Our Headquarters", text: "Global Research Hub, India" },
-  { icon: Building, title: "Project Consult", text: "Schedule a virtual meeting with our team" }
+  { 
+    icon: Mail, 
+    title: "Email Inquiry", 
+    text: "support@technicaljournals.org",
+    link: "mailto:support@technicaljournals.org"
+  },
+  { 
+    icon: PhoneCall, 
+    title: "Project Hotline", 
+    text: "+91 8200385143",
+    link: "tel:+918200385143"
+  },
+  { 
+    icon: MapPin, 
+    title: "Our Headquarters", 
+    text: "Global Research Hub, India",
+    link: null
+  },
+  { 
+    icon: Building, 
+    title: "Project Consult", 
+    text: "Schedule a virtual meeting",
+    link: "#contact-form"
+  }
 ];
 
 export default function ContactPage() {
@@ -32,14 +52,14 @@ export default function ContactPage() {
               <div className="flex flex-wrap items-center justify-center gap-8 text-white/90">
                 <a 
                   href="mailto:support@technicaljournals.org" 
-                  className="flex items-center gap-2 hover:text-white transition-colors border-r border-white/20 pr-8"
+                  className="flex items-center gap-2 hover:text-accent transition-colors border-r border-white/20 pr-8 last:border-0"
                 >
                   <Mail className="h-5 w-5 text-accent" />
                   <span className="font-bold">Email:</span> support@technicaljournals.org
                 </a>
                 <a 
                   href="tel:+918200385143" 
-                  className="flex items-center gap-2 hover:text-white transition-colors"
+                  className="flex items-center gap-2 hover:text-accent transition-colors"
                 >
                   <PhoneCall className="h-5 w-5 text-accent" />
                   <span className="font-bold">Mobile:</span> +91 8200385143
@@ -54,12 +74,23 @@ export default function ContactPage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
               {contactOptions.map((opt, i) => (
                 <Card key={i} className="rounded-funky text-center border-none bg-secondary/50 shadow-md hover:shadow-xl transition-all group hover:-translate-y-1" data-aos="fade-up" data-aos-delay={i * 100}>
-                  <CardContent className="p-8">
+                  <CardContent className="p-8 flex flex-col items-center h-full">
                     <div className="h-12 w-12 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm group-hover:bg-accent transition-colors">
                       <opt.icon className="h-6 w-6 text-accent group-hover:text-white" />
                     </div>
                     <h4 className="font-bold text-primary mb-2 font-headline">{opt.title}</h4>
-                    <p className="text-sm text-foreground/70 font-medium">{opt.text}</p>
+                    {opt.link ? (
+                      <a 
+                        href={opt.link} 
+                        className="text-sm text-foreground/70 font-medium hover:text-accent transition-colors break-all"
+                      >
+                        {opt.text}
+                      </a>
+                    ) : (
+                      <p className="text-sm text-foreground/70 font-medium break-words">
+                        {opt.text}
+                      </p>
+                    )}
                   </CardContent>
                 </Card>
               ))}
