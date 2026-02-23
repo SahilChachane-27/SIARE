@@ -144,6 +144,30 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Quick Links & Policies Section */}
+        <div className="border-t border-primary-foreground/10 pt-8 pb-4 grid grid-cols-1 md:grid-cols-2 gap-6 text-[11px] font-medium text-primary-foreground/60" data-aos="fade-up">
+          <div className="flex flex-wrap gap-x-2 gap-y-1 items-center justify-center md:justify-start">
+            <span className="text-accent font-black uppercase tracking-widest mr-1">Quick Links</span>
+            <Link href="/" className="hover:text-accent">Home</Link> | 
+            <Link href="/about" className="hover:text-accent">About</Link> | 
+            <Link href="/services" className="hover:text-accent">Services</Link> | 
+            <Link href="/journals" className="hover:text-accent">Journals</Link> | 
+            <Link href="/pricing" className="hover:text-accent">Subscription</Link> | 
+            <Link href="/contact" className="hover:text-accent">Contact</Link>
+          </div>
+          <div className="flex flex-wrap gap-x-2 gap-y-1 items-center justify-center md:justify-end">
+            <span className="text-accent font-black uppercase tracking-widest mr-1">Policies</span>
+            <span className="opacity-40">•</span>
+            <Link href="#" className="hover:text-accent">Privacy Policy</Link>
+            <span className="opacity-40">•</span>
+            <Link href="#" className="hover:text-accent">Hosting Agreement</Link>
+            <span className="opacity-40">•</span>
+            <Link href="#" className="hover:text-accent">Ethics & Guidelines</Link>
+            <span className="opacity-40">•</span>
+            <Link href="#" className="hover:text-accent">Accessibility Statement</Link>
+          </div>
+        </div>
+
         <div className="border-t border-primary-foreground/10 pt-8 text-center text-xs tracking-widest text-primary-foreground/40 uppercase" data-aos="fade-up">
           {isClient && <p>© {year} Technical Journals. All Rights Reserved. Built for Academic Sovereignty.</p>}
         </div>
