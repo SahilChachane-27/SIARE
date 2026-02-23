@@ -46,28 +46,30 @@ export function Header() {
         scrolled ? 'bg-primary shadow-xl py-2 border-b border-accent/10' : 'bg-primary/90 backdrop-blur-md py-4'
       )}
     >
-      <div className="w-full px-8 md:px-16 lg:px-32">
+      <div className="w-full px-4 md:px-8">
         <div className="flex items-center justify-between h-20">
           <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-transform hover:scale-[1.02] shrink-0">
             <BookOpen className="h-8 w-8 text-accent" />
             <div className="flex flex-col">
               <span className="text-xl md:text-2xl font-bold text-accent">Technical Journals</span>
-              <span className="text-[10px] md:text-[11px] font-medium text-white/80 tracking-[0.15em] uppercase leading-tight">University Journal Hosting</span>
+              <span className="text-[10px] md:text-[11px] font-medium text-white/80 tracking-[0.1em] uppercase leading-tight">University Journal Hosting</span>
             </div>
           </Link>
           
-          <nav className="hidden xl:flex items-center gap-5">
-            {navLinks.map((link, idx) => {
-              return (
-                <Link key={idx} href={link.href!} className="text-xs font-medium text-white/80 hover:text-white transition-colors">
-                  {link.label}
-                </Link>
-              );
-            })}
-            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky ml-2 text-[10px] h-8 px-4">
+          <div className="hidden xl:flex items-center gap-6">
+            <nav className="flex items-center gap-5">
+              {navLinks.map((link, idx) => {
+                return (
+                  <Link key={idx} href={link.href!} className="text-[11px] font-medium text-white/80 hover:text-white transition-colors uppercase tracking-wider">
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </nav>
+            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky text-[10px] h-8 px-4 shrink-0">
               <Link href="/contact">Begin your Research Journey</Link>
             </Button>
-          </nav>
+          </div>
 
           <div className="xl:hidden">
             {isClient && (
