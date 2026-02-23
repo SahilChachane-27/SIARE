@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useUser, useAuth } from '@/firebase';
@@ -79,8 +78,8 @@ export default function AdminDashboard() {
             ))}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-10">
-            <Card className="rounded-funky border-none shadow-2xl p-8" data-aos="fade-right">
+          <div className="max-w-3xl">
+            <Card className="rounded-funky border-none shadow-2xl p-8" data-aos="fade-up">
               <h3 className="text-2xl font-bold text-primary font-headline italic mb-6">Journal Management</h3>
               <p className="text-foreground/70 mb-8 leading-relaxed">
                 Add new journals to the catalog, update university information, or manage indexing details.
@@ -93,24 +92,6 @@ export default function AdminDashboard() {
                   <Link href="/journals">View Catalog</Link>
                 </Button>
               </div>
-            </Card>
-
-            <Card className="rounded-funky border-none shadow-2xl p-8 bg-primary text-white" data-aos="fade-left">
-              <h3 className="text-2xl font-bold font-headline italic mb-6 text-accent">Quick Actions</h3>
-              <ul className="space-y-4">
-                <li className="flex items-center gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
-                  <div className="h-10 w-10 rounded-full bg-accent/20 flex items-center justify-center text-accent">
-                    <Plus className="h-5 w-5" />
-                  </div>
-                  <span className="font-bold">Register New DOI</span>
-                </li>
-                <li className="flex items-center gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
-                  <div className="h-10 w-10 rounded-full bg-accent/20 flex items-center justify-center text-accent">
-                    <Settings className="h-5 w-5" />
-                  </div>
-                  <span className="font-bold">Edit Institutional Profile</span>
-                </li>
-              </ul>
             </Card>
           </div>
         </div>
