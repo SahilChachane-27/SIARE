@@ -87,7 +87,7 @@ export default function JournalsPage() {
         </section>
 
         <section className="py-10 bg-secondary/30 relative">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+          <div className="container ml-0 mr-auto px-8 md:px-16 lg:px-32 max-w-5xl">
             <div className="bg-white p-6 md:p-8 rounded-xl shadow-2xl border border-primary/5 relative z-20" data-aos="fade-up">
               {isClient ? (
                 <div className="space-y-4">
