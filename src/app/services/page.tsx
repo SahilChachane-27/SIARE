@@ -119,7 +119,7 @@ export default function ServicesPage() {
               <div className="flex flex-col items-center gap-2"><ShieldCheck className="h-6 w-6 md:h-8 md:w-8" /><span className="text-[8px] md:text-[10px] font-bold uppercase tracking-widest">Secure Servers</span></div>
               <div className="flex flex-col items-center gap-2"><BarChart className="h-6 w-6 md:h-8 md:w-8" /><span className="text-[8px] md:text-[10px] font-bold uppercase tracking-widest">Growth Analytics</span></div>
             </div>
-            <Button asChild className="mt-8 md:mt-12 bg-accent hover:bg-white hover:text-primary text-accent-foreground px-8 md:px-12 py-6 md:py-8 text-base md:text-lg font-bold rounded-funky shadow-2xl w-full sm:w-auto h-auto transition-all">
+            <Button asChild className="mt-8 md:mt-12 bg-accent hover:bg-white hover:text-primary text-accent-foreground px-6 md:px-12 py-3 md:py-6 text-sm md:text-lg font-bold rounded-funky shadow-2xl w-full sm:w-auto h-auto transition-all">
               <Link href="/contact">Inquire About Services</Link>
             </Button>
           </section>

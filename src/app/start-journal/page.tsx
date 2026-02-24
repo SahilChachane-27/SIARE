@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
@@ -202,7 +202,7 @@ export default function StartJournalPage() {
                   <Button 
                     type="submit" 
                     size="lg" 
-                    className="w-full bg-primary hover:bg-primary/90 text-accent rounded-funky py-4 md:py-8 text-lg md:text-xl font-bold shadow-xl transition-all hover:scale-[1.01]"
+                    className="w-full bg-primary hover:bg-primary/90 text-accent rounded-funky py-3 md:py-6 text-base md:text-xl font-bold shadow-xl transition-all hover:scale-[1.01]"
                   >
                     Submit Inquiry
                   </Button>
