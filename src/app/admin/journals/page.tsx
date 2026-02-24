@@ -187,13 +187,13 @@ export default function ManageJournals() {
   };
 
   const handleDelete = (id: string) => {
-    if (!db) return;
-    if (!confirm("Are you sure you want to delete this journal?")) return;
+    if (!db || !id) return;
+    if (!window.confirm("Are you sure you want to permanently delete this journal record?")) return;
     
     const docRef = doc(db, 'journals', id);
     deleteDoc(docRef)
       .then(() => {
-        toast({ title: "Journal Removed", description: "The journal has been deleted." });
+        toast({ title: "Journal Removed", description: "The journal has been successfully deleted from the catalog." });
       })
       .catch(async (err) => {
         const permissionError = new FirestorePermissionError({
@@ -368,7 +368,7 @@ export default function ManageJournals() {
                 <>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {paginatedJournals.map((journal: any) => (
-                      <Card key={journal.id} className="rounded-funky border-none shadow-xl group hover:shadow-2xl transition-all duration-300 overflow-hidden">
+                      <Card key={journal.id} className="rounded-funky border-none shadow-xl group hover:shadow-2xl transition-all duration-300 overflow-hidden relative">
                         <div className="relative aspect-video w-full bg-secondary">
                           {journal.imageUrl ? (
                             <Image src={journal.imageUrl} alt={journal.name} fill className="object-cover" />
@@ -377,11 +377,29 @@ export default function ManageJournals() {
                               <Building2 className="h-12 w-12 text-primary/10" />
                             </div>
                           )}
-                          <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                            <Button variant="secondary" size="icon" onClick={() => handleEdit(journal)} className="rounded-full h-8 w-8 bg-white shadow-md">
+                          <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                            <Button 
+                              type="button"
+                              variant="secondary" 
+                              size="icon" 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleEdit(journal);
+                              }} 
+                              className="rounded-full h-8 w-8 bg-white shadow-md hover:bg-slate-100"
+                            >
                               <Edit3 className="h-4 w-4 text-primary" />
                             </Button>
-                            <Button variant="destructive" size="icon" onClick={() => handleDelete(journal.id)} className="rounded-full h-8 w-8 shadow-md">
+                            <Button 
+                              type="button"
+                              variant="destructive" 
+                              size="icon" 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDelete(journal.id);
+                              }} 
+                              className="rounded-full h-8 w-8 shadow-md"
+                            >
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
