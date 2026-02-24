@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, BookOpen } from 'lucide-react';
+import { Menu } from 'lucide-react';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
@@ -49,7 +50,15 @@ export function Header() {
       <div className="w-full px-4 md:px-8">
         <div className="flex items-center justify-between h-20">
           <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-transform hover:scale-[1.02] shrink-0">
-            <BookOpen className="h-8 w-8 text-accent" />
+            <div className="relative h-12 w-12 flex-shrink-0">
+              <Image 
+                src="https://picsum.photos/seed/tech-logo/200/200" 
+                alt="Technical Journals Logo" 
+                fill 
+                className="object-contain"
+                data-ai-hint="technical journal logo"
+              />
+            </div>
             <div className="flex flex-col">
               <span className="text-xl md:text-2xl font-bold text-accent">Technical Journals</span>
               <span className="text-[10px] md:text-[11px] font-medium text-white/80 tracking-[0.1em] uppercase leading-tight">University Journal Hosting</span>

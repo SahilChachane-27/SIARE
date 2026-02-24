@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { Facebook, Twitter, Linkedin, Instagram, BookOpen } from 'lucide-react';
+import Image from 'next/image';
+import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const socialLinks = [
@@ -43,7 +44,15 @@ export function Footer() {
           {/* Column 1: Branding & Info */}
           <div className="space-y-6 lg:col-span-2" data-aos="fade-up">
             <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-opacity hover:opacity-80">
-                <BookOpen className="h-8 w-8 text-accent" />
+                <div className="relative h-10 w-10 shrink-0">
+                  <Image 
+                    src="https://picsum.photos/seed/tech-logo/200/200" 
+                    alt="Technical Journals Logo" 
+                    fill 
+                    className="object-contain"
+                    data-ai-hint="technical journal logo"
+                  />
+                </div>
                 <div className="flex flex-col">
                   <span className="text-2xl font-bold text-accent">Technical Journals</span>
                   <span className="text-[11px] font-medium text-accent/80 tracking-[0.2em] uppercase">University Journal Hosting</span>
@@ -103,7 +112,7 @@ export function Footer() {
             <h5 className="font-bold text-lg text-primary-foreground font-headline mb-4">Get in Touch</h5>
             <div className="text-sm space-y-4 mb-6">
               <p className="leading-tight"><span className="text-accent font-bold">Email:</span><br/>support@technicaljournals.org</p>
-              <p className="leading-tight"><span className="text-accent font-bold">Mobile:</span><br/>+91 98765 43210</p>
+              <p className="leading-tight"><span className="text-accent font-bold">Mobile:</span><br/>+91 8200385143</p>
             </div>
           </div>
         </div>
