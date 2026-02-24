@@ -44,9 +44,9 @@ export function Footer() {
           {/* Column 1: Branding & Info */}
           <div className="space-y-6 lg:col-span-2" data-aos="fade-up">
             <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-opacity hover:opacity-80">
-                <div className="relative h-12 w-12 shrink-0">
+                <div className="relative h-20 w-20 shrink-0">
                   <Image 
-                    src="https://picsum.photos/seed/tech-logo/200/200" 
+                    src="/logo.png" 
                     alt="Technical Journals Logo" 
                     fill 
                     className="object-contain"

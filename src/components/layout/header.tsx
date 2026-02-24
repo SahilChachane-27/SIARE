@@ -50,9 +50,9 @@ export function Header() {
       <div className="w-full px-4 md:px-8 max-w-[1600px] mx-auto">
         <div className="flex items-center justify-between h-20">
           <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-transform hover:scale-[1.02] shrink-0">
-            <div className="relative h-12 w-12 flex-shrink-0">
+            <div className="relative h-20 w-20 flex-shrink-0">
               <Image 
-                src="https://picsum.photos/seed/tech-logo/200/200" 
+                src="/logo.png" 
                 alt="Technical Journals Logo" 
                 fill 
                 className="object-contain"
