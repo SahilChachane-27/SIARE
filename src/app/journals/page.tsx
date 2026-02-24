@@ -94,26 +94,26 @@ export default function JournalsPage() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="relative">
                       <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input placeholder="Search Journal Name" className="pl-10 h-12 border-primary/10 rounded-xl bg-secondary/5" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+                      <Input placeholder="Search Journal Name" className="pl-10 h-10 border-primary/10 rounded-xl bg-secondary/5" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                     </div>
                     <div className="relative">
                       <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input placeholder="University" className="pl-10 h-12 border-primary/10 rounded-xl bg-secondary/5" value={universityQuery} onChange={(e) => setUniversityQuery(e.target.value)} />
+                      <Input placeholder="University" className="pl-10 h-10 border-primary/10 rounded-xl bg-secondary/5" value={universityQuery} onChange={(e) => setUniversityQuery(e.target.value)} />
                     </div>
                     <div className="relative">
                       <Hash className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input placeholder="ISSN" className="pl-10 h-12 border-primary/10 rounded-xl bg-secondary/5" value={issnQuery} onChange={(e) => setIssnQuery(e.target.value)} />
+                      <Input placeholder="ISSN" className="pl-10 h-10 border-primary/10 rounded-xl bg-secondary/5" value={issnQuery} onChange={(e) => setIssnQuery(e.target.value)} />
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                      <SelectTrigger className="h-12 border-primary/10 rounded-xl bg-secondary/5"><SelectValue placeholder="Field of Study" /></SelectTrigger>
+                      <SelectTrigger className="h-10 border-primary/10 rounded-xl bg-secondary/5"><SelectValue placeholder="Field of Study" /></SelectTrigger>
                       <SelectContent>
                         <SelectItem value="All">All Fields</SelectItem>
                         {categories.map(cat => <SelectItem key={cat.name} value={cat.name}>{cat.name}</SelectItem>)}
                       </SelectContent>
                     </Select>
-                    <Button className="h-12 bg-primary text-white rounded-xl font-bold shadow-xl md:col-span-2 uppercase tracking-widest text-xs">Search Catalog</Button>
+                    <Button className="h-10 bg-primary text-white rounded-xl font-bold shadow-xl md:col-span-2 uppercase tracking-widest text-[10px]">Search Catalog</Button>
                   </div>
                 </div>
               ) : <div className="h-32 flex items-center justify-center font-bold text-primary/40 tracking-widest uppercase">Initializing Sources...</div>}
