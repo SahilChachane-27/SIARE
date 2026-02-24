@@ -1,9 +1,9 @@
-
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { AOSInit } from '@/components/AOSInit';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
+import { FirebaseErrorListener } from '@/components/FirebaseErrorListener';
 
 export const metadata: Metadata = {
   title: 'Technical Journals | Secure University Journal Hosting',
@@ -25,6 +25,7 @@ export default function RootLayout({
       <body className="antialiased">
         <FirebaseClientProvider>
           <AOSInit />
+          <FirebaseErrorListener />
           {children}
           <Toaster />
         </FirebaseClientProvider>

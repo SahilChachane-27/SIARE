@@ -30,6 +30,8 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError } from '@/firebase/errors';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -113,7 +115,7 @@ export default function ManageJournals() {
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!db) return;
 
@@ -126,32 +128,51 @@ export default function ManageJournals() {
       return;
     }
 
-    try {
-      const journalData = {
-        name,
-        university,
-        issn,
-        domain,
-        link,
-        imageUrl,
-        updatedAt: serverTimestamp(),
-      };
+    const journalData = {
+      name,
+      university,
+      issn,
+      domain,
+      link,
+      imageUrl,
+      updatedAt: serverTimestamp(),
+    };
 
-      if (editingId) {
-        await updateDoc(doc(db, 'journals', editingId), journalData);
-        toast({ title: "Journal Updated", description: `${name} has been updated successfully.` });
-      } else {
-        await addDoc(collection(db, 'journals'), {
-          ...journalData,
-          createdAt: serverTimestamp(),
+    if (editingId) {
+      const docRef = doc(db, 'journals', editingId);
+      updateDoc(docRef, journalData)
+        .then(() => {
+          toast({ title: "Journal Updated", description: `${name} has been updated successfully.` });
+        })
+        .catch(async (err) => {
+          const permissionError = new FirestorePermissionError({
+            path: docRef.path,
+            operation: 'update',
+            requestResourceData: journalData,
+          });
+          errorEmitter.emit('permission-error', permissionError);
         });
-        toast({ title: "Journal Added", description: `${name} has been published successfully.` });
-      }
-      
-      resetForm();
-    } catch (error: any) {
-      toast({ variant: "destructive", title: "Error", description: error.message });
+    } else {
+      const colRef = collection(db, 'journals');
+      const newJournal = {
+        ...journalData,
+        createdAt: serverTimestamp(),
+      };
+      addDoc(colRef, newJournal)
+        .then(() => {
+          toast({ title: "Journal Added", description: `${name} has been published successfully.` });
+        })
+        .catch(async (err) => {
+          const permissionError = new FirestorePermissionError({
+            path: colRef.path,
+            operation: 'create',
+            requestResourceData: newJournal,
+          });
+          errorEmitter.emit('permission-error', permissionError);
+        });
     }
+    
+    resetForm();
   };
 
   const handleEdit = (journal: any) => {
@@ -165,15 +186,22 @@ export default function ManageJournals() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = (id: string) => {
     if (!db) return;
     if (!confirm("Are you sure you want to delete this journal?")) return;
-    try {
-      await deleteDoc(doc(db, 'journals', id));
-      toast({ title: "Journal Removed", description: "The journal has been deleted." });
-    } catch (error: any) {
-      toast({ variant: "destructive", title: "Error", description: error.message });
-    }
+    
+    const docRef = doc(db, 'journals', id);
+    deleteDoc(docRef)
+      .then(() => {
+        toast({ title: "Journal Removed", description: "The journal has been deleted." });
+      })
+      .catch(async (err) => {
+        const permissionError = new FirestorePermissionError({
+          path: docRef.path,
+          operation: 'delete',
+        });
+        errorEmitter.emit('permission-error', permissionError);
+      });
   };
 
   const filteredAndSortedJournals = useMemo(() => {
