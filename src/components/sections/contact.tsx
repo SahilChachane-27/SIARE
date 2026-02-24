@@ -142,7 +142,11 @@ export function Contact() {
                 )}
               />
 
-              <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90 text-accent rounded-funky py-8 text-xl font-bold shadow-xl transition-all hover:scale-[1.01]">
+              <Button 
+                type="submit" 
+                size="lg" 
+                className="w-full bg-primary hover:bg-primary/90 text-accent rounded-funky py-4 md:py-8 text-lg md:text-xl font-bold shadow-xl transition-all hover:scale-[1.01]"
+              >
                 Request Technical Consultation
               </Button>
             </form>
