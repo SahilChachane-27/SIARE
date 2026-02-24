@@ -114,7 +114,12 @@ export function Footer() {
         </div>
 
         <div className="border-t border-primary-foreground/10 pt-8 text-center text-[10px] tracking-widest text-primary-foreground/40 uppercase" data-aos="fade-up">
-          {isClient && <p>© {year} Technical Journals. All Rights Reserved. Built for Academic Sovereignty.</p>}
+          {isClient && (
+            <div className="space-y-4">
+              <p>© {year} Technical Journals. All Rights Reserved. Built for Academic Sovereignty.</p>
+              <p className="text-[11px] font-bold text-accent/80 tracking-normal opacity-90">Copyright © {year} Technical Journals. All Rights Reserved.</p>
+            </div>
+          )}
         </div>
       </div>
     </footer>

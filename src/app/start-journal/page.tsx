@@ -60,11 +60,11 @@ export default function StartJournalPage() {
   if (!isClient) return null;
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen bg-background overflow-x-hidden">
       <Header />
       <main className="flex-1">
-        <section className="relative flex flex-col items-center justify-center overflow-hidden bg-primary pt-24 pb-16 md:pt-32 md:pb-24 text-center">
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="relative flex flex-col items-center justify-center overflow-hidden bg-primary pt-24 pb-16 md:pt-32 md:pb-24 text-center px-4">
+          <div className="relative z-10 max-w-7xl mx-auto">
             <div className="space-y-6 md:space-y-8">
               <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight text-white font-headline">
                 Start Your Journal with Technical Journals
@@ -95,11 +95,11 @@ export default function StartJournalPage() {
           </div>
         </section>
 
-        <section className="bg-slate-50 py-20">
-          <div className="container mx-auto px-4 max-w-4xl">
-            <div className="bg-white p-8 md:p-12 rounded-funky shadow-2xl border border-border/50">
+        <section className="bg-slate-50 py-20 px-4">
+          <div className="container mx-auto max-w-4xl">
+            <div className="bg-white p-6 md:p-12 rounded-funky shadow-2xl border border-border/50">
               <div className="text-center mb-10">
-                <h2 className="text-3xl font-bold text-primary font-headline italic">Institutional Inquiry Form</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold text-primary font-headline italic">Institutional Inquiry Form</h2>
                 <div className="mt-2 w-16 h-1 bg-accent mx-auto"></div>
               </div>
 
@@ -209,7 +209,7 @@ export default function StartJournalPage() {
                     Submit Inquiry
                   </Button>
                   
-                  <p className="text-sm text-center text-muted-foreground mt-4">
+                  <p className="text-xs sm:text-sm text-center text-muted-foreground mt-4">
                     By submitting this form, you agree to our Terms of Service and Privacy Policy. 
                     We respect your privacy and will never share your information.
                   </p>
