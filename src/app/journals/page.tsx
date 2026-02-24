@@ -113,7 +113,7 @@ export default function JournalsPage() {
                         {categories.map(cat => <SelectItem key={cat.name} value={cat.name}>{cat.name}</SelectItem>)}
                       </SelectContent>
                     </Select>
-                    <Button className="h-10 bg-primary text-white rounded-xl font-bold shadow-xl md:col-span-2 uppercase tracking-widest text-[10px]">Search Catalog</Button>
+                    <Button className="h-10 bg-primary text-white rounded-xl font-bold shadow-xl md:col-span-1 md:w-max px-10 uppercase tracking-widest text-[10px]">Search Catalog</Button>
                   </div>
                 </div>
               ) : <div className="h-32 flex items-center justify-center font-bold text-primary/40 tracking-widest uppercase">Initializing Sources...</div>}
