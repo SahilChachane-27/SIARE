@@ -79,6 +79,14 @@ export default function JournalsPage() {
     setSelectedCategory('All');
   };
 
+  const handleSearch = () => {
+    // Scroll to results on small screens
+    const resultsElement = document.getElementById('catalog-results');
+    if (resultsElement) {
+      resultsElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-slate-50/50">
       <Header />
@@ -171,24 +179,18 @@ export default function JournalsPage() {
                       </SelectContent>
                     </Select>
                   </div>
-                </div>
 
-                <div className="pt-6 border-t border-slate-200">
-                  <div className="p-6 bg-primary rounded-xl text-white relative overflow-hidden group">
-                    <div className="relative z-10">
-                      <h4 className="text-sm font-bold mb-2">Need Help?</h4>
-                      <p className="text-[10px] text-white/70 mb-4 leading-relaxed">Can't find a specific publication? Contact our support desk for assistance.</p>
-                      <Button variant="outline" size="sm" className="w-full text-[10px] font-bold uppercase tracking-widest border-white/20 text-white hover:bg-white/10 h-8 rounded-lg">
-                        Contact Desk
-                      </Button>
-                    </div>
-                    <BookOpen className="absolute -bottom-4 -right-4 h-20 w-20 text-white opacity-5 group-hover:scale-110 transition-transform duration-500" />
-                  </div>
+                  <Button 
+                    onClick={handleSearch}
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-black uppercase text-[10px] tracking-widest h-10 rounded-xl shadow-lg mt-4"
+                  >
+                    <Search className="mr-2 h-3.5 w-3.5" /> Search Catalog
+                  </Button>
                 </div>
               </aside>
 
               {/* Right Side: Card Grid */}
-              <div className="lg:col-span-3 min-h-[600px]" data-aos="fade-left">
+              <div id="catalog-results" className="lg:col-span-3 min-h-[600px]" data-aos="fade-left">
                 <div className="flex items-center justify-between mb-8">
                   <h3 className="text-sm font-bold text-primary/60">
                     Showing {filteredJournals.length} Results
