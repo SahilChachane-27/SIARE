@@ -80,7 +80,6 @@ export default function JournalsPage() {
   };
 
   const handleSearch = () => {
-    // Scroll to results on small screens
     const resultsElement = document.getElementById('catalog-results');
     if (resultsElement) {
       resultsElement.scrollIntoView({ behavior: 'smooth' });
@@ -91,9 +90,8 @@ export default function JournalsPage() {
     <div className="flex flex-col min-h-screen bg-slate-50/50">
       <Header />
       <main className="flex-1 pt-20">
-        {/* Simplified Hero */}
-        <section className="py-12 bg-primary text-primary-foreground relative overflow-hidden">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32 relative z-10">
+        <section className="py-12 bg-primary text-primary-foreground relative overflow-hidden px-4 md:px-0">
+          <div className="container mx-auto px-4 md:px-16 lg:px-32 relative z-10">
             <h1 className="text-3xl md:text-4xl font-bold font-headline mb-2" data-aos="fade-right">
               University Journal Catalog
             </h1>
@@ -104,11 +102,10 @@ export default function JournalsPage() {
         </section>
 
         <section className="py-12">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+          <div className="container mx-auto px-4 md:px-16 lg:px-32">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 items-start">
               
-              {/* Left Side: Filter Sidebar */}
-              <aside className="lg:col-span-1 space-y-8 sticky top-32" data-aos="fade-right">
+              <aside className="lg:col-span-1 space-y-8 lg:sticky lg:top-32 lg:max-h-[calc(100vh-160px)] lg:overflow-y-auto pr-2" data-aos="fade-right">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xs font-black uppercase tracking-[0.2em] text-primary/40 flex items-center gap-2">
                     <Filter className="h-3 w-3" /> Filter Catalog
@@ -124,7 +121,6 @@ export default function JournalsPage() {
                 </div>
 
                 <div className="space-y-6">
-                  {/* Journal Name */}
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase text-primary/60 tracking-widest">Journal Name</label>
                     <div className="relative">
@@ -138,7 +134,6 @@ export default function JournalsPage() {
                     </div>
                   </div>
 
-                  {/* University */}
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase text-primary/60 tracking-widest">University</label>
                     <div className="relative">
@@ -152,7 +147,6 @@ export default function JournalsPage() {
                     </div>
                   </div>
 
-                  {/* ISSN */}
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase text-primary/60 tracking-widest">ISSN</label>
                     <div className="relative">
@@ -166,7 +160,6 @@ export default function JournalsPage() {
                     </div>
                   </div>
 
-                  {/* Field of Study */}
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase text-primary/60 tracking-widest">Field of Study</label>
                     <Select value={selectedCategory} onValueChange={setSelectedCategory}>
@@ -189,9 +182,8 @@ export default function JournalsPage() {
                 </div>
               </aside>
 
-              {/* Right Side: Card Grid */}
               <div id="catalog-results" className="lg:col-span-3 min-h-[600px]" data-aos="fade-left">
-                <div className="flex items-center justify-between mb-8">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
                   <h3 className="text-sm font-bold text-primary/60">
                     Showing {filteredJournals.length} Results
                   </h3>
@@ -202,12 +194,12 @@ export default function JournalsPage() {
                 </div>
 
                 {loading ? (
-                  <div className="flex flex-col items-center justify-center p-32 space-y-4">
+                  <div className="flex flex-col items-center justify-center py-32 space-y-4">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
                     <p className="text-xs font-bold text-primary/40 uppercase tracking-[0.2em]">Synchronizing Repository...</p>
                   </div>
                 ) : filteredJournals.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-10">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
                     {filteredJournals.map((journal: any, index: number) => (
                       <Card key={index} className="overflow-hidden bg-white border-none shadow-sm hover:shadow-xl transition-all duration-500 rounded-2xl group flex flex-col h-full border border-slate-100">
                         <div className="relative aspect-video w-full bg-secondary shrink-0">
@@ -224,18 +216,18 @@ export default function JournalsPage() {
                             </div>
                           </div>
                         </div>
-                        <CardHeader className="p-8 flex-grow">
+                        <CardHeader className="p-6 md:p-8 flex-grow">
                           <CardTitle className="text-xl font-bold text-primary font-headline leading-tight italic group-hover:text-accent transition-colors duration-300">
                             {journal.name}
                           </CardTitle>
                         </CardHeader>
-                        <CardContent className="p-8 pt-0 space-y-4">
+                        <CardContent className="p-6 md:p-8 pt-0 space-y-4">
                           <div className="space-y-2">
                             <div className="flex items-center gap-3">
                               <div className="h-8 w-8 rounded-lg bg-slate-50 flex items-center justify-center shrink-0">
                                 <Building2 className="h-4 w-4 text-accent" />
                               </div>
-                              <p className="text-sm font-bold text-primary/80">{journal.university}</p>
+                              <p className="text-sm font-bold text-primary/80 truncate">{journal.university}</p>
                             </div>
                             <div className="flex items-center gap-3">
                               <div className="h-8 w-8 rounded-lg bg-slate-50 flex items-center justify-center shrink-0">
@@ -256,7 +248,7 @@ export default function JournalsPage() {
                     ))}
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center justify-center py-32 bg-white rounded-3xl border-2 border-dashed border-slate-200">
+                  <div className="flex flex-col items-center justify-center py-32 bg-white rounded-3xl border-2 border-dashed border-slate-200 px-4 text-center">
                     <RefreshCw className="h-12 w-12 text-slate-200 mb-4 animate-reverse-spin" />
                     <p className="text-lg font-bold text-primary/40 uppercase tracking-widest italic">No matching journals found</p>
                     <Button variant="link" onClick={resetFilters} className="text-accent font-bold uppercase text-[10px] tracking-[0.2em] mt-2">

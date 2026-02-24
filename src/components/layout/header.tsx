@@ -47,7 +47,7 @@ export function Header() {
         scrolled ? 'bg-primary shadow-xl py-2 border-b border-accent/10' : 'bg-primary/90 backdrop-blur-md py-4'
       )}
     >
-      <div className="w-full px-4 md:px-8">
+      <div className="w-full px-4 md:px-8 max-w-[1600px] mx-auto">
         <div className="flex items-center justify-between h-20">
           <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-transform hover:scale-[1.02] shrink-0">
             <div className="relative h-12 w-12 flex-shrink-0">
@@ -65,7 +65,7 @@ export function Header() {
             <nav className="flex items-center gap-5">
               {navLinks.map((link, idx) => {
                 return (
-                  <Link key={idx} href={link.href!} className="text-[11px] font-medium text-white/80 hover:text-white transition-colors uppercase tracking-wider">
+                  <Link key={idx} href={link.href!} className="text-[11px] font-medium text-white/80 hover:text-white transition-colors uppercase tracking-wider whitespace-nowrap">
                     {link.label}
                   </Link>
                 );
@@ -76,37 +76,39 @@ export function Header() {
             </Button>
           </div>
 
-          <div className="xl:hidden">
+          <div className="xl:hidden flex items-center">
             {isClient && (
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
-                    <Menu className="h-6 w-6" />
+                  <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 h-12 w-12">
+                    <Menu className="h-7 w-7" />
                     <span className="sr-only">Toggle navigation</span>
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="bg-primary border-l-0 text-white w-80 p-6 overflow-y-auto">
+                <SheetContent side="right" className="bg-primary border-l-0 text-white w-[85%] sm:w-80 p-6 overflow-y-auto">
                   <SheetHeader className="sr-only">
                     <SheetTitle>Navigation Menu</SheetTitle>
                     <SheetDescription>
                       Access all pages and resources of Technical Journals.
                     </SheetDescription>
                   </SheetHeader>
-                  <nav className="flex flex-col items-start space-y-4 mt-8">
+                  <nav className="flex flex-col items-start space-y-2 mt-8">
                     {navLinks.map((link, idx) => (
-                      <div key={idx} className="py-4 border-b border-white/10 w-full text-left">
+                      <div key={idx} className="py-3 border-b border-white/10 w-full text-left">
                         <SheetClose asChild>
-                          <Link href={link.href!} className="text-white/80 hover:text-white font-medium block w-full">
+                          <Link href={link.href!} className="text-white/80 hover:text-white font-medium block w-full text-lg">
                             {link.label}
                           </Link>
                         </SheetClose>
                       </div>
                     ))}
-                    <SheetClose asChild>
-                      <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky mt-6">
-                        <Link href="/contact">Begin your Research Journey</Link>
-                      </Button>
-                    </SheetClose>
+                    <div className="pt-6 w-full">
+                      <SheetClose asChild>
+                        <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky h-14 text-lg">
+                          <Link href="/contact">Begin Journey</Link>
+                        </Button>
+                      </SheetClose>
+                    </div>
                   </nav>
                 </SheetContent>
               </Sheet>

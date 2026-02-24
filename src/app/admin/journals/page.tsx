@@ -53,7 +53,6 @@ export default function ManageJournals() {
   const router = useRouter();
   const { toast } = useToast();
 
-  // Form State
   const [editingId, setEditingId] = useState<string | null>(null);
   const [name, setName] = useState('');
   const [university, setUniversity] = useState('');
@@ -64,11 +63,8 @@ export default function ManageJournals() {
   const [isFeatured, setIsFeatured] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Filter & Sort State
   const [searchFilter, setSearchFilter] = useState('');
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest' | 'az' | 'za'>('newest');
-  
-  // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
 
   const journalsQuery = useMemo(() => {
@@ -82,7 +78,6 @@ export default function ManageJournals() {
     if (!userLoading && !user) router.push('/admin/login');
   }, [user, userLoading, router]);
 
-  // Reset page when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [searchFilter, sortOrder]);
@@ -244,19 +239,19 @@ export default function ManageJournals() {
     <div className="flex flex-col min-h-screen bg-background">
       <Header />
       <main className="flex-1 pt-32 pb-24">
-        <div className="container mx-auto px-8 md:px-16 lg:px-32">
+        <div className="container mx-auto px-4 md:px-16 lg:px-32">
           <div className="flex items-center gap-4 mb-12" data-aos="fade-right">
             <Button variant="ghost" size="icon" asChild className="rounded-full">
               <Link href="/admin/dashboard"><ArrowLeft className="h-6 w-6" /></Link>
             </Button>
-            <h1 className="text-4xl font-bold text-primary font-headline italic">
+            <h1 className="text-3xl md:text-4xl font-bold text-primary font-headline italic">
               {editingId ? 'Edit Journal' : 'Manage Journals'}
             </h1>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-12">
             <div className="lg:col-span-1" data-aos="fade-up">
-              <Card className="rounded-funky border-none shadow-2xl p-8 sticky top-32">
+              <Card className="rounded-funky border-none shadow-2xl p-6 md:p-8 lg:sticky lg:top-32 lg:max-h-[calc(100vh-160px)] lg:overflow-y-auto">
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-xl font-bold text-primary italic">
                     {editingId ? 'Update Entry' : 'Add New Source'}
@@ -310,7 +305,7 @@ export default function ManageJournals() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-[10px] font-black uppercase text-primary/40 tracking-widest">ISSN</label>
                       <Input value={issn} onChange={(e) => setIssn(e.target.value)} required placeholder="2345-6789" className="rounded-xl h-12" />
@@ -370,7 +365,7 @@ export default function ManageJournals() {
                     />
                   </div>
                   <Select value={sortOrder} onValueChange={(v: any) => setSortOrder(v)}>
-                    <SelectTrigger className="w-40 h-10 rounded-xl">
+                    <SelectTrigger className="w-full sm:w-40 h-10 rounded-xl">
                       <ArrowUpDown className="mr-2 h-4 w-4 text-primary/40" />
                       <SelectValue placeholder="Sort by" />
                     </SelectTrigger>
@@ -430,12 +425,12 @@ export default function ManageJournals() {
                             </Button>
                           </div>
                         </div>
-                        <CardContent className="p-8">
+                        <CardContent className="p-6 md:p-8">
                           <div className="flex justify-between items-start mb-6">
-                            <h3 className="text-xl font-bold text-primary font-headline leading-tight">{journal.name}</h3>
+                            <h3 className="text-xl font-bold text-primary font-headline leading-tight truncate">{journal.name}</h3>
                           </div>
                           <div className="space-y-3">
-                            <div className="flex items-center gap-3 text-sm font-bold text-primary/60"><Building2 className="h-4 w-4 text-accent" /> {journal.university}</div>
+                            <div className="flex items-center gap-3 text-sm font-bold text-primary/60 truncate"><Building2 className="h-4 w-4 text-accent" /> {journal.university}</div>
                             <div className="flex items-center gap-3 text-sm text-foreground/70"><Tag className="h-4 w-4 text-accent" /> {journal.issn}</div>
                             <div className="flex items-center gap-3 text-sm text-foreground/70"><Globe className="h-4 w-4 text-accent" /> {journal.domain}</div>
                           </div>
@@ -451,9 +446,8 @@ export default function ManageJournals() {
                     ))}
                   </div>
                   
-                  {/* Pagination Controls */}
                   {totalPages > 1 && (
-                    <div className="flex justify-center items-center gap-4 mt-12">
+                    <div className="flex justify-center items-center gap-4 mt-12 flex-wrap">
                       <Button
                         variant="outline"
                         size="icon"
@@ -491,7 +485,7 @@ export default function ManageJournals() {
                   )}
                 </>
               ) : (
-                <Card className="rounded-funky border-dashed border-2 border-primary/10 p-20 text-center">
+                <Card className="rounded-funky border-dashed border-2 border-primary/10 p-12 md:p-20 text-center">
                   <Filter className="h-12 w-12 text-primary/10 mx-auto mb-4" />
                   <p className="text-foreground/40 font-bold uppercase tracking-widest">No matching journals found</p>
                 </Card>
