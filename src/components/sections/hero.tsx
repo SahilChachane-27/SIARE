@@ -24,8 +24,8 @@ export function Hero() {
 
       <div className="container mx-auto px-8 md:px-16 lg:px-32 relative z-10">
         <div className="relative z-10 max-w-4xl" data-aos="fade-right">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 drop-shadow-2xl font-headline text-white leading-tight">
-            Secure and Reliable Journal Hosting for Universities Only
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 drop-shadow-2xl font-headline text-white leading-tight">
+            Secure and Reliable Journal Hosting for Universities.
           </h1>
           <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl drop-shadow-lg leading-relaxed">
             Technical Journals provides secure, scalable, and ethical journal hosting exclusively for University-owned journals. Own your research output with professional institutional branding.
