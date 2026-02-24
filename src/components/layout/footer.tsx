@@ -3,8 +3,6 @@
 import Link from 'next/link';
 import { Facebook, Twitter, Linkedin, Instagram, BookOpen } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 
 const socialLinks = [
   { icon: Facebook, href: '#' },
@@ -107,19 +105,6 @@ export function Footer() {
               <p className="leading-tight"><span className="text-accent font-bold">Email:</span><br/>support@technicaljournals.org</p>
               <p className="leading-tight"><span className="text-accent font-bold">Mobile:</span><br/>+91 8200385143</p>
             </div>
-            {isClient && (
-              <div className="space-y-3">
-                <p className="text-[10px] uppercase tracking-widest font-black text-accent">Join Our Newsletter</p>
-                <div className="flex gap-2">
-                  <Input 
-                    type="email" 
-                    placeholder="Email Address" 
-                    className="h-9 text-xs bg-primary-foreground/5 text-primary-foreground placeholder:text-primary-foreground/40 border-primary-foreground/10 focus-visible:ring-accent" 
-                  />
-                  <Button type="submit" size="sm" className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky">Go</Button>
-                </div>
-              </div>
-            )}
           </div>
         </div>
 
