@@ -15,7 +15,7 @@ export default function HostingAgreementPage() {
             <p className="text-lg font-medium text-primary/70">Standard Institutional Terms</p>
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-primary italic">1. Scope of Service</h2>
-              <p>Technical Journals provides a specialized ScholarJMS based hosting environment exclusively for University-owned academic journals. Our services include server maintenance, technical support, and indexing assistance.</p>
+              <p>Technical Journals provides a specialized OJS Platform based hosting environment exclusively for University-owned academic journals. Our services include server maintenance, technical support, and indexing assistance.</p>
             </section>
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-primary italic">2. Institutional Ownership</h2>

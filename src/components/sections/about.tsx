@@ -32,7 +32,7 @@ export function About() {
               Technical Journals is being developed as a global journal hosting platform exclusively for Universities and Academic Institutions. The platform will NOT host journals from private publishers.
             </p>
             <p className="text-base md:text-lg text-foreground/80">
-              The main objective is to provide a secure, scalable, and professional Scholar JMS based hosting environment where universities can launch, manage, and publish their research journals under their own institutional branding.
+              The main objective is to provide a secure, scalable, and professional OJS Platform based hosting environment where universities can launch, manage, and publish their research journals under their own institutional branding.
             </p>
             <Card className="bg-card border-0 border-l-4 border-accent shadow-lg rounded-funky">
               <CardHeader>

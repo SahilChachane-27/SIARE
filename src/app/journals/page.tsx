@@ -96,7 +96,7 @@ export default function JournalsPage() {
               University Journal Catalog
             </h1>
             <p className="text-base opacity-80 max-w-xl" data-aos="fade-right" data-aos-delay="100">
-              Browse prestigious academic publications hosted on our secure ScholarJMS platform.
+              Browse prestigious academic publications hosted on our secure OJS Platform.
             </p>
           </div>
         </section>

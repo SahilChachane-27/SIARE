@@ -14,7 +14,7 @@ const categories = [
     icon: Laptop,
     description: "Robust, secure infrastructure tailored for academic journals.",
     features: [
-      "ScholarJMS complete installation & setup",
+      "OJS Platform complete installation & setup",
       "Enterprise server maintenance & monitoring",
       "DOI registration (DigiIdentify/CrossRef)",
       "Article-level indexing metadata management",

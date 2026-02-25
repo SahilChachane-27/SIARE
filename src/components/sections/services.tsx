@@ -8,9 +8,9 @@ const services = [
   {
     href: '#contact',
     title: 'Journal Hosting Services',
-    description: 'Complete Scholar JMS setup, secure server maintenance, DOI registration, Digiidentify, and article-level metadata indexing with anti-plagiarism integration.',
+    description: 'Complete OJS Platform setup, secure server maintenance, DOI registration, Digiidentify, and article-level metadata indexing with anti-plagiarism integration.',
     icon: BookOpen,
-    features: ['Scholar JMS Setup', 'DOI Registration', 'Plagiarism Checks']
+    features: ['OJS Platform Setup', 'DOI Registration', 'Plagiarism Checks']
   },
   {
     href: '#contact',

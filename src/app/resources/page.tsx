@@ -143,7 +143,7 @@ export default function ResourcesPage() {
           </div>
         </section>
 
-        {/* ScholarJMS Documentation Section */}
+        {/* OJS Platform Documentation Section */}
         <section className="py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <Card className="bg-primary text-primary-foreground p-8 md:p-16 rounded-[40px] overflow-hidden relative shadow-2xl" data-aos="fade-up">
@@ -154,7 +154,7 @@ export default function ResourcesPage() {
                     Support Documentation
                   </div>
                   <h2 className="text-3xl md:text-4xl font-extrabold font-headline leading-tight">
-                    Technical Guide for ScholarJMS
+                    Technical Guide for OJS Platform
                   </h2>
                   <p className="text-lg opacity-80 leading-relaxed">
                     Need help navigating our Journal Management System? Access comprehensive guides on manuscript tracking, reviewer assignment, and production workflows.

@@ -32,7 +32,7 @@ export default function PricingPage() {
       price: currency === 'INR' ? "₹25,000" : "$299",
       description: "Essential tools for launching a new journal.",
       features: [
-        "Scholar JMS installation",
+        "OJS Platform installation",
         "Journal website hosting",
         "Technical support",
         "Up to 4 issues/year",
@@ -178,7 +178,7 @@ export default function PricingPage() {
                 {[
                   { title: "Contact Form", desc: "Submit your specific requirements through our official contact channel.", icon: Mail },
                   { title: "University MoU Discussion", desc: "Discuss and formalize institutional partnerships and research agreements.", icon: FileText },
-                  { title: "Hosting Demo Request", desc: "Experience our professional ScholarJMS hosting setup with a live tour.", icon: PlayCircle },
+                  { title: "Hosting Demo Request", desc: "Experience our professional OJS Platform hosting setup with a live tour.", icon: PlayCircle },
                   { title: "Support Email & Phone", desc: "Connect with our technical team directly for immediate assistance.", icon: PhoneCall },
                 ].map((item, i) => (
                   <Card 

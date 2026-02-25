@@ -60,7 +60,7 @@ export function Footer() {
                 <p className="font-bold text-accent mb-1 uppercase text-xs tracking-widest">Platform Info:</p>
                 <ul className="text-xs space-y-1 opacity-80">
                   <li>• Exclusively for Universities</li>
-                  <li>• Secure Hosting</li>
+                  <li>• Secure OJS Platform Hosting</li>
                   <li>• Institutional Branding</li>
                   <li>• No Private Publishers</li>
                 </ul>

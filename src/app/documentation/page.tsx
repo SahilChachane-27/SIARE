@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 const docs = [
   { icon: Book, title: "User Guide", desc: "Learn how to manage your journal from start to finish." },
   { icon: Terminal, title: "API Reference", desc: "Integration guides for advanced indexing and tools." },
-  { icon: Shield, title: "Security Protocols", desc: "Understanding ScholarJMS data protection measures." },
+  { icon: Shield, title: "Security Protocols", desc: "Understanding OJS Platform data protection measures." },
   { icon: Code, title: "Customization", desc: "Branding and workflow configuration documentation." },
 ];
 

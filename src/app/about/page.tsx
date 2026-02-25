@@ -38,8 +38,8 @@ export default function AboutPage() {
     },
     {
       icon: Cpu,
-      title: "ScholarJMS Powered",
-      desc: "Utilizing industry-grade ScholarJMS for professional journal management."
+      title: "OJS Platform Powered",
+      desc: "Utilizing industry-grade OJS Platform for professional journal management."
     },
     {
       icon: Globe,
@@ -56,7 +56,7 @@ export default function AboutPage() {
         <section className="relative py-20 bg-primary text-primary-foreground overflow-hidden">
           <div className="container mx-auto px-8 md:px-16 lg:px-32 relative z-10">
             <div className="max-w-3xl" data-aos="fade-up">
-              <h1 className="text-4xl md:text-5xl font-extrabold font-headline mb-6">
+              <h1 className="text-4xl md:text-4xl font-extrabold font-headline mb-6">
                 About Technical Journals
               </h1>
               <p className="text-xl opacity-90 leading-relaxed">
