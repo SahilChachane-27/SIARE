@@ -19,8 +19,6 @@ import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function ForUniversitiesPage() {
-  const heroImage = PlaceHolderImages.find(p => p.id === 'hero-bg');
-
   const benefits = [
     {
       icon: TrendingUp,
@@ -74,7 +72,7 @@ export default function ForUniversitiesPage() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground font-body">
+    <div className="flex flex-col min-h-screen bg-background text-foreground font-body overflow-x-hidden">
       <Header />
       <main className="flex-1 pt-20">
         {/* Hero Section */}
@@ -90,16 +88,14 @@ export default function ForUniversitiesPage() {
               </p>
             </div>
           </div>
-          <div className="absolute inset-0 opacity-10 pointer-events-none">
-            {heroImage && (
-              <Image
-                src={heroImage.imageUrl}
-                alt="Background"
-                fill
-                className="object-cover"
-                priority
-              />
-            )}
+          <div className="absolute inset-0 opacity-10">
+            <Image
+              src="/ResearchPsychology.jpg"
+              alt="Academic Research"
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
         </section>
 
