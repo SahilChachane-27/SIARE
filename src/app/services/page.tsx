@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Check, Laptop, Users, Workflow, Database, ShieldCheck, Zap, Globe, BarChart } from 'lucide-react';
 import Link from 'next/link';
 import { ScrollToTop } from '@/components/layout/scroll-to-top';
+import Image from 'next/image';
 
 const categories = [
   {
@@ -63,16 +64,31 @@ export default function ServicesPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background overflow-x-hidden">
       <Header />
-      <main className="flex-1 pt-32 pb-24">
-        <div className="container mx-auto px-8 md:px-16 lg:px-32">
-          <div className="text-center mb-20" data-aos="fade-up">
-            <h1 className="text-4xl md:text-6xl font-bold text-primary font-headline">Academic Solutions</h1>
-            <div className="mt-4 w-24 h-1 bg-accent mx-auto"></div>
-            <p className="mt-6 text-foreground/80 max-w-2xl mx-auto italic font-medium">
-              Empowering universities with end-to-end publishing technology and strategic indexing support.
-            </p>
+      <main className="flex-1 pt-20">
+        {/* Hero Section */}
+        <section className="relative py-24 bg-primary text-primary-foreground overflow-hidden">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32 relative z-10 text-center">
+            <div className="max-w-4xl mx-auto" data-aos="fade-up">
+              <h1 className="text-4xl md:text-6xl font-extrabold font-headline mb-6">
+                Academic Solutions
+              </h1>
+              <div className="mt-2 w-24 h-1 bg-accent mx-auto mb-6"></div>
+              <p className="text-xl opacity-90 leading-relaxed max-w-2xl mx-auto italic font-medium">
+                Empowering universities with end-to-end publishing technology and strategic indexing support.
+              </p>
+            </div>
           </div>
+          <div className="absolute inset-0 opacity-10">
+            <Image
+              src="/ResearchPsychology.jpg"
+              alt="Academic Solutions"
+              fill
+              className="object-cover"
+            />
+          </div>
+        </section>
 
+        <div className="container mx-auto px-8 md:px-16 lg:px-32 py-20">
           <div className="grid md:grid-cols-2 gap-10">
             {categories.map((cat, i) => (
               <Card key={i} className="rounded-funky shadow-2xl border-none bg-slate-50 group hover:bg-white transition-all duration-500 relative overflow-hidden" data-aos="fade-up" data-aos-delay={i * 100}>
