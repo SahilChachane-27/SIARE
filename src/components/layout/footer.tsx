@@ -44,7 +44,7 @@ export function Footer() {
           {/* Column 1: Branding & Info */}
           <div className="space-y-6 lg:col-span-2">
             <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-opacity hover:opacity-80">
-                <div className="relative h-24 w-24 shrink-0">
+                <div className="relative h-32 w-32 shrink-0">
                   <Image 
                     src="/JTlogo.png" 
                     alt="Technical Journals Logo" 
