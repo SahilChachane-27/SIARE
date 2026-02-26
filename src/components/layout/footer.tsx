@@ -46,7 +46,7 @@ export function Footer() {
             <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-opacity hover:opacity-80">
                 <div className="relative h-16 w-48 sm:h-20 sm:w-64 shrink-0">
                   <Image 
-                    src="/JTlogo.png" 
+                    src="/JTlogoUpdated.png" 
                     alt="Technical Journals Logo" 
                     fill 
                     className="object-contain"
