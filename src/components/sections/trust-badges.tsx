@@ -2,68 +2,80 @@
 
 import { Card } from '@/components/ui/card';
 import { 
-  Award, 
-  Share2, 
-  GraduationCap, 
+  ShieldCheck, 
   Lock, 
-  ExternalLink, 
-  BookOpen, 
-  LifeBuoy, 
+  Hash, 
+  IdCard, 
   Database, 
   Network, 
-  FileCheck 
+  BookOpen, 
+  Users, 
+  Megaphone, 
+  BarChart, 
+  Library, 
+  Archive 
 } from 'lucide-react';
 
 const badges = [
   {
-    title: 'DPIIT Startup India',
-    desc: 'Startup India DPIIT Recognized Startup',
-    icon: Award,
-  },
-  {
-    title: 'Creative Commons',
-    desc: 'Creative Commons license',
-    icon: Share2,
-  },
-  {
-    title: 'UGC CARE',
-    desc: 'Compliance Ready Platform',
-    icon: GraduationCap,
+    title: 'Strong OJS LTS Platform',
+    desc: 'Stable Long-Term Support Architecture',
+    icon: ShieldCheck,
   },
   {
     title: 'SSL Encrypted',
-    desc: 'Bank-Grade Security',
+    desc: 'Bank-Grade Data Security Standards',
     icon: Lock,
   },
   {
-    title: 'CrossRef Partner',
-    desc: 'Official DOI Registration',
-    icon: ExternalLink,
+    title: 'Crossref DOI Support',
+    desc: 'Official DOI Registration & Minting',
+    icon: Hash,
   },
   {
-    title: 'DOAJ',
-    desc: 'Compliance Ready Platform',
-    icon: BookOpen,
+    title: 'DIGI Identify Supported',
+    desc: 'Make in India based Digital Identifier',
+    icon: IdCard,
   },
   {
-    title: '24/7 Support',
-    desc: 'Always Here to Help',
-    icon: LifeBuoy,
-  },
-  {
-    title: 'Scopus',
-    desc: 'Compliance Ready Platform',
+    title: 'Scopus Compliant',
+    desc: 'JATS and XML Metadata Support',
     icon: Database,
   },
   {
-    title: 'Web of Science',
-    desc: 'Compliance Ready Platform',
+    title: 'Web Of Science',
+    desc: 'Structure Compliance Verified',
     icon: Network,
   },
   {
-    title: 'Ithenticate',
-    desc: 'Smart Plagiarism Checker',
-    icon: FileCheck,
+    title: 'DOAJ Pages',
+    desc: 'Data Check & Compliance Support',
+    icon: BookOpen,
+  },
+  {
+    title: 'Reviewer Connect',
+    desc: 'Free Search by Researcher Connect',
+    icon: Users,
+  },
+  {
+    title: 'Digital Marketing',
+    desc: 'Citation Improvisation Support',
+    icon: Megaphone,
+  },
+  {
+    title: 'Author Index Ranking',
+    desc: 'Institutional Ranking Program',
+    icon: BarChart,
+  },
+  {
+    title: 'Digital Library',
+    desc: 'Upto 100K Document Support',
+    icon: Library,
+  },
+  {
+    title: 'Manuscript Repository',
+    desc: 'Professional Archival Services',
+    icon: Archive,
   },
 ];
 
@@ -77,7 +89,7 @@ export function TrustBadges() {
           </h2>
           <div className="mt-4 w-24 h-1 bg-accent mx-auto"></div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {badges.map((badge, index) => (
             <Card 
               key={index} 
