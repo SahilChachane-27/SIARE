@@ -17,8 +17,6 @@ import {
 } from 'lucide-react';
 
 export default function AboutPage() {
-  const aboutImage = PlaceHolderImages.find(p => p.id === 'about-img');
-  const heroImage = PlaceHolderImages.find(p => p.id === 'hero-bg');
 
   const pillars = [
     {
@@ -65,9 +63,9 @@ export default function AboutPage() {
             </div>
           </div>
           <div className="absolute inset-0 opacity-10">
-             {heroImage && (
+             {(
               <Image
-                src={heroImage.imageUrl}
+                src="/Research Psychology.jpg"
                 alt="Background"
                 fill
                 className="object-cover"
@@ -81,13 +79,12 @@ export default function AboutPage() {
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="relative aspect-video lg:aspect-square rounded-2xl overflow-hidden shadow-2xl" data-aos="fade-right">
-                {aboutImage && (
+                {(
                   <Image
-                    src={aboutImage.imageUrl}
-                    alt={aboutImage.description}
+                    src="/aboutus.png"
+                    alt="aboutus.png"
                     fill
                     className="object-cover"
-                    data-ai-hint={aboutImage.imageHint}
                   />
                 )}
               </div>

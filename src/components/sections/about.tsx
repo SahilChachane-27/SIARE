@@ -3,21 +3,19 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export function About() {
-  const aboutImage = PlaceHolderImages.find(p => p.id === 'about-img');
 
   return (
     <section id="about" className="py-10 md:py-16 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-5 gap-8 items-center">
           <div className="lg:col-span-2 relative aspect-[4/5] rounded-none overflow-hidden shadow-2xl" data-aos="fade-right">
-            {aboutImage && (
+            {(
               <Image
-                src={aboutImage.imageUrl}
-                alt={aboutImage.description}
+                src="/aboutus.png"
+                alt="aboutus.png"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 40vw"
-                data-ai-hint={aboutImage.imageHint}
               />
             )}
           </div>

@@ -4,15 +4,14 @@ import Link from 'next/link';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export function Hero() {
-  const heroImage = PlaceHolderImages.find(p => p.id === 'hero-bg');
 
   return (
     <section id="hero" className="relative min-h-[70vh] md:min-h-[80vh] flex flex-col items-start justify-center overflow-hidden bg-primary pt-16">
       {/* Background Image Container */}
       <div className="absolute inset-0 z-0">
-        {heroImage && (
+        {(
           <Image
-            src={heroImage.imageUrl}
+            src="/ResearchPsychology.jpg"
             alt="Hero Background"
             fill
             className="object-cover"

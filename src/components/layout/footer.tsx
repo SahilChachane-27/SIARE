@@ -46,7 +46,7 @@ export function Footer() {
             <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-opacity hover:opacity-80">
                 <div className="relative h-16 w-32 sm:h-20 sm:w-48 shrink-0">
                   <Image 
-                    src="https://placehold.co/400x120/1e293b/facc15?text=OJS+PLATFORM" 
+                    src="/JTlogo.png" 
                     alt="Technical Journals Logo" 
                     fill 
                     className="object-contain"
