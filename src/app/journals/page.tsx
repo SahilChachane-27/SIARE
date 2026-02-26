@@ -87,7 +87,7 @@ export default function JournalsPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50/50">
+    <div className="flex flex-col min-h-screen bg-slate-50/50 overflow-x-hidden">
       <Header />
       <main className="flex-1 pt-20">
         <section className="py-12 bg-primary text-primary-foreground relative overflow-hidden px-4 md:px-0">
@@ -202,9 +202,9 @@ export default function JournalsPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
                     {filteredJournals.map((journal: any, index: number) => (
                       <Card key={index} className="overflow-hidden bg-white border-none shadow-sm hover:shadow-xl transition-all duration-500 rounded-2xl group flex flex-col h-full border border-slate-100">
-                        <div className="relative aspect-video w-full bg-secondary shrink-0">
+                        <div className="relative aspect-[3/4] w-full bg-secondary/20 shrink-0 flex items-center justify-center p-4">
                           {journal.imageUrl ? (
-                            <Image src={journal.imageUrl} alt={journal.name} fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                            <Image src={journal.imageUrl} alt={journal.name} fill className="object-contain p-2 transition-transform duration-700 group-hover:scale-105" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/5 to-accent/5">
                               <Building2 className="h-12 w-12 text-primary/10" />
@@ -237,7 +237,7 @@ export default function JournalsPage() {
                             </div>
                           </div>
                           <div className="pt-6 border-t border-slate-50">
-                            <Button asChild className="w-full bg-primary hover:bg-accent text-white hover:text-primary transition-all duration-300 rounded-xl h-12 font-bold shadow-lg shadow-primary/5">
+                            <Button asChild className="w-full bg-primary hover:bg-accent text-white hover:text-primary transition-all duration-300 rounded-xl h-12 font-bold shadow-lg shadow-primary/5 text-sm">
                               <a href={journal.link} target="_blank">
                                 Open Journal Portal <ExternalLink className="ml-2 h-4 w-4" />
                               </a>

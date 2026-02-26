@@ -236,7 +236,7 @@ export default function ManageJournals() {
   if (userLoading || !user) return null;
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen bg-background overflow-x-hidden">
       <Header />
       <main className="flex-1 pt-32 pb-24">
         <div className="container mx-auto px-4 md:px-16 lg:px-32">
@@ -276,12 +276,12 @@ export default function ManageJournals() {
                     <label className="text-[10px] font-black uppercase text-primary/40 tracking-widest">Journal Cover Image</label>
                     <div className="flex flex-col gap-4">
                       {imageUrl ? (
-                        <div className="relative w-full aspect-video rounded-xl overflow-hidden group shadow-lg">
-                          <Image src={imageUrl} alt="Preview" fill className="object-cover" />
+                        <div className="relative w-full aspect-[3/4] rounded-xl overflow-hidden group shadow-lg bg-secondary/30 flex items-center justify-center p-2">
+                          <Image src={imageUrl} alt="Preview" fill className="object-contain" />
                           <button 
                             type="button" 
                             onClick={() => setImageUrl(null)}
-                            className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-30"
                           >
                             <X className="h-4 w-4" />
                           </button>
@@ -289,7 +289,7 @@ export default function ManageJournals() {
                       ) : (
                         <div 
                           onClick={() => fileInputRef.current?.click()}
-                          className="w-full aspect-video border-2 border-dashed border-primary/10 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-secondary/50 transition-colors"
+                          className="w-full aspect-[3/4] border-2 border-dashed border-primary/10 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-secondary/50 transition-colors"
                         >
                           <ImageIcon className="h-8 w-8 text-primary/20" />
                           <span className="text-xs font-bold text-primary/40 uppercase">Click to Upload Cover</span>
@@ -344,7 +344,7 @@ export default function ManageJournals() {
                     </label>
                   </div>
 
-                  <Button type="submit" className="w-full h-12 bg-accent text-accent-foreground font-bold rounded-funky shadow-lg hover:scale-105 transition-transform">
+                  <Button type="submit" className="w-full h-12 bg-accent text-accent-foreground font-bold rounded-funky shadow-lg hover:scale-105 transition-transform text-sm sm:text-base">
                     {editingId ? <><Edit3 className="mr-2 h-5 w-5" /> Update Journal</> : <><Plus className="mr-2 h-5 w-5" /> Publish Journal</>}
                   </Button>
                 </form>
@@ -386,9 +386,9 @@ export default function ManageJournals() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {paginatedJournals.map((journal: any) => (
                       <Card key={journal.id} className="rounded-funky border-none shadow-xl group hover:shadow-2xl transition-all duration-300 overflow-hidden relative">
-                        <div className="relative aspect-video w-full bg-secondary">
+                        <div className="relative aspect-[3/4] w-full bg-secondary/20 flex items-center justify-center p-4">
                           {journal.imageUrl ? (
-                            <Image src={journal.imageUrl} alt={journal.name} fill className="object-cover" />
+                            <Image src={journal.imageUrl} alt={journal.name} fill className="object-contain p-2" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
                               <Building2 className="h-12 w-12 text-primary/10" />

@@ -70,7 +70,7 @@ export default function StartJournalPage() {
                 Start Your Journal with Technical Journals
               </h1>
               <p className="max-w-5xl mx-auto text-sm sm:text-lg md:text-xl text-white/90 font-medium italic">
-                Empowering your institution with Technical Journals.
+                Empowering your institution with OJS Platform technology.
               </p>
 
               <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 sm:gap-8 text-white/90">
@@ -204,7 +204,7 @@ export default function StartJournalPage() {
                   <Button 
                     type="submit" 
                     size="lg" 
-                    className="w-full bg-primary hover:bg-primary/90 text-accent rounded-funky py-3 sm:py-4 md:py-6 text-sm sm:text-lg md:text-xl font-bold shadow-xl transition-all hover:scale-[1.01]"
+                    className="w-full bg-primary hover:bg-primary/90 text-accent rounded-funky py-2 sm:py-3 md:py-6 text-sm sm:text-base md:text-xl font-bold shadow-xl transition-all hover:scale-[1.01]"
                   >
                     Submit Inquiry
                   </Button>

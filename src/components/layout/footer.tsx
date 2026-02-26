@@ -44,7 +44,7 @@ export function Footer() {
           {/* Column 1: Branding & Info */}
           <div className="space-y-6 lg:col-span-2">
             <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-opacity hover:opacity-80">
-                <div className="relative h-32 w-32 shrink-0">
+                <div className="relative h-24 w-48 sm:h-32 sm:w-64 shrink-0">
                   <Image 
                     src="/JTlogo.png" 
                     alt="Technical Journals Logo" 
@@ -115,7 +115,7 @@ export function Footer() {
 
         <div className="border-t border-primary-foreground/10 pt-8 text-center">
           {isClient && (
-            <p className="text-xs font-bold tracking-widest text-primary-foreground uppercase">
+            <p className="text-[10px] font-bold tracking-widest text-primary-foreground uppercase opacity-60">
               Copyright © {year} Technical Journals. All Rights Reserved. Built for Academic Sovereignty.
             </p>
           )}

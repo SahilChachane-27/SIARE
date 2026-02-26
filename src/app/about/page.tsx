@@ -49,7 +49,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground font-body">
+    <div className="flex flex-col min-h-screen bg-background text-foreground font-body overflow-x-hidden">
       <Header />
       <main className="flex-1 pt-20">
         {/* Hero Section */}
@@ -115,7 +115,7 @@ export default function AboutPage() {
                   {[
                     { icon: Shield, text: "Sovereign Ownership" },
                     { icon: Globe, text: "Global Standards" },
-                    { icon: Cpu, text: "Advanced JMS Tech" },
+                    { icon: Cpu, text: "Advanced OJS Tech" },
                     { icon: BookOpen, text: "Open Access Ready" }
                   ].map((item, idx) => (
                     <div key={idx} className="flex items-center gap-3 p-4 bg-secondary rounded-xl">

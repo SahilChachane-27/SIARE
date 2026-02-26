@@ -44,7 +44,7 @@ export function Contact() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto overflow-hidden">
       <div className="bg-white p-8 md:p-12 rounded-funky shadow-2xl border border-border/50" data-aos="fade-up">
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold text-primary font-headline italic">Institutional Inquiry</h2>
@@ -145,7 +145,7 @@ export function Contact() {
               <Button 
                 type="submit" 
                 size="lg" 
-                className="w-full bg-primary hover:bg-primary/90 text-accent rounded-funky py-3 sm:py-4 md:py-6 text-sm sm:text-lg md:text-xl font-bold shadow-xl transition-all hover:scale-[1.01]"
+                className="w-full bg-primary hover:bg-primary/90 text-accent rounded-funky py-2 sm:py-3 md:py-6 text-sm sm:text-base md:text-xl font-bold shadow-xl transition-all hover:scale-[1.01]"
               >
                 Request Technical Consultation
               </Button>
