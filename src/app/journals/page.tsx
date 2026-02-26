@@ -102,8 +102,8 @@ export default function JournalsPage() {
         </section>
 
         <section className="py-12">
-          <div className="container mx-auto px-4 md:px-16 lg:px-32">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 items-start">
+          <div className="container mx-auto px-4 md:px-8 lg:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12 items-start">
               
               <aside className="lg:col-span-1 space-y-8 lg:sticky lg:top-32 lg:max-h-[calc(100vh-160px)] lg:overflow-y-auto pr-2" data-aos="fade-right">
                 <div className="flex items-center justify-between mb-4">
@@ -199,47 +199,47 @@ export default function JournalsPage() {
                     <p className="text-xs font-bold text-primary/40 uppercase tracking-[0.2em]">Synchronizing Repository...</p>
                   </div>
                 ) : filteredJournals.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
                     {filteredJournals.map((journal: any, index: number) => (
                       <Card key={index} className="overflow-hidden bg-white border-none shadow-sm hover:shadow-xl transition-all duration-500 rounded-2xl group flex flex-col h-full border border-slate-100">
-                        <div className="relative aspect-[3/4] w-full bg-secondary/20 shrink-0 flex items-center justify-center p-4">
+                        <div className="relative aspect-[3/4] w-full bg-secondary/10 shrink-0 flex items-center justify-center p-2">
                           {journal.imageUrl ? (
-                            <Image src={journal.imageUrl} alt={journal.name} fill className="object-contain p-2 transition-transform duration-700 group-hover:scale-105" />
+                            <Image src={journal.imageUrl} alt={journal.name} fill className="object-contain p-1 transition-transform duration-700 group-hover:scale-105" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/5 to-accent/5">
-                              <Building2 className="h-12 w-12 text-primary/10" />
+                              <Building2 className="h-10 w-10 text-primary/10" />
                             </div>
                           )}
-                          <div className="absolute top-4 left-4">
-                            <div className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest shadow-sm text-primary">
+                          <div className="absolute top-3 left-3">
+                            <div className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest shadow-sm text-primary">
                               {journal.domain}
                             </div>
                           </div>
                         </div>
-                        <CardHeader className="p-6 md:p-8 flex-grow">
-                          <CardTitle className="text-xl font-bold text-primary font-headline leading-tight italic group-hover:text-accent transition-colors duration-300">
+                        <CardHeader className="p-4 md:p-5 flex-grow">
+                          <CardTitle className="text-base font-bold text-primary font-headline leading-tight italic group-hover:text-accent transition-colors duration-300 line-clamp-2 h-12">
                             {journal.name}
                           </CardTitle>
                         </CardHeader>
-                        <CardContent className="p-6 md:p-8 pt-0 space-y-4">
-                          <div className="space-y-2">
-                            <div className="flex items-center gap-3">
-                              <div className="h-8 w-8 rounded-lg bg-slate-50 flex items-center justify-center shrink-0">
-                                <Building2 className="h-4 w-4 text-accent" />
+                        <CardContent className="p-4 md:p-5 pt-0 space-y-3">
+                          <div className="space-y-1.5">
+                            <div className="flex items-center gap-2">
+                              <div className="h-6 w-6 rounded-lg bg-slate-50 flex items-center justify-center shrink-0">
+                                <Building2 className="h-3 w-3 text-accent" />
                               </div>
-                              <p className="text-sm font-bold text-primary/80 truncate">{journal.university}</p>
+                              <p className="text-[11px] font-bold text-primary/80 truncate">{journal.university}</p>
                             </div>
-                            <div className="flex items-center gap-3">
-                              <div className="h-8 w-8 rounded-lg bg-slate-50 flex items-center justify-center shrink-0">
-                                <Tag className="h-4 w-4 text-accent" />
+                            <div className="flex items-center gap-2">
+                              <div className="h-6 w-6 rounded-lg bg-slate-50 flex items-center justify-center shrink-0">
+                                <Tag className="h-3 w-3 text-accent" />
                               </div>
-                              <p className="text-sm font-medium text-slate-500">{journal.issn}</p>
+                              <p className="text-[11px] font-medium text-slate-500">{journal.issn}</p>
                             </div>
                           </div>
-                          <div className="pt-6 border-t border-slate-50">
-                            <Button asChild className="w-full bg-primary hover:bg-accent text-white hover:text-primary transition-all duration-300 rounded-xl h-12 font-bold shadow-lg shadow-primary/5 text-sm">
+                          <div className="pt-4 border-t border-slate-50">
+                            <Button asChild className="w-full bg-primary hover:bg-accent text-white hover:text-primary transition-all duration-300 rounded-xl h-10 font-bold shadow-lg shadow-primary/5 text-xs">
                               <a href={journal.link} target="_blank">
-                                Open Journal Portal <ExternalLink className="ml-2 h-4 w-4" />
+                                Open Portal <ExternalLink className="ml-1.5 h-3 w-3" />
                               </a>
                             </Button>
                           </div>

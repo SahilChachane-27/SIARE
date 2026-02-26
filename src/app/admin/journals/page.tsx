@@ -34,7 +34,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError } from '@/firebase/errors';
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 9;
 
 const domains = [
   'Engineering',
@@ -239,7 +239,7 @@ export default function ManageJournals() {
     <div className="flex flex-col min-h-screen bg-background overflow-x-hidden">
       <Header />
       <main className="flex-1 pt-32 pb-24">
-        <div className="container mx-auto px-4 md:px-16 lg:px-32">
+        <div className="container mx-auto px-4 md:px-8 lg:px-12">
           <div className="flex items-center gap-4 mb-12" data-aos="fade-right">
             <Button variant="ghost" size="icon" asChild className="rounded-full">
               <Link href="/admin/dashboard"><ArrowLeft className="h-6 w-6" /></Link>
@@ -249,7 +249,7 @@ export default function ManageJournals() {
             </h1>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-12">
+          <div className="grid lg:grid-cols-4 gap-12">
             <div className="lg:col-span-1" data-aos="fade-up">
               <Card className="rounded-funky border-none shadow-2xl p-6 md:p-8 lg:sticky lg:top-32 lg:max-h-[calc(100vh-160px)] lg:overflow-y-auto">
                 <div className="flex justify-between items-center mb-6">
@@ -292,7 +292,7 @@ export default function ManageJournals() {
                           className="w-full aspect-[3/4] border-2 border-dashed border-primary/10 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-secondary/50 transition-colors"
                         >
                           <ImageIcon className="h-8 w-8 text-primary/20" />
-                          <span className="text-xs font-bold text-primary/40 uppercase">Click to Upload Cover</span>
+                          <span className="text-xs font-bold text-primary/40 uppercase">Upload Cover</span>
                         </div>
                       )}
                       <input 
@@ -314,7 +314,7 @@ export default function ManageJournals() {
                       <label className="text-[10px] font-black uppercase text-primary/40 tracking-widest">Domain</label>
                       <Select value={domain} onValueChange={setDomain} required>
                         <SelectTrigger className="rounded-xl h-12 border-input">
-                          <SelectValue placeholder="Select domain" />
+                          <SelectValue placeholder="Select" />
                         </SelectTrigger>
                         <SelectContent>
                           {domains.map((d) => (
@@ -338,27 +338,27 @@ export default function ManageJournals() {
                     />
                     <label 
                       htmlFor="isFeatured" 
-                      className="text-xs font-bold text-primary uppercase tracking-wider cursor-pointer"
+                      className="text-[10px] font-bold text-primary uppercase tracking-wider cursor-pointer"
                     >
-                      Mark as Featured (Home Page)
+                      Featured (Home Page)
                     </label>
                   </div>
 
-                  <Button type="submit" className="w-full h-12 bg-accent text-accent-foreground font-bold rounded-funky shadow-lg hover:scale-105 transition-transform text-sm sm:text-base">
-                    {editingId ? <><Edit3 className="mr-2 h-5 w-5" /> Update Journal</> : <><Plus className="mr-2 h-5 w-5" /> Publish Journal</>}
+                  <Button type="submit" className="w-full h-12 bg-accent text-accent-foreground font-bold rounded-funky shadow-lg hover:scale-105 transition-transform text-sm">
+                    {editingId ? <><Edit3 className="mr-2 h-4 w-4" /> Update</> : <><Plus className="mr-2 h-4 w-4" /> Publish</>}
                   </Button>
                 </form>
               </Card>
             </div>
 
-            <div className="lg:col-span-2 space-y-8" data-aos="fade-left">
+            <div className="lg:col-span-3 space-y-8" data-aos="fade-left">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <h2 className="text-xl font-bold text-primary italic">Live Catalog {journals && `(${journals.length})`}</h2>
                 <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
                    <div className="relative flex-1 md:w-64">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-primary/40" />
                     <Input 
-                      placeholder="Search name, uni, issn..." 
+                      placeholder="Search..." 
                       className="pl-9 h-10 rounded-xl"
                       value={searchFilter}
                       onChange={(e) => setSearchFilter(e.target.value)}
@@ -367,7 +367,7 @@ export default function ManageJournals() {
                   <Select value={sortOrder} onValueChange={(v: any) => setSortOrder(v)}>
                     <SelectTrigger className="w-full sm:w-40 h-10 rounded-xl">
                       <ArrowUpDown className="mr-2 h-4 w-4 text-primary/40" />
-                      <SelectValue placeholder="Sort by" />
+                      <SelectValue placeholder="Sort" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="newest">Newest First</SelectItem>
@@ -383,25 +383,25 @@ export default function ManageJournals() {
                 <div className="flex justify-center p-12"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div></div>
               ) : paginatedJournals.length > 0 ? (
                 <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                     {paginatedJournals.map((journal: any) => (
-                      <Card key={journal.id} className="rounded-funky border-none shadow-xl group hover:shadow-2xl transition-all duration-300 overflow-hidden relative">
-                        <div className="relative aspect-[3/4] w-full bg-secondary/20 flex items-center justify-center p-4">
+                      <Card key={journal.id} className="rounded-funky border-none shadow-md group hover:shadow-xl transition-all duration-300 overflow-hidden relative bg-white">
+                        <div className="relative aspect-[3/4] w-full bg-secondary/10 flex items-center justify-center p-2">
                           {journal.imageUrl ? (
-                            <Image src={journal.imageUrl} alt={journal.name} fill className="object-contain p-2" />
+                            <Image src={journal.imageUrl} alt={journal.name} fill className="object-contain p-1" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
-                              <Building2 className="h-12 w-12 text-primary/10" />
+                              <Building2 className="h-10 w-10 text-primary/10" />
                             </div>
                           )}
                           
                           {journal.isFeatured && (
-                            <div className="absolute top-4 left-4 bg-accent text-accent-foreground px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg flex items-center gap-1.5 z-20">
-                              <Star className="h-3 w-3 fill-current" /> Featured
+                            <div className="absolute top-2 left-2 bg-accent text-accent-foreground px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest shadow-lg flex items-center gap-1 z-20">
+                              <Star className="h-2 w-2 fill-current" /> Featured
                             </div>
                           )}
 
-                          <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                          <div className="absolute top-2 right-2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity z-20">
                             <Button 
                               type="button"
                               variant="secondary" 
@@ -410,34 +410,32 @@ export default function ManageJournals() {
                                 e.stopPropagation();
                                 handleEdit(journal);
                               }} 
-                              className="rounded-full h-8 w-8 bg-white shadow-md hover:bg-slate-100"
+                              className="rounded-full h-7 w-7 bg-white shadow-md hover:bg-slate-100"
                             >
-                              <Edit3 className="h-4 w-4 text-primary" />
+                              <Edit3 className="h-3.5 w-3.5 text-primary" />
                             </Button>
                             <Button 
                               type="button"
                               variant="destructive" 
                               size="icon" 
                               onClick={(e) => handleDelete(e, journal.id)} 
-                              className="rounded-full h-8 w-8 shadow-md"
+                              className="rounded-full h-7 w-7 shadow-md"
                             >
-                              <Trash2 className="h-4 w-4" />
+                              <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           </div>
                         </div>
-                        <CardContent className="p-6 md:p-8">
-                          <div className="flex justify-between items-start mb-6">
-                            <h3 className="text-xl font-bold text-primary font-headline leading-tight truncate">{journal.name}</h3>
+                        <CardContent className="p-4 md:p-5">
+                          <h3 className="text-sm font-bold text-primary font-headline leading-tight line-clamp-2 h-10 mb-2">{journal.name}</h3>
+                          <div className="space-y-1.5">
+                            <div className="flex items-center gap-2 text-[10px] font-bold text-primary/60 truncate"><Building2 className="h-3 w-3 text-accent" /> {journal.university}</div>
+                            <div className="flex items-center gap-2 text-[10px] text-foreground/70"><Tag className="h-3 w-3 text-accent" /> {journal.issn}</div>
+                            <div className="flex items-center gap-2 text-[10px] text-foreground/70"><Globe className="h-3 w-3 text-accent" /> {journal.domain}</div>
                           </div>
-                          <div className="space-y-3">
-                            <div className="flex items-center gap-3 text-sm font-bold text-primary/60 truncate"><Building2 className="h-4 w-4 text-accent" /> {journal.university}</div>
-                            <div className="flex items-center gap-3 text-sm text-foreground/70"><Tag className="h-4 w-4 text-accent" /> {journal.issn}</div>
-                            <div className="flex items-center gap-3 text-sm text-foreground/70"><Globe className="h-4 w-4 text-accent" /> {journal.domain}</div>
-                          </div>
-                          <div className="mt-8 pt-6 border-t border-secondary">
-                            <Button variant="link" asChild className="p-0 h-auto text-primary font-black italic text-sm group-hover:text-accent">
-                              <a href={journal.link} target="_blank" className="flex items-center gap-2 uppercase tracking-widest">
-                                Public Portal <ExternalLink className="h-3 w-3" />
+                          <div className="mt-4 pt-3 border-t border-secondary">
+                            <Button variant="link" asChild className="p-0 h-auto text-primary font-black italic text-[10px] group-hover:text-accent">
+                              <a href={journal.link} target="_blank" className="flex items-center gap-1.5 uppercase tracking-widest">
+                                Portal <ExternalLink className="h-2.5 w-2.5" />
                               </a>
                             </Button>
                           </div>
@@ -453,9 +451,9 @@ export default function ManageJournals() {
                         size="icon"
                         onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                         disabled={currentPage === 1}
-                        className="rounded-full border-primary/10"
+                        className="rounded-full border-primary/10 h-8 w-8"
                       >
-                        <ChevronLeft className="h-4 w-4" />
+                        <ChevronLeft className="h-3 w-3" />
                       </Button>
                       
                       <div className="flex items-center gap-2">
@@ -465,7 +463,7 @@ export default function ManageJournals() {
                             variant={currentPage === page ? "default" : "ghost"}
                             size="sm"
                             onClick={() => setCurrentPage(page)}
-                            className={`w-8 h-8 p-0 rounded-full font-bold ${currentPage === page ? 'bg-primary text-white shadow-lg' : 'text-primary/60'}`}
+                            className={`w-7 h-7 p-0 rounded-full text-xs font-bold ${currentPage === page ? 'bg-primary text-white shadow-lg' : 'text-primary/60'}`}
                           >
                             {page}
                           </Button>
@@ -477,17 +475,17 @@ export default function ManageJournals() {
                         size="icon"
                         onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                         disabled={currentPage === totalPages}
-                        className="rounded-full border-primary/10"
+                        className="rounded-full border-primary/10 h-8 w-8"
                       >
-                        <ChevronRight className="h-4 w-4" />
+                        <ChevronRight className="h-3 w-3" />
                       </Button>
                     </div>
                   )}
                 </>
               ) : (
-                <Card className="rounded-funky border-dashed border-2 border-primary/10 p-12 md:p-20 text-center">
-                  <Filter className="h-12 w-12 text-primary/10 mx-auto mb-4" />
-                  <p className="text-foreground/40 font-bold uppercase tracking-widest">No matching journals found</p>
+                <Card className="rounded-funky border-dashed border-2 border-primary/10 p-12 text-center">
+                  <Filter className="h-8 w-8 text-primary/10 mx-auto mb-4" />
+                  <p className="text-foreground/40 font-bold uppercase tracking-widest text-xs">No matching journals found</p>
                 </Card>
               )}
             </div>
