@@ -40,17 +40,16 @@ export function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground/80 pt-10 pb-6 overflow-hidden">
       <div className="container mx-auto px-8 md:px-16 lg:px-32">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-10">
           {/* Column 1: Branding & Info */}
           <div className="space-y-4 lg:col-span-2">
             <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-opacity hover:opacity-80">
-                <div className="relative h-16 w-32 sm:h-20 sm:w-48 shrink-0">
+                <div className="relative h-16 w-48 sm:h-20 sm:w-64 shrink-0">
                   <Image 
                     src="/JTlogo.png" 
                     alt="Technical Journals Logo" 
                     fill 
                     className="object-contain"
-                    data-ai-hint="technical journal logo"
                   />
                 </div>
             </Link>
@@ -115,7 +114,7 @@ export function Footer() {
 
         <div className="border-t border-primary-foreground/10 pt-6 text-center">
           {isClient && (
-            <p className="text-[9px] font-bold tracking-widest text-primary-foreground uppercase opacity-60">
+            <p className="text-[10px] font-bold tracking-[0.2em] text-primary-foreground uppercase opacity-60">
               Copyright © {year} Technical Journals. All Rights Reserved. Built for Academic Sovereignty.
             </p>
           )}
