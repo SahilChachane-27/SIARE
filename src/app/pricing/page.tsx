@@ -29,7 +29,7 @@ export default function PricingPage() {
   const plans = [
     {
       name: "Basic Hosting Plan",
-      price: currency === 'INR' ? "₹45,000" : "$549",
+      price: currency === 'INR' ? "₹45,000" : "$494",
       description: "Essential tools for launching a new journal.",
       features: [
         "OJS Platform installation",
@@ -44,7 +44,7 @@ export default function PricingPage() {
     },
     {
       name: "Standard Plan",
-      price: currency === 'INR' ? "₹80,000" : "$979",
+      price: currency === 'INR' ? "₹80,000" : "$878",
       description: "Optimized for automated editorial workflows.",
       features: [
         "Everything in Basic +",
@@ -59,7 +59,7 @@ export default function PricingPage() {
     },
     {
       name: "Premium University Plan",
-      price: currency === 'INR' ? "₹1,25,000" : "$1,529",
+      price: currency === 'INR' ? "₹1,25,000" : "$1,372",
       description: "Advanced growth and indexing optimization.",
       features: [
         "Everything in Standard +",
@@ -74,7 +74,7 @@ export default function PricingPage() {
     },
     {
       name: "Enterprise Package",
-      price: currency === 'INR' ? "₹2,50,000" : "$3,049",
+      price: currency === 'INR' ? "₹2,50,000" : "$2,745",
       description: "For universities hosting 3+ journals (Up to 5 journals).",
       features: [
         "Up to 5 Journals Included",
