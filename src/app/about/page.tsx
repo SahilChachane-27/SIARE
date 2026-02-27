@@ -96,12 +96,16 @@ export default function AboutPage() {
                 </p>
                 
                 {/* Vision Statement Section */}
-                <div className="p-8 bg-secondary/50 rounded-2xl border-l-4 border-accent shadow-md">
-                  <h3 className="text-2xl font-bold text-primary font-headline mb-4 italic">Our Vision</h3>
-                  <p className="text-lg text-foreground/80 leading-relaxed font-medium italic">
-                    "To build the world’s most trusted, university-exclusive journal hosting ecosystem that empowers institutions to publish, preserve, and elevate their scholarly research through secure, scalable, and future-ready technologies."
-                  </p>
-                </div>
+                <Card className="bg-card border-0 border-l-4 border-accent shadow-lg rounded-funky overflow-hidden">
+                  <CardHeader className="py-4">
+                    <CardTitle className="text-primary text-xl font-headline italic">Our Vision</CardTitle>
+                  </CardHeader>
+                  <CardContent className="pb-6">
+                    <p className="text-lg text-foreground/80 leading-relaxed font-medium italic">
+                      "To build the world’s most trusted, university-exclusive journal hosting ecosystem that empowers institutions to publish, preserve, and elevate their scholarly research through secure, scalable, and future-ready technologies."
+                    </p>
+                  </CardContent>
+                </Card>
 
                 <div className="grid sm:grid-cols-2 gap-6 mt-8">
                   {[
