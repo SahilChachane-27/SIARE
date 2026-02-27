@@ -5,7 +5,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export function Hero() {
   return (
-    <section id="hero" className="relative min-h-screen flex flex-col items-start justify-center overflow-hidden bg-primary pt-16">
+    <section id="hero" className="relative min-h-screen flex flex-col items-start justify-center overflow-hidden bg-primary pt-24 md:pt-32">
       {/* Background Image Container */}
       <div className="absolute inset-0 z-0">
         <Image

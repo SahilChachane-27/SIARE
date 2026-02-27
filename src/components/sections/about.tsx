@@ -36,7 +36,7 @@ export function About() {
               </CardHeader>
               <CardContent className="pb-6">
                 <p className="text-base text-foreground/80 leading-relaxed font-medium">
-                  To build the world’s most trusted, university-exclusive journal hosting ecosystem that empowers institutions to publish, preserve, and elevate their scholarly research through secure, scalable, and future-ready technologies."
+                  To build the world’s most trusted, university-exclusive journal hosting ecosystem that empowers institutions to publish, preserve, and elevate their scholarly research through secure, scalable, and future-ready technologies.
                 </p>
               </CardContent>
             </Card>

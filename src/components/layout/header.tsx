@@ -44,13 +44,13 @@ export function Header() {
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        scrolled ? 'bg-primary shadow-xl py-1 border-b border-accent/10' : 'bg-primary/90 backdrop-blur-md py-2'
+        scrolled ? 'bg-primary shadow-xl py-2 border-b border-accent/10' : 'bg-primary/90 backdrop-blur-md py-4'
       )}
     >
       <div className="w-full px-4 md:px-8 max-w-[1600px] mx-auto">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20 md:h-24">
           <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-transform hover:scale-[1.02] shrink-0">
-            <div className="relative h-16 w-44 sm:h-20 sm:w-64 flex-shrink-0">
+            <div className="relative h-16 w-48 md:h-20 md:w-72 flex-shrink-0">
               <Image 
                 src="/JTlogoUpdated.png" 
                 alt="Technical Journals Logo" 
@@ -61,17 +61,17 @@ export function Header() {
             </div>
           </Link>
           
-          <div className="hidden xl:flex items-center gap-6">
-            <nav className="flex items-center gap-5">
+          <div className="hidden xl:flex items-center gap-8">
+            <nav className="flex items-center gap-6">
               {navLinks.map((link, idx) => {
                 return (
-                  <Link key={idx} href={link.href!} className="text-[12px] font-medium text-white/80 hover:text-white transition-colors uppercase tracking-wider whitespace-nowrap">
+                  <Link key={idx} href={link.href!} className="text-[13px] font-medium text-white/80 hover:text-white transition-colors uppercase tracking-wider whitespace-nowrap">
                     {link.label}
                   </Link>
                 );
               })}
             </nav>
-            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky text-[10px] h-8 px-4 shrink-0 transition-all hover:scale-105 active:scale-95">
+            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky text-[11px] h-10 px-6 shrink-0 transition-all hover:scale-105 active:scale-95">
               <Link href="/contact">Begin Research</Link>
             </Button>
           </div>
@@ -80,8 +80,8 @@ export function Header() {
             {isClient && (
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 h-10 w-10">
-                    <Menu className="h-6 w-6" />
+                  <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 h-12 w-12">
+                    <Menu className="h-8 w-8" />
                     <span className="sr-only">Toggle navigation</span>
                   </Button>
                 </SheetTrigger>

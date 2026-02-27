@@ -64,7 +64,7 @@ export default function ServicesPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background overflow-x-hidden">
       <Header />
-      <main className="flex-1 pt-20">
+      <main className="flex-1 pt-28 md:pt-36">
         {/* Hero Section */}
         <section className="relative py-24 bg-primary text-primary-foreground overflow-hidden">
           <div className="container mx-auto px-8 md:px-16 lg:px-32 relative z-10">
