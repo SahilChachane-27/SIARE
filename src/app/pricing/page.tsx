@@ -36,6 +36,7 @@ export default function PricingPage() {
         "Journal website hosting",
         "Technical support",
         "Up to 4 issues/year",
+        "Up to 100 articles/year",
         "HTTPS security"
       ],
       cta: "Get Started",
