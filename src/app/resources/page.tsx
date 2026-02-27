@@ -56,7 +56,7 @@ export default function ResourcesPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground font-body overflow-x-hidden">
       <Header />
-      <main className="flex-1 pt-20">
+      <main className="flex-1 pt-28 md:pt-36">
         {/* Hero Section */}
         <section className="relative py-24 bg-primary text-primary-foreground overflow-hidden">
           <div className="container mx-auto px-8 md:px-16 lg:px-32 relative z-10">
@@ -161,7 +161,7 @@ export default function ResourcesPage() {
                     <Button size="lg" className="w-full sm:w-auto bg-accent hover:bg-accent/90 text-accent-foreground font-extrabold rounded-funky px-8 md:px-14 py-4 md:py-8 text-sm md:text-lg shadow-xl shadow-accent/20 transition-all hover:scale-105 h-auto">
                       Access Documentation
                     </Button>
-                    <Button variant="outline" size="lg" className="w-full sm:w-auto border-white/20 text-white hover:bg-white/10 rounded-funky px-8 md:px-14 py-4 md:py-8 text-sm md:text-lg font-bold transition-all hover:scale-105 h-auto">
+                    <Button variant="outline" size="lg" className="w-full sm:w-auto border-white/20 text-white rounded-funky px-8 md:px-14 py-4 md:py-8 text-sm md:text-lg font-bold transition-all h-auto">
                       Video Tutorials
                     </Button>
                   </div>
