@@ -24,11 +24,6 @@ export default function AboutPage() {
       desc: "Strictly limited to academic institutions to preserve research ownership."
     },
     {
-      icon: Landmark,
-      title: "Non-commercial model",
-      desc: "A system focused on academic value and research integrity rather than private profit."
-    },
-    {
       icon: Scale,
       title: "Transparent, ethical publishing",
       desc: "Supporting international ethics standards and peer-review transparency."
@@ -121,7 +116,7 @@ export default function AboutPage() {
             </h2>
             <div className="w-20 h-1 bg-accent mx-auto mb-12" data-aos="fade-up"></div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {pillars.map((pillar, idx) => (
                 <Card key={idx} className="border-none shadow-xl rounded-funky bg-white p-8 flex flex-col items-center text-center transition-all hover:shadow-2xl hover:-translate-y-2" data-aos="fade-up" data-aos-delay={idx * 100}>
                   <div className="mb-6 p-5 bg-primary rounded-full text-accent shadow-lg">
