@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -45,7 +44,7 @@ export default function PricingPage() {
     <div className="flex flex-col min-h-screen bg-background font-body overflow-x-hidden">
       <Header />
       <main className="flex-1">
-        <section className="relative overflow-hidden bg-primary text-white pt-32 pb-24">
+        <section className="relative overflow-hidden bg-primary text-white pt-32 pb-24 md:pt-44 md:pb-28">
           <div className="absolute inset-0 pointer-events-none opacity-5">
             <Globe className="absolute top-1/4 left-[10%] w-64 h-64 animate-pulse" />
             <Database className="absolute bottom-1/4 right-[10%] w-64 h-64 animate-pulse" />

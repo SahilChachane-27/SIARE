@@ -92,8 +92,8 @@ export default function JournalsPage() {
   return (
     <div className="flex flex-col min-h-screen bg-slate-50/50 overflow-x-hidden">
       <Header />
-      <main className="flex-1 pt-28 md:pt-36">
-        <section className="relative py-24 bg-primary text-primary-foreground overflow-hidden">
+      <main className="flex-1">
+        <section className="relative pt-32 pb-20 md:pt-44 md:pb-24 bg-primary text-primary-foreground overflow-hidden">
           <div className="container mx-auto px-8 md:px-16 lg:px-32 relative z-10">
             <div className="max-w-3xl" data-aos="fade-right">
               <h1 className="text-4xl md:text-5xl font-extrabold font-headline mb-6">
