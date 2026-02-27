@@ -65,7 +65,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-body;
+    @apply bg-background text-foreground font-sans;
     overflow-x: hidden !important;
     width: 100vw;
     position: relative;
@@ -76,7 +76,7 @@
   h4,
   h5,
   h6 {
-    @apply font-headline;
+    @apply font-serif;
   }
 }
 
