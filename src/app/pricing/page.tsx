@@ -44,7 +44,7 @@ export default function PricingPage() {
     },
     {
       name: "Standard Plan",
-      price: currency === 'INR' ? "₹80,000" : "$949",
+      price: currency === 'INR' ? "₹80,000" : "$979",
       description: "Optimized for automated editorial workflows.",
       features: [
         "Everything in Basic +",
@@ -59,7 +59,7 @@ export default function PricingPage() {
     },
     {
       name: "Premium University Plan",
-      price: currency === 'INR' ? "₹1,25,000" : "$1,499",
+      price: currency === 'INR' ? "₹1,25,000" : "$1,529",
       description: "Advanced growth and indexing optimization.",
       features: [
         "Everything in Standard +",
@@ -74,7 +74,7 @@ export default function PricingPage() {
     },
     {
       name: "Enterprise Package",
-      price: currency === 'INR' ? "₹2,50,000" : "$2,999",
+      price: currency === 'INR' ? "₹2,50,000" : "$3,049",
       description: "For universities hosting 3+ journals (Up to 5 journals).",
       features: [
         "Up to 5 Journals Included",
@@ -101,7 +101,7 @@ export default function PricingPage() {
             <Globe className="absolute top-1/4 left-[10%] w-64 h-64 animate-pulse" />
             <Database className="absolute bottom-1/4 right-[10%] w-64 h-64 animate-pulse" />
           </div>
-          <div className="container mx-auto px-4 md:px-16 lg:px-32 relative z-10 text-center">
+          <div className="container mx-auto px-4 md:px-8 lg:px-12 relative z-10 text-center">
             <h1 data-aos="fade-up" className="text-3xl md:text-6xl font-bold mb-6 font-headline italic">
               Institutional Hosting Plans
             </h1>
@@ -126,8 +126,8 @@ export default function PricingPage() {
           </div>
         </section>
 
-        <section className="py-16 md:py-24 -mt-12 md:-mt-16 bg-white rounded-t-[40px] md:rounded-t-[60px] shadow-2xl relative z-20 overflow-hidden">
-          <div className="container mx-auto px-4 md:px-16 lg:px-32">
+        <section className="py-16 md:py-24 -mt-8 md:-mt-16 bg-white rounded-t-[30px] md:rounded-t-[60px] shadow-2xl relative z-20 overflow-hidden">
+          <div className="container mx-auto px-4 md:px-8 lg:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {plans.map((plan, idx) => (
                 <Card 
