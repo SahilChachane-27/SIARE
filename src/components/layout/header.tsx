@@ -50,7 +50,7 @@ export function Header() {
       <div className="w-full px-4 md:px-8 max-w-[1600px] mx-auto">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-transform hover:scale-[1.02] shrink-0">
-            <div className="relative h-14 w-40 sm:h-16 sm:w-56 flex-shrink-0">
+            <div className="relative h-16 w-44 sm:h-20 sm:w-64 flex-shrink-0">
               <Image 
                 src="/JTlogoUpdated.png" 
                 alt="Technical Journals Logo" 
@@ -71,7 +71,7 @@ export function Header() {
                 );
               })}
             </nav>
-            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky text-[9px] h-7 px-3 shrink-0">
+            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky text-[10px] h-8 px-4 shrink-0 transition-all hover:scale-105 active:scale-95">
               <Link href="/contact">Begin Research</Link>
             </Button>
           </div>

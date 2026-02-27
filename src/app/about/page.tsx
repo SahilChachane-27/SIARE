@@ -56,7 +56,8 @@ export default function AboutPage() {
               <h1 className="text-4xl md:text-5xl font-extrabold font-headline mb-6">
                 About Technical Journals
               </h1>
-              <p className="text-xl opacity-90 leading-relaxed">
+              <div className="w-20 h-1 bg-accent mb-6"></div>
+              <p className="text-xl opacity-90 leading-relaxed font-medium">
                 Empowering academic institutions with secure, scalable, and sovereign journal hosting solutions built on the OJS Platform.
               </p>
             </div>
@@ -67,6 +68,7 @@ export default function AboutPage() {
               alt="Academic Research"
               fill
               className="object-cover"
+              priority
             />
           </div>
         </section>
@@ -88,38 +90,24 @@ export default function AboutPage() {
                   Our Academic Mission
                 </h2>
                 <div className="w-20 h-1 bg-accent"></div>
-                <p className="text-lg text-foreground/80 leading-relaxed">
+                <p className="text-lg text-foreground/80 leading-relaxed font-medium">
                   Technical Journals is a global platform exclusively developed for Universities and Academic Institutions. Unlike traditional hosting providers, we do not serve private publishers. 
                 </p>
-                <p className="text-lg text-foreground/80 leading-relaxed">
+                <p className="text-lg text-foreground/80 leading-relaxed font-medium">
                   We believe that research belongs to the institutions that foster it. Our objective is to provide a high-performance environment where universities can manage and publish journals under their own unique institutional branding.
                 </p>
                 
                 {/* Vision Statement Section */}
                 <Card className="bg-card border-0 border-l-4 border-accent shadow-lg rounded-funky overflow-hidden">
                   <CardHeader className="py-4">
-                    <CardTitle className="text-primary text-xl font-headline italic">Our Vision</CardTitle>
+                    <CardTitle className="text-primary text-xl font-headline">Our Vision</CardTitle>
                   </CardHeader>
                   <CardContent className="pb-6">
-                    <p className="text-lg text-foreground/80 leading-relaxed font-medium italic">
+                    <p className="text-lg text-foreground/80 leading-relaxed font-medium">
                       "To build the world’s most trusted, university-exclusive journal hosting ecosystem that empowers institutions to publish, preserve, and elevate their scholarly research through secure, scalable, and future-ready technologies."
                     </p>
                   </CardContent>
                 </Card>
-
-                <div className="grid sm:grid-cols-2 gap-6 mt-8">
-                  {[
-                    { icon: Shield, text: "Sovereign Ownership" },
-                    { icon: Globe, text: "Global Standards" },
-                    { icon: Cpu, text: "Advanced OJS Tech" },
-                    { icon: BookOpen, text: "Open Access Ready" }
-                  ].map((item, idx) => (
-                    <div key={idx} className="flex items-center gap-4 p-5 bg-secondary rounded-xl border border-primary/5">
-                      <item.icon className="h-6 w-6 text-accent" />
-                      <span className="font-bold text-primary">{item.text}</span>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           </div>

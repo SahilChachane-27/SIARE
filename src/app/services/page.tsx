@@ -68,7 +68,7 @@ export default function ServicesPage() {
         {/* Hero Section */}
         <section className="relative py-24 bg-primary text-primary-foreground overflow-hidden">
           <div className="container mx-auto px-8 md:px-16 lg:px-32 relative z-10">
-            <div className="max-w-3xl" data-aos="fade-up">
+            <div className="max-w-3xl" data-aos="fade-right">
               <h1 className="text-4xl md:text-6xl font-extrabold font-headline mb-6">
                 Academic Solutions
               </h1>
@@ -84,6 +84,7 @@ export default function ServicesPage() {
               alt="Academic Solutions"
               fill
               className="object-cover"
+              priority
             />
           </div>
         </section>

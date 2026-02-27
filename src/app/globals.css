@@ -79,3 +79,23 @@
     @apply font-headline;
   }
 }
+
+@layer components {
+  .btn-responsive {
+    @apply transition-all duration-300 ease-in-out hover:scale-105 active:scale-95;
+  }
+  
+  @media (max-width: 450px) {
+    .btn-responsive {
+      @apply text-[10px] px-4 py-2 h-auto;
+    }
+    
+    .hero-title-responsive {
+      @apply text-2xl leading-tight;
+    }
+    
+    .hero-text-responsive {
+      @apply text-sm;
+    }
+  }
+}
