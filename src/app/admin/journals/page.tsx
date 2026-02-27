@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect, useMemo, useRef, Suspense } from 'react';
@@ -430,8 +431,8 @@ function JournalManagementContent() {
                 <>
                   <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                     {paginatedJournals.map((journal: any) => (
-                      <Card key={journal.id} className="rounded-funky border-none shadow-md group hover:shadow-xl transition-all duration-300 overflow-hidden relative bg-white flex flex-col h-full">
-                        <div className="relative aspect-[3/4] w-full bg-secondary/10 flex items-center justify-center p-2 shrink-0">
+                      <Card key={journal.id} className="overflow-hidden group relative rounded-none shadow-lg border-none flex flex-col h-full bg-white transition-all duration-500">
+                        <div className="relative aspect-[3/4] w-full bg-secondary/5 flex items-center justify-center p-2 shrink-0">
                           {journal.imageUrl ? (
                             <Image src={journal.imageUrl} alt={journal.name} fill className="object-contain p-1" />
                           ) : (
@@ -441,12 +442,12 @@ function JournalManagementContent() {
                           )}
                           
                           {journal.isFeatured && (
-                            <div className="absolute top-2 left-2 bg-accent text-accent-foreground px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest shadow-lg flex items-center gap-1 z-20">
+                            <div className="absolute top-2 left-2 bg-accent text-accent-foreground px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest shadow-lg flex items-center gap-1 z-30">
                               <Star className="h-2 w-2 fill-current" /> Featured
                             </div>
                           )}
 
-                          <div className="absolute top-2 right-2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                          <div className="absolute top-2 right-2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity z-30">
                             <Button 
                               type="button"
                               variant="secondary" 
@@ -470,27 +471,30 @@ function JournalManagementContent() {
                             </Button>
                           </div>
                         </div>
-                        <CardContent className="p-4 md:p-5 flex flex-col flex-1">
-                          <h3 className="text-sm font-bold text-primary font-headline leading-tight line-clamp-2 h-10 mb-2">{journal.name}</h3>
-                          <div className="space-y-1.5 flex-1">
-                            <div className="flex items-center gap-2 text-[10px] font-bold text-primary/60 truncate"><Building2 className="h-3 w-3 text-accent" /> {journal.university}</div>
-                            <div className="flex items-center gap-2 text-[10px] text-foreground/70"><Tag className="h-3 w-3 text-accent" /> {journal.issn}</div>
-                            <div className="flex items-center gap-2 text-[10px] text-foreground/70"><Globe className="h-3 w-3 text-accent" /> {journal.domain}</div>
-                            {journal.country && (
-                              <div className="flex items-center gap-2 text-[10px] text-foreground/70"><Flag className="h-3 w-3 text-accent" /> {journal.country}</div>
-                            )}
-                            {journal.indexing && journal.indexing.length > 0 && (
-                              <div className="flex items-start gap-2 text-[10px] text-foreground/70"><ListChecks className="h-3 w-3 text-accent mt-0.5" /> <span className="line-clamp-1">{journal.indexing.join(', ')}</span></div>
-                            )}
+
+                        {/* Hover Overlay */}
+                        <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-primary/95 via-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out z-20">
+                          <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
+                            <h3 className="text-sm font-bold text-white font-headline leading-tight italic mb-1 line-clamp-2">{journal.name}</h3>
+                            <p className="text-accent font-black uppercase text-[8px] tracking-widest truncate mb-2">{journal.university}</p>
+                            
+                            <div className="space-y-1 mb-3">
+                              <div className="flex items-center gap-2 text-[8px] text-white/80"><Tag className="h-2 w-2 text-accent" /> {journal.issn}</div>
+                              <div className="flex items-center gap-2 text-[8px] text-white/80"><Globe className="h-2 w-2 text-accent" /> {journal.domain}</div>
+                              {journal.country && (
+                                <div className="flex items-center gap-2 text-[8px] text-white/80"><Flag className="h-2 w-2 text-accent" /> {journal.country}</div>
+                              )}
+                            </div>
+
+                            <div className="pt-2 border-t border-white/10">
+                              <Button variant="link" asChild className="p-0 h-auto text-accent font-black italic text-[8px] hover:text-white">
+                                <a href={journal.link} target="_blank" className="flex items-center gap-1.5 uppercase tracking-[0.2em]">
+                                  Portal <ExternalLink className="h-2 w-2" />
+                                </a>
+                              </Button>
+                            </div>
                           </div>
-                          <div className="mt-4 pt-3 border-t border-secondary">
-                            <Button variant="link" asChild className="p-0 h-auto text-primary font-black italic text-[10px] group-hover:text-accent">
-                              <a href={journal.link} target="_blank" className="flex items-center gap-1.5 uppercase tracking-widest">
-                                Portal <ExternalLink className="h-2.5 w-2.5" />
-                              </a>
-                            </Button>
-                          </div>
-                        </CardContent>
+                        </div>
                       </Card>
                     ))}
                   </div>

@@ -7,7 +7,7 @@ import { Footer } from '@/components/layout/footer';
 import { ScrollToTop } from '@/components/layout/scroll-to-top';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -215,71 +215,81 @@ export default function JournalsPage() {
                 ) : filteredJournals.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
                     {filteredJournals.map((journal: any, index: number) => (
-                      <Card key={index} className="overflow-hidden bg-white border-none shadow-sm hover:shadow-xl transition-all duration-500 rounded-2xl group flex flex-col h-full border border-slate-100">
-                        <div className="relative aspect-[3/4] w-full bg-secondary/10 shrink-0 flex items-center justify-center p-2">
+                      <Card key={index} className="overflow-hidden group relative rounded-none shadow-lg border-none flex flex-col h-full bg-white transition-all duration-500">
+                        <div className="relative aspect-[3/4] w-full shrink-0 flex items-center justify-center p-2 bg-secondary/5">
                           {journal.imageUrl ? (
-                            <Image src={journal.imageUrl} alt={journal.name} fill className="object-contain p-1 transition-transform duration-700 group-hover:scale-105" />
+                            <Image 
+                              src={journal.imageUrl} 
+                              alt={journal.name} 
+                              fill 
+                              className="object-contain p-2 transition-transform duration-700 group-hover:scale-110" 
+                            />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/5 to-accent/5">
-                              <Building2 className="h-10 w-10 text-primary/10" />
+                              <Building2 className="h-12 w-12 text-primary/10" />
                             </div>
                           )}
-                          <div className="absolute top-3 left-3">
+                          
+                          {/* Initial Category Tag */}
+                          <div className="absolute top-3 left-3 z-10 group-hover:opacity-0 transition-opacity duration-300">
                             <div className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest shadow-sm text-primary">
                               {journal.domain}
                             </div>
                           </div>
                         </div>
-                        <CardHeader className="p-4 md:p-5 pb-2">
-                          <CardTitle className="text-base font-bold text-primary font-headline leading-tight italic group-hover:text-accent transition-colors duration-300 line-clamp-2 h-12">
-                            {journal.name}
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-4 md:p-5 pt-0 flex flex-col flex-1 space-y-3">
-                          <div className="space-y-1.5 flex-1">
-                            <div className="flex items-center gap-2">
-                              <div className="h-6 w-6 rounded-lg bg-slate-50 flex items-center justify-center shrink-0">
-                                <Building2 className="h-3 w-3 text-accent" />
-                              </div>
-                              <p className="text-[11px] font-bold text-primary/80 truncate">{journal.university}</p>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <div className="h-6 w-6 rounded-lg bg-slate-50 flex items-center justify-center shrink-0">
-                                <Tag className="h-3 w-3 text-accent" />
-                              </div>
-                              <p className="text-[11px] font-medium text-slate-500">{journal.issn}</p>
-                            </div>
-                            {journal.country && (
-                              <div className="flex items-center gap-2">
-                                <div className="h-6 w-6 rounded-lg bg-slate-50 flex items-center justify-center shrink-0">
-                                  <Flag className="h-3 w-3 text-accent" />
-                                </div>
-                                <p className="text-[11px] font-medium text-slate-500">{journal.country}</p>
-                              </div>
-                            )}
-                            {journal.description && (
-                              <p className="text-[10px] text-foreground/60 italic line-clamp-2 mt-2 leading-relaxed">
-                                {journal.description}
+
+                        {/* Premium Hover Overlay */}
+                        <div className="absolute inset-0 flex flex-col justify-end p-5 bg-gradient-to-t from-primary/95 via-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out z-20">
+                          <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
+                            <h3 className="text-base font-bold text-white font-headline leading-tight italic mb-1 line-clamp-2">
+                              {journal.name}
+                            </h3>
+                            <div className="flex items-center gap-2 mb-3">
+                              <div className="h-4 w-0.5 bg-accent"></div>
+                              <p className="text-accent font-black uppercase text-[9px] tracking-widest truncate">
+                                {journal.university}
                               </p>
-                            )}
-                            {journal.indexing && journal.indexing.length > 0 && (
-                              <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-slate-50">
-                                {journal.indexing.map((idxName: string, i: number) => (
-                                  <Badge key={i} variant="secondary" className="bg-accent/5 text-primary/60 border-none text-[8px] font-bold uppercase tracking-tight py-0 px-2 h-4">
-                                    {idxName}
-                                  </Badge>
-                                ))}
+                            </div>
+                            
+                            <div className="space-y-1.5 mb-4 opacity-90">
+                              <div className="flex items-center gap-2">
+                                <Tag className="h-2.5 w-2.5 text-accent" />
+                                <p className="text-[9px] font-medium text-white/80">{journal.issn}</p>
                               </div>
-                            )}
+                              <div className="flex items-center gap-2">
+                                <Globe className="h-2.5 w-2.5 text-accent" />
+                                <p className="text-[9px] font-medium text-white/80">{journal.domain}</p>
+                              </div>
+                              {journal.country && (
+                                <div className="flex items-center gap-2">
+                                  <Flag className="h-2.5 w-2.5 text-accent" />
+                                  <p className="text-[9px] font-medium text-white/80">{journal.country}</p>
+                                </div>
+                              )}
+                              {journal.indexing && journal.indexing.length > 0 && (
+                                <div className="flex items-start gap-2">
+                                  <ListChecks className="h-2.5 w-2.5 text-accent mt-0.5" />
+                                  <p className="text-[9px] font-medium text-white/80 line-clamp-1">
+                                    {journal.indexing.join(', ')}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+
+                            <div className="pt-3 border-t border-white/10 flex flex-col gap-3">
+                              {journal.description && (
+                                <p className="text-[9px] text-white/60 italic line-clamp-2 leading-relaxed">
+                                  {journal.description}
+                                </p>
+                              )}
+                              <Button asChild className="w-full bg-accent hover:bg-white text-primary font-black uppercase text-[10px] tracking-widest h-9 rounded-xl transition-all duration-300">
+                                <a href={journal.link} target="_blank">
+                                  Open Portal <ExternalLink className="ml-1.5 h-3 w-3" />
+                                </a>
+                              </Button>
+                            </div>
                           </div>
-                          <div className="pt-4 border-t border-slate-50">
-                            <Button asChild className="w-full bg-primary hover:bg-accent text-white hover:text-primary transition-all duration-300 rounded-xl h-10 font-bold shadow-lg shadow-primary/5 text-xs">
-                              <a href={journal.link} target="_blank">
-                                Open Portal <ExternalLink className="ml-1.5 h-3 w-3" />
-                              </a>
-                            </Button>
-                          </div>
-                        </CardContent>
+                        </div>
                       </Card>
                     ))}
                   </div>
