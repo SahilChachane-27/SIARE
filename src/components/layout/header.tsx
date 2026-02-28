@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -86,26 +86,27 @@ export function Header() {
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="right" className="bg-primary border-l-0 text-white w-[85%] sm:w-80 p-6 overflow-y-auto">
-                  <SheetHeader className="sr-only">
-                    <SheetTitle>Navigation Menu</SheetTitle>
-                    <SheetDescription>
-                      Access all pages and resources of Technical Journals.
+                  <SheetHeader className="text-left mb-8">
+                    <SheetTitle className="text-accent font-headline italic text-2xl">Navigation</SheetTitle>
+                    <SheetDescription className="text-white/60">
+                      Technical Journals Portal
                     </SheetDescription>
                   </SheetHeader>
-                  <nav className="flex flex-col items-start space-y-2 mt-8">
+                  <nav className="flex flex-col items-start space-y-1">
                     {navLinks.map((link, idx) => (
-                      <div key={idx} className="py-3 border-b border-white/10 w-full text-left">
-                        <SheetClose asChild>
-                          <Link href={link.href!} className="text-white/80 hover:text-white font-medium block w-full text-lg">
-                            {link.label}
-                          </Link>
-                        </SheetClose>
-                      </div>
+                      <SheetClose asChild key={idx}>
+                        <Link 
+                          href={link.href!} 
+                          className="text-white/80 hover:text-accent font-medium py-4 border-b border-white/5 w-full transition-colors"
+                        >
+                          {link.label}
+                        </Link>
+                      </SheetClose>
                     ))}
-                    <div className="pt-6 w-full">
+                    <div className="pt-8 w-full">
                       <SheetClose asChild>
-                        <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky h-12 text-base">
-                          <Link href="/contact">Begin Journey</Link>
+                        <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky h-14 text-base">
+                          <Link href="/contact">Start Your Journal</Link>
                         </Button>
                       </SheetClose>
                     </div>

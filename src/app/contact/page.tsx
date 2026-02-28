@@ -36,47 +36,47 @@ const contactOptions = [
 
 export default function ContactPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen bg-background overflow-x-hidden">
       <Header />
       <main className="flex-1">
-        <section className="relative flex flex-col items-center justify-center overflow-hidden bg-primary pt-32 pb-16 md:pt-44 md:pb-24 text-center px-4">
+        <section className="relative flex flex-col items-center justify-center overflow-hidden bg-primary pt-32 pb-16 md:pt-44 md:pb-24 text-center px-6">
           <div className="relative z-10 max-w-7xl mx-auto">
             <div className="space-y-6 md:space-y-8" data-aos="fade-up">
-              <h1 className="text-xl sm:text-3xl md:text-5xl font-bold leading-tight text-white font-headline">
+              <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight text-white font-headline max-w-4xl mx-auto">
                 Start Your Journal with Technical Journals
               </h1>
-              <p className="max-w-5xl mx-auto text-sm sm:text-lg md:text-xl text-white/90 font-medium italic">
+              <p className="max-w-2xl mx-auto text-sm sm:text-lg md:text-xl text-white/90 font-medium italic px-4">
                 Empowering your institution with secure and sovereign publishing tools.
               </p>
 
-              <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 sm:gap-8 text-white/90">
+              <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-6 text-white/90">
                 <a 
                   href="mailto:support@technicaljournals.org" 
-                  className="flex items-center gap-2 hover:text-accent transition-colors sm:border-r sm:border-white/20 sm:pr-8 last:border-0"
+                  className="flex items-center gap-2 hover:text-accent transition-colors md:border-r md:border-white/20 md:pr-8 last:border-0"
                 >
                   <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
-                  <span className="font-bold text-xs sm:text-base">Email:</span> 
-                  <span className="text-[10px] sm:text-base break-all">support@technicaljournals.org</span>
+                  <span className="font-bold text-xs sm:text-sm">Email:</span> 
+                  <span className="text-[10px] sm:text-sm break-all">support@technicaljournals.org</span>
                 </a>
                 <a 
                   href="tel:0000000000" 
                   className="flex items-center gap-2 hover:text-accent transition-colors"
                 >
                   <PhoneCall className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
-                  <span className="font-bold text-xs sm:text-base">Mobile:</span> 
-                  <span className="text-[10px] sm:text-base">0000000000</span>
+                  <span className="font-bold text-xs sm:text-sm">Mobile:</span> 
+                  <span className="text-[10px] sm:text-sm">0000000000</span>
                 </a>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+        <section className="py-12 md:py-20 bg-white">
+          <div className="container mx-auto px-6 md:px-16 lg:px-32">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 md:mb-20">
               {contactOptions.map((opt, i) => (
                 <Card key={i} className="rounded-funky text-center border-none bg-secondary/50 shadow-md hover:shadow-xl transition-all group hover:-translate-y-1" data-aos="fade-up" data-aos-delay={i * 100}>
-                  <CardContent className="p-8 flex flex-col items-center h-full">
+                  <CardContent className="p-6 md:p-8 flex flex-col items-center h-full">
                     <div className="h-12 w-12 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm group-hover:bg-accent transition-colors">
                       <opt.icon className="h-6 w-6 text-accent group-hover:text-white" />
                     </div>
@@ -84,12 +84,12 @@ export default function ContactPage() {
                     {opt.link ? (
                       <a 
                         href={opt.link} 
-                        className="text-sm text-foreground/70 font-medium hover:text-accent transition-colors break-all"
+                        className="text-xs md:text-sm text-foreground/70 font-medium hover:text-accent transition-colors break-all"
                       >
                         {opt.text}
                       </a>
                     ) : (
-                      <p className="text-sm text-foreground/70 font-medium break-words">
+                      <p className="text-xs md:text-sm text-foreground/70 font-medium break-words">
                         {opt.text}
                       </p>
                     )}
@@ -98,7 +98,9 @@ export default function ContactPage() {
               ))}
             </div>
 
-            <Contact />
+            <div id="contact-form" className="scroll-mt-32">
+              <Contact />
+            </div>
           </div>
         </section>
       </main>
