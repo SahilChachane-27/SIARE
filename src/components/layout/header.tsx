@@ -86,10 +86,18 @@ export function Header() {
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="right" className="bg-primary border-l-0 text-white w-[85%] sm:w-80 p-6 overflow-y-auto">
-                  <SheetHeader className="text-left mb-8">
-                    <SheetTitle className="text-accent font-headline italic text-2xl">Navigation</SheetTitle>
-                    <SheetDescription className="text-white/60">
-                      Technical Journals Portal
+                  <SheetHeader className="text-left mb-8 pr-8">
+                    <SheetTitle className="sr-only">Technical Journals</SheetTitle>
+                    <div className="relative h-12 w-48 mb-2">
+                      <Image 
+                        src="/JTlogoUpdated.png" 
+                        alt="Technical Journals Logo" 
+                        fill 
+                        className="object-contain object-left"
+                      />
+                    </div>
+                    <SheetDescription className="sr-only">
+                      Technical Journals Portal Navigation
                     </SheetDescription>
                   </SheetHeader>
                   <nav className="flex flex-col items-start space-y-1">
