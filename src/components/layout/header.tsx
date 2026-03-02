@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, ChevronDown, ExternalLink } from 'lucide-react';
+import { Menu, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -37,15 +37,7 @@ interface NavLink {
 const navLinks: NavLink[] = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
-  {
-    label: 'Membership',
-    children: [
-      { href: '/why-us', label: 'Why Join' },
-      { href: '/pricing', label: 'Individual Membership' },
-      { href: '/for-universities', label: 'Institutional Membership' },
-      { href: '/contact', label: 'Student Membership' },
-    ],
-  },
+  { href: '/why-us', label: 'Membership' },
   {
     label: 'Proceedings',
     children: [
