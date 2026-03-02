@@ -36,15 +36,7 @@ interface NavLink {
 
 const navLinks: NavLink[] = [
   { href: '/', label: 'Home' },
-  {
-    label: 'About',
-    children: [
-      { href: '/about', label: 'About SIARE' },
-      { href: '/about#heritage', label: 'Our Heritage' },
-      { href: '/team#board', label: 'Our Board' },
-      { href: '/team', label: 'Our Team' },
-    ],
-  },
+  { href: '/about', label: 'About' },
   {
     label: 'Membership',
     children: [
