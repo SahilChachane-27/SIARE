@@ -37,22 +37,22 @@ const whyJoinPoints = [
   {
     icon: Globe,
     title: "Global Research Community",
-    desc: "Engage with researchers across engineering, management, humanities, agriculture, and medicine."
+    desc: "Engage with researchers across engineering, management, humanities, education, agriculture, medicine, biological sciences, and emerging technologies."
   },
   {
     icon: Trophy,
     title: "Priority Access to Conferences",
-    desc: "Receive early access, discounted fees, and special invitations to SIARE-partnered events."
+    desc: "Members receive early access, discounted fees, and special invitations to SIARE-partnered conferences and events."
   },
   {
     icon: BookOpen,
-    title: "Proceedings Publication",
-    desc: "Faster review, dedicated editorial support, and DOI/indexing assistance for conference papers."
+    title: "Proceedings Publication Benefits",
+    desc: "Members can submit their conference papers to SIARE’s proceedings series with faster review, dedicated editorial support, and DOI assistance."
   },
   {
     icon: Zap,
     title: "Training & Development",
-    desc: "Exclusive workshops on research writing, AI tools, publishing ethics, and analytics."
+    desc: "Exclusive workshops on research writing, systematic reviews, publishing ethics, and research analytics."
   },
   {
     icon: Users,
@@ -73,7 +73,7 @@ const categories = [
       "Discounted conference rates",
       "Eligibility to publish in proceedings",
       "Certificate of membership",
-      "Academic committee participation"
+      "Participation in academic committees"
     ]
   },
   {
@@ -86,8 +86,8 @@ const categories = [
       "Low-cost yearly membership",
       "Mentoring & research guidance",
       "Access to workshops & training",
-      "Travel support opportunities",
-      "Presentation slots at events"
+      "Paper presentation opportunities",
+      "Travel support eligibility"
     ]
   },
   {
@@ -101,7 +101,7 @@ const categories = [
       "Proceedings publication partnership",
       "Faculty & student training modules",
       "Research analytics consultation",
-      "Institution name on SIARE portal"
+      "Institutional branding on portal"
     ]
   },
   {
@@ -115,7 +115,7 @@ const categories = [
       "Research-industry integration",
       "Access to expert advisory panels",
       "Joint technology workshops",
-      "Brand visibility at events"
+      "Joint venture projects"
     ]
   }
 ];
@@ -312,13 +312,13 @@ export default function MembershipPage() {
         </section>
 
         {/* Responsibilities & Renewal */}
-        <section className="py-20 bg-primary text-white overflow-hidden">
+        <section className="py-20 bg-primary overflow-hidden">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="grid md:grid-cols-2 gap-12">
-              <Card className="bg-white/5 border-white/10 p-10 rounded-3xl" data-aos="fade-up">
+              <Card className="bg-white p-10 rounded-3xl border-none shadow-2xl" data-aos="fade-up">
                 <div className="flex items-center gap-4 mb-6">
                   <ShieldCheck className="h-8 w-8 text-accent" />
-                  <h3 className="text-2xl font-bold font-headline italic">Member Responsibilities</h3>
+                  <h3 className="text-2xl font-bold text-primary font-headline italic">Member Responsibilities</h3>
                 </div>
                 <ul className="space-y-4">
                   {[
@@ -327,7 +327,7 @@ export default function MembershipPage() {
                     "Contribute to research discussions and activities",
                     "Promote responsible and impactful research"
                   ].map((text, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm opacity-80">
+                    <li key={i} className="flex items-start gap-3 text-sm text-foreground/70">
                       <CheckCircle2 className="h-4 w-4 text-accent shrink-0 mt-0.5" />
                       {text}
                     </li>
@@ -335,12 +335,12 @@ export default function MembershipPage() {
                 </ul>
               </Card>
 
-              <Card className="bg-white/5 border-white/10 p-10 rounded-3xl" data-aos="fade-up" data-aos-delay="100">
+              <Card className="bg-white p-10 rounded-3xl border-none shadow-2xl" data-aos="fade-up" data-aos-delay="100">
                 <div className="flex items-center gap-4 mb-6">
                   <RefreshCw className="h-8 w-8 text-accent" />
-                  <h3 className="text-2xl font-bold font-headline italic">Membership Renewal</h3>
+                  <h3 className="text-2xl font-bold text-primary font-headline italic">Membership Renewal</h3>
                 </div>
-                <p className="text-sm opacity-80 leading-relaxed mb-6">
+                <p className="text-sm text-foreground/70 leading-relaxed mb-6">
                   Renewal reminders are sent 30 days before expiry. Members who renew on time retain:
                 </p>
                 <ul className="space-y-4">
@@ -349,7 +349,7 @@ export default function MembershipPage() {
                     "Active listing on member directories",
                     "Priority access to upcoming global events"
                   ].map((text, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm opacity-80">
+                    <li key={i} className="flex items-start gap-3 text-sm text-foreground/70">
                       <CheckCircle2 className="h-4 w-4 text-accent shrink-0 mt-0.5" />
                       {text}
                     </li>
