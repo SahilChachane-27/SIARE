@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
+import { Menu, ChevronDown, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -15,16 +15,75 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
-const navLinks = [
+interface NavLink {
+  href?: string;
+  label: string;
+  children?: { href: string; label: string }[];
+}
+
+const navLinks: NavLink[] = [
   { href: '/', label: 'Home' },
-  { href: '/about', label: 'About Us' },
-  { href: '/services', label: 'Our Services' },
-  { href: '/journals', label: 'Journals Hosted' },
-  { href: '/for-universities', label: 'For Universities' },
-  { href: '/resources', label: 'Resources' },
-  { href: '/pricing', label: 'Subscription Plans' },
-  { href: '/contact', label: 'Contact Us' },
+  {
+    label: 'About',
+    children: [
+      { href: '/about', label: 'About SIARE' },
+      { href: '/about#heritage', label: 'Our Heritage' },
+      { href: '/team#board', label: 'Our Board' },
+      { href: '/team', label: 'Our Team' },
+    ],
+  },
+  {
+    label: 'Membership',
+    children: [
+      { href: '/why-us', label: 'Why Join' },
+      { href: '/pricing', label: 'Individual Membership' },
+      { href: '/for-universities', label: 'Institutional Membership' },
+      { href: '/contact', label: 'Student Membership' },
+    ],
+  },
+  {
+    label: 'Proceedings',
+    children: [
+      { href: '/journals', label: 'View all series' },
+      { href: '/start-journal', label: 'Submit a Paper' },
+      { href: '/ethics-guidelines', label: 'Publishing Policies' },
+    ],
+  },
+  {
+    label: 'Authors & Conferences',
+    children: [
+      { href: '/resources', label: 'Author Guidelines' },
+      { href: '/ethics-guidelines', label: 'Editorial Guidelines' },
+      { href: '/services', label: 'Indexing & Archiving' },
+    ],
+  },
+  {
+    label: 'Events',
+    children: [
+      { href: '/contact', label: 'Upcoming Conferences' },
+      { href: '/services', label: 'Workshops' },
+    ],
+  },
+  {
+    label: 'News',
+    children: [
+      { href: '/blog', label: 'Latest News & Updates' },
+    ],
+  },
+  { href: '/contact', label: 'Contact' },
 ];
 
 export function Header() {
@@ -44,7 +103,7 @@ export function Header() {
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        scrolled ? 'bg-primary shadow-xl py-2 border-b border-accent/10' : 'bg-primary/90 backdrop-blur-md py-4'
+        scrolled ? 'bg-primary shadow-xl py-2 border-b border-accent/10' : 'bg-primary/95 backdrop-blur-md py-4'
       )}
     >
       <div className="w-full px-4 md:px-8 max-w-[1600px] mx-auto">
@@ -61,17 +120,38 @@ export function Header() {
             </div>
           </Link>
           
-          <div className="hidden xl:flex items-center gap-8">
-            <nav className="flex items-center gap-6">
+          <div className="hidden xl:flex items-center gap-6">
+            <nav className="flex items-center gap-1">
               {navLinks.map((link, idx) => {
+                if (link.children) {
+                  return (
+                    <DropdownMenu key={idx}>
+                      <DropdownMenuTrigger asChild>
+                        <button className="flex items-center gap-1 px-3 py-2 text-[13px] font-medium text-white/80 hover:text-white transition-colors uppercase tracking-wider whitespace-nowrap outline-none group">
+                          {link.label}
+                          <ChevronDown className="h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="start" className="bg-primary border-accent/20 min-w-[200px]">
+                        {link.children.map((child, childIdx) => (
+                          <DropdownMenuItem key={childIdx} asChild className="focus:bg-accent focus:text-accent-foreground text-white cursor-pointer py-3 px-4 border-b border-white/5 last:border-0">
+                            <Link href={child.href} className="text-xs uppercase tracking-widest font-medium w-full">
+                              {child.label}
+                            </Link>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  );
+                }
                 return (
-                  <Link key={idx} href={link.href!} className="text-[13px] font-medium text-white/80 hover:text-white transition-colors uppercase tracking-wider whitespace-nowrap">
+                  <Link key={idx} href={link.href!} className="px-3 py-2 text-[13px] font-medium text-white/80 hover:text-white transition-colors uppercase tracking-wider whitespace-nowrap">
                     {link.label}
                   </Link>
                 );
               })}
             </nav>
-            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky text-[11px] h-10 px-6 shrink-0 transition-all hover:scale-105 active:scale-95">
+            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky text-[11px] h-10 px-6 shrink-0 transition-all hover:scale-105 active:scale-95 ml-4">
               <Link href="/contact">Begin Research</Link>
             </Button>
           </div>
@@ -100,25 +180,52 @@ export function Header() {
                       Technical Journals Portal Navigation
                     </SheetDescription>
                   </SheetHeader>
-                  <nav className="flex flex-col items-start space-y-1">
-                    {navLinks.map((link, idx) => (
-                      <SheetClose asChild key={idx}>
-                        <Link 
-                          href={link.href!} 
-                          className="text-white/80 hover:text-accent font-medium py-4 border-b border-white/5 w-full transition-colors"
-                        >
-                          {link.label}
-                        </Link>
-                      </SheetClose>
-                    ))}
-                    <div className="pt-8 w-full">
-                      <SheetClose asChild>
-                        <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky h-14 text-base">
-                          <Link href="/contact">Start Your Journal</Link>
-                        </Button>
-                      </SheetClose>
-                    </div>
-                  </nav>
+                  
+                  <Accordion type="single" collapsible className="w-full">
+                    {navLinks.map((link, idx) => {
+                      if (link.children) {
+                        return (
+                          <AccordionItem value={`item-${idx}`} key={idx} className="border-white/10">
+                            <AccordionTrigger className="text-white/80 hover:text-accent font-medium py-4 uppercase tracking-widest text-xs">
+                              {link.label}
+                            </AccordionTrigger>
+                            <AccordionContent className="flex flex-col space-y-1 pb-4">
+                              {link.children.map((child, childIdx) => (
+                                <SheetClose asChild key={childIdx}>
+                                  <Link 
+                                    href={child.href} 
+                                    className="text-white/60 hover:text-accent py-3 pl-4 text-xs font-medium border-l border-white/10 transition-colors"
+                                  >
+                                    {child.label}
+                                  </Link>
+                                </SheetClose>
+                              ))}
+                            </AccordionContent>
+                          </AccordionItem>
+                        );
+                      }
+                      return (
+                        <div key={idx} className="border-b border-white/10">
+                          <SheetClose asChild>
+                            <Link 
+                              href={link.href!} 
+                              className="text-white/80 hover:text-accent font-medium py-4 flex w-full transition-colors uppercase tracking-widest text-xs"
+                            >
+                              {link.label}
+                            </Link>
+                          </SheetClose>
+                        </div>
+                      );
+                    })}
+                  </Accordion>
+
+                  <div className="pt-8 w-full">
+                    <SheetClose asChild>
+                      <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky h-14 text-base">
+                        <Link href="/contact">Start Your Journal</Link>
+                      </Button>
+                    </SheetClose>
+                  </div>
                 </SheetContent>
               </Sheet>
             )}
