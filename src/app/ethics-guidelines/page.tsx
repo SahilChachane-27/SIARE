@@ -57,10 +57,10 @@ export default function EthicsGuidelinesPage() {
       title: "2. Peer Review Policy",
       content: (
         <div className="space-y-4">
-          <p className="text-xs">SIARE uses a <strong>double-blind peer review</strong> system. Reviewers and authors do not know each other’s identity.</p>
+          <p className="text-xs">SIARE uses a double-blind peer review system. Reviewers and authors do not know each other’s identity.</p>
           <div className="flex flex-wrap gap-1.5">
             {["Screening", "Similarity", "Reviewer Assignment", "Feedback", "Revision", "Approval"].map((step, i) => (
-              <span key={i} className="px-2 py-0.5 bg-secondary rounded-none text-[9px] font-bold text-primary/60 uppercase border border-primary/5">
+              <span key={i} className="px-2 py-0.5 bg-secondary rounded-lg text-[9px] font-bold text-primary/60 uppercase border border-primary/5">
                 {i + 1}. {step}
               </span>
             ))}
@@ -76,15 +76,15 @@ export default function EthicsGuidelinesPage() {
         <div className="space-y-4">
           <p className="text-xs">SIARE enforces strict rules. Similarity threshold limits:</p>
           <div className="grid grid-cols-3 gap-2">
-            <div className="p-2 bg-green-50 rounded-none border border-green-100 text-center">
+            <div className="p-2 bg-green-50 rounded-xl border border-green-100 text-center">
               <div className="text-sm font-black text-green-600">&lt; 15%</div>
               <div className="text-[8px] font-bold uppercase text-green-800">OK</div>
             </div>
-            <div className="p-2 bg-amber-50 rounded-none border border-amber-100 text-center">
+            <div className="p-2 bg-amber-50 rounded-xl border border-amber-100 text-center">
               <div className="text-sm font-black text-amber-600">15–25%</div>
               <div className="text-[8px] font-bold uppercase text-amber-800">REVISE</div>
             </div>
-            <div className="p-2 bg-red-50 rounded-none border border-red-100 text-center">
+            <div className="p-2 bg-red-50 rounded-xl border border-red-100 text-center">
               <div className="text-sm font-black text-red-600">&gt; 25%</div>
               <div className="text-[8px] font-bold uppercase text-red-800">REJECT</div>
             </div>
@@ -184,12 +184,12 @@ export default function EthicsGuidelinesPage() {
               {policies.map((policy, idx) => (
                 <Card 
                   key={policy.id} 
-                  className="border border-primary/10 shadow-xl rounded-none overflow-hidden bg-white group hover:border-accent/20 transition-all duration-500"
+                  className="border border-primary/10 shadow-xl rounded-2xl overflow-hidden bg-white group hover:border-accent/20 transition-all duration-500"
                   data-aos="fade-up"
                   data-aos-delay={idx * 50}
                 >
                   <CardHeader className="flex flex-row items-center gap-4 pb-2 border-b border-slate-50">
-                    <div className="h-10 w-10 rounded-none bg-primary/5 flex items-center justify-center shrink-0 group-hover:bg-accent transition-colors">
+                    <div className="h-10 w-10 rounded-xl bg-primary/5 flex items-center justify-center shrink-0 group-hover:bg-accent transition-colors">
                       <policy.icon className="h-5 w-5 text-primary group-hover:text-white" />
                     </div>
                     <CardTitle className="text-lg text-primary font-bold font-headline italic">
@@ -206,7 +206,7 @@ export default function EthicsGuidelinesPage() {
             </div>
 
             {/* Final Note */}
-            <div className="mt-20 p-8 md:p-12 bg-primary rounded-none text-white text-center shadow-2xl relative overflow-hidden" data-aos="zoom-in">
+            <div className="mt-20 p-8 md:p-12 bg-primary rounded-3xl text-white text-center shadow-2xl relative overflow-hidden" data-aos="zoom-in">
               <div className="relative z-10">
                 <h3 className="text-2xl font-bold font-headline italic mb-4">Final Note</h3>
                 <p className="max-w-3xl mx-auto text-white/80 font-medium italic text-sm">
