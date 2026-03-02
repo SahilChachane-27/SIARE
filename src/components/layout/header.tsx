@@ -38,22 +38,8 @@ const navLinks: NavLink[] = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/why-us', label: 'Membership' },
-  {
-    label: 'Proceedings',
-    children: [
-      { href: '/journals', label: 'View all series' },
-      { href: '/start-journal', label: 'Submit a Paper' },
-      { href: '/ethics-guidelines', label: 'Publishing Policies' },
-    ],
-  },
-  {
-    label: 'Authors & Conferences',
-    children: [
-      { href: '/resources', label: 'Author Guidelines' },
-      { href: '/ethics-guidelines', label: 'Editorial Guidelines' },
-      { href: '/services', label: 'Indexing & Archiving' },
-    ],
-  },
+  { href: '/journals', label: 'Proceedings' },
+  { href: '/resources', label: 'Authors & Conferences' },
   {
     label: 'Events',
     children: [

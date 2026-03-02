@@ -14,43 +14,37 @@ import {
   Search,
   CheckCircle2,
   ExternalLink,
-  LifeBuoy
+  Workflow,
+  Layers,
+  Zap,
+  ArrowRight,
+  ClipboardList,
+  Scale,
+  Clock,
+  Globe
 } from 'lucide-react';
 import Image from 'next/image';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
+import Link from 'next/link';
 
 export default function ResourcesPage() {
-  const resourceCategories = [
-    {
-      title: "For Authors",
-      icon: FileText,
-      items: [
-        "Manuscript Preparation Guidelines",
-        "Author Agreement Form",
-        "Article Processing Charge (APC) Info",
-        "Submission Checklist"
-      ]
-    },
-    {
-      title: "For Reviewers",
-      icon: Users,
-      items: [
-        "Peer Review Policy",
-        "Reviewer Evaluation Form",
-        "Ethical Guidelines for Reviewers",
-        "Recognition & Certificates"
-      ]
-    },
-    {
-      title: "Editorial Standards",
-      icon: ShieldCheck,
-      items: [
-        "COPE Compliance Guidelines",
-        "Plagiarism Policy (iThenticate)",
-        "Conflict of Interest Policy",
-        "Retraction & Correction Policy"
-      ]
-    }
+  const steps = [
+    "Submit partnership request",
+    "Evaluation by SIARE Academic Committee",
+    "MoU signing & planning",
+    "Conference conducts submissions",
+    "Papers undergo SIARE review workflow",
+    "Final publication & DOI allocation"
+  ];
+
+  const series = [
+    "SIARE Proceedings in Engineering & Technology",
+    "SIARE Proceedings in Computer Science & AI",
+    "SIARE Proceedings in Management & Innovation",
+    "SIARE Proceedings in Social Sciences & Humanities",
+    "SIARE Proceedings in Education & Learning",
+    "SIARE Proceedings in Agriculture & Biological Sciences",
+    "SIARE Proceedings in Medical & Health Sciences",
+    "SIARE Multidisciplinary Proceedings Series"
   ];
 
   return (
@@ -62,127 +56,345 @@ export default function ResourcesPage() {
           <div className="container mx-auto px-6 md:px-16 lg:px-32 relative z-10 text-center">
             <div className="max-w-4xl mx-auto" data-aos="fade-up">
               <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold font-headline italic leading-tight mb-6">
-                Academic Resources & Guidelines
+                Authors & Conferences
               </h1>
               <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
-              <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed font-medium">
-                Empowering authors, reviewers, and editors with the tools and information needed for high-quality academic publishing.
+              <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed font-medium">
+                Unified academic ecosystem for authors, conference organizers, and institutions.
               </p>
             </div>
           </div>
           <div className="absolute inset-0 opacity-10">
             <Image
-              src="/ResearchPsychology.jpg"
-              alt="Academic Research"
+              src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+              alt="Academic Authors"
               fill
               className="object-cover"
               priority
+              data-ai-hint="scholars meeting"
             />
           </div>
         </section>
 
-        {/* Main Resource Categories */}
-        <section className="py-16 md:py-24 bg-white">
+        {/* Introduction */}
+        <section className="py-16 bg-white border-b border-border/50">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32 text-center">
+            <p className="max-w-4xl mx-auto text-lg text-foreground/70 leading-relaxed font-medium italic" data-aos="fade-up">
+              SIARE provides a unified academic ecosystem for authors, conference organizers, and institutions. This section outlines the complete guidelines, workflows, responsibilities, and support available for all authors and partnered conferences publishing with SIARE.
+            </p>
+          </div>
+        </section>
+
+        {/* Author Guidelines */}
+        <section className="py-20 bg-slate-50">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
-            <div className="grid md:grid-cols-3 gap-8">
-              {resourceCategories.map((cat, idx) => (
-                <Card key={idx} className="border-none shadow-xl rounded-[30px] overflow-hidden bg-secondary/30 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group hover:bg-white border border-transparent hover:border-accent/10" data-aos="fade-up" data-aos-delay={idx * 100}>
-                  <CardHeader className="flex flex-col items-center pb-2">
-                    <div className="p-4 bg-primary/5 rounded-full mb-4 group-hover:bg-accent/10 transition-colors">
-                      <cat.icon className="h-10 w-10 text-primary group-hover:text-accent transition-colors" />
-                    </div>
-                    <CardTitle className="text-2xl text-primary font-bold group-hover:text-accent transition-colors">{cat.title}</CardTitle>
+            <div className="grid lg:grid-cols-2 gap-16 items-start">
+              <div data-aos="fade-right">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="h-12 w-12 rounded-xl bg-accent flex items-center justify-center text-white shadow-lg">
+                    <FileText className="h-6 w-6" />
+                  </div>
+                  <h2 className="text-3xl font-bold text-primary font-headline italic">1. Author Guidelines</h2>
+                </div>
+                
+                <div className="space-y-8">
+                  <Card className="rounded-2xl border-none shadow-xl overflow-hidden">
+                    <CardHeader className="bg-primary text-white p-6">
+                      <CardTitle className="text-lg">Manuscript Preparation</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-6 space-y-4">
+                      <p className="text-sm font-bold text-primary/60 uppercase tracking-widest">Formatting Standards:</p>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {[
+                          "Recommended length: 10–15 pages",
+                          "File format: MS Word (.doc/.docx)",
+                          "Font: Times New Roman, 12 pt",
+                          "Margin: 1 inch on all sides",
+                          "Spacing: 1.15",
+                          "Referencing: APA / IEEE"
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-center gap-2 text-xs font-medium text-foreground/70">
+                            <CheckCircle2 className="h-3.5 w-3.5 text-accent" /> {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="rounded-2xl border-none shadow-xl overflow-hidden">
+                    <CardHeader className="bg-primary text-white p-6">
+                      <CardTitle className="text-lg">Paper Structure</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-6">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        {[
+                          "1. Title", "2. Authors", "3. Abstract", "4. Keywords", "5. Intro", 
+                          "6. Literature", "7. Method", "8. Findings", "9. Discussion", 
+                          "10. Conclusion", "11. Refs", "12. Ack."
+                        ].map((step, i) => (
+                          <div key={i} className="px-3 py-2 bg-secondary rounded-lg text-[10px] font-bold text-primary/60 uppercase border border-primary/5 text-center">
+                            {step}
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              <div data-aos="fade-left" className="space-y-8">
+                <Card className="rounded-2xl border-none shadow-xl">
+                  <CardHeader>
+                    <CardTitle className="text-primary font-headline italic">Submission Requirements</CardTitle>
                   </CardHeader>
-                  <CardContent className="px-8 pb-8">
+                  <CardContent className="space-y-4">
                     <ul className="space-y-4">
-                      {cat.items.map((item, i) => (
-                        <li key={i} className="flex items-start gap-3 group cursor-pointer">
-                          <CheckCircle2 className="h-5 w-5 text-accent shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
-                          <span className="text-foreground/70 text-sm font-medium hover:text-primary transition-colors">{item}</span>
+                      {[
+                        "Original, unpublished work only",
+                        "Manuscript must pass plagiarism screening",
+                        "Complete author details (email, ORCID, affiliations)",
+                        "Figures and tables properly numbered",
+                        "Ethical approval statements for sensitive studies"
+                      ].map((item, i) => (
+                        <li key={i} className="flex items-start gap-3 text-sm text-foreground/70 italic">
+                          <ArrowRight className="h-4 w-4 text-accent shrink-0 mt-1" />
+                          <span>{item}</span>
                         </li>
                       ))}
                     </ul>
                   </CardContent>
                 </Card>
-              ))}
+
+                <div className="p-8 bg-primary rounded-3xl text-white shadow-2xl relative overflow-hidden group">
+                  <div className="relative z-10">
+                    <h3 className="text-xl font-bold font-headline mb-4 flex items-center gap-2">
+                      <Workflow className="h-6 w-6 text-accent" /> 2. Review Process
+                    </h3>
+                    <p className="text-sm text-white/70 mb-6 italic">Authors undergo a rigorous double-blind peer review.</p>
+                    <div className="space-y-3">
+                      {["Initial Screening", "Reviewer Assignment", "Evaluation", "Author Revision Round", "Final Editorial Acceptance"].map((step, i) => (
+                        <div key={i} className="flex items-center gap-3 text-xs font-bold">
+                          <span className="h-5 w-5 rounded-full bg-accent text-primary flex items-center justify-center text-[10px] shrink-0">{i+1}</span>
+                          {step}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-700"></div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Downloadable Templates Section */}
-        <section className="py-20 bg-secondary/30 border-y border-border/50">
+        {/* Conference Partnerships */}
+        <section className="py-20 bg-white">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline" data-aos="fade-up">
-                Downloadable Templates
+            <div className="text-center mb-16" data-aos="fade-up">
+              <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4 italic">
+                3. Conference Partnerships
               </h2>
-              <div className="mt-4 w-24 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
+              <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
+              <p className="max-w-3xl mx-auto text-foreground/60 font-medium">
+                SIARE partners with universities, academic societies, and institutions worldwide to publish high-quality conference proceedings under its official SIARE Proceedings Series.
+              </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { title: "Word Template", type: "DOCX", size: "1.2 MB" },
-                { title: "LaTeX Template", type: "ZIP", size: "4.5 MB" },
-                { title: "Reviewer Guide", type: "PDF", size: "0.8 MB" },
-                { title: "Ethics Policy", type: "PDF", size: "1.5 MB" }
-              ].map((template, idx) => (
-                <div key={idx} className="bg-white p-6 rounded-2xl shadow-md border border-border/50 flex flex-col items-center text-center transition-all hover:shadow-lg hover:-translate-y-1" data-aos="zoom-in" data-aos-delay={idx * 50}>
-                  <div className="h-12 w-12 bg-accent/10 rounded-xl flex items-center justify-center mb-4">
-                    <Download className="h-6 w-6 text-accent" />
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card className="rounded-2xl border border-primary/5 shadow-xl bg-slate-50 flex flex-col h-full" data-aos="fade-up">
+                <CardHeader className="pb-2">
+                  <ClipboardList className="h-10 w-10 text-accent mb-4" />
+                  <CardTitle className="text-xl text-primary font-headline italic">Organizer Requirements</CardTitle>
+                </CardHeader>
+                <CardContent className="flex-1">
+                  <ul className="space-y-3 text-sm text-foreground/70 italic">
+                    <li>• Provide theme, committee & schedule</li>
+                    <li>• Ensure proper peer review</li>
+                    <li>• Maintain ethical standards</li>
+                    <li>• Submit final files in required format</li>
+                    <li>• Follow SIARE templates & guidelines</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <Card className="rounded-2xl border border-primary/5 shadow-xl bg-primary text-white md:scale-110 relative z-10 flex flex-col h-full" data-aos="zoom-in">
+                <CardHeader className="pb-2">
+                  <Zap className="h-10 w-10 text-accent mb-4" />
+                  <CardTitle className="text-xl font-headline italic">SIARE Support</CardTitle>
+                </CardHeader>
+                <CardContent className="flex-1 text-xs space-y-4">
+                  <div>
+                    <p className="font-black text-accent uppercase tracking-widest mb-2">Pre-Conference</p>
+                    <p className="opacity-70">Publication MoU, Workflow Planning, Templates, Submission Portal.</p>
                   </div>
-                  <h3 className="font-bold text-primary mb-1">{template.title}</h3>
-                  <p className="text-[10px] text-foreground/40 font-black mb-4 uppercase tracking-widest">{template.type} • {template.size}</p>
-                  <Button variant="outline" size="sm" className="w-full border-primary/20 text-primary font-bold hover:bg-primary hover:text-white rounded-xl">
-                    Download
-                  </Button>
-                </div>
-              ))}
+                  <div>
+                    <p className="font-black text-accent uppercase tracking-widest mb-2">During Conference</p>
+                    <p className="opacity-70">Technical support, Paper curation, Guidance for session chairs.</p>
+                  </div>
+                  <div>
+                    <p className="font-black text-accent uppercase tracking-widest mb-2">Post-Conference</p>
+                    <p className="opacity-70">Similarity checks, Typesetting, DOI assignment, Indexing support.</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="rounded-2xl border border-primary/5 shadow-xl bg-slate-50 flex flex-col h-full" data-aos="fade-up" data-aos-delay="100">
+                <CardHeader className="pb-2">
+                  <Layers className="h-10 w-10 text-accent mb-4" />
+                  <CardTitle className="text-xl text-primary font-headline italic">Proceedings Series</CardTitle>
+                </CardHeader>
+                <CardContent className="flex-1">
+                  <ul className="space-y-2 text-[10px] font-bold text-primary/60 uppercase">
+                    {series.slice(0, 6).map((s, i) => <li key={i}>• {s}</li>)}
+                    <li className="text-accent">• And More...</li>
+                  </ul>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
 
-        {/* OJS Platform Documentation Section */}
-        <section className="py-12 md:py-24">
-          <div className="container mx-auto px-4 md:px-16 lg:px-32">
-            <Card className="bg-primary text-primary-foreground p-6 md:p-12 lg:p-16 rounded-[30px] md:rounded-[40px] overflow-hidden relative shadow-2xl border-none" data-aos="fade-up">
-              <div className="relative z-10 grid lg:grid-cols-2 gap-10 md:gap-12 items-center">
-                <div className="space-y-6">
-                  <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full text-accent font-bold text-xs uppercase tracking-widest">
-                    <LifeBuoy className="h-4 w-4" />
-                    Support Documentation
-                  </div>
-                  <h2 className="text-2xl md:text-4xl font-extrabold font-headline leading-tight">
-                    Technical Guide for OJS Platform
-                  </h2>
-                  <p className="text-base md:text-lg opacity-80 leading-relaxed font-medium">
-                    Need help navigating our Journal Management System? Access comprehensive guides on manuscript tracking, reviewer assignment, and production workflows.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                    <Button size="lg" className="w-full sm:w-auto bg-accent hover:bg-accent/90 text-accent-foreground font-extrabold rounded-funky px-8 md:px-14 py-4 md:py-8 text-sm md:text-lg shadow-xl shadow-accent/20 transition-all hover:scale-105 h-auto">
-                      Access Documentation
-                    </Button>
-                    <Button variant="outline" size="lg" className="w-full sm:w-auto border-white/20 text-white rounded-funky px-8 md:px-14 py-4 md:py-8 text-sm md:text-lg font-bold transition-all h-auto">
-                      Video Tutorials
-                    </Button>
-                  </div>
+        {/* Responsibilities */}
+        <section className="py-20 bg-slate-50">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+            <div className="grid lg:grid-cols-2 gap-12">
+              <div data-aos="fade-right">
+                <h3 className="text-2xl font-bold text-primary font-headline italic mb-8 flex items-center gap-3">
+                  <Users className="h-7 w-7 text-accent" /> 5. Responsibilities of Authors
+                </h3>
+                <div className="grid gap-4">
+                  {[
+                    "Ensure manuscript originality",
+                    "Follow formatting guidelines meticulously",
+                    "Respond to reviewer comments promptly",
+                    "Provide accurate metadata (ORCID, Affiliation)",
+                    "Declare conflicts of interest",
+                    "Obtain permissions for copyrighted content"
+                  ].map((res, i) => (
+                    <div key={i} className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm border border-primary/5">
+                      <CheckCircle2 className="h-5 w-5 text-accent shrink-0" />
+                      <span className="text-sm font-medium text-foreground/80">{res}</span>
+                    </div>
+                  ))}
                 </div>
-                <div className="relative aspect-video rounded-2xl md:rounded-3xl overflow-hidden border-4 md:border-8 border-white/5 shadow-2xl">
-                  <Image
-                    src="/ResearchPsychology.jpg"
-                    alt="Technical Support"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-primary/20 backdrop-blur-[2px] flex items-center justify-center">
-                    <div className="w-14 h-14 md:w-20 md:h-20 bg-accent rounded-full flex items-center justify-center shadow-2xl cursor-pointer hover:scale-110 transition-transform">
-                      <div className="w-0 h-0 border-t-[8px] md:border-t-[12px] border-t-transparent border-l-[14px] md:border-l-[20px] border-l-primary border-b-[8px] md:border-b-[12px] border-b-transparent ml-1 md:ml-2"></div>
+              </div>
+
+              <div data-aos="fade-left">
+                <h3 className="text-2xl font-bold text-primary font-headline italic mb-8 flex items-center gap-3">
+                  <Globe className="h-7 w-7 text-accent" /> 6. Responsibilities of Organizers
+                </h3>
+                <div className="grid gap-4">
+                  {[
+                    "Ensure all papers undergo proper review",
+                    "Maintain transparency and academic integrity",
+                    "Avoid predatory practices or unverified authorship",
+                    "Submit only accepted papers with reviewer comments",
+                    "Deliver manuscripts in required timelines",
+                    "Pay agreed publication charges (if applicable)"
+                  ].map((res, i) => (
+                    <div key={i} className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm border border-primary/5">
+                      <CheckCircle2 className="h-5 w-5 text-accent shrink-0" />
+                      <span className="text-sm font-medium text-foreground/80">{res}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Important Notes & Workflow */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div data-aos="fade-right" className="space-y-10">
+                <div>
+                  <h3 className="text-2xl font-bold text-primary font-headline italic mb-6">7. Important Notes</h3>
+                  <div className="space-y-6">
+                    <div className="flex gap-4">
+                      <Clock className="h-6 w-6 text-accent shrink-0" />
+                      <div>
+                        <p className="font-bold text-primary text-sm uppercase mb-1">Publication Timeline</p>
+                        <p className="text-xs text-foreground/60 italic">Typically 3–6 weeks after receiving finalized files, based on volume and quality.</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-4">
+                      <Scale className="h-6 w-6 text-accent shrink-0" />
+                      <div>
+                        <p className="font-bold text-primary text-sm uppercase mb-1">Ethical Compliance</p>
+                        <p className="text-xs text-foreground/60 italic">Violation of standards may disqualify proceedings from final publication.</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-4">
+                      <Search className="h-6 w-6 text-accent shrink-0" />
+                      <div>
+                        <p className="font-bold text-primary text-sm uppercase mb-1">Indexing Eligibility</p>
+                        <p className="text-xs text-foreground/60 italic">SIARE facilitates applications but does not guarantee external body acceptance.</p>
+                      </div>
                     </div>
                   </div>
                 </div>
+
+                <div className="p-8 border-2 border-dashed border-accent/30 rounded-3xl bg-accent/5">
+                  <h3 className="text-xl font-bold text-primary font-headline italic mb-6">8. How to Partner</h3>
+                  <div className="space-y-4">
+                    {steps.map((step, i) => (
+                      <div key={i} className="flex gap-4 items-start group">
+                        <span className="h-6 w-6 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-black shrink-0">{i+1}</span>
+                        <p className="text-sm font-medium text-foreground/70">{step}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <div className="absolute top-0 right-0 w-64 md:w-96 h-64 md:h-96 bg-accent/5 rounded-full -mr-32 md:-mr-48 -mt-32 md:-mt-48 blur-2xl md:blur-3xl"></div>
-            </Card>
+
+              <div data-aos="fade-left" className="relative">
+                <div className="relative aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl">
+                  <Image
+                    src="https://images.unsplash.com/photo-1541339907198-e087563ef3b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+                    alt="University Partnership"
+                    fill
+                    className="object-cover"
+                    data-ai-hint="university campus"
+                  />
+                  <div className="absolute inset-0 bg-primary/20"></div>
+                </div>
+                {/* Floating Stats */}
+                <div className="absolute -bottom-10 -left-10 bg-accent text-primary p-8 rounded-3xl shadow-2xl hidden md:block max-w-[240px]">
+                  <p className="text-4xl font-black mb-2">3-6wk</p>
+                  <p className="text-xs font-bold uppercase tracking-widest leading-tight">Average Publication Speed</p>
+                </div>
+              </div>
+            </div>
           </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-24 bg-primary text-white text-center relative overflow-hidden">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32 relative z-10">
+            <div className="max-w-4xl mx-auto" data-aos="zoom-in">
+              <h2 className="text-3xl md:text-5xl font-bold font-headline mb-6 italic">Ready to Publish?</h2>
+              <p className="text-xl text-white/70 mb-12 font-medium">
+                Connect with our academic committee to begin your publishing journey or establish a conference partnership.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                <Button asChild size="lg" className="bg-accent hover:bg-white text-accent-foreground hover:text-primary font-extrabold rounded-xl px-14 py-8 text-lg shadow-xl transition-all hover:scale-105 h-auto">
+                  <Link href="/contact">Submit Your Paper</Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="border-white/20 text-white rounded-xl px-14 py-8 text-lg font-bold transition-all hover:scale-105 h-auto">
+                  <Link href="/contact">Partner Your Conference</Link>
+                </Button>
+              </div>
+              <div className="mt-10">
+                <Button variant="link" className="text-white/60 hover:text-white uppercase tracking-widest text-xs font-black italic">
+                  <Download className="mr-2 h-4 w-4" /> Download Author Guidelines
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/5 rounded-full -ml-32 -mb-32 blur-3xl"></div>
         </section>
       </main>
       <Footer />
