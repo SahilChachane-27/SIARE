@@ -15,9 +15,9 @@ const socialLinks = [
 const quickLinks = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
-  { href: '/services', label: 'Services' },
-  { href: '/journals', label: 'Journals' },
-  { href: '/pricing', label: 'Subscription' },
+  { href: '/why-us', label: 'Membership' },
+  { href: '/journals', label: 'Proceedings' },
+  { href: '/resources', label: 'Authors & Conferences' },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -106,7 +106,7 @@ export function Footer() {
           <div className="lg:col-span-1">
             <h5 className="font-bold text-base text-primary-foreground font-headline mb-3">Get in Touch</h5>
             <div className="text-xs space-y-3 mb-4">
-              <p className="leading-tight"><span className="text-accent font-bold">Email:</span><br/>support@technicaljournals.org</p>
+              <p className="leading-tight"><span className="text-accent font-bold">Email:</span><br/>info@academicproceeding.org</p>
               <p className="leading-tight"><span className="text-accent font-bold">Mobile:</span><br/>0000000000</p>
             </div>
           </div>
