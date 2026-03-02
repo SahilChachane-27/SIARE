@@ -40,13 +40,7 @@ const navLinks: NavLink[] = [
   { href: '/why-us', label: 'Membership' },
   { href: '/journals', label: 'Proceedings' },
   { href: '/resources', label: 'Authors & Conferences' },
-  {
-    label: 'Events',
-    children: [
-      { href: '/contact', label: 'Upcoming Conferences' },
-      { href: '/services', label: 'Workshops' },
-    ],
-  },
+  { href: '/events', label: 'Events' },
   {
     label: 'News',
     children: [
@@ -192,7 +186,7 @@ export function Header() {
                   <div className="pt-8 w-full">
                     <SheetClose asChild>
                       <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky h-14 text-base">
-                        <Link href="/contact">Submit Your Paper</Link>
+                        <Link href="/contact">submit your paper</Link>
                       </Button>
                     </SheetClose>
                   </div>
