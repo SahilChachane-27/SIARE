@@ -1,88 +1,83 @@
-
 'use client';
 
-import Image from 'next/image';
-import { Card } from '@/components/ui/card';
-import { useFirestore, useCollection } from '@/firebase';
-import { collection, query, where, limit } from 'firebase/firestore';
-import { useMemo } from 'react';
-import { Building2, Star } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { Calendar, MapPin, ArrowRight, Star } from 'lucide-react';
+
+const conferences = [
+  {
+    title: "International Conference on Multidisciplinary Research & Innovation 2025",
+    date: "12–13 April 2025",
+    location: "Pune, India (Hybrid)",
+    status: "Call for Papers Open",
+    color: "bg-blue-500"
+  },
+  {
+    title: "SIARE Global Summit on Sustainable Technologies & Development",
+    date: "May 2025",
+    location: "Online",
+    status: "Registration Open",
+    color: "bg-green-500"
+  },
+  {
+    title: "Symposium on AI & Emerging Technologies (AET 2025)",
+    date: "June 2025",
+    location: "Bangkok, Thailand",
+    status: "Paper Submission Open",
+    color: "bg-purple-500"
+  }
+];
 
 export function Projects() {
-  const db = useFirestore();
-
-  const featuredQuery = useMemo(() => {
-    if (!db) return null;
-    return query(
-      collection(db, 'journals'), 
-      where('isFeatured', '==', true), 
-      limit(3)
-    );
-  }, [db]);
-
-  const { data: featuredJournals, loading } = useCollection(featuredQuery);
-
   return (
-    <section id="projects" className="py-10 md:py-16">
+    <section id="conferences" className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8" data-aos="fade-up">
-          <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline">Featured Hosted Journals</h2>
-          <div className="mt-2 w-16 h-1 bg-accent mx-auto"></div>
-          <p className="mt-4 text-sm md:text-base text-foreground/80 max-w-2xl mx-auto">
-            Explore our portfolio of secure, university-owned academic journals hosted on our professional platform.
-          </p>
+        <div className="text-center mb-16" data-aos="fade-up">
+          <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-4">Academic Gatherings</h2>
+          <h3 className="text-3xl md:text-5xl font-bold text-primary font-headline italic">Upcoming Conferences</h3>
+          <div className="mt-4 w-24 h-1 bg-accent mx-auto"></div>
         </div>
 
-        {loading ? (
-          <div className="flex justify-center p-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-          </div>
-        ) : featuredJournals && featuredJournals.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredJournals.map((journal: any, index: number) => (
-              <Card key={journal.id} className="overflow-hidden group relative rounded-none shadow-lg border-accent/20" data-aos="fade-up" data-aos-delay={index * 100}>
-                <div className="relative aspect-[3/4] md:aspect-[16/10] bg-secondary">
-                  {journal.imageUrl ? (
-                     <Image
-                      src={journal.imageUrl}
-                      alt={journal.name}
-                      fill
-                      className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/5 to-accent/5">
-                      <Building2 className="h-12 w-12 text-primary/10" />
-                    </div>
-                  )}
-                </div>
-                <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-primary/95 via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
-                  <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
-                    <h3 className="text-xl font-bold text-white font-headline leading-tight italic">{journal.name}</h3>
-                    <p className="text-accent font-black uppercase text-[8px] tracking-widest mt-1">{journal.university}</p>
-                    <p className="text-white/80 text-xs mt-3 line-clamp-2">
-                      {journal.description || "Peer-reviewed, OA compliant, and institutionally branded research source."}
-                    </p>
-                    <a 
-                      href={journal.link} 
-                      target="_blank" 
-                      className="inline-block mt-4 text-[8px] font-black uppercase tracking-[0.2em] text-accent hover:text-white transition-colors"
-                    >
-                      View Publication &rarr;
-                    </a>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {conferences.map((conf, index) => (
+            <Card key={index} className="overflow-hidden border-none shadow-2xl rounded-2xl group" data-aos="fade-up" data-aos-delay={index * 100}>
+              <div className={`h-2 ${conf.color}`}></div>
+              <CardContent className="p-8 space-y-6">
+                <div className="flex justify-between items-start">
+                  <div className="bg-accent/10 text-accent text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter flex items-center gap-1">
+                    <Star className="h-3 w-3 fill-current" /> {conf.status}
                   </div>
                 </div>
-                {/* Visual indicator for journals */}
-                <div className="absolute top-3 right-3 bg-accent text-accent-foreground px-2 py-0.5 text-[8px] font-black rounded-full shadow-lg uppercase tracking-tighter flex items-center gap-1">
-                  <Star className="h-2 w-2 fill-current" /> Featured
+                
+                <h4 className="text-xl font-bold text-primary font-headline italic leading-tight group-hover:text-accent transition-colors min-h-[3.5rem]">
+                  {conf.title}
+                </h4>
+                
+                <div className="space-y-3 pt-4 border-t border-slate-100">
+                  <div className="flex items-center gap-3 text-xs font-bold text-primary/60">
+                    <Calendar className="h-4 w-4 text-accent" /> {conf.date}
+                  </div>
+                  <div className="flex items-center gap-3 text-xs font-bold text-primary/60">
+                    <MapPin className="h-4 w-4 text-accent" /> {conf.location}
+                  </div>
                 </div>
-              </Card>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12 bg-secondary/20 rounded-[30px] border-2 border-dashed border-primary/5">
-            <p className="text-base font-bold text-primary/40 uppercase tracking-widest italic">No featured journals to display</p>
-          </div>
-        )}
+
+                <div className="pt-4">
+                  <Button asChild className="w-full bg-primary hover:bg-accent text-white hover:text-primary rounded-xl h-12 text-[10px] font-bold uppercase tracking-widest transition-all">
+                    <Link href="/events">View Details & Participate</Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        <div className="mt-16 text-center" data-aos="fade-up">
+          <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-primary hover:text-white rounded-xl px-12 py-8 text-base font-black italic shadow-2xl transition-all hover:scale-105 h-auto">
+            <Link href="/events">View All Events <ArrowRight className="ml-2 h-5 w-5" /></Link>
+          </Button>
+        </div>
       </div>
     </section>
   );

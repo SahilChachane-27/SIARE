@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Instagram, Mail, PhoneCall, ArrowRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
 
 const socialLinks = [
   { icon: Facebook, href: '#' },
@@ -13,19 +14,13 @@ const socialLinks = [
 ];
 
 const quickLinks = [
-  { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/why-us', label: 'Membership' },
   { href: '/journals', label: 'Proceedings' },
-  { href: '/resources', label: 'Authors & Conferences' },
+  { href: '/events', label: 'Events' },
+  { href: '/resources', label: 'Learning Hub' },
+  { href: '/privacy-policy', label: 'Policies' },
   { href: '/contact', label: 'Contact' },
-];
-
-const policiesLinks = [
-  { href: '/privacy-policy', label: 'Privacy Policy' },
-  { href: '/hosting-agreement', label: 'Hosting Agreement' },
-  { href: '/ethics-guidelines', label: 'Ethics & Guidelines' },
-  { href: '/accessibility-statement', label: 'Accessibility Statement' },
 ];
 
 export function Footer() {
@@ -38,49 +33,61 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="bg-primary text-primary-foreground/80 pt-10 pb-6 overflow-hidden">
-      <div className="container mx-auto px-8 md:px-16 lg:px-32">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-10">
-          {/* Column 1: Branding & Info */}
-          <div className="space-y-4 lg:col-span-2">
-            <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-opacity hover:opacity-80">
-                <div className="relative h-16 w-48 sm:h-20 sm:w-64 shrink-0">
-                  <Image 
-                    src="/JTlogoUpdated.png" 
-                    alt="Technical Journals Logo" 
-                    fill 
-                    className="object-contain"
-                  />
-                </div>
-            </Link>
-            <div className="text-xs leading-relaxed max-w-sm">
-              <p>Empowering academic institutions with secure, scalable, and professional journal hosting since 2024.</p>
-              <div className="pt-2">
-                <p className="font-bold text-accent mb-1 uppercase text-[10px] tracking-widest">Platform Info:</p>
-                <ul className="text-[10px] space-y-0.5 opacity-80">
-                  <li>• Exclusively for Universities</li>
-                  <li>• Secure OJS Platform Hosting</li>
-                  <li>• Institutional Branding</li>
-                  <li>• No Private Publishers</li>
-                </ul>
+    <footer className="bg-primary text-primary-foreground overflow-hidden">
+      {/* CTA Section Integrated in Footer Top */}
+      <div className="bg-accent py-16 md:py-24 relative overflow-hidden">
+        <div className="container mx-auto px-8 md:px-16 lg:px-32 text-center relative z-10">
+          <h2 className="text-3xl md:text-5xl font-bold text-primary font-headline italic mb-6" data-aos="zoom-in">
+            Ready to Collaborate With SIARE?
+          </h2>
+          <p className="text-primary/70 text-lg md:text-xl max-w-3xl mx-auto mb-12 font-medium italic" data-aos="fade-up">
+            Partner with us for conferences, proceedings, academic training, and global research activities.
+          </p>
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-6" data-aos="fade-up" data-aos-delay="100">
+            <Button asChild size="lg" className="bg-primary text-white hover:bg-white hover:text-primary rounded-xl px-12 py-8 text-base font-black italic shadow-2xl transition-all hover:scale-105 h-auto">
+              <Link href="/contact">Partner With Us</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-xl px-12 py-8 text-base font-bold transition-all hover:scale-105 h-auto italic">
+              <Link href="/contact">Submit Conference Proposal</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-xl px-12 py-8 text-base font-bold transition-all hover:scale-105 h-auto italic">
+              <Link href="/contact">Contact SIARE</Link>
+            </Button>
+          </div>
+        </div>
+        <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
+          <Mail className="absolute top-10 left-10 w-32 h-32 -rotate-12" />
+          <PhoneCall className="absolute bottom-10 right-10 w-32 h-32 rotate-12" />
+        </div>
+      </div>
+
+      <div className="container mx-auto px-8 md:px-16 lg:px-32 pt-20 pb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+          <div className="space-y-6 lg:col-span-1">
+            <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
+              <div className="relative h-16 w-48 sm:h-20 sm:w-64">
+                <Image src="/JTlogoUpdated.png" alt="SIARE Logo" fill className="object-contain" />
               </div>
-            </div>
-            <div className="flex space-x-3">
+            </Link>
+            <p className="text-xs leading-relaxed text-white/60 font-medium italic max-w-xs">
+              Empowering global academic communities through integrated research, ethical publishing, and international collaboration.
+            </p>
+            <div className="flex space-x-4 pt-4">
               {socialLinks.map((social, index) => (
-                <a key={index} href={social.href} className="text-primary-foreground/60 hover:text-accent transition-colors">
+                <a key={index} href={social.href} className="h-10 w-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-accent hover:text-primary transition-all shadow-lg">
                   <social.icon className="h-4 w-4" />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Column 2: Quick Links */}
           <div>
-            <h5 className="font-bold text-base text-primary-foreground mb-3 font-headline">Quick Links</h5>
-            <ul className="space-y-2 text-xs">
+            <h5 className="font-bold text-lg text-accent mb-6 font-headline italic">Quick Links</h5>
+            <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="hover:text-accent transition-colors">
+                  <Link href={link.href} className="text-xs text-white/60 hover:text-accent transition-colors flex items-center gap-2 group italic">
+                    <ArrowRight className="h-3 w-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                     {link.label}
                   </Link>
                 </li>
@@ -88,34 +95,38 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Policies */}
           <div>
-            <h5 className="font-bold text-base text-primary-foreground mb-3 font-headline">Policies</h5>
-            <ul className="space-y-2 text-xs">
-              {policiesLinks.map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className="hover:text-accent transition-colors">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <h5 className="font-bold text-lg text-accent mb-6 font-headline italic">Contact Information</h5>
+            <div className="space-y-4 text-xs font-medium text-white/60">
+              <p className="flex items-center gap-3 italic">
+                <Mail className="h-4 w-4 text-accent" />
+                <a href="mailto:info@academicproceeding.org" className="hover:text-accent transition-colors">info@academicproceeding.org</a>
+              </p>
+              <p className="flex items-center gap-3 italic">
+                <PhoneCall className="h-4 w-4 text-accent" />
+                <span>+1 000 000 0000</span>
+              </p>
+              <p className="text-[10px] uppercase tracking-widest pt-4 opacity-40 leading-relaxed font-black">
+                SIARE Administrative Office<br/>[City, State, Country]
+              </p>
+            </div>
           </div>
 
-          {/* Column 4: Contact */}
-          <div className="lg:col-span-1">
-            <h5 className="font-bold text-base text-primary-foreground font-headline mb-3">Get in Touch</h5>
-            <div className="text-xs space-y-3 mb-4">
-              <p className="leading-tight"><span className="text-accent font-bold">Email:</span><br/>info@academicproceeding.org</p>
-              <p className="leading-tight"><span className="text-accent font-bold">Mobile:</span><br/>0000000000</p>
-            </div>
+          <div>
+            <h5 className="font-bold text-lg text-accent mb-6 font-headline italic">Platform Values</h5>
+            <ul className="text-[10px] space-y-3 font-black uppercase tracking-widest opacity-40">
+              <li className="flex items-center gap-2">• Academic Integrity</li>
+              <li className="flex items-center gap-2">• University-Focused</li>
+              <li className="flex items-center gap-2">• Global Network</li>
+              <li className="flex items-center gap-2">• Ethical Publishing</li>
+            </ul>
           </div>
         </div>
 
-        <div className="border-t border-primary-foreground/10 pt-6 text-center">
+        <div className="border-t border-white/10 pt-10 text-center">
           {isClient && (
-            <p className="text-[10px] font-bold tracking-[0.2em] text-primary-foreground uppercase opacity-60">
-              Copyright © {year} Technical Journals. All Rights Reserved. Built for Academic Sovereignty.
+            <p className="text-[10px] font-black tracking-[0.3em] text-white/30 uppercase">
+              Copyright © {year} SIARE – Society of Integrated Academic Research and Education. All Rights Reserved.
             </p>
           )}
         </div>
