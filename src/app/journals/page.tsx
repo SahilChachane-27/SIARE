@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
@@ -6,12 +7,11 @@ import { Footer } from '@/components/layout/footer';
 import { ScrollToTop } from '@/components/layout/scroll-to-top';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   Search, 
   Building2, 
-  Hash, 
   Globe,
   BookOpen, 
   ExternalLink, 
@@ -24,12 +24,20 @@ import {
   Leaf,
   Filter,
   RefreshCw,
-  Flag,
-  ListChecks
+  CheckCircle2,
+  FileText,
+  ShieldCheck,
+  Zap,
+  ArrowRight,
+  Download,
+  Database,
+  Cloud,
+  Layers
 } from 'lucide-react';
 import { useCollection, useFirestore } from '@/firebase';
 import { collection, query, orderBy } from 'firebase/firestore';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const categories = [
   { name: 'Engineering', icon: Cpu },
@@ -42,11 +50,10 @@ const categories = [
   { name: 'Environment & Sustainability', icon: Leaf },
 ];
 
-export default function JournalsPage() {
+export default function ProceedingsPage() {
   const [isClient, setIsClient] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [universityQuery, setUniversityQuery] = useState('');
-  const [issnQuery, setIssnQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   const db = useFirestore();
@@ -67,29 +74,22 @@ export default function JournalsPage() {
     return journals.filter((j: any) => {
       const matchesName = (j.name || '').toLowerCase().includes(searchQuery.toLowerCase());
       const matchesUniversity = (j.university || '').toLowerCase().includes(universityQuery.toLowerCase());
-      const matchesISSN = (j.issn || '').includes(issnQuery);
       const matchesCategory = selectedCategory === 'All' || j.domain === selectedCategory;
 
-      return matchesName && matchesUniversity && matchesISSN && matchesCategory;
+      return matchesName && matchesUniversity && matchesCategory;
     });
-  }, [journals, searchQuery, universityQuery, issnQuery, selectedCategory]);
+  }, [journals, searchQuery, universityQuery, selectedCategory]);
 
   const resetFilters = () => {
     setSearchQuery('');
     setUniversityQuery('');
-    setIssnQuery('');
     setSelectedCategory('All');
   };
 
-  const handleSearch = () => {
-    const resultsElement = document.getElementById('catalog-results');
-    if (resultsElement) {
-      resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
+  if (!isClient) return null;
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50/50 overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-white overflow-x-hidden font-body">
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
@@ -97,12 +97,20 @@ export default function JournalsPage() {
           <div className="container mx-auto px-6 md:px-16 lg:px-32 relative z-10 text-center">
             <div className="max-w-4xl mx-auto" data-aos="fade-up">
               <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold font-headline italic leading-tight mb-6">
-                University Journal Catalog
+                SIARE Conference Proceedings
               </h1>
               <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
-              <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed font-medium">
-                Browse prestigious academic publications hosted on our secure OJS Platform.
+              <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed font-medium">
+                SIARE publishes high-quality, peer-reviewed conference proceedings across major academic domains.
               </p>
+              <div className="flex flex-wrap justify-center gap-4 mt-10">
+                <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-xl h-12 px-8">
+                  <Link href="/contact">Partner for Proceedings</Link>
+                </Button>
+                <Button variant="outline" asChild className="border-white/20 text-white hover:bg-white/10 rounded-xl h-12 px-8">
+                  <Link href="/start-journal">Submit Conference Proposal</Link>
+                </Button>
+              </div>
             </div>
           </div>
           <div className="absolute inset-0 opacity-10">
@@ -116,160 +124,299 @@ export default function JournalsPage() {
           </div>
         </section>
 
-        <section className="py-8 md:py-12">
+        {/* Intro Section */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div data-aos="fade-right">
+                <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-6 italic">
+                  What Are SIARE Proceedings?
+                </h2>
+                <div className="w-20 h-1 bg-accent mb-8"></div>
+                <div className="space-y-6 text-foreground/70 leading-relaxed font-medium">
+                  <p>
+                    SIARE Proceedings are structured collections of conference papers reviewed, edited, and published under the Society of Integrated Academic Research and Education’s official series.
+                  </p>
+                  <p>
+                    Each proceeding serves as an academic record of the research presented at partnered conferences. Proceedings are accessible to global researchers, institutions, and indexing bodies, enabling authors to gain international visibility.
+                  </p>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-6" data-aos="fade-left">
+                {[
+                  { icon: ShieldCheck, title: "Rigorous Peer Review", desc: "Structured screening process" },
+                  { icon: Tag, title: "DOI Assignment", desc: "Persistent accessibility" },
+                  { icon: BookOpen, title: "Ethical Standards", desc: "Ensuring integrity" },
+                  { icon: Globe, title: "Global Visibility", desc: "International indexing" }
+                ].map((item, i) => (
+                  <Card key={i} className="p-6 border-none shadow-xl bg-slate-50 rounded-2xl group hover:bg-white transition-all">
+                    <item.icon className="h-8 w-8 text-accent mb-4 group-hover:scale-110 transition-transform" />
+                    <h4 className="font-bold text-primary text-sm mb-1">{item.title}</h4>
+                    <p className="text-[10px] text-foreground/50 uppercase font-black">{item.desc}</p>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Why SIARE Section */}
+        <section className="py-20 bg-slate-50">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
+                Why Publish Your Proceedings With SIARE?
+              </h2>
+              <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  title: "Multidisciplinary Scope",
+                  desc: "We publish across Engineering, Management, Social Sciences, Agriculture, Biological Sciences, and more.",
+                  icon: Layers
+                },
+                {
+                  title: "University-Focused",
+                  desc: "SIARE works only with universities and institutes—not private publishers—ensuring academic credibility.",
+                  icon: Landmark
+                },
+                {
+                  title: "Fast Turnaround",
+                  desc: "Proceedings are produced within an agreed timeline after the conference without compromising quality.",
+                  icon: Zap
+                }
+              ].map((item, i) => (
+                <div key={i} className="p-8 bg-white rounded-3xl shadow-md border border-slate-100 flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay={i * 100}>
+                  <div className="h-16 w-16 bg-accent/10 rounded-2xl flex items-center justify-center mb-6">
+                    <item.icon className="h-8 w-8 text-accent" />
+                  </div>
+                  <h3 className="text-xl font-bold text-primary mb-4 italic">{item.title}</h3>
+                  <p className="text-sm text-foreground/60 leading-relaxed font-medium">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Process Section */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+            <div className="grid lg:grid-cols-2 gap-16">
+              <div data-aos="fade-right">
+                <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-6 italic">
+                  How Conferences Partner With SIARE
+                </h2>
+                <div className="w-20 h-1 bg-accent mb-8"></div>
+                <ul className="space-y-4 mb-10">
+                  {[
+                    "Full proceedings publication",
+                    "Select paper publication",
+                    "Thematic proceedings series",
+                    "Annual conference publishing support"
+                  ].map((text, i) => (
+                    <li key={i} className="flex items-center gap-3 text-foreground/80 font-medium">
+                      <CheckCircle2 className="h-5 w-5 text-accent" /> {text}
+                    </li>
+                  ))}
+                </ul>
+                <Button asChild className="bg-primary hover:bg-primary/90 text-white rounded-xl h-12 px-8">
+                  <Link href="/resources">Download Proceedings Guidelines <Download className="ml-2 h-4 w-4" /></Link>
+                </Button>
+              </div>
+              <div data-aos="fade-left">
+                <h3 className="text-xl font-bold text-primary font-headline mb-8 italic">Process for Partnership</h3>
+                <div className="space-y-6">
+                  {[
+                    "Submit a Request for Proceedings Partnership",
+                    "SIARE evaluates scope, committee, and standards",
+                    "Publication MoU is signed",
+                    "Submission portal is created for the event",
+                    "Peer review and editorial workflows completed",
+                    "Proceedings published on official platform"
+                  ].map((step, i) => (
+                    <div key={i} className="flex gap-4 items-start group">
+                      <div className="h-8 w-8 rounded-full bg-accent/10 flex items-center justify-center text-accent font-black text-xs group-hover:bg-accent group-hover:text-white transition-all shrink-0">
+                        {i + 1}
+                      </div>
+                      <p className="text-sm font-medium text-foreground/70 pt-1.5">{step}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Guidelines Section */}
+        <section className="py-20 bg-primary text-white overflow-hidden">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold font-headline mb-4" data-aos="fade-up">
+                Submission Guidelines for Authors
+              </h2>
+              <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card className="bg-white/5 border-white/10 p-8 rounded-3xl text-white" data-aos="fade-up">
+                <h3 className="text-lg font-bold mb-6 text-accent uppercase tracking-widest">Categories Accepted</h3>
+                <ul className="space-y-3 text-sm opacity-80">
+                  {["Full Research Papers", "Review Papers", "Case Studies", "Survey Papers", "Short Communications"].map((item, i) => (
+                    <li key={i} className="flex items-center gap-2"><ArrowRight className="h-3 w-3 text-accent" /> {item}</li>
+                  ))}
+                </ul>
+              </Card>
+              <Card className="bg-white/5 border-white/10 p-8 rounded-3xl text-white" data-aos="fade-up" data-aos-delay="100">
+                <h3 className="text-lg font-bold mb-6 text-accent uppercase tracking-widest">Formatting Requirements</h3>
+                <ul className="space-y-3 text-sm opacity-80">
+                  {["Follow SIARE formatting template", "10–15 pages recommended", "APA/IEEE referencing standards"].map((item, i) => (
+                    <li key={i} className="flex items-center gap-2"><ArrowRight className="h-3 w-3 text-accent" /> {item}</li>
+                  ))}
+                </ul>
+              </Card>
+              <Card className="bg-white/5 border-white/10 p-8 rounded-3xl text-white" data-aos="fade-up" data-aos-delay="200">
+                <h3 className="text-lg font-bold mb-6 text-accent uppercase tracking-widest">Ethical Requirements</h3>
+                <ul className="space-y-3 text-sm opacity-80">
+                  {["No simultaneous submission", "Plagiarism check (iThenticate)", "Original and cited data"].map((item, i) => (
+                    <li key={i} className="flex items-center gap-2"><ArrowRight className="h-3 w-3 text-accent" /> {item}</li>
+                  ))}
+                </ul>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Series Catalog Section */}
+        <section id="series-catalog" className="py-20 bg-slate-50">
           <div className="container mx-auto px-4 md:px-16 lg:px-32">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
+                SIARE Proceedings Series
+              </h2>
+              <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
+              <p className="text-foreground/60 mt-6 max-w-2xl mx-auto font-medium">Each series maintains its own editorial standards under SIARE’s central guidelines.</p>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
-              
               <aside className="lg:col-span-1 space-y-6 lg:sticky lg:top-32" data-aos="fade-up">
                 <div className="bg-white p-6 rounded-2xl shadow-lg border border-slate-100">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-xs font-black uppercase tracking-[0.2em] text-primary/40 flex items-center gap-2">
                       <Filter className="h-3 w-3" /> Filters
                     </h2>
-                    <button 
-                      onClick={resetFilters}
-                      className="text-[10px] font-bold uppercase tracking-widest text-accent hover:text-primary transition-colors"
-                    >
-                      Reset
-                    </button>
+                    <button onClick={resetFilters} className="text-[10px] font-bold uppercase tracking-widest text-accent hover:text-primary transition-colors">Reset</button>
                   </div>
 
                   <div className="space-y-5">
                     <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase text-primary/60 tracking-widest">Journal Name</label>
-                      <Input 
-                        placeholder="Search name..." 
-                        className="h-10 border-slate-200 rounded-xl bg-slate-50 focus:bg-white" 
-                        value={searchQuery} 
-                        onChange={(e) => setSearchQuery(e.target.value)} 
-                      />
+                      <label className="text-[10px] font-black uppercase text-primary/60 tracking-widest">Series Name</label>
+                      <Input placeholder="Search name..." className="h-10 border-slate-200 rounded-xl bg-slate-50 focus:bg-white" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                     </div>
-
                     <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase text-primary/60 tracking-widest">University</label>
-                      <Input 
-                        placeholder="Search institution..." 
-                        className="h-10 border-slate-200 rounded-xl bg-slate-50 focus:bg-white" 
-                        value={universityQuery} 
-                        onChange={(e) => setUniversityQuery(e.target.value)} 
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase text-primary/60 tracking-widest">Field of Study</label>
+                      <label className="text-[10px] font-black uppercase text-primary/60 tracking-widest">Academic Domain</label>
                       <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                        <SelectTrigger className="h-10 border-slate-200 rounded-xl bg-slate-50 focus:bg-white">
-                          <SelectValue placeholder="All Fields" />
-                        </SelectTrigger>
+                        <SelectTrigger className="h-10 border-slate-200 rounded-xl bg-slate-50 focus:bg-white"><SelectValue placeholder="All Domains" /></SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="All">All Fields</SelectItem>
+                          <SelectItem value="All">All Domains</SelectItem>
                           {categories.map(cat => <SelectItem key={cat.name} value={cat.name}>{cat.name}</SelectItem>)}
                         </SelectContent>
                       </Select>
                     </div>
-
-                    <Button 
-                      onClick={handleSearch}
-                      className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-black uppercase text-[10px] tracking-widest h-11 rounded-xl shadow-lg lg:hidden"
-                    >
-                      <Search className="mr-2 h-3.5 w-3.5" /> Apply Filters
-                    </Button>
                   </div>
                 </div>
               </aside>
 
-              <div id="catalog-results" className="lg:col-span-3 min-h-[400px]">
-                <div className="flex items-center justify-between mb-8">
-                  <h3 className="text-sm font-bold text-primary/60">
-                    Results: {filteredJournals.length}
-                  </h3>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold text-primary/40 uppercase tracking-widest">Sort:</span>
-                    <span className="text-[10px] font-black text-primary uppercase tracking-widest">Recent</span>
-                  </div>
-                </div>
-
+              <div className="lg:col-span-3 min-h-[400px]">
                 {loading ? (
-                  <div className="flex flex-col items-center justify-center py-20 space-y-4">
-                    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-accent"></div>
-                    <p className="text-[10px] font-bold text-primary/40 uppercase tracking-[0.2em]">Synchronizing...</p>
-                  </div>
+                  <div className="flex flex-col items-center justify-center py-20"><RefreshCw className="h-10 w-10 text-accent animate-spin mb-4" /><p className="text-xs font-black uppercase text-primary/40">Synchronizing...</p></div>
                 ) : filteredJournals.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                     {filteredJournals.map((journal: any, index: number) => (
                       <Card key={index} className="overflow-hidden group relative rounded-none shadow-lg border-none flex flex-col h-full bg-white transition-all duration-500">
                         <div className="relative aspect-[3/4] w-full shrink-0 flex items-center justify-center p-4 bg-secondary/5">
                           {journal.imageUrl ? (
-                            <Image 
-                              src={journal.imageUrl} 
-                              alt={journal.name} 
-                              fill 
-                              className="object-contain p-4 transition-transform duration-700 group-hover:scale-110" 
-                            />
+                            <Image src={journal.imageUrl} alt={journal.name} fill className="object-contain p-4 transition-transform duration-700 group-hover:scale-110" />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/5 to-accent/5">
-                              <Building2 className="h-12 w-12 text-primary/10" />
-                            </div>
+                            <Building2 className="h-12 w-12 text-primary/10" />
                           )}
-                          
                           <div className="absolute top-3 left-3 z-10 group-hover:opacity-0 transition-opacity duration-300">
-                            <div className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest shadow-sm text-primary">
-                              {journal.domain}
-                            </div>
+                            <div className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest text-primary shadow-sm">{journal.domain}</div>
                           </div>
                         </div>
-
                         <div className="absolute inset-0 flex flex-col justify-end p-5 bg-gradient-to-t from-primary/95 via-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out z-20">
                           <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
-                            <h3 className="text-base font-bold text-white font-headline leading-tight italic mb-1 line-clamp-2">
-                              {journal.name}
-                            </h3>
-                            <div className="flex items-center gap-2 mb-3">
-                              <div className="h-4 w-0.5 bg-accent"></div>
-                              <p className="text-accent font-black uppercase text-[9px] tracking-widest truncate">
-                                {journal.university}
-                              </p>
-                            </div>
-                            
-                            <div className="space-y-1.5 mb-4 opacity-90">
-                              <div className="flex items-center gap-2">
-                                <Tag className="h-2.5 w-2.5 text-accent" />
-                                <p className="text-[9px] font-medium text-white/80">{journal.issn}</p>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <Globe className="h-2.5 w-2.5 text-accent" />
-                                <p className="text-[9px] font-medium text-white/80">{journal.domain}</p>
-                              </div>
-                            </div>
-
-                            <div className="pt-3 border-t border-white/10">
-                              <Button asChild className="w-full bg-accent hover:bg-white text-primary font-black uppercase text-[10px] tracking-widest h-9 rounded-xl transition-all duration-300">
-                                <a href={journal.link} target="_blank">
-                                  View Journal <ExternalLink className="ml-1.5 h-3 w-3" />
-                                </a>
-                              </Button>
-                            </div>
+                            <h3 className="text-base font-bold text-white font-headline leading-tight italic mb-1">{journal.name}</h3>
+                            <p className="text-accent font-black uppercase text-[9px] tracking-widest mb-3">{journal.university}</p>
+                            <Button asChild className="w-full bg-accent hover:bg-white text-primary font-black uppercase text-[10px] tracking-widest h-9 rounded-xl transition-all">
+                              <a href={journal.link} target="_blank">View Series <ExternalLink className="ml-1.5 h-3 w-3" /></a>
+                            </Button>
                           </div>
                         </div>
                       </Card>
                     ))}
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center justify-center py-20 bg-white rounded-3xl border-2 border-dashed border-slate-200 px-4 text-center">
-                    <RefreshCw className="h-10 w-10 text-slate-200 mb-4 animate-reverse-spin" />
-                    <p className="text-base font-bold text-primary/40 uppercase tracking-widest italic">No matching publications</p>
-                    <button 
-                      onClick={resetFilters} 
-                      className="text-accent font-bold uppercase text-[10px] tracking-[0.2em] mt-2 hover:text-primary transition-colors"
-                    >
-                      Clear Filters
-                    </button>
+                  <div className="py-20 text-center bg-white rounded-3xl border-2 border-dashed border-slate-200">
+                    <p className="text-base font-bold text-primary/40 uppercase tracking-widest italic">No series found matching your criteria</p>
                   </div>
                 )}
               </div>
-
             </div>
           </div>
+        </section>
+
+        {/* Indexing Section */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
+                Indexing & Archiving
+              </h2>
+              <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
+              <p className="text-foreground/60 mt-6 max-w-2xl mx-auto font-medium">SIARE ensures long-term preservation of all proceedings through stable digital architecture.</p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {[
+                { icon: Tag, title: "DOI Permanent Links", desc: "Stable citation tracking" },
+                { icon: Cloud, title: "Cloud Archiving", desc: "Redundant digital storage" },
+                { icon: Database, title: "University Repositories", desc: "Institutional linkage" },
+                { icon: Search, title: "Global Indexing", desc: "Academic visibility" }
+              ].map((item, i) => (
+                <div key={i} className="flex flex-col items-center text-center p-6" data-aos="zoom-in" data-aos-delay={i * 100}>
+                  <div className="h-12 w-12 bg-primary/5 rounded-full flex items-center justify-center mb-4 text-accent">
+                    <item.icon className="h-6 w-6" />
+                  </div>
+                  <h4 className="font-bold text-primary text-sm mb-1">{item.title}</h4>
+                  <p className="text-[10px] text-foreground/40 font-bold uppercase">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Call to Action */}
+        <section className="py-24 bg-primary text-white text-center relative overflow-hidden">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32 relative z-10">
+            <div className="max-w-4xl mx-auto" data-aos="zoom-in">
+              <h2 className="text-3xl md:text-5xl font-bold font-headline mb-6 italic">Conference Organizers: Publish With SIARE</h2>
+              <p className="text-xl text-white/70 mb-12 font-medium">
+                We partner with institutions across India, Southeast Asia, Middle East, Europe, Africa, and Australia to publish high-impact proceedings.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                <Button asChild size="lg" className="bg-accent hover:bg-white text-accent-foreground hover:text-primary font-extrabold rounded-xl px-14 py-8 text-lg shadow-xl transition-all hover:scale-105 h-auto">
+                  <Link href="/contact">Partner Now</Link>
+                </Button>
+                <Button variant="outline" asChild size="lg" className="border-white/20 text-white rounded-xl px-14 py-8 text-lg font-bold transition-all hover:scale-105 h-auto">
+                  <Link href="/resources">Download Guidelines</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/5 rounded-full -ml-32 -mb-32 blur-3xl"></div>
         </section>
       </main>
       <Footer />
