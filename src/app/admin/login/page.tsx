@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -29,7 +28,7 @@ export default function AdminLoginPage() {
       await signInWithEmailAndPassword(auth, email, password);
       toast({
         title: "Login Successful",
-        description: "Welcome to the Technical Journals Admin Panel.",
+        description: "Welcome to the SIARE Admin Panel.",
       });
       router.push('/admin/dashboard');
     } catch (error: any) {
@@ -51,7 +50,7 @@ export default function AdminLoginPage() {
             <BookOpen className="h-8 w-8 text-accent" />
           </div>
           <div>
-            <CardTitle className="text-2xl font-bold font-headline italic text-primary">Admin Access</CardTitle>
+            <CardTitle className="text-2xl font-bold font-headline italic text-primary">SIARE Admin Access</CardTitle>
             <CardDescription>Enter your credentials to manage the platform</CardDescription>
           </div>
         </CardHeader>
@@ -61,7 +60,7 @@ export default function AdminLoginPage() {
               <label className="text-sm font-bold text-primary/70 uppercase tracking-wider">Email Address</label>
               <Input
                 type="email"
-                placeholder="admin@technicaljournals.org"
+                placeholder="admin@academicproceeding.org"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
