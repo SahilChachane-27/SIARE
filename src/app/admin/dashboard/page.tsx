@@ -131,7 +131,7 @@ export default function AdminDashboard() {
                   <LayoutDashboard className="h-6 w-6 text-accent" />
                 </div>
                 <h1 className="text-3xl font-black text-primary font-headline italic">
-                  Command Center
+                  SIARE Admin Portal
                 </h1>
               </div>
               <p className="text-muted-foreground text-xs font-bold uppercase tracking-[0.2em] ml-1">
@@ -201,7 +201,7 @@ export default function AdminDashboard() {
                 {recentLoading ? (
                   <div className="p-20 text-center flex flex-col items-center gap-4">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
-                    <p className="text-xs font-bold text-primary/20 uppercase tracking-widest">Synchronizing records...</p>
+                    <p className="text-xs font-bold uppercase tracking-widest text-primary/20">Synchronizing records...</p>
                   </div>
                 ) : (recentJournals && recentJournals.length > 0) ? (
                   <div className="divide-y divide-slate-50">
