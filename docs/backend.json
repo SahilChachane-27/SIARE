@@ -1,9 +1,8 @@
-
 {
   "entities": {
     "Journal": {
       "title": "Journal",
-      "description": "A scholarly journal hosted on the platform.",
+      "description": "A scholarly journal or proceedings series hosted on the platform.",
       "type": "object",
       "properties": {
         "name": {
@@ -20,22 +19,22 @@
         },
         "issn": {
           "type": "string",
-          "description": "The ISSN (International Standard Serial Number) of the journal."
+          "description": "The ISSN of the journal."
         },
         "domain": {
           "type": "string",
-          "description": "The academic field or domain (e.g., Engineering, Law)."
+          "description": "The academic field or domain."
         },
         "country": {
           "type": "string",
-          "description": "The country of origin for the journal."
+          "description": "The country of origin."
         },
         "indexing": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "List of indexing services (e.g., Scopus, UGC CARE)."
+          "description": "List of indexing services."
         },
         "link": {
           "type": "string",
@@ -44,11 +43,11 @@
         },
         "imageUrl": {
           "type": "string",
-          "description": "The data URI or URL of the journal cover image."
+          "description": "The cover image URL."
         },
         "isFeatured": {
           "type": "boolean",
-          "description": "Whether the journal is featured on the home page."
+          "description": "Whether the journal is featured."
         }
       },
       "required": ["name", "university", "issn", "domain", "link"]
@@ -58,47 +57,33 @@
       "description": "A dynamic pricing plan for journal hosting.",
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string",
-          "description": "The name of the pricing plan."
-        },
-        "priceINR": {
-          "type": "string",
-          "description": "Price formatted in INR (e.g. ₹45,000)."
-        },
-        "priceUSD": {
-          "type": "string",
-          "description": "Price formatted in USD (e.g. $494)."
-        },
-        "description": {
-          "type": "string",
-          "description": "A brief summary of the plan's purpose."
-        },
-        "features": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "List of features included in the plan."
-        },
-        "cta": {
-          "type": "string",
-          "description": "The text for the call-to-action button."
-        },
-        "highlight": {
-          "type": "boolean",
-          "description": "Whether this plan should be visually highlighted as recommended."
-        },
-        "tag": {
-          "type": "string",
-          "description": "An optional badge text (e.g. Recommended, Popular)."
-        },
-        "order": {
-          "type": "number",
-          "description": "Display order of the plan."
-        }
+        "name": { "type": "string" },
+        "priceINR": { "type": "string" },
+        "priceUSD": { "type": "string" },
+        "description": { "type": "string" },
+        "features": { "type": "array", "items": { "type": "string" } },
+        "cta": { "type": "string" },
+        "highlight": { "type": "boolean" },
+        "tag": { "type": "string" },
+        "order": { "type": "number" }
       },
       "required": ["name", "priceINR", "priceUSD", "features"]
+    },
+    "Conference": {
+      "title": "Conference",
+      "description": "An upcoming academic conference managed by SIARE.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "location": { "type": "string" },
+        "status": { "type": "string", "description": "e.g. Call for Papers Open, Registration Open" },
+        "tracks": { "type": "string" },
+        "highlights": { "type": "string" },
+        "color": { "type": "string", "description": "Tailwind color class, e.g. bg-blue-500" },
+        "order": { "type": "number" }
+      },
+      "required": ["title", "date", "location"]
     }
   },
   "auth": {
@@ -107,11 +92,15 @@
   "firestore": {
     "/journals/{journalId}": {
       "schema": { "$ref": "#/backend/entities/Journal" },
-      "description": "Collection of university journals."
+      "description": "Collection of university journals/proceedings."
     },
     "/pricingPlans/{planId}": {
       "schema": { "$ref": "#/backend/entities/PricingPlan" },
       "description": "Collection of dynamic pricing plans."
+    },
+    "/conferences/{conferenceId}": {
+      "schema": { "$ref": "#/backend/entities/Conference" },
+      "description": "Collection of upcoming conferences and events."
     }
   }
 }

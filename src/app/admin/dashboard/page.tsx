@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useUser, useAuth, useFirestore, useCollection } from '@/firebase';
@@ -20,7 +19,8 @@ import {
   Clock,
   Globe,
   Edit3,
-  CreditCard
+  CreditCard,
+  Calendar
 } from 'lucide-react';
 import Link from 'next/link';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
@@ -39,6 +39,14 @@ export default function AdminDashboard() {
   }, [db]);
 
   const { data: journals, loading: journalsLoading } = useCollection(journalsQuery);
+
+  // Fetch all conferences for stats
+  const confsQuery = useMemo(() => {
+    if (!db) return null;
+    return query(collection(db, 'conferences'));
+  }, [db]);
+
+  const { data: conferences } = useCollection(confsQuery);
 
   // Fetch recent 5 journals for activity list
   const recentQuery = useMemo(() => {
@@ -63,16 +71,23 @@ export default function AdminDashboard() {
 
   const dynamicStats = useMemo(() => {
     const hostedCount = journals?.length || 0;
+    const confCount = conferences?.length || 0;
     const uniqueUniversities = new Set(journals?.map((j: any) => j.university?.toLowerCase().trim()).filter(Boolean));
-    const uniqueDomains = new Set(journals?.map((j: any) => j.domain?.toLowerCase().trim()).filter(Boolean));
 
     return [
       { 
-        title: "Total Journals", 
+        title: "Proceedings Series", 
         count: journalsLoading ? "..." : hostedCount.toString(), 
         icon: BookOpen, 
         color: "bg-blue-500/10 text-blue-500",
-        desc: "Active publications hosted"
+        desc: "Active series hosted"
+      },
+      { 
+        title: "Global Conferences", 
+        count: journalsLoading ? "..." : confCount.toString(), 
+        icon: Calendar, 
+        color: "bg-purple-500/10 text-purple-500",
+        desc: "Upcoming events"
       },
       { 
         title: "Partner Universities", 
@@ -82,13 +97,6 @@ export default function AdminDashboard() {
         desc: "Institutions on platform"
       },
       { 
-        title: "Academic Domains", 
-        count: journalsLoading ? "..." : uniqueDomains.size.toString(), 
-        icon: Globe, 
-        color: "bg-purple-500/10 text-purple-500",
-        desc: "Diverse research fields"
-      },
-      { 
         title: "Platform Status", 
         count: "Active", 
         icon: Activity, 
@@ -96,7 +104,7 @@ export default function AdminDashboard() {
         desc: "Server health: 99.9%"
       },
     ];
-  }, [journals, journalsLoading]);
+  }, [journals, journalsLoading, conferences]);
 
   if (loading || !user) {
     return (
@@ -117,16 +125,16 @@ export default function AdminDashboard() {
             <div>
               <h1 className="text-3xl font-black text-primary font-headline flex items-center gap-3">
                 <LayoutDashboard className="h-8 w-8 text-accent" />
-                DASHBOARD OVERVIEW
+                SIARE ADMIN
               </h1>
               <p className="text-muted-foreground text-sm font-medium mt-1 uppercase tracking-widest">
-                System Administrator: {user.email}
+                Administrator: {user.email}
               </p>
             </div>
             <div className="flex gap-4">
               <Button asChild className="rounded-funky bg-primary hover:bg-primary/90 text-accent font-bold shadow-lg px-6 h-12">
                 <Link href="/admin/journals">
-                  <Plus className="mr-2 h-5 w-5" /> Add Journal
+                  <Plus className="mr-2 h-5 w-5" /> Add Proceeding
                 </Link>
               </Button>
               <Button 
@@ -168,7 +176,7 @@ export default function AdminDashboard() {
                 <div className="flex justify-between items-center">
                   <div>
                     <CardTitle className="text-xl font-bold text-primary font-headline italic">Recent Publications</CardTitle>
-                    <CardDescription className="mt-1">Latest journals added to the platform</CardDescription>
+                    <CardDescription className="mt-1">Latest proceedings series added</CardDescription>
                   </div>
                   <Button variant="ghost" size="sm" asChild className="text-accent font-bold text-xs uppercase tracking-widest hover:text-primary p-0 h-auto">
                     <Link href="/admin/journals" className="flex items-center">View All <ChevronRight className="ml-1 h-3 w-3" /></Link>
@@ -211,7 +219,7 @@ export default function AdminDashboard() {
                     ))}
                   </div>
                 ) : (
-                  <div className="p-20 text-center text-muted-foreground italic text-sm">No journals recorded yet.</div>
+                  <div className="p-20 text-center text-muted-foreground italic text-sm">No proceedings recorded yet.</div>
                 )}
               </CardContent>
             </Card>
@@ -220,15 +228,15 @@ export default function AdminDashboard() {
             <div className="space-y-8" data-aos="fade-up" data-aos-delay="600">
               <Card className="rounded-funky border-none shadow-xl bg-primary text-white p-10 relative overflow-hidden group">
                 <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <Settings className="h-32 w-32" />
+                  <Calendar className="h-32 w-32" />
                 </div>
                 <div className="relative z-10">
-                  <h3 className="text-2xl font-bold font-headline italic mb-6">Journal Management</h3>
+                  <h3 className="text-2xl font-bold font-headline italic mb-6">Events Manager</h3>
                   <p className="text-white/70 text-sm mb-10 leading-relaxed">
-                    Access the central management suite to update journal details, verify indexing, or remove records from the global catalog.
+                    Update upcoming conferences, workshops, and symposiums. Change dates, status, and tracks for global visibility.
                   </p>
                   <Button asChild className="w-full bg-accent text-accent-foreground font-black italic rounded-funky hover:scale-105 transition-transform shadow-xl h-14">
-                    <Link href="/admin/journals" className="flex items-center justify-center">Launch Manager <ChevronRight className="ml-2 h-5 w-5" /></Link>
+                    <Link href="/admin/events" className="flex items-center justify-center">Launch Events Manager <ChevronRight className="ml-2 h-5 w-5" /></Link>
                   </Button>
                 </div>
               </Card>
@@ -240,7 +248,7 @@ export default function AdminDashboard() {
                 <div className="relative z-10">
                   <h3 className="text-xl font-bold text-primary font-headline italic mb-4">Pricing Plans</h3>
                   <p className="text-muted-foreground text-xs mb-8 leading-relaxed">
-                    Configure institutional hosting packages, update prices, and highlight premium tiers for your partners.
+                    Configure institutional hosting packages and update membership tier pricing for your partners.
                   </p>
                   <Button asChild variant="outline" className="w-full border-primary/20 text-primary font-black italic rounded-funky hover:bg-primary hover:text-white transition-all shadow-sm">
                     <Link href="/admin/pricing" className="flex items-center justify-center">Manage Pricing <ChevronRight className="ml-2 h-4 w-4" /></Link>
@@ -253,11 +261,11 @@ export default function AdminDashboard() {
                 <div className="space-y-6">
                   <div className="flex gap-4 items-start p-4 rounded-xl bg-blue-50/50 border border-blue-100">
                     <div className="h-2.5 w-2.5 rounded-full bg-blue-500 mt-2 shrink-0"></div>
-                    <p className="text-xs text-blue-900 leading-relaxed">New university partner application pending review for SSIPMT Raipur.</p>
+                    <p className="text-xs text-blue-900 leading-relaxed">New membership application pending review for Prof. Amit Sharma.</p>
                   </div>
                   <div className="flex gap-4 items-start p-4 rounded-xl bg-green-50/50 border border-green-100">
                     <div className="h-2.5 w-2.5 rounded-full bg-green-500 mt-2 shrink-0"></div>
-                    <p className="text-xs text-green-900 leading-relaxed">Indexing metadata for 12 journals updated successfully in Google Scholar.</p>
+                    <p className="text-xs text-green-900 leading-relaxed">Metadata for ICMRI 2025 has been successfully pushed to CrossRef.</p>
                   </div>
                 </div>
               </Card>

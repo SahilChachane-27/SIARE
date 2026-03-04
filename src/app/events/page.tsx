@@ -16,36 +16,24 @@ import {
   GraduationCap,
   ClipboardList,
   CheckCircle2,
-  ArrowRight
+  ArrowRight,
+  RefreshCw
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useFirestore, useCollection } from '@/firebase';
+import { collection, query, orderBy } from 'firebase/firestore';
+import { useMemo } from 'react';
 
 export default function EventsPage() {
-  const upcomingEvents = [
-    {
-      title: "International Conference on Multidisciplinary Research & Innovation (ICMRI 2025)",
-      date: "12–13 April 2025",
-      location: "Pune, India (Hybrid)",
-      tracks: "Engineering, Social Sciences, AI, Management, Education",
-      highlights: "Keynote speakers, Scopus-indexed proceedings options",
-      color: "border-blue-500"
-    },
-    {
-      title: "SIARE Global Conference on Sustainable Technologies & Development",
-      date: "20–21 May 2025",
-      location: "Online",
-      focus: "Green energy, environmental sciences, digital sustainability",
-      color: "border-green-500"
-    },
-    {
-      title: "International Symposium on AI and Emerging Technologies (AET 2025)",
-      date: "15–16 June 2025",
-      location: "Bangkok, Thailand",
-      tracks: "AI, Robotics, Data Science, Healthcare Technologies",
-      color: "border-purple-500"
-    }
-  ];
+  const db = useFirestore();
+  
+  const eventsQuery = useMemo(() => {
+    if (!db) return null;
+    return query(collection(db, 'conferences'), orderBy('order', 'asc'));
+  }, [db]);
+
+  const { data: dynamicEvents, loading } = useCollection(eventsQuery);
 
   const pastEvents = [
     { title: "SIARE Academic Forum 2024", desc: "Featured 250+ researchers from 30 countries. Proceedings published under SIARE Multidisciplinary Series." },
@@ -101,45 +89,55 @@ export default function EventsPage() {
               <p className="text-foreground/60 mt-6 max-w-2xl mx-auto font-medium italic">Dynamically showcasing our latest academic gatherings.</p>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-8">
-              {upcomingEvents.map((event, idx) => (
-                <Card key={idx} className={`border-0 border-l-4 ${event.color} shadow-xl rounded-2xl bg-slate-50 p-8 hover:bg-white transition-all duration-300 group`} data-aos="fade-up" data-aos-delay={idx * 100}>
-                  <div className="flex flex-col h-full">
-                    <h3 className="text-xl font-bold text-primary mb-4 italic group-hover:text-accent transition-colors">{event.title}</h3>
-                    <div className="space-y-3 mb-8 flex-1">
-                      <div className="flex items-center gap-2 text-sm text-foreground/70 font-medium"><Calendar className="h-4 w-4 text-accent" /> <strong>Date:</strong> {event.date}</div>
-                      <div className="flex items-center gap-2 text-sm text-foreground/70 font-medium"><MapPin className="h-4 w-4 text-accent" /> <strong>Location:</strong> {event.location}</div>
-                      {event.tracks && <div className="text-xs text-foreground/60 italic mt-2"><strong>Tracks:</strong> {event.tracks}</div>}
-                      {event.highlights && <div className="text-xs text-foreground/60 italic"><strong>Highlights:</strong> {event.highlights}</div>}
-                      {event.focus && <div className="text-xs text-foreground/60 italic"><strong>Focus Areas:</strong> {event.focus}</div>}
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-12 gap-4">
+                <RefreshCw className="h-8 w-8 text-accent animate-spin" />
+                <p className="text-xs font-bold uppercase tracking-widest text-primary/40">Updating Catalog...</p>
+              </div>
+            ) : (dynamicEvents && dynamicEvents.length > 0) ? (
+              <div className="grid lg:grid-cols-2 gap-8">
+                {dynamicEvents.map((event: any, idx: number) => (
+                  <Card key={idx} className={`border-0 border-l-4 ${event.color || 'border-primary'} shadow-xl rounded-2xl bg-slate-50 p-8 hover:bg-white transition-all duration-300 group`} data-aos="fade-up" data-aos-delay={idx * 100}>
+                    <div className="flex flex-col h-full">
+                      <h3 className="text-xl font-bold text-primary mb-4 italic group-hover:text-accent transition-colors">{event.title}</h3>
+                      <div className="space-y-3 mb-8 flex-1">
+                        <div className="flex items-center gap-2 text-sm text-foreground/70 font-medium"><Calendar className="h-4 w-4 text-accent" /> <strong>Date:</strong> {event.date}</div>
+                        <div className="flex items-center gap-2 text-sm text-foreground/70 font-medium"><MapPin className="h-4 w-4 text-accent" /> <strong>Location:</strong> {event.location}</div>
+                        {event.tracks && <div className="text-xs text-foreground/60 italic mt-2"><strong>Tracks:</strong> {event.tracks}</div>}
+                        {event.highlights && <div className="text-xs text-foreground/60 italic"><strong>Highlights:</strong> {event.highlights}</div>}
+                      </div>
+                      <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-200">
+                        <Button asChild size="sm" className="bg-primary hover:bg-accent text-white rounded-xl">
+                          <Link href="/contact">Register Now</Link>
+                        </Button>
+                        <Button variant="outline" size="sm" asChild className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-xl">
+                          <Link href="/contact">Submit Paper</Link>
+                        </Button>
+                      </div>
                     </div>
-                    <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-200">
-                      <Button asChild size="sm" className="bg-primary hover:bg-accent text-white rounded-xl">
-                        <Link href="/contact">Register Now</Link>
-                      </Button>
-                      <Button variant="outline" size="sm" asChild className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-xl">
-                        <Link href="/contact">Submit Paper</Link>
-                      </Button>
-                    </div>
+                  </Card>
+                ))}
+                
+                <Card className="border-0 border-l-4 border-accent shadow-xl rounded-2xl bg-primary text-white p-8 hover:scale-[1.02] transition-all duration-300 flex flex-col" data-aos="fade-up" data-aos-delay="300">
+                  <div className="h-12 w-12 bg-white/10 rounded-xl flex items-center justify-center mb-6">
+                    <Trophy className="h-6 w-6 text-accent" />
                   </div>
+                  <h3 className="text-2xl font-bold font-headline italic mb-4">Annual SIARE Research Excellence Summit</h3>
+                  <div className="space-y-3 mb-8 flex-1">
+                    <div className="flex items-center gap-2 text-sm opacity-80 font-medium"><Calendar className="h-4 w-4 text-accent" /> 2025</div>
+                    <div className="flex items-center gap-2 text-sm opacity-80 font-medium"><MapPin className="h-4 w-4 text-accent" /> UAE / Singapore (Tentative)</div>
+                    <p className="text-xs opacity-70 italic mt-2">Recognizing outstanding research, academic awards, and global networking.</p>
+                  </div>
+                  <Button asChild className="bg-accent hover:bg-white text-primary font-bold rounded-xl w-full">
+                    <Link href="/contact">Nominate Now</Link>
+                  </Button>
                 </Card>
-              ))}
-              
-              <Card className="border-0 border-l-4 border-accent shadow-xl rounded-2xl bg-primary text-white p-8 hover:scale-[1.02] transition-all duration-300 flex flex-col" data-aos="fade-up" data-aos-delay="300">
-                <div className="h-12 w-12 bg-white/10 rounded-xl flex items-center justify-center mb-6">
-                  <Trophy className="h-6 w-6 text-accent" />
-                </div>
-                <h3 className="text-2xl font-bold font-headline italic mb-4">Annual SIARE Research Excellence Summit</h3>
-                <div className="space-y-3 mb-8 flex-1">
-                  <div className="flex items-center gap-2 text-sm opacity-80 font-medium"><Calendar className="h-4 w-4 text-accent" /> 2025</div>
-                  <div className="flex items-center gap-2 text-sm opacity-80 font-medium"><MapPin className="h-4 w-4 text-accent" /> UAE / Singapore (Tentative)</div>
-                  <p className="text-xs opacity-70 italic mt-2">Recognizing outstanding research, academic awards, and global networking.</p>
-                </div>
-                <Button asChild className="bg-accent hover:bg-white text-primary font-bold rounded-xl w-full">
-                  <Link href="/contact">Nominate Now</Link>
-                </Button>
-              </Card>
-            </div>
+              </div>
+            ) : (
+              <div className="text-center py-12 italic text-muted-foreground bg-slate-50 rounded-2xl border border-dashed border-primary/10">
+                Sample Structure: Please add events in the admin panel.
+              </div>
+            )}
           </div>
         </section>
 

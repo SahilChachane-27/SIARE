@@ -1,10 +1,9 @@
-
 export const firebaseConfig = {
-  apiKey: "AIzaSyAo7NPJ0XYKihWbwKCWtxnUZ6HXCr6n-bw",
-  authDomain: "technical-journals.firebaseapp.com",
-  projectId: "technical-journals",
-  storageBucket: "technical-journals.firebasestorage.app",
-  messagingSenderId: "450907720990",
-  appId: "1:450907720990:web:ee206e37b1a8adcd7a8d0f",
-  measurementId: "G-YKZ7SCCNBF"
+  apiKey: "AIzaSyCS-iZWbagmfpEAPON1I-haQUpRU0MvcHY",
+  authDomain: "siare-ed9b9.firebaseapp.com",
+  projectId: "siare-ed9b9",
+  storageBucket: "siare-ed9b9.firebasestorage.app",
+  messagingSenderId: "741299154090",
+  appId: "1:741299154090:web:3329772009725f6daeb4d3",
+  measurementId: "G-3CEPH2BSHV"
 };
