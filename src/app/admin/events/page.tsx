@@ -18,7 +18,11 @@ import {
   Calendar,
   Star,
   ArrowUpDown,
-  MapPin
+  MapPin,
+  Presentation,
+  CheckCircle2,
+  Clock,
+  LayoutGrid
 } from 'lucide-react';
 import Link from 'next/link';
 import { errorEmitter } from '@/firebase/error-emitter';
@@ -83,7 +87,7 @@ export default function EventsManagement() {
       const docRef = doc(db, 'conferences', editingId);
       updateDoc(docRef, eventData)
         .then(() => {
-          toast({ title: "Event Updated", description: `${title} has been updated successfully.` });
+          toast({ title: "Update Success", description: `Conference "${title}" has been synchronized.` });
         })
         .catch(async (err) => {
           const permissionError = new FirestorePermissionError({
@@ -101,7 +105,7 @@ export default function EventsManagement() {
       };
       addDoc(colRef, newEvent)
         .then(() => {
-          toast({ title: "Event Created", description: `${title} is now listed.` });
+          toast({ title: "Event Cataloged", description: `New conference "${title}" is now active.` });
         })
         .catch(async (err) => {
           const permissionError = new FirestorePermissionError({
@@ -132,12 +136,12 @@ export default function EventsManagement() {
   const handleDelete = (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
     if (!db || !id) return;
-    if (!window.confirm("Are you sure you want to delete this event?")) return;
+    if (!window.confirm("Are you sure you want to permanently remove this conference from the catalog?")) return;
     
     const docRef = doc(db, 'conferences', id);
     deleteDoc(docRef)
       .then(() => {
-        toast({ title: "Event Deleted", description: "The event has been removed from the catalog." });
+        toast({ title: "Entry Removed", description: "The conference record has been deleted." });
       })
       .catch(async (err) => {
         const permissionError = new FirestorePermissionError({
@@ -151,135 +155,168 @@ export default function EventsManagement() {
   if (userLoading || !user) return null;
 
   return (
-    <div className="flex flex-col min-h-screen bg-background overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-slate-50 overflow-x-hidden">
       <Header />
       <main className="flex-1 pt-32 pb-24">
-        <div className="container mx-auto px-4 md:px-8 lg:px-12">
-          <div className="flex items-center gap-4 mb-12" data-aos="fade-right">
-            <Button variant="ghost" size="icon" asChild className="rounded-full">
-              <Link href="/admin/dashboard"><ArrowLeft className="h-6 w-6" /></Link>
-            </Button>
-            <h1 className="text-3xl md:text-4xl font-bold text-primary font-headline italic">
-              {editingId ? 'Edit Event' : 'Conference Management'}
-            </h1>
+        <div className="container mx-auto px-4 md:px-8 max-w-7xl">
+          
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
+            <div className="flex items-center gap-4">
+              <Button variant="ghost" size="icon" asChild className="rounded-full bg-white shadow-sm hover:bg-primary hover:text-white transition-colors">
+                <Link href="/admin/dashboard"><ArrowLeft className="h-5 w-5" /></Link>
+              </Button>
+              <div>
+                <h1 className="text-3xl font-black text-primary font-headline italic">
+                  Conference Manager
+                </h1>
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/40 ml-1">Event Registry & Cataloging</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl shadow-sm border border-slate-100">
+              <Clock className="h-4 w-4 text-accent" />
+              <span className="text-[10px] font-black uppercase text-primary/60 tracking-widest">Active Session: {new Date().toLocaleDateString()}</span>
+            </div>
           </div>
 
-          <div className="grid lg:grid-cols-4 gap-12">
-            <div className="lg:col-span-1" data-aos="fade-up">
-              <Card className="rounded-funky border-none shadow-2xl p-6 md:p-8 lg:sticky lg:top-32">
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-xl font-bold text-primary italic">
-                    {editingId ? 'Update Event' : 'Add New Event'}
+          <div className="grid lg:grid-cols-12 gap-8 items-start">
+            
+            {/* Management Console (Form) */}
+            <div className="lg:col-span-4" data-aos="fade-right">
+              <Card className="rounded-2xl border-none shadow-2xl bg-white p-8 lg:sticky lg:top-32">
+                <div className="flex justify-between items-center mb-8 border-b border-slate-50 pb-4">
+                  <h2 className="text-lg font-bold text-primary font-headline flex items-center gap-2 italic">
+                    <Presentation className="h-5 w-5 text-accent" />
+                    {editingId ? 'Modify Record' : 'Add Conference'}
                   </h2>
                   {editingId && (
-                    <Button variant="ghost" size="sm" onClick={resetForm} className="text-primary/40 hover:text-primary">
+                    <Button variant="ghost" size="sm" onClick={resetForm} className="text-[10px] font-black uppercase tracking-widest text-red-500 hover:bg-red-50">
                       Cancel
                     </Button>
                   )}
                 </div>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase text-primary/40 tracking-widest">Event Title</label>
-                    <Input value={title} onChange={(e) => setTitle(e.target.value)} required placeholder="e.g. ICMRI 2025" className="rounded-xl h-12" />
+                
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Title of Event</label>
+                    <Input value={title} onChange={(e) => setTitle(e.target.value)} required placeholder="e.g. ICMRI 2025" className="rounded-xl border-slate-100 h-11 focus:ring-accent/20" />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase text-primary/40 tracking-widest">Date</label>
-                      <Input value={date} onChange={(e) => setDate(e.target.value)} required placeholder="12–13 April 2025" className="rounded-xl h-12" />
+                    <div className="space-y-1.5">
+                      <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Schedule</label>
+                      <Input value={date} onChange={(e) => setDate(e.target.value)} required placeholder="12–13 April" className="rounded-xl border-slate-100 h-11" />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase text-primary/40 tracking-widest">Location</label>
-                      <Input value={location} onChange={(e) => setLocation(e.target.value)} required placeholder="Pune, India" className="rounded-xl h-12" />
+                    <div className="space-y-1.5">
+                      <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Venue/City</label>
+                      <Input value={location} onChange={(e) => setLocation(e.target.value)} required placeholder="Pune, India" className="rounded-xl border-slate-100 h-11" />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase text-primary/40 tracking-widest">Status</label>
-                    <Input value={status} onChange={(e) => setStatus(e.target.value)} placeholder="Call for Papers Open" className="rounded-xl h-12" />
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Status Badge</label>
+                    <Input value={status} onChange={(e) => setStatus(e.target.value)} placeholder="Call for Papers Open" className="rounded-xl border-slate-100 h-11" />
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase text-primary/40 tracking-widest">Tracks</label>
-                    <Input value={tracks} onChange={(e) => setTracks(e.target.value)} placeholder="Engineering, AI, Management..." className="rounded-xl h-12" />
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Research Tracks</label>
+                    <Input value={tracks} onChange={(e) => setTracks(e.target.value)} placeholder="Engineering, AI, Management..." className="rounded-xl border-slate-100 h-11" />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase text-primary/40 tracking-widest">Color (Tailwind)</label>
-                      <Input value={color} onChange={(e) => setColor(e.target.value)} placeholder="bg-blue-500" className="rounded-xl h-12" />
+                    <div className="space-y-1.5">
+                      <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">UI Color</label>
+                      <Input value={color} onChange={(e) => setColor(e.target.value)} placeholder="bg-blue-500" className="rounded-xl border-slate-100 h-11" />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase text-primary/40 tracking-widest">Order</label>
-                      <Input type="number" value={order} onChange={(e) => setOrder(e.target.value)} className="rounded-xl h-12" />
+                    <div className="space-y-1.5">
+                      <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Priority Order</label>
+                      <Input type="number" value={order} onChange={(e) => setOrder(e.target.value)} className="rounded-xl border-slate-100 h-11" />
                     </div>
                   </div>
 
-                  <Button type="submit" className="w-full h-12 bg-accent text-accent-foreground font-bold rounded-funky shadow-lg hover:scale-105 transition-transform text-sm">
-                    {editingId ? <><Edit3 className="mr-2 h-4 w-4" /> Update Event</> : <><Plus className="mr-2 h-4 w-4" /> Create Event</>}
+                  <Button type="submit" className="w-full h-12 bg-primary text-accent font-black uppercase text-xs tracking-widest rounded-xl shadow-xl hover:scale-[1.02] transition-transform mt-4">
+                    {editingId ? <><Edit3 className="mr-2 h-4 w-4" /> Sync Changes</> : <><Plus className="mr-2 h-4 w-4" /> Add to Catalog</>}
                   </Button>
                 </form>
               </Card>
             </div>
 
-            <div className="lg:col-span-3 space-y-8" data-aos="fade-left">
-              <div className="flex justify-between items-center">
-                <h2 className="text-xl font-bold text-primary italic">Live Events {events && `(${events.length})`}</h2>
-                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-primary/40">
-                  <ArrowUpDown className="h-3 w-3" /> Sorting by Order
+            {/* Live Registry (List) */}
+            <div className="lg:col-span-8 space-y-6" data-aos="fade-left">
+              <div className="flex justify-between items-center px-4">
+                <h2 className="text-lg font-bold text-primary font-headline italic flex items-center gap-2">
+                  <LayoutGrid className="h-5 w-5 text-accent" />
+                  Live Registry {events && <span className="text-xs font-black bg-primary/5 px-2 py-0.5 rounded-full text-primary/40 ml-1">({events.length})</span>}
+                </h2>
+                <div className="flex items-center gap-4 text-[9px] font-black uppercase tracking-[0.2em] text-primary/30">
+                  <span className="flex items-center gap-1.5"><ArrowUpDown className="h-3 w-3" /> Sorting: Order Asc</span>
                 </div>
               </div>
               
               {eventsLoading ? (
-                <div className="flex justify-center p-12"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div></div>
+                <div className="flex flex-col items-center justify-center p-32 bg-white rounded-2xl border-none shadow-sm gap-4">
+                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-accent"></div>
+                  <p className="text-[10px] font-black text-primary/20 uppercase tracking-[0.3em]">Updating registry...</p>
+                </div>
               ) : (events && events.length > 0) ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {events.map((event: any) => (
-                    <Card key={event.id} className="rounded-2xl shadow-xl border-none overflow-hidden relative group bg-white">
-                      <div className={`h-2 ${event.color || 'bg-primary'}`}></div>
-                      <div className="p-8">
-                        <div className="flex justify-between items-start mb-6">
+                    <Card key={event.id} className="rounded-2xl shadow-lg border-none overflow-hidden relative group bg-white hover:shadow-2xl transition-all duration-500">
+                      <div className={`h-1.5 ${event.color || 'bg-primary'}`}></div>
+                      <div className="p-6">
+                        <div className="flex justify-between items-start mb-4">
                           <div>
-                            <h3 className="text-xl font-bold text-primary font-headline italic">{event.title}</h3>
-                            <p className="text-[10px] text-accent uppercase font-black mt-1 tracking-widest">{event.status}</p>
+                            <div className="text-[8px] font-black text-accent uppercase tracking-widest mb-1 flex items-center gap-1">
+                              <Star className="h-2.5 w-2.5 fill-current" /> {event.status || 'Active'}
+                            </div>
+                            <h3 className="text-base font-bold text-primary font-headline italic leading-tight group-hover:text-accent transition-colors">
+                              {event.title}
+                            </h3>
                           </div>
-                          <div className="flex gap-2">
-                            <Button variant="ghost" size="icon" onClick={() => handleEdit(event)} className="h-8 w-8 rounded-full bg-slate-50 text-primary hover:bg-accent hover:text-white">
-                              <Edit3 className="h-4 w-4" />
+                          <div className="flex gap-1.5">
+                            <Button variant="ghost" size="icon" onClick={() => handleEdit(event)} className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all shadow-sm">
+                              <Edit3 className="h-3.5 w-3.5" />
                             </Button>
-                            <Button variant="ghost" size="icon" onClick={(e) => handleDelete(e, event.id)} className="h-8 w-8 rounded-full bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white">
-                              <Trash2 className="h-4 w-4" />
+                            <Button variant="ghost" size="icon" onClick={(e) => handleDelete(e, event.id)} className="h-8 w-8 rounded-lg bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm">
+                              <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           </div>
                         </div>
 
-                        <div className="space-y-3 mb-6">
-                          <div className="flex items-center gap-3 text-sm font-bold text-primary/60">
-                            <Calendar className="h-4 w-4 text-accent" /> {event.date}
+                        <div className="grid grid-cols-2 gap-4 mb-6">
+                          <div className="flex items-center gap-2 text-[10px] font-bold text-primary/60">
+                            <Calendar className="h-3.5 w-3.5 text-accent" /> {event.date}
                           </div>
-                          <div className="flex items-center gap-3 text-sm font-bold text-primary/60">
-                            <MapPin className="h-4 w-4 text-accent" /> {event.location}
+                          <div className="flex items-center gap-2 text-[10px] font-bold text-primary/60">
+                            <MapPin className="h-3.5 w-3.5 text-accent" /> {event.location}
                           </div>
                         </div>
 
                         {event.tracks && (
-                          <p className="text-xs text-foreground/60 italic border-t pt-4">
-                            <strong>Tracks:</strong> {event.tracks}
-                          </p>
+                          <div className="bg-slate-50/50 p-3 rounded-xl border border-slate-100 mb-4">
+                            <p className="text-[9px] text-foreground/60 leading-relaxed italic font-medium">
+                              <strong className="text-primary/40 uppercase tracking-tighter not-italic mr-1">Tracks:</strong> {event.tracks}
+                            </p>
+                          </div>
                         )}
 
-                        <div className="flex items-center justify-between pt-6 mt-6 border-t border-slate-100">
-                          <span className="text-[10px] font-black text-primary/20 uppercase tracking-[0.2em]">Order: {event.order}</span>
+                        <div className="flex items-center justify-between pt-4 mt-2 border-t border-slate-50">
+                          <span className="text-[8px] font-black text-primary/20 uppercase tracking-[0.2em]">Registry ID: {event.id.slice(0,8)}</span>
+                          <div className="text-[10px] font-black text-primary/40 italic">Order: {event.order}</div>
                         </div>
                       </div>
                     </Card>
                   ))}
                 </div>
               ) : (
-                <Card className="rounded-funky border-dashed border-2 border-primary/10 p-20 text-center">
-                  <Calendar className="h-12 w-12 text-primary/10 mx-auto mb-4" />
-                  <p className="text-foreground/40 font-bold uppercase tracking-widest text-xs italic">No dynamic events found. Add your first conference.</p>
-                </Card>
+                <div className="bg-white rounded-2xl border-2 border-dashed border-primary/5 p-32 text-center flex flex-col items-center gap-6">
+                  <div className="h-16 w-16 bg-primary/5 rounded-full flex items-center justify-center text-primary/10">
+                    <Presentation className="h-8 w-8" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-primary/40 uppercase tracking-widest">No Conferences Registry Found</p>
+                    <p className="text-[10px] text-muted-foreground mt-2 italic">Begin by adding an upcoming academic gathering in the console.</p>
+                  </div>
+                </div>
               )}
             </div>
           </div>
