@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
             <p className="text-lg font-medium text-primary/70">Last Updated: October 2024</p>
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-primary italic">1. Introduction</h2>
-              <p>Technical Journals is committed to protecting the privacy of the academic institutions and individuals who use our hosting services. This policy outlines how we collect, use, and safeguard your data.</p>
+              <p>SIARE is committed to protecting the privacy of the academic institutions and individuals who use our hosting services. This policy outlines how we collect, use, and safeguard your data.</p>
             </section>
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-primary italic">2. Data Collection</h2>

@@ -6,8 +6,8 @@ import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { FirebaseErrorListener } from '@/components/FirebaseErrorListener';
 
 export const metadata: Metadata = {
-  title: 'Technical Journals | Secure University Journal Hosting',
-  description: 'Technical Journals - Providing secure, scalable, and ethical journal hosting exclusively for University-owned academic journals.',
+  title: 'SIARE | Society of Integrated Academic Research and Education',
+  description: 'SIARE - Providing secure, scalable, and ethical journal hosting and conference proceedings exclusively for University-owned academic research.',
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },

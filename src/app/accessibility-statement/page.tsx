@@ -15,7 +15,7 @@ export default function AccessibilityStatementPage() {
             <p className="text-lg font-medium text-primary/70">Commitment to Inclusive Research</p>
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-primary italic">Our Commitment</h2>
-              <p>Technical Journals is committed to ensuring that our platform and the research it hosts are accessible to everyone, including individuals with disabilities. We aim to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA.</p>
+              <p>SIARE is committed to ensuring that our platform and the research it hosts are accessible to everyone, including individuals with disabilities. We aim to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA.</p>
             </section>
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-primary italic">Key Features</h2>
@@ -28,7 +28,7 @@ export default function AccessibilityStatementPage() {
             </section>
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-primary italic">Feedback</h2>
-              <p>If you encounter any accessibility barriers on our platform, please contact our support team at support@technicaljournals.org. We value your feedback and will work to resolve any issues promptly.</p>
+              <p>If you encounter any accessibility barriers on our platform, please contact our support team at support@academicproceeding.org. We value your feedback and will work to resolve any issues promptly.</p>
             </section>
           </div>
         </div>

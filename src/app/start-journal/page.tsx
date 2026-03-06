@@ -67,20 +67,20 @@ export default function StartJournalPage() {
           <div className="relative z-10 max-w-7xl mx-auto">
             <div className="space-y-6 md:space-y-8">
               <h1 className="text-xl sm:text-3xl md:text-5xl font-bold leading-tight text-white font-headline">
-                Start Your Journal with Technical Journals
+                Start Your Journal with SIARE
               </h1>
               <p className="max-w-5xl mx-auto text-sm sm:text-lg md:text-xl text-white/90 font-medium italic">
-                Empowering your institution with OJS Platform technology.
+                Empowering your institution with professional OJS Platform technology.
               </p>
 
               <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 sm:gap-8 text-white/90">
                 <a 
-                  href="mailto:support@technicaljournals.org" 
+                  href="mailto:support@academicproceeding.org" 
                   className="flex items-center gap-2 hover:text-white transition-colors sm:border-r sm:border-white/20 sm:pr-8 last:border-0"
                 >
                   <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                   <span className="font-bold text-xs sm:text-base">Email:</span> 
-                  <span className="text-[10px] sm:text-base break-all">support@technicaljournals.org</span>
+                  <span className="text-[10px] sm:text-base break-all">support@academicproceeding.org</span>
                 </a>
                 <a 
                   href="tel:0000000000" 

@@ -15,11 +15,11 @@ export default function HostingAgreementPage() {
             <p className="text-lg font-medium text-primary/70">Standard Institutional Terms</p>
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-primary italic">1. Scope of Service</h2>
-              <p>Technical Journals provides a specialized OJS Platform based hosting environment exclusively for University-owned academic journals. Our services include server maintenance, technical support, and indexing assistance.</p>
+              <p>SIARE provides a specialized OJS Platform based hosting environment exclusively for University-owned academic journals. Our services include server maintenance, technical support, and indexing assistance.</p>
             </section>
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-primary italic">2. Institutional Ownership</h2>
-              <p>All content, including manuscripts, reviews, and published articles, remains the sole property of the hosting University or Institution. Technical Journals acts as a service provider and claims no rights over the intellectual property hosted on our platform.</p>
+              <p>All content, including manuscripts, reviews, and published articles, remains the sole property of the hosting University or Institution. SIARE acts as a service provider and claims no rights over the intellectual property hosted on our platform.</p>
             </section>
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-primary italic">3. Service Availability</h2>
@@ -27,7 +27,7 @@ export default function HostingAgreementPage() {
             </section>
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-primary italic">4. Termination</h2>
-              <p>Institutions may terminate the hosting agreement with a 90-day notice. In such cases, Technical Journals will provide a full backup of all journal data and assist in the migration process.</p>
+              <p>Institutions may terminate the hosting agreement with a 90-day notice. In such cases, SIARE will provide a full backup of all journal data and assist in the migration process.</p>
             </section>
           </div>
         </div>
