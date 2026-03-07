@@ -9,21 +9,9 @@ export const metadata: Metadata = {
   title: 'SIARE | Society of Integrated Academic Research and Education',
   description: 'SIARE - Providing secure, scalable, and ethical journal hosting and conference proceedings exclusively for University-owned academic research.',
   icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon-16x16 copy.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32 copy.png', sizes: '32x32', type: 'image/png' },
-    ],
-    apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
-    other: [
-      {
-        rel: 'android-chrome',
-        url: '/android-chrome-512x512.png',
-        sizes: '512x512',
-      },
-    ],
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
 };
 
