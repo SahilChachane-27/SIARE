@@ -58,11 +58,11 @@ export default function AboutPage() {
   ];
 
   const values = [
-    { icon: ShieldCheck, title: "Integrity", desc: "Ethical and transparent practices" },
-    { icon: Trophy, title: "Quality", desc: "Rigorous international standards" },
-    { icon: Lightbulb, title: "Innovation", desc: "Embracing AI and digital tools" },
-    { icon: Users, title: "Inclusivity", desc: "Equal opportunities for all scholars" },
-    { icon: Target, title: "Impact", desc: "Contributing to global development" }
+    { icon: ShieldCheck, title: "Integrity", desc: "Ethical, transparent, and reliable academic practices" },
+    { icon: Trophy, title: "Quality", desc: "Maintaining rigorous international publishing standards" },
+    { icon: Lightbulb, title: "Innovation", desc: "Encouraging digital tools, AI adoption, and new methodologies" },
+    { icon: Users, title: "Inclusivity", desc: "Providing equal opportunities for scholars worldwide" },
+    { icon: Target, title: "Impact", desc: "Ensuring research contributes to global development goals" }
   ];
 
   return (
