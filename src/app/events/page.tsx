@@ -3,7 +3,7 @@
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { ScrollToTop } from '@/components/layout/scroll-to-top';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { 
   Calendar, 
@@ -21,7 +21,11 @@ import {
   History,
   Clock,
   User,
-  ExternalLink
+  ExternalLink,
+  FileEdit,
+  Award,
+  UserPlus,
+  Star
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -314,6 +318,142 @@ export default function EventsPage() {
                   data-ai-hint="scholars meeting"
                 />
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Event Proposal Guidelines */}
+        <section className="py-20 bg-slate-50">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+            <div className="flex items-center gap-4 mb-12" data-aos="fade-right">
+              <div className="h-12 w-12 rounded-xl bg-accent flex items-center justify-center text-primary shadow-lg">
+                <FileEdit className="h-6 w-6" />
+              </div>
+              <h2 className="text-3xl font-bold text-primary font-headline italic">Event Proposal Guidelines</h2>
+            </div>
+
+            <Card className="rounded-3xl border-none shadow-2xl bg-white p-10" data-aos="fade-up">
+              <div className="grid lg:grid-cols-2 gap-12">
+                <div>
+                  <p className="text-lg text-foreground/70 mb-8 italic font-medium">
+                    Institutions seeking to collaborate must provide:
+                  </p>
+                  <ul className="space-y-4">
+                    {[
+                      "Conference theme & objectives",
+                      "Organizing committee details",
+                      "Paper submission timeline",
+                      "Review process framework",
+                      "Expected number of submissions",
+                      "Venue (physical/online/hybrid)",
+                      "Technical partners (if any)"
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-center gap-3 text-sm font-bold text-primary/80">
+                        <CheckCircle2 className="h-5 w-5 text-accent" /> {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="bg-primary/5 rounded-[40px] p-10 flex flex-col justify-center border border-primary/5">
+                  <h4 className="text-xl font-bold text-primary font-headline italic mb-4">Post-Approval Workflow</h4>
+                  <p className="text-sm text-foreground/60 leading-relaxed italic">
+                    Upon approval, SIARE will sign a publishing MoU and initiate workflows for submission management, technical setup, and metadata coordination.
+                  </p>
+                  <Button asChild className="mt-8 bg-primary hover:bg-accent text-white rounded-xl w-fit">
+                    <Link href="/contact">Submit Proposal</Link>
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </section>
+
+        {/* Awards & Recognitions */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+            <div className="flex items-center gap-4 mb-12" data-aos="fade-right">
+              <div className="h-12 w-12 rounded-xl bg-primary flex items-center justify-center text-white shadow-lg">
+                <Award className="h-6 w-6" />
+              </div>
+              <h2 className="text-3xl font-bold text-primary font-headline italic">Awards & Recognitions</h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[
+                { title: "Best Paper Award", icon: Star, desc: "Recognizing outstanding research quality and contribution." },
+                { title: "Young Researcher Award", icon: Trophy, desc: "Empowering emerging scholars and early-career researchers." },
+                { title: "Outstanding Reviewer Award", icon: CheckCircle2, desc: "Acknowledging excellence in the peer review process." },
+                { title: "Excellence in Academic Contribution Award", icon: Zap, desc: "For significant impact on multidisciplinary research." },
+                { title: "Distinguished Educator Award", icon: GraduationCap, desc: "Honoring leadership in academic training and pedagogy." }
+              ].map((award, i) => (
+                <Card key={i} className="p-8 border-none shadow-xl bg-slate-50 hover:bg-white transition-all group rounded-2xl" data-aos="fade-up" data-aos-delay={i * 100}>
+                  <div className="h-12 w-12 rounded-xl bg-primary/5 flex items-center justify-center text-accent mb-6 group-hover:bg-accent group-hover:text-primary transition-colors">
+                    <award.icon className="h-6 w-6" />
+                  </div>
+                  <h4 className="text-lg font-bold text-primary mb-3 italic">{award.title}</h4>
+                  <p className="text-xs text-foreground/60 leading-relaxed italic">{award.desc}</p>
+                </Card>
+              ))}
+              <div className="flex flex-col justify-center p-8 bg-accent/10 rounded-2xl border border-accent/20" data-aos="fade-up">
+                <p className="text-xs font-bold text-primary/70 leading-relaxed italic">
+                  These recognitions help boost academic profiles and enhance researcher visibility across the global scholarly network.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Registration & Participation */}
+        <section className="py-20 bg-slate-50">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+            <div className="flex items-center gap-4 mb-12" data-aos="fade-right">
+              <div className="h-12 w-12 rounded-xl bg-accent flex items-center justify-center text-primary shadow-lg">
+                <UserPlus className="h-6 w-6" />
+              </div>
+              <h2 className="text-3xl font-bold text-primary font-headline italic">Registration & Participation</h2>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12">
+              <Card className="rounded-3xl border-none shadow-2xl bg-white p-10 overflow-hidden relative group" data-aos="fade-right">
+                <div className="relative z-10">
+                  <h3 className="text-xl font-bold text-primary mb-6 flex items-center gap-2">
+                    <ArrowRight className="h-5 w-5 text-accent" /> How to Join
+                  </h3>
+                  <div className="space-y-4">
+                    {[
+                      "Online registration portal",
+                      "Institutional nomination",
+                      "Conference invitations"
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <CheckCircle2 className="h-4 w-4 text-accent" />
+                        <span className="text-sm font-bold text-primary/80 uppercase tracking-widest">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="rounded-3xl border-none shadow-2xl bg-white p-10" data-aos="fade-left">
+                <h3 className="text-xl font-bold text-primary mb-6 flex items-center gap-2">
+                  <Zap className="h-5 w-5 text-accent" /> Benefits for Accepted Authors
+                </h3>
+                <div className="grid gap-4">
+                  {[
+                    { label: "Presentation slots", desc: "Showcase your research to global peers." },
+                    { label: "E-certificates", desc: "Digital recognition of your participation." },
+                    { label: "Proceedings publication", desc: "Indexed archival of your conference paper (when applicable)." }
+                  ].map((benefit, i) => (
+                    <div key={i} className="flex items-start gap-4">
+                      <div className="h-6 w-6 rounded-full bg-accent/10 flex items-center justify-center text-accent text-[10px] font-black shrink-0 mt-1">{i+1}</div>
+                      <div>
+                        <p className="text-sm font-bold text-primary leading-tight mb-1">{benefit.label}</p>
+                        <p className="text-[10px] text-foreground/50 italic leading-relaxed">{benefit.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
             </div>
           </div>
         </section>
