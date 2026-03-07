@@ -14,35 +14,35 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 const blogPosts = [
   { 
     id: 'blog-post-1', 
-    category: 'Sustainability', 
-    title: 'The Future of Eco-Friendly Construction Materials', 
+    category: 'Research Ethics', 
+    title: 'Navigating the Future of Peer Review in the AI Era', 
     date: 'Jan 15, 2026', 
     readTime: '8 min read', 
-    excerpt: 'Exploring the latest innovations in sustainable building materials and how they are transforming the industry for a greener future.' 
+    excerpt: 'Exploring how artificial intelligence is transforming the scholarly peer-review process and the ethical considerations for researchers.' 
   },
   { 
     id: 'blog-post-2', 
-    category: 'Interior Design', 
-    title: 'Minimalist Trends in Modern Luxury Residential Projects', 
+    category: 'Open Access', 
+    title: 'The Impact of Gold Open Access on Global Research Visibility', 
     date: 'Feb 02, 2026', 
     readTime: '6 min read', 
-    excerpt: 'How high-end developments are embracing minimalism to create sophisticated, open-concept living spaces that breathe.' 
+    excerpt: 'How removing paywalls from academic proceedings accelerates knowledge dissemination and increases citation metrics for universities.' 
   },
   { 
     id: 'blog-post-3', 
-    category: 'Urban Planning', 
-    title: 'The Impact of Mixed-Use Developments on City Life', 
+    category: 'Collaboration', 
+    title: 'Bridges Between Borders: The Rise of Multidisciplinary Summits', 
     date: 'Feb 10, 2026', 
     readTime: '10 min read', 
-    excerpt: 'Analyzing how combining commercial, residential, and retail spaces creates more vibrant and sustainable urban centers.' 
+    excerpt: 'Analyzing why integrated academic conferences are becoming the preferred platform for solving complex global challenges.' 
   },
   { 
     id: 'blog-post-4', 
-    category: 'Technology', 
-    title: 'Smart Buildings: Integrating IoT into Commercial Architecture', 
+    category: 'Digital Publishing', 
+    title: 'Metadata Excellence: Why DOI Integration Matters for Authors', 
     date: 'Mar 05, 2026', 
     readTime: '12 min read', 
-    excerpt: 'From energy efficiency to occupant comfort, see how the Internet of Things is revolutionizing modern office towers.' 
+    excerpt: 'A deep dive into the technical standards of digital archiving and how persistent identifiers protect the legacy of your research.' 
   }
 ];
 
@@ -62,10 +62,10 @@ export default function BlogPage() {
         <section className="bg-primary text-white pt-32 pb-16 md:pb-24">
           <div className="container mx-auto px-4 text-left">
             <h1 className="text-4xl md:text-6xl font-bold font-headline italic mb-6 leading-tight">
-              Horizon <span className="text-accent">Insights</span>
+              SIARE <span className="text-accent">Insights</span>
             </h1>
             <p className="text-lg md:text-xl text-white/80 max-w-2xl font-medium italic">
-              Latest trends, news, and deep dives from the world of premium real estate and construction.
+              Latest trends, news, and deep dives from the world of integrated academic research and education.
             </p>
           </div>
         </section>
