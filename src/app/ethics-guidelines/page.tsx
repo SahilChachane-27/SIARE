@@ -22,7 +22,8 @@ import {
   Layers,
   ArrowRight,
   Archive,
-  Cloud
+  Cloud,
+  Check
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -31,7 +32,7 @@ export default function EthicsGuidelinesPage() {
     {
       id: "1",
       icon: ShieldCheck,
-      title: "1. Publication Ethics Policy",
+      title: "Publication Ethics Policy",
       content: (
         <div className="space-y-4">
           <p className="text-xs">SIARE follows international ethical guidelines including COPE. All stakeholders must uphold specific responsibilities:</p>
@@ -71,7 +72,7 @@ export default function EthicsGuidelinesPage() {
     {
       id: "2",
       icon: Search,
-      title: "2. Peer Review Policy",
+      title: "Peer Review Policy",
       content: (
         <div className="space-y-4">
           <p className="text-xs">SIARE uses a <strong>double-blind peer review</strong> system (reviewers and authors do not know each other’s identity).</p>
@@ -98,7 +99,7 @@ export default function EthicsGuidelinesPage() {
     {
       id: "3",
       icon: AlertTriangle,
-      title: "3. Plagiarism Policy",
+      title: "Plagiarism Policy",
       content: (
         <div className="space-y-4">
           <p className="text-xs">SIARE enforces strict rules. Self-plagiarism and recycled content are treated as violations.</p>
@@ -122,7 +123,7 @@ export default function EthicsGuidelinesPage() {
     {
       id: "4",
       icon: UserX,
-      title: "4. Conflict of Interest",
+      title: "Conflict of Interest Policy",
       content: (
         <div className="space-y-2">
           <p className="text-xs">All contributors must disclose financial relationships, institutional affiliations, personal connections, or reviewer-author relationships. Editors may reject or reassign papers with potential conflicts.</p>
@@ -132,7 +133,7 @@ export default function EthicsGuidelinesPage() {
     {
       id: "5",
       icon: Trash2,
-      title: "5. Withdrawal & Retraction",
+      title: "Withdrawal & Retraction Policy",
       content: (
         <div className="space-y-4">
           <div className="space-y-1">
@@ -149,7 +150,7 @@ export default function EthicsGuidelinesPage() {
     {
       id: "6",
       icon: Unlock,
-      title: "6. Open Access Policy",
+      title: "Open Access Policy",
       content: (
         <div className="space-y-2">
           <p className="text-xs">SIARE follows a <strong>Gold Open Access</strong> model. All proceedings are freely accessible, authors retain copyright, and SIARE holds publishing rights for dissemination, ensuring global visibility.</p>
@@ -159,7 +160,7 @@ export default function EthicsGuidelinesPage() {
     {
       id: "7",
       icon: Copyright,
-      title: "7. Copyright & Licensing",
+      title: "Copyright & Licensing Policy",
       content: (
         <div className="space-y-2">
           <p className="text-xs">Unless specified, SIARE uses the <strong>Creative Commons Attribution (CC BY) License</strong>. Authors can share and reuse work with proper citation. Copyright is shared for distribution purposes.</p>
@@ -169,7 +170,7 @@ export default function EthicsGuidelinesPage() {
     {
       id: "8",
       icon: Database,
-      title: "8. Data Availability",
+      title: "Data Availability Policy",
       content: (
         <div className="space-y-2">
           <ul className="text-[10px] space-y-1 text-foreground/70 italic">
@@ -184,7 +185,7 @@ export default function EthicsGuidelinesPage() {
     {
       id: "9",
       icon: FileText,
-      title: "9. Conference Proceedings",
+      title: "Conference Proceedings Policy",
       content: (
         <div className="space-y-2 text-xs">
           Organizers must ensure proper peer review, ethical standards, transparent communication, and correct metadata transfer. Publication occurs only after all ethical and technical checks are completed.
@@ -194,7 +195,7 @@ export default function EthicsGuidelinesPage() {
     {
       id: "10",
       icon: MessageSquare,
-      title: "10. Appeals & Complaints",
+      title: "Appeals & Complaints Policy",
       content: (
         <div className="space-y-2 text-xs">
           Authors may appeal editorial decisions with scientific justification. Complaints regarding ethical misbehavior or bias are reviewed by the SIARE Academic Committee.
@@ -204,7 +205,7 @@ export default function EthicsGuidelinesPage() {
     {
       id: "11",
       icon: Cloud,
-      title: "11. Indexing & Archiving",
+      title: "Indexing & Archiving Policy",
       content: (
         <div className="space-y-2 text-xs">
           SIARE ensures long-term preservation via DOI-based permanent links, cloud archiving, metadata preservation, and indexing applications for eligible proceedings.
@@ -214,7 +215,7 @@ export default function EthicsGuidelinesPage() {
     {
       id: "12",
       icon: Scale,
-      title: "12. Anti-Fraud & Misconduct",
+      title: "Anti-Fraud & Misconduct Policy",
       content: (
         <div className="space-y-2">
           <p className="text-xs">SIARE strictly prohibits paper mills, fake reviews, contract cheating, and identity manipulation. Misconduct may lead to permanent blacklisting of authors or organizers.</p>
