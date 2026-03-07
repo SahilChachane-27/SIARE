@@ -134,7 +134,7 @@ export function Header() {
                     <SheetTitle className="sr-only">SIARE</SheetTitle>
                     <div className="relative h-12 w-48 mb-4">
                       <Image 
-                        src="/JTlogoUpdated.png" 
+                        src="/logo.png" 
                         alt="SIARE Logo" 
                         fill 
                         className="object-contain object-left"
