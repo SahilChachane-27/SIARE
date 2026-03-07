@@ -102,6 +102,23 @@
       },
       "required": ["title", "date"]
     },
+    "Webinar": {
+      "title": "Webinar",
+      "description": "An upcoming academic webinar or online lecture.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "speaker": { "type": "string" },
+        "joinLink": { "type": "string", "format": "uri" },
+        "description": { "type": "string" },
+        "status": { "type": "string", "description": "e.g. Live Soon, Registration Open" },
+        "color": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["title", "date", "speaker"]
+    },
     "PastEvent": {
       "title": "Past Event",
       "description": "A record of a completed academic event.",
@@ -133,6 +150,10 @@
     "/workshops/{workshopId}": {
       "schema": { "$ref": "#/backend/entities/Workshop" },
       "description": "Collection of upcoming academic workshops."
+    },
+    "/webinars/{webinarId}": {
+      "schema": { "$ref": "#/backend/entities/Webinar" },
+      "description": "Collection of upcoming online webinars."
     },
     "/pastEvents/{eventId}": {
       "schema": { "$ref": "#/backend/entities/PastEvent" },

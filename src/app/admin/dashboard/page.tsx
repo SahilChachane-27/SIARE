@@ -26,7 +26,8 @@ import {
   CheckCircle2,
   Bell,
   History,
-  GraduationCap
+  GraduationCap,
+  Video
 } from 'lucide-react';
 import Link from 'next/link';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
@@ -151,6 +152,11 @@ export default function AdminDashboard() {
               <Button asChild variant="outline" className="rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50">
                 <Link href="/admin/workshops">
                   <GraduationCap className="mr-2 h-4 w-4" /> Workshops
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50">
+                <Link href="/admin/webinars">
+                  <Video className="mr-2 h-4 w-4" /> Webinars
                 </Link>
               </Button>
               <Button asChild variant="outline" className="rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50">
