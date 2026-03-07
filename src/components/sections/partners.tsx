@@ -11,8 +11,7 @@ const partners = [
 ];
 
 export function Partners() {
-  // Duplicating the list multiple times to ensure seamless looping on all screen sizes
-  // and prevent gaps/white spaces at the end of the animation cycle.
+  // Duplicating the list multiple times to ensure seamless looping
   const displayPartners = [...partners, ...partners, ...partners, ...partners, ...partners, ...partners];
 
   return (
@@ -25,12 +24,16 @@ export function Partners() {
           <h2 className="text-2xl md:text-3xl font-bold italic text-primary font-headline mb-2">
             Global University Partners
           </h2>
-          <div className="w-10 h-1 bg-accent mx-auto"></div>
+          
+          {/* Animated Scanning Line Divider */}
+          <div className="relative w-24 h-0.5 bg-accent/20 mx-auto mt-4 overflow-hidden rounded-full">
+            <div className="absolute top-0 bottom-0 w-4 bg-accent rounded-full animate-scan shadow-[0_0_8px_rgba(251,191,36,0.8)]"></div>
+          </div>
         </div>
       </div>
 
       <div className="relative w-full overflow-hidden">
-        {/* Edge Gradient Masks for a smoother fade effect */}
+        {/* Edge Gradient Masks */}
         <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
         <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
         
