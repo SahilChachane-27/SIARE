@@ -74,8 +74,10 @@ export function Projects() {
         )}
 
         <div className="mt-16 text-center" data-aos="fade-up">
-          <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-primary hover:text-white rounded-xl px-12 py-8 text-base font-black italic shadow-2xl transition-all hover:scale-105 h-auto">
-            <Link href="/events">View All Events <ArrowRight className="ml-2 h-5 w-5" /></Link>
+          <Button asChild className="bg-accent text-accent-foreground hover:bg-primary hover:text-white rounded-xl px-10 h-12 text-xs font-black italic shadow-2xl transition-all hover:scale-105">
+            <Link href="/events" className="flex items-center gap-2">
+              View All Events <ArrowRight className="h-4 w-4" />
+            </Link>
           </Button>
         </div>
       </div>
