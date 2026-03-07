@@ -9,7 +9,6 @@ import { Services } from '@/components/sections/services';
 import { Projects } from '@/components/sections/projects';
 import { WhyUs } from '@/components/sections/why-us';
 import { ScrollToTop } from '@/components/layout/scroll-to-top';
-import { TrustBadges } from '@/components/sections/trust-badges';
 import { MembershipHighlights } from '@/components/sections/membership-highlights';
 import { LearningHub } from '@/components/sections/learning-hub';
 import { Testimonials } from '@/components/sections/testimonials';
@@ -27,7 +26,6 @@ export default function Home() {
         <MembershipHighlights />
         <LearningHub />
         <Testimonials />
-        <TrustBadges />
         <Partners />
       </main>
       <Footer />
