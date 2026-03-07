@@ -25,9 +25,9 @@ export function Partners() {
             Global University Partners
           </h2>
           
-          {/* Animated Scanning Line Divider */}
-          <div className="relative w-24 h-0.5 bg-accent/20 mx-auto mt-4 overflow-hidden rounded-full">
-            <div className="absolute top-0 bottom-0 w-4 bg-accent rounded-full animate-scan shadow-[0_0_8px_rgba(251,191,36,0.8)]"></div>
+          {/* Custom Animated Line & Moving Point */}
+          <div className="w-[200px] h-[2px] bg-[#333] relative mx-auto mt-12 mb-8">
+            <div className="w-[10px] h-[10px] bg-[#ff0000] rounded-full absolute top-1/2 animate-move-point shadow-[0_0_10px_rgba(255,0,0,0.5)]"></div>
           </div>
         </div>
       </div>
