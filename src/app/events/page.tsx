@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -354,10 +355,10 @@ export default function EventsPage() {
                 <Button asChild size="lg" className="bg-accent hover:bg-white text-accent-foreground hover:text-primary font-black italic rounded-xl px-14 py-8 text-lg shadow-xl transition-all hover:scale-105 h-auto">
                   <Link href="/contact">View All Events</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-white/20 text-white rounded-xl px-14 py-8 text-lg font-bold transition-all hover:scale-105 h-auto italic">
+                <Button asChild size="lg" variant="outline" className="bg-transparent border-white/20 text-white rounded-xl px-14 py-8 text-lg font-bold transition-all hover:scale-105 h-auto italic">
                   <Link href="/contact">Submit Event Proposal</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-white/20 text-white rounded-xl px-14 py-8 text-lg font-bold transition-all hover:scale-105 h-auto italic">
+                <Button asChild size="lg" variant="outline" className="bg-transparent border-white/20 text-white rounded-xl px-14 py-8 text-lg font-bold transition-all hover:scale-105 h-auto italic">
                   <Link href="/contact">Become a Partner</Link>
                 </Button>
               </div>

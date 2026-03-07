@@ -107,7 +107,7 @@ export default function ProceedingsPage() {
                 <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-xl h-12 px-8">
                   <Link href="/contact">Partner for Proceedings</Link>
                 </Button>
-                <Button variant="outline" asChild className="border-white/20 text-white hover:bg-white/10 rounded-xl h-12 px-8">
+                <Button variant="outline" asChild className="bg-transparent border-white/20 text-white hover:bg-white/10 rounded-xl h-12 px-8">
                   <Link href="/start-journal">Submit Conference Proposal</Link>
                 </Button>
               </div>
@@ -409,7 +409,7 @@ export default function ProceedingsPage() {
                 <Button asChild size="lg" className="bg-accent hover:bg-white text-accent-foreground hover:text-primary font-extrabold rounded-xl px-14 py-8 text-lg shadow-xl transition-all hover:scale-105 h-auto">
                   <Link href="/contact">Partner Now</Link>
                 </Button>
-                <Button variant="outline" asChild size="lg" className="border-white/20 text-white rounded-xl px-14 py-8 text-lg font-bold transition-all hover:scale-105 h-auto">
+                <Button variant="outline" asChild size="lg" className="bg-transparent border-white/20 text-white rounded-xl px-14 py-8 text-lg font-bold transition-all hover:scale-105 h-auto">
                   <Link href="/resources">Download Guidelines</Link>
                 </Button>
               </div>
