@@ -238,9 +238,18 @@ export default function AboutPage() {
 
             <div className="grid md:grid-cols-3 gap-8">
               {[
-                { title: "Executive Committee", desc: "A team of senior scholars and advisors guiding strategic direction." },
-                { title: "Editorial & Proceedings", desc: "Handling peer review coordination and ethical publication checks." },
-                { title: "Academic Council", desc: "Experts overseeing academic quality and event partnerships." }
+                { 
+                  title: "Executive Committee", 
+                  desc: "A team of senior scholars and advisors who guide the strategic direction of SIARE." 
+                },
+                { 
+                  title: "Editorial & Proceedings Committee", 
+                  desc: "Handles peer review coordination, ethical checks, and proceedings publication." 
+                },
+                { 
+                  title: "Academic Council", 
+                  desc: "Experts from multiple disciplines who oversee academic quality, event partnerships, and research programs." 
+                }
               ].map((struct, idx) => (
                 <Card key={idx} className="rounded-funky border-none bg-slate-50 p-8 text-center" data-aos="fade-up" data-aos-delay={idx * 100}>
                   <h3 className="text-xl font-bold text-primary mb-4 italic">{struct.title}</h3>
