@@ -17,6 +17,7 @@ const quickLinks = [
   { href: '/about', label: 'About' },
   { href: '/why-us', label: 'Membership' },
   { href: '/journals', label: 'Proceedings' },
+  { href: '/ethics-guidelines', label: 'Publishing Policies' },
   { href: '/events', label: 'Events' },
   { href: '/resources', label: 'Learning Hub' },
   { href: '/privacy-policy', label: 'Policies' },
