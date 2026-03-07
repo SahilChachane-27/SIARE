@@ -5,8 +5,7 @@ import {
   ShieldCheck, 
   School, 
   Layers, 
-  Globe,
-  CheckCircle2
+  Globe
 } from 'lucide-react';
 
 const reasons = [
@@ -63,9 +62,6 @@ export function WhyUs() {
               <p className="text-foreground/60 text-xs leading-relaxed italic font-medium">
                 {reason.description}
               </p>
-              <div className="mt-6 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <CheckCircle2 className="h-5 w-5 text-accent" />
-              </div>
             </Card>
           ))}
         </div>
