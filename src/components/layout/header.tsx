@@ -75,7 +75,7 @@ export function Header() {
           <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-transform hover:scale-[1.02] shrink-0">
             <div className="relative h-16 w-48 md:h-20 md:w-72 flex-shrink-0">
               <Image 
-                src="/JTlogoUpdated.png" 
+                src="/logo.png" 
                 alt="SIARE Logo" 
                 fill 
                 className="object-contain"
