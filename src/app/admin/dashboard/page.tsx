@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useUser, useAuth, useFirestore, useCollection } from '@/firebase';
@@ -147,28 +146,28 @@ export default function AdminDashboard() {
               </div>
             </div>
             
-            <div className="flex flex-wrap gap-4 md:gap-5">
-              <Button asChild className="rounded-xl bg-primary hover:bg-primary/90 text-accent font-bold px-6 py-6 h-auto shadow-md border border-accent/20">
+            <div className="flex flex-wrap gap-3 md:gap-4">
+              <Button asChild className="rounded-xl bg-primary hover:bg-primary/90 text-accent font-bold px-5 h-12 shadow-md border border-accent/20 transition-all hover:scale-105 active:scale-95">
                 <Link href="/admin/events">
                   <Plus className="mr-2 h-4 w-4" /> Manage Conferences
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-6 py-6 h-auto shadow-sm">
+              <Button asChild variant="outline" className="rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-5 h-12 shadow-sm transition-all hover:scale-105 active:scale-95">
                 <Link href="/admin/membership">
                   <UserPlus className="mr-2 h-4 w-4" /> Memberships
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-6 py-6 h-auto shadow-sm">
+              <Button asChild variant="outline" className="rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-5 h-12 shadow-sm transition-all hover:scale-105 active:scale-95">
                 <Link href="/admin/workshops">
                   <GraduationCap className="mr-2 h-4 w-4" /> Workshops
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-6 py-6 h-auto shadow-sm">
+              <Button asChild variant="outline" className="rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-5 h-12 shadow-sm transition-all hover:scale-105 active:scale-95">
                 <Link href="/admin/webinars">
                   <Video className="mr-2 h-4 w-4" /> Webinars
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-6 py-6 h-auto shadow-sm">
+              <Button asChild variant="outline" className="rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-5 h-12 shadow-sm transition-all hover:scale-105 active:scale-95">
                 <Link href="/admin/journals">
                   <BookOpen className="mr-2 h-4 w-4" /> Edit Proceedings
                 </Link>
@@ -176,7 +175,7 @@ export default function AdminDashboard() {
               <Button 
                 variant="ghost" 
                 onClick={handleLogout} 
-                className="rounded-xl text-red-500 hover:bg-red-50 hover:text-red-600 px-4 h-12"
+                className="rounded-xl text-red-500 hover:bg-red-50 hover:text-red-600 px-4 h-12 transition-all hover:scale-105 active:scale-95"
               >
                 <LogOut className="h-5 w-5" />
               </Button>
