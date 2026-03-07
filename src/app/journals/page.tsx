@@ -398,18 +398,18 @@ export default function ProceedingsPage() {
         </section>
 
         {/* Call to Action */}
-        <section className="py-24 bg-primary text-white text-center relative overflow-hidden">
+        <section className="py-16 bg-primary text-white text-center relative overflow-hidden">
           <div className="container mx-auto px-8 md:px-16 lg:px-32 relative z-10">
             <div className="max-w-4xl mx-auto" data-aos="zoom-in">
               <h2 className="text-3xl md:text-5xl font-bold font-headline mb-6 italic">Conference Organizers: Publish With SIARE</h2>
               <p className="text-xl text-white/70 mb-12 font-medium">
                 We partner with institutions across India, Southeast Asia, Middle East, Europe, Africa, and Australia to publish high-impact proceedings.
               </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <Button asChild size="lg" className="bg-accent hover:bg-white text-accent-foreground hover:text-primary font-extrabold rounded-xl px-14 py-8 text-lg shadow-xl transition-all hover:scale-105 h-auto">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button asChild className="bg-accent hover:bg-white text-accent-foreground hover:text-primary font-extrabold rounded-xl px-8 py-4 text-sm shadow-xl transition-all hover:scale-105 h-auto">
                   <Link href="/contact">Partner Now</Link>
                 </Button>
-                <Button variant="outline" asChild size="lg" className="bg-transparent border-white/20 text-white rounded-xl px-14 py-8 text-lg font-bold transition-all hover:scale-105 h-auto">
+                <Button variant="outline" asChild className="bg-transparent border-white/20 text-white rounded-xl px-8 py-4 text-sm font-bold transition-all hover:scale-105 h-auto">
                   <Link href="/resources">Download Guidelines</Link>
                 </Button>
               </div>
