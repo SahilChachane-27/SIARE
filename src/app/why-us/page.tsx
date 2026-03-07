@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -12,15 +13,13 @@ import {
   BookOpen, 
   GraduationCap, 
   Award, 
-  FileText, 
   Zap, 
-  ArrowRight,
-  Download,
-  ShieldCheck,
-  RefreshCw,
-  Trophy,
-  Landmark,
-  Briefcase
+  Download, 
+  ShieldCheck, 
+  RefreshCw, 
+  Trophy, 
+  Landmark, 
+  Briefcase 
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -32,6 +31,9 @@ import {
   TableHeader, 
   TableRow 
 } from "@/components/ui/table";
+import { useFirestore, useCollection } from '@/firebase';
+import { collection, query, orderBy } from 'firebase/firestore';
+import { useMemo } from 'react';
 
 const whyJoinPoints = [
   {
@@ -61,13 +63,13 @@ const whyJoinPoints = [
   }
 ];
 
-const categories = [
+const defaultCategories = [
   {
-    title: "Individual Researcher",
-    icon: Users,
+    name: "Individual Researcher",
+    icon: "Users",
     priceINR: "₹1,500",
     priceUSD: "$35",
-    desc: "Suitable for faculty, research scholars, and independent researchers.",
+    description: "Suitable for faculty, research scholars, and independent researchers.",
     benefits: [
       "Access to all society resources",
       "Discounted conference rates",
@@ -77,11 +79,11 @@ const categories = [
     ]
   },
   {
-    title: "Student Membership",
-    icon: GraduationCap,
+    name: "Student Membership",
+    icon: "GraduationCap",
     priceINR: "₹700",
     priceUSD: "$15",
-    desc: "For undergraduate, postgraduate, and doctoral researchers.",
+    description: "For undergraduate, postgraduate, and doctoral researchers.",
     benefits: [
       "Low-cost yearly membership",
       "Mentoring & research guidance",
@@ -91,11 +93,11 @@ const categories = [
     ]
   },
   {
-    title: "Institutional Membership",
-    icon: Landmark,
+    name: "Institutional Membership",
+    icon: "Landmark",
     priceINR: "₹15,000",
     priceUSD: "$250",
-    desc: "Designed for universities, colleges, and research centers.",
+    description: "Designed for universities, colleges, and research centers.",
     benefits: [
       "Opportunity to host conferences",
       "Proceedings publication partnership",
@@ -105,11 +107,11 @@ const categories = [
     ]
   },
   {
-    title: "Affiliate Membership",
-    icon: Briefcase,
+    name: "Affiliate Membership",
+    icon: "Briefcase",
     priceINR: "₹5,000",
     priceUSD: "$95",
-    desc: "For industry partners and NGOs in education & technology.",
+    description: "For industry partners and NGOs in education & technology.",
     benefits: [
       "Collaboration opportunities",
       "Research-industry integration",
@@ -120,7 +122,22 @@ const categories = [
   }
 ];
 
+const IconComponent = ({ name, className }: { name: string, className?: string }) => {
+  const icons: Record<string, any> = { Users, GraduationCap, Landmark, Briefcase, Award, Zap, Globe, Trophy, BookOpen, ShieldCheck };
+  const Icon = icons[name] || Users;
+  return <Icon className={className} />;
+};
+
 export default function MembershipPage() {
+  const db = useFirestore();
+  const tiersQuery = useMemo(() => {
+    if (!db) return null;
+    return query(collection(db, 'membershipTiers'), orderBy('order', 'asc'));
+  }, [db]);
+
+  const { data: dynamicTiers, loading } = useCollection(tiersQuery);
+  const tiers = dynamicTiers && dynamicTiers.length > 0 ? dynamicTiers : defaultCategories;
+
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground font-body overflow-x-hidden">
       <Header />
@@ -133,7 +150,7 @@ export default function MembershipPage() {
                 Membership at SIARE
               </h1>
               <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
-              <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed font-medium">
+              <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed font-medium">
                 Join a Global Network of Scholars. Connect with researchers, educators, and innovators committed to advancing multidisciplinary research.
               </p>
             </div>
@@ -195,35 +212,42 @@ export default function MembershipPage() {
               <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {categories.map((cat, idx) => (
-                <Card key={idx} className="flex flex-col rounded-funky shadow-xl border-accent/10 overflow-hidden group hover:shadow-2xl transition-all" data-aos="fade-up" data-aos-delay={idx * 100}>
-                  <CardHeader className="bg-primary text-white p-8 text-center">
-                    <cat.icon className="h-10 w-10 mx-auto mb-4 text-accent" />
-                    <CardTitle className="text-lg font-headline italic">{cat.title}</CardTitle>
-                    <div className="mt-4">
-                      <span className="text-2xl font-black">{cat.priceINR}</span>
-                      <span className="text-white/40 text-xs ml-2">/ {cat.priceUSD}</span>
-                    </div>
-                    <p className="text-[10px] uppercase font-bold tracking-widest text-white/60 mt-2">Yearly Membership</p>
-                  </CardHeader>
-                  <CardContent className="p-8 flex-1 flex flex-col">
-                    <p className="text-xs text-foreground/60 font-bold mb-6 italic">{cat.desc}</p>
-                    <ul className="space-y-3 mb-8 flex-1">
-                      {cat.benefits.map((benefit, i) => (
-                        <li key={i} className="flex items-start gap-2 text-[11px] font-medium text-foreground/80">
-                          <CheckCircle2 className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5" />
-                          {benefit}
-                        </li>
-                      ))}
-                    </ul>
-                    <Button asChild className="w-full bg-accent hover:bg-primary text-accent-foreground hover:text-white rounded-xl font-bold text-xs uppercase tracking-widest">
-                      <Link href="/contact">Apply Now</Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-12 gap-4">
+                <RefreshCw className="h-8 w-8 text-accent animate-spin" />
+                <p className="text-[10px] font-black uppercase text-primary/40 tracking-widest">Synchronizing Tiers...</p>
+              </div>
+            ) : (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                {tiers.map((cat: any, idx: number) => (
+                  <Card key={idx} className="flex flex-col rounded-funky shadow-xl border-accent/10 overflow-hidden group hover:shadow-2xl transition-all" data-aos="fade-up" data-aos-delay={idx * 100}>
+                    <CardHeader className="bg-primary text-white p-8 text-center">
+                      <IconComponent name={cat.icon} className="h-10 w-10 mx-auto mb-4 text-accent" />
+                      <CardTitle className="text-lg font-headline italic">{cat.name}</CardTitle>
+                      <div className="mt-4">
+                        <span className="text-2xl font-black">{cat.priceINR}</span>
+                        <span className="text-white/40 text-xs ml-2">/ {cat.priceUSD}</span>
+                      </div>
+                      <p className="text-[10px] uppercase font-bold tracking-widest text-white/60 mt-2">Yearly Membership</p>
+                    </CardHeader>
+                    <CardContent className="p-8 flex-1 flex flex-col">
+                      <p className="text-xs text-foreground/60 font-bold mb-6 italic">{cat.description}</p>
+                      <ul className="space-y-3 mb-8 flex-1">
+                        {cat.benefits?.map((benefit: string, i: number) => (
+                          <li key={i} className="flex items-start gap-2 text-[11px] font-medium text-foreground/80">
+                            <CheckCircle2 className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5" />
+                            {benefit}
+                          </li>
+                        ))}
+                      </ul>
+                      <Button asChild className="w-full bg-accent hover:bg-primary text-accent-foreground hover:text-white rounded-xl font-bold text-xs uppercase tracking-widest">
+                        <Link href="/contact">Apply Now</Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 

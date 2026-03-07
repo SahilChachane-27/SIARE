@@ -27,7 +27,8 @@ import {
   Bell,
   History,
   GraduationCap,
-  Video
+  Video,
+  UserPlus
 } from 'lucide-react';
 import Link from 'next/link';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
@@ -147,6 +148,11 @@ export default function AdminDashboard() {
               <Button asChild className="rounded-xl bg-primary hover:bg-primary/90 text-accent font-bold px-6 shadow-md border border-accent/20">
                 <Link href="/admin/events">
                   <Plus className="mr-2 h-4 w-4" /> Manage Conferences
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50">
+                <Link href="/admin/membership">
+                  <UserPlus className="mr-2 h-4 w-4" /> Memberships
                 </Link>
               </Button>
               <Button asChild variant="outline" className="rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50">

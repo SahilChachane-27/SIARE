@@ -70,6 +70,21 @@
       },
       "required": ["name", "priceINR", "priceUSD", "features"]
     },
+    "MembershipTier": {
+      "title": "Membership Tier",
+      "description": "A dynamic membership tier for scholars.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "icon": { "type": "string", "description": "Lucide icon name" },
+        "priceINR": { "type": "string" },
+        "priceUSD": { "type": "string" },
+        "description": { "type": "string" },
+        "benefits": { "type": "array", "items": { "type": "string" } },
+        "order": { "type": "number" }
+      },
+      "required": ["name", "priceINR", "priceUSD", "benefits"]
+    },
     "Conference": {
       "title": "Conference",
       "description": "An upcoming academic conference managed by SIARE.",
@@ -142,6 +157,10 @@
     "/pricingPlans/{planId}": {
       "schema": { "$ref": "#/backend/entities/PricingPlan" },
       "description": "Collection of dynamic pricing plans."
+    },
+    "/membershipTiers/{tierId}": {
+      "schema": { "$ref": "#/backend/entities/MembershipTier" },
+      "description": "Collection of dynamic membership tiers."
     },
     "/conferences/{conferenceId}": {
       "schema": { "$ref": "#/backend/entities/Conference" },
