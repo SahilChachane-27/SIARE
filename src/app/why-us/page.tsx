@@ -361,7 +361,7 @@ export default function MembershipPage() {
         </section>
 
         {/* Call to Action */}
-        <section className="py-24 bg-white text-center">
+        <section className="py-16 bg-white text-center">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="max-w-4xl mx-auto" data-aos="zoom-in">
               <h2 className="text-3xl md:text-5xl font-bold text-primary font-headline mb-6">
@@ -372,10 +372,10 @@ export default function MembershipPage() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-extrabold rounded-funky px-14 py-8 text-lg shadow-xl shadow-accent/20 transition-all hover:scale-105 h-auto">
+                <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-extrabold rounded-funky px-8 h-12 text-sm shadow-xl shadow-accent/20 transition-all hover:scale-105">
                   <Link href="/contact">Apply for Membership</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-funky px-14 py-8 text-lg font-bold transition-all hover:scale-105 h-auto">
+                <Button asChild variant="outline" className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-funky px-8 h-12 text-sm font-bold transition-all hover:scale-105">
                   <Link href="/resources" className="flex items-center gap-2">
                     <Download className="h-5 w-5" /> Download Brochure
                   </Link>
