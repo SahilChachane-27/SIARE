@@ -1,3 +1,4 @@
+
 {
   "entities": {
     "Journal": {
@@ -84,6 +85,17 @@
         "order": { "type": "number" }
       },
       "required": ["title", "date", "location"]
+    },
+    "PastEvent": {
+      "title": "Past Event",
+      "description": "A record of a completed academic event.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["title", "description"]
     }
   },
   "auth": {
@@ -101,6 +113,10 @@
     "/conferences/{conferenceId}": {
       "schema": { "$ref": "#/backend/entities/Conference" },
       "description": "Collection of upcoming conferences and events."
+    },
+    "/pastEvents/{eventId}": {
+      "schema": { "$ref": "#/backend/entities/PastEvent" },
+      "description": "Collection of completed SIARE events."
     }
   }
 }

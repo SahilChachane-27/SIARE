@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -10,14 +11,15 @@ import {
   MapPin, 
   Trophy, 
   Users, 
-  Zap, 
-  Video, 
   Lightbulb, 
+  Video, 
   GraduationCap,
   ClipboardList,
   CheckCircle2,
   ArrowRight,
-  RefreshCw
+  RefreshCw,
+  Zap,
+  History
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -35,11 +37,12 @@ export default function EventsPage() {
 
   const { data: dynamicEvents, loading } = useCollection(eventsQuery);
 
-  const pastEvents = [
-    { title: "SIARE Academic Forum 2024", desc: "Featured 250+ researchers from 30 countries. Proceedings published under SIARE Multidisciplinary Series." },
-    { title: "International Conference on Smart Computing & Analytics 2024", desc: "Co-hosted by a partner university. Included keynote lectures from industry-leading experts." },
-    { title: "National Workshop on Research Writing & Publishing Ethics", desc: "Conducted for early-stage researchers. Included hands-on sessions on citation, plagiarism, and methodology." }
-  ];
+  const pastEventsQuery = useMemo(() => {
+    if (!db) return null;
+    return query(collection(db, 'pastEvents'), orderBy('order', 'asc'));
+  }, [db]);
+
+  const { data: pastEvents, loading: pastLoading } = useCollection(pastEventsQuery);
 
   const categories = [
     { icon: Users, title: "Conferences", desc: "Large academic gatherings partnering with universities to publish peer-reviewed proceedings." },
@@ -135,13 +138,13 @@ export default function EventsPage() {
               </div>
             ) : (
               <div className="text-center py-12 italic text-muted-foreground bg-slate-50 rounded-2xl border border-dashed border-primary/10">
-                Sample Structure: Please add events in the admin panel.
+                No upcoming events listed at this time.
               </div>
             )}
           </div>
         </section>
 
-        {/* Past Events */}
+        {/* Past Events Section (Now Dynamic) */}
         <section className="py-20 bg-slate-50">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="text-center mb-16">
@@ -152,17 +155,27 @@ export default function EventsPage() {
               <p className="text-foreground/60 mt-6 max-w-2xl mx-auto font-medium italic">Building credibility through a global academic footprint.</p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
-              {pastEvents.map((event, idx) => (
-                <div key={idx} className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col h-full group hover:shadow-md transition-all" data-aos="fade-up" data-aos-delay={idx * 100}>
-                  <h4 className="font-bold text-primary mb-4 italic leading-tight text-lg">{event.title}</h4>
-                  <p className="text-xs text-foreground/60 leading-relaxed font-medium flex-1 italic">"{event.desc}"</p>
-                  <div className="mt-6 flex items-center gap-2 text-[10px] font-black uppercase text-accent group-hover:text-primary transition-colors">
-                    <CheckCircle2 className="h-3 w-3" /> Successfully Completed
+            {pastLoading ? (
+              <div className="flex justify-center py-12">
+                <RefreshCw className="h-8 w-8 text-accent animate-spin" />
+              </div>
+            ) : (pastEvents && pastEvents.length > 0) ? (
+              <div className="grid md:grid-cols-3 gap-8">
+                {pastEvents.map((event: any, idx: number) => (
+                  <div key={idx} className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col h-full group hover:shadow-md transition-all" data-aos="fade-up" data-aos-delay={idx * 100}>
+                    <h4 className="font-bold text-primary mb-4 italic leading-tight text-lg">{event.title}</h4>
+                    <p className="text-xs text-foreground/60 leading-relaxed font-medium flex-1 italic">"{event.description}"</p>
+                    <div className="mt-6 flex items-center gap-2 text-[10px] font-black uppercase text-accent group-hover:text-primary transition-colors">
+                      <CheckCircle2 className="h-3 w-3" /> Successfully Completed
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12 italic text-muted-foreground bg-white/50 rounded-2xl border border-dashed border-primary/5">
+                History records are currently being archived.
+              </div>
+            )}
           </div>
         </section>
 

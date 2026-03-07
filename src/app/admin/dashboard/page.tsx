@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useUser, useAuth, useFirestore, useCollection } from '@/firebase';
@@ -23,7 +24,8 @@ import {
   Calendar,
   Presentation,
   CheckCircle2,
-  Bell
+  Bell,
+  History
 } from 'lucide-react';
 import Link from 'next/link';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
@@ -258,6 +260,22 @@ export default function AdminDashboard() {
                   </p>
                   <Button asChild className="w-full bg-accent text-primary font-black uppercase text-[10px] tracking-widest rounded-xl hover:scale-[1.02] transition-transform shadow-xl h-12">
                     <Link href="/admin/events" className="flex items-center justify-center">Launch Event Panel <ChevronRight className="ml-2 h-4 w-4" /></Link>
+                  </Button>
+                </div>
+              </Card>
+
+              {/* Past Events Quick Card */}
+              <Card className="rounded-2xl border-none shadow-xl bg-white p-8 relative overflow-hidden group border border-slate-100">
+                <div className="relative z-10">
+                  <h3 className="text-lg font-bold text-primary font-headline italic mb-2 flex items-center gap-2">
+                    <History className="h-5 w-5 text-accent" />
+                    Past Records
+                  </h3>
+                  <p className="text-muted-foreground text-[10px] mb-6 leading-relaxed font-medium uppercase tracking-tighter">
+                    Manage the history of successfully completed academic activities.
+                  </p>
+                  <Button asChild variant="outline" className="w-full border-primary/10 text-primary font-black uppercase text-[9px] tracking-widest rounded-xl hover:bg-slate-50 transition-all h-10">
+                    <Link href="/admin/past-events">Manage History</Link>
                   </Button>
                 </div>
               </Card>
