@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
@@ -32,7 +31,8 @@ import {
   Download,
   Database,
   Cloud,
-  Layers
+  Layers,
+  Check
 } from 'lucide-react';
 import { useCollection, useFirestore } from '@/firebase';
 import { collection, query, orderBy } from 'firebase/firestore';
@@ -104,10 +104,10 @@ export default function ProceedingsPage() {
                 SIARE publishes high-quality, peer-reviewed conference proceedings across major academic domains.
               </p>
               <div className="flex flex-wrap justify-center gap-4 mt-10">
-                <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-xl h-12 px-8">
+                <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-xl h-12 px-8 shadow-xl transition-all">
                   <Link href="/contact">Partner for Proceedings</Link>
                 </Button>
-                <Button variant="outline" asChild className="bg-transparent border-white/20 text-white hover:bg-white/10 rounded-xl h-12 px-8">
+                <Button variant="outline" asChild className="bg-transparent border-white/20 text-white hover:bg-white hover:text-primary rounded-xl h-12 px-8 shadow-xl transition-all">
                   <Link href="/start-journal">Submit Conference Proposal</Link>
                 </Button>
               </div>
@@ -170,31 +170,60 @@ export default function ProceedingsPage() {
               <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 {
+                  title: "Rigorous Editorial & Peer Review",
+                  desc: "Every manuscript undergoes a structured screening process including similarity checks, reviewer assignment, reviewer evaluation, and final editorial approval.",
+                  icon: ShieldCheck,
+                  isList: true,
+                  points: ["Similarity check", "Review assignment", "Reviewer evaluation", "Final editorial approval"]
+                },
+                {
+                  title: "DOI Assignment",
+                  desc: "Each paper receives a persistent Digital Object Identifier to ensure long-term accessibility and citation tracking.",
+                  icon: Tag
+                },
+                {
+                  title: "Ethical Publishing Standards",
+                  desc: "All proceedings follow SIARE's publishing ethics, ensuring transparency and integrity.",
+                  icon: BookOpen
+                },
+                {
                   title: "Multidisciplinary Scope",
-                  desc: "We publish across Engineering, Management, Social Sciences, Agriculture, Biological Sciences, and more.",
-                  icon: Layers
+                  desc: "We publish across a wide range of disciplines ensuring global academic reach.",
+                  icon: Layers,
+                  isList: true,
+                  points: ["Engineering", "Management", "Social Sciences", "Education", "Arts & Humanities", "Agriculture", "Biological Sciences", "Computer Science", "Pharmacy & Health Sciences", "Interdisciplinary Themes"]
                 },
                 {
                   title: "University-Focused",
-                  desc: "SIARE works only with universities and institutes—not private publishers—ensuring academic credibility.",
+                  desc: "SIARE works only with universities, institutes, and academic societies—not private publishers—ensuring academic credibility.",
                   icon: Landmark
                 },
                 {
                   title: "Fast Turnaround",
-                  desc: "Proceedings are produced within an agreed timeline after the conference without compromising quality.",
+                  desc: "Proceedings are produced within an agreed timeline after the conference, maintaining high-quality controlled standards.",
                   icon: Zap
                 }
               ].map((item, i) => (
-                <div key={i} className="p-8 bg-white rounded-3xl shadow-md border border-slate-100 flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay={i * 100}>
-                  <div className="h-16 w-16 bg-accent/10 rounded-2xl flex items-center justify-center mb-6">
-                    <item.icon className="h-8 w-8 text-accent" />
+                <Card key={i} className="p-8 bg-white rounded-3xl shadow-xl border border-slate-100 flex flex-col group hover:shadow-2xl transition-all duration-500" data-aos="fade-up" data-aos-delay={i * 100}>
+                  <div className="h-14 w-14 bg-primary/5 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-accent transition-colors">
+                    <item.icon className="h-7 w-7 text-accent group-hover:text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold text-primary mb-4 italic">{item.title}</h3>
-                  <p className="text-sm text-foreground/60 leading-relaxed font-medium">{item.desc}</p>
-                </div>
+                  <h3 className="text-xl font-bold text-primary mb-4 italic leading-tight">{item.title}</h3>
+                  <p className="text-sm text-foreground/60 leading-relaxed font-medium mb-4">{item.desc}</p>
+                  
+                  {item.isList && item.points && (
+                    <ul className="space-y-2 mt-2">
+                      {item.points.map((pt, pIdx) => (
+                        <li key={pIdx} className="flex items-center gap-2 text-xs text-foreground/70 font-bold">
+                          <Check className="h-3 w-3 text-accent shrink-0" /> {pt}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </Card>
               ))}
             </div>
           </div>
@@ -409,7 +438,7 @@ export default function ProceedingsPage() {
                 <Button asChild className="bg-accent hover:bg-white text-accent-foreground hover:text-primary font-extrabold rounded-xl px-8 py-4 text-sm shadow-xl transition-all hover:scale-105 h-auto">
                   <Link href="/contact">Partner Now</Link>
                 </Button>
-                <Button variant="outline" asChild className="bg-transparent border-white/20 text-white rounded-xl px-8 py-4 text-sm font-bold transition-all hover:scale-105 h-auto">
+                <Button variant="outline" asChild className="bg-transparent border-white/20 text-white hover:bg-white hover:text-primary rounded-xl px-8 py-4 text-sm font-bold transition-all hover:scale-105 h-auto">
                   <Link href="/resources">Download Guidelines</Link>
                 </Button>
               </div>
