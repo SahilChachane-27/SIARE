@@ -84,7 +84,7 @@ export default function EventsPage() {
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
-                1. Upcoming Events
+                Upcoming Events
               </h2>
               <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
               <p className="text-foreground/60 mt-6 max-w-2xl mx-auto font-medium italic">Dynamically showcasing our latest academic gatherings.</p>
@@ -147,7 +147,7 @@ export default function EventsPage() {
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
-                2. Past Events
+                Past Events
               </h2>
               <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
               <p className="text-foreground/60 mt-6 max-w-2xl mx-auto font-medium italic">Building credibility through a global academic footprint.</p>
@@ -172,7 +172,7 @@ export default function EventsPage() {
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
-                3. Event Categories
+                Event Categories
               </h2>
               <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
             </div>
@@ -197,7 +197,7 @@ export default function EventsPage() {
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div data-aos="fade-right">
                 <h2 className="text-3xl md:text-4xl font-bold font-headline mb-6 italic text-accent">
-                  4. Partner With SIARE for Events
+                  Partner With SIARE for Events
                 </h2>
                 <p className="text-lg text-white/70 mb-8 leading-relaxed font-medium italic">
                   SIARE invites universities and institutions to collaborate on conference hosting, proceedings publication, and research training programs.
@@ -249,7 +249,7 @@ export default function EventsPage() {
                   <div className="h-12 w-12 rounded-xl bg-primary flex items-center justify-center text-white">
                     <ClipboardList className="h-6 w-6" />
                   </div>
-                  <h3 className="text-2xl font-bold text-primary font-headline italic">5. Event Proposal Guidelines</h3>
+                  <h3 className="text-2xl font-bold text-primary font-headline italic">Event Proposal Guidelines</h3>
                 </div>
                 <p className="text-sm text-foreground/60 mb-6 italic font-medium">Institutions seeking to collaborate must provide:</p>
                 <div className="space-y-4">
@@ -278,7 +278,7 @@ export default function EventsPage() {
                   <div className="h-12 w-12 rounded-xl bg-accent flex items-center justify-center text-white">
                     <Trophy className="h-6 w-6" />
                   </div>
-                  <h3 className="text-2xl font-bold text-primary font-headline italic">6. Awards & Recognitions</h3>
+                  <h3 className="text-2xl font-bold text-primary font-headline italic">Awards & Recognitions</h3>
                 </div>
                 <p className="text-sm text-foreground/60 mb-8 leading-relaxed italic font-medium">SIARE recognizes contributions to boost academic profiles and enhance visibility.</p>
                 <div className="grid gap-4">
@@ -305,7 +305,7 @@ export default function EventsPage() {
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
-                7. Registration & Participation
+                Registration & Participation
               </h2>
               <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
             </div>
@@ -343,22 +343,22 @@ export default function EventsPage() {
         </section>
 
         {/* Call to Action */}
-        <section className="py-24 bg-primary text-white text-center relative overflow-hidden">
+        <section className="py-16 bg-primary text-white text-center relative overflow-hidden">
           <div className="container mx-auto px-8 md:px-16 lg:px-32 relative z-10">
             <div className="max-w-4xl mx-auto" data-aos="zoom-in">
-              <h2 className="text-3xl md:text-5xl font-bold font-headline mb-6 italic">Empowering Global Research</h2>
-              <p className="text-xl text-white/70 mb-12 font-medium italic">
+              <h2 className="text-2xl md:text-4xl font-bold font-headline mb-6 italic">Empowering Global Research</h2>
+              <p className="text-lg text-white/70 mb-8 font-medium italic">
                 Connect with SIARE today to host your conference or join our upcoming academic events.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <Button asChild size="lg" className="bg-accent hover:bg-white text-accent-foreground hover:text-primary font-black italic rounded-xl px-14 py-8 text-lg shadow-xl transition-all hover:scale-105 h-auto">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button asChild className="bg-accent hover:bg-white text-accent-foreground hover:text-primary font-black italic rounded-xl px-8 py-4 text-xs shadow-xl transition-all hover:scale-105 h-auto">
                   <Link href="/contact">View All Events</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="bg-transparent border-white/20 text-white rounded-xl px-14 py-8 text-lg font-bold transition-all hover:scale-105 h-auto italic">
+                <Button asChild variant="outline" className="bg-transparent border-white/20 text-white rounded-xl px-8 py-4 text-xs font-bold transition-all hover:scale-105 h-auto italic">
                   <Link href="/contact">Submit Event Proposal</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="bg-transparent border-white/20 text-white rounded-xl px-14 py-8 text-lg font-bold transition-all hover:scale-105 h-auto italic">
+                <Button asChild variant="outline" className="bg-transparent border-white/20 text-white rounded-xl px-8 py-4 text-xs font-bold transition-all hover:scale-105 h-auto italic">
                   <Link href="/contact">Become a Partner</Link>
                 </Button>
               </div>

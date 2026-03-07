@@ -95,7 +95,7 @@ export default function ResourcesPage() {
                   <div className="h-12 w-12 rounded-xl bg-accent flex items-center justify-center text-white shadow-lg">
                     <FileText className="h-6 w-6" />
                   </div>
-                  <h2 className="text-3xl font-bold text-primary font-headline italic">1. Author Guidelines</h2>
+                  <h2 className="text-3xl font-bold text-primary font-headline italic">Author Guidelines</h2>
                 </div>
                 
                 <div className="space-y-8">
@@ -169,7 +169,7 @@ export default function ResourcesPage() {
                 <div className="p-8 bg-primary rounded-3xl text-white shadow-2xl relative overflow-hidden group">
                   <div className="relative z-10">
                     <h3 className="text-xl font-bold font-headline mb-4 flex items-center gap-2">
-                      <Workflow className="h-6 w-6 text-accent" /> 2. Review Process
+                      <Workflow className="h-6 w-6 text-accent" /> Review Process
                     </h3>
                     <p className="text-sm text-white/70 mb-6 italic">Authors undergo a rigorous double-blind peer review.</p>
                     <div className="space-y-3">
@@ -193,7 +193,7 @@ export default function ResourcesPage() {
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="text-center mb-16" data-aos="fade-up">
               <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4 italic">
-                3. Conference Partnerships
+                Conference Partnerships
               </h2>
               <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
               <p className="max-w-3xl mx-auto text-foreground/60 font-medium">
@@ -261,7 +261,7 @@ export default function ResourcesPage() {
             <div className="grid lg:grid-cols-2 gap-12">
               <div data-aos="fade-right">
                 <h3 className="text-2xl font-bold text-primary font-headline italic mb-8 flex items-center gap-3">
-                  <Users className="h-7 w-7 text-accent" /> 5. Responsibilities of Authors
+                  <Users className="h-7 w-7 text-accent" /> Responsibilities of Authors
                 </h3>
                 <div className="grid gap-4">
                   {[
@@ -282,7 +282,7 @@ export default function ResourcesPage() {
 
               <div data-aos="fade-left">
                 <h3 className="text-2xl font-bold text-primary font-headline italic mb-8 flex items-center gap-3">
-                  <Globe className="h-7 w-7 text-accent" /> 6. Responsibilities of Organizers
+                  <Globe className="h-7 w-7 text-accent" /> Responsibilities of Organizers
                 </h3>
                 <div className="grid gap-4">
                   {[
@@ -310,7 +310,7 @@ export default function ResourcesPage() {
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div data-aos="fade-right" className="space-y-10">
                 <div>
-                  <h3 className="text-2xl font-bold text-primary font-headline italic mb-6">7. Important Notes</h3>
+                  <h3 className="text-2xl font-bold text-primary font-headline italic mb-6">Important Notes</h3>
                   <div className="space-y-6">
                     <div className="flex gap-4">
                       <Clock className="h-6 w-6 text-accent shrink-0" />
@@ -337,7 +337,7 @@ export default function ResourcesPage() {
                 </div>
 
                 <div className="p-8 border-2 border-dashed border-accent/30 rounded-3xl bg-accent/5">
-                  <h3 className="text-xl font-bold text-primary font-headline italic mb-6">8. How to Partner</h3>
+                  <h3 className="text-xl font-bold text-primary font-headline italic mb-6">How to Partner</h3>
                   <div className="space-y-4">
                     {steps.map((step, i) => (
                       <div key={i} className="flex gap-4 items-start group">
@@ -371,23 +371,23 @@ export default function ResourcesPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-24 bg-primary text-white text-center relative overflow-hidden">
+        <section className="py-16 bg-primary text-white text-center relative overflow-hidden">
           <div className="container mx-auto px-8 md:px-16 lg:px-32 relative z-10">
             <div className="max-w-4xl mx-auto" data-aos="zoom-in">
-              <h2 className="text-3xl md:text-5xl font-bold font-headline mb-6 italic">Ready to Publish?</h2>
-              <p className="text-xl text-white/70 mb-12 font-medium">
+              <h2 className="text-2xl md:text-4xl font-bold font-headline mb-6 italic">Ready to Publish?</h2>
+              <p className="text-lg text-white/70 mb-8 font-medium">
                 Connect with our academic committee to begin your publishing journey or establish a conference partnership.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <Button asChild size="lg" className="bg-accent hover:bg-white text-accent-foreground hover:text-primary font-extrabold rounded-xl px-14 py-8 text-lg shadow-xl transition-all hover:scale-105 h-auto">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button asChild className="bg-accent hover:bg-white text-accent-foreground hover:text-primary font-extrabold rounded-xl px-8 py-4 text-xs shadow-xl transition-all hover:scale-105 h-auto">
                   <Link href="/contact">Submit Your Paper</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="bg-transparent border-white/20 text-white rounded-xl px-14 py-8 text-lg font-bold transition-all hover:scale-105 h-auto">
+                <Button asChild variant="outline" className="bg-transparent border-white/20 text-white rounded-xl px-8 py-4 text-xs font-bold transition-all hover:scale-105 h-auto">
                   <Link href="/contact">Partner Your Conference</Link>
                 </Button>
               </div>
-              <div className="mt-10">
+              <div className="mt-6">
                 <Button variant="link" className="text-white/60 hover:text-white uppercase tracking-widest text-xs font-black italic">
                   <Download className="mr-2 h-4 w-4" /> Download Author Guidelines
                 </Button>

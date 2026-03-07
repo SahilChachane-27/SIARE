@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -102,7 +103,7 @@ export default function ContactPage() {
             {/* General Contact Info */}
             <div className="mb-20">
               <div className="text-center mb-12">
-                <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic" data-aos="fade-up">1. General Contact Information</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic" data-aos="fade-up">General Contact Information</h2>
                 <div className="w-16 h-1 bg-accent mx-auto mt-4"></div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -125,7 +126,7 @@ export default function ContactPage() {
             <div className="grid lg:grid-cols-2 gap-16 items-start mb-20">
               {/* Office Address */}
               <div data-aos="fade-right">
-                <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic mb-8">2. Office Address</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic mb-8">Office Address</h2>
                 <Card className="rounded-2xl border-none shadow-2xl bg-primary text-white overflow-hidden p-10 relative">
                   <MapPin className="absolute top-4 right-4 h-24 w-24 opacity-5" />
                   <div className="relative z-10">
@@ -140,7 +141,7 @@ export default function ContactPage() {
 
                 {/* Support Response Time */}
                 <div className="mt-16" data-aos="fade-up">
-                  <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic mb-8">4. Support Response Time</h2>
+                  <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic mb-8">Support Response Time</h2>
                   <div className="space-y-4">
                     {responseTimes.map((rt, i) => (
                       <div key={i} className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
@@ -156,7 +157,7 @@ export default function ContactPage() {
 
               {/* Contact Form */}
               <div data-aos="fade-left">
-                <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic mb-8">3. Quick Contact Form</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic mb-8">Quick Contact Form</h2>
                 <Contact />
               </div>
             </div>
@@ -164,7 +165,7 @@ export default function ContactPage() {
             {/* Helpdesk & Assistance */}
             <div className="mb-20">
               <div className="text-center mb-12">
-                <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic" data-aos="fade-up">6. Helpdesk & Assistance</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic" data-aos="fade-up">Helpdesk & Assistance</h2>
                 <div className="w-16 h-1 bg-accent mx-auto mt-4"></div>
               </div>
               <div className="grid md:grid-cols-3 gap-8">
@@ -185,7 +186,7 @@ export default function ContactPage() {
             {/* Collaboration & Feedback */}
             <div className="grid md:grid-cols-2 gap-8">
               <Card className="rounded-2xl border-none shadow-2xl bg-slate-50 p-10" data-aos="fade-up">
-                <h2 className="text-2xl font-bold text-primary font-headline italic mb-6">7. Collaboration Enquiries</h2>
+                <h2 className="text-2xl font-bold text-primary font-headline italic mb-6">Collaboration Enquiries</h2>
                 <p className="text-sm text-foreground/70 mb-8 font-medium">Universities and research centers can reach out for Joint Conferences, Academic MoUs, and Faculty Development Programs.</p>
                 <div className="flex items-center gap-3">
                   <Mail className="h-5 w-5 text-accent" />
@@ -194,7 +195,7 @@ export default function ContactPage() {
               </Card>
 
               <Card className="rounded-2xl border-none shadow-2xl bg-slate-50 p-10" data-aos="fade-up" data-aos-delay="100">
-                <h2 className="text-2xl font-bold text-primary font-headline italic mb-6">8. Feedback & Suggestions</h2>
+                <h2 className="text-2xl font-bold text-primary font-headline italic mb-6">Feedback & Suggestions</h2>
                 <p className="text-sm text-foreground/70 mb-8 font-medium">Share your improvement suggestions, policy concerns, or website feedback with our quality assurance team.</p>
                 <div className="flex items-center gap-3">
                   <Mail className="h-5 w-5 text-accent" />
@@ -205,7 +206,7 @@ export default function ContactPage() {
 
             {/* Social Media Links */}
             <div className="mt-20 text-center" data-aos="zoom-in">
-              <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic mb-8">5. Connect With Us Online</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic mb-8">Connect With Us Online</h2>
               <div className="flex justify-center gap-6">
                 {[
                   { icon: Linkedin, name: "LinkedIn" },
