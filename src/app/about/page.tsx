@@ -38,17 +38,17 @@ export default function AboutPage() {
     {
       icon: BookOpen,
       title: "Conference Proceedings Publication",
-      desc: "Peer-reviewed publications across Engineering, Social Sciences, Management, Agriculture, and more."
+      desc: "We publish peer-reviewed proceedings across disciplines such as Engineering, Social Sciences, Management, Agriculture, Biological Sciences, Pharmacy, Humanities, and more."
     },
     {
       icon: Calendar,
       title: "Academic Events & Conferences",
-      desc: "Partnering with universities worldwide to host summits and thematic symposiums."
+      desc: "SIARE partners with universities and organizations worldwide to host conferences, research summits, and thematic symposiums."
     },
     {
       icon: GraduationCap,
       title: "Training & Capacity Building",
-      desc: "Workshops on research writing, publishing ethics, and digital tools."
+      desc: "Workshops and training modules on research writing, publishing ethics, research analytics, and digital tools."
     },
     {
       icon: Users,
