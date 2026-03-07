@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -246,8 +245,9 @@ export default function ResourcesPage() {
                 </CardHeader>
                 <CardContent className="flex-1">
                   <ul className="space-y-2 text-[10px] font-bold text-primary/60 uppercase">
-                    {series.slice(0, 6).map((s, i) => <li key={i}>• {s}</li>)}
-                    <li className="text-accent">• And More...</li>
+                    {series.map((s, i) => (
+                      <li key={i}>• {s}</li>
+                    ))}
                   </ul>
                 </CardContent>
               </Card>
