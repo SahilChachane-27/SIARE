@@ -48,17 +48,17 @@ export function MembershipHighlights() {
           </div>
 
           <div data-aos="fade-left">
-            <Card className="bg-white/5 border border-white/10 p-8 md:p-12 rounded-[40px] backdrop-blur-sm">
+            <Card className="bg-white/10 border border-white/20 p-8 md:p-12 rounded-[40px] backdrop-blur-md text-white shadow-2xl">
               <h4 className="text-xl font-bold font-headline italic mb-8 text-center text-accent uppercase tracking-widest">Membership Tiers</h4>
               <div className="grid grid-cols-2 gap-6">
                 {types.map((type, i) => (
-                  <div key={i} className="bg-white/5 p-6 rounded-2xl text-center group hover:bg-accent transition-all duration-500 cursor-default">
+                  <div key={i} className="bg-white/5 p-6 rounded-2xl text-center group hover:bg-accent transition-all duration-500 cursor-default border border-white/5 hover:border-accent/50">
                     <type.icon className="h-8 w-8 mx-auto mb-4 text-accent group-hover:text-primary transition-colors" />
                     <span className="text-sm font-black uppercase tracking-widest group-hover:text-primary transition-colors">{type.name}</span>
                   </div>
                 ))}
               </div>
-              <p className="mt-10 text-xs text-center opacity-50 italic font-medium">Join 1500+ scholars worldwide accelerating global research impact.</p>
+              <p className="mt-10 text-xs text-center opacity-60 italic font-medium">Join 1500+ scholars worldwide accelerating global research impact.</p>
             </Card>
           </div>
         </div>
