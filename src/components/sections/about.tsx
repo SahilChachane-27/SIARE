@@ -54,7 +54,7 @@ export function About() {
               </div>
             </div>
 
-            <Button asChild className="bg-primary hover:bg-accent text-white hover:text-primary rounded-xl px-10 h-14 text-sm font-bold uppercase tracking-widest shadow-xl transition-all">
+            <Button asChild className="bg-primary hover:bg-accent text-white hover:text-primary rounded-lg px-6 h-11 text-xs font-bold uppercase tracking-widest shadow-lg transition-all w-fit">
               <Link href="/about" className="flex items-center gap-2">
                 Learn More About SIARE <ArrowRight className="h-4 w-4" />
               </Link>
