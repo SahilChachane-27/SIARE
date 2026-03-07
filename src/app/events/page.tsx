@@ -77,7 +77,7 @@ export default function EventsPage() {
                 Events at SIARE
               </h1>
               <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
-              <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed font-medium">
+              <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed font-medium">
                 SIARE organizes and partners with universities, research institutions, and academic societies worldwide to host impactful conferences, workshops, symposiums, and training programs. These events aim to strengthen global research collaboration and enhance academic excellence across disciplines.
               </p>
             </div>
@@ -286,9 +286,9 @@ export default function EventsPage() {
                     "Conference hosting",
                     "Proceedings publication",
                     "Technical workshops",
-                    "Faculty development",
+                    "Faculty development programs",
                     "Student research training",
-                    "Academic collaborations"
+                    "International academic collaborations"
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-2 text-sm opacity-80 font-medium">
                       <CheckCircle2 className="h-4 w-4 text-accent" /> {item}
@@ -333,7 +333,7 @@ export default function EventsPage() {
                   <Link href="/contact">View All Events</Link>
                 </Button>
                 <Button asChild variant="outline" className="bg-transparent border-white/20 text-white rounded-xl px-8 py-4 text-xs font-bold transition-all hover:scale-105 h-auto italic">
-                  <Link href="/contact">Submit Event Proposal</Link>
+                  <Link href="/contact">Submit Conference Proposal</Link>
                 </Button>
                 <Button asChild variant="outline" className="bg-transparent border-white/20 text-white rounded-xl px-8 py-4 text-xs font-bold transition-all hover:scale-105 h-auto italic">
                   <Link href="/contact">Become a Partner</Link>
