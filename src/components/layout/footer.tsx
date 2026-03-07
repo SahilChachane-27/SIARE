@@ -66,7 +66,7 @@ export function Footer() {
           <div className="space-y-6 lg:col-span-1">
             <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
               <div className="relative h-16 w-48 sm:h-20 sm:w-64">
-                <Image src="/JTlogoUpdated.png" alt="SIARE Logo" fill className="object-contain" />
+                <Image src="/footer.png" alt="SIARE Logo" fill className="object-contain" />
               </div>
             </Link>
             <p className="text-xs leading-relaxed text-white/60 font-medium italic max-w-xs">
