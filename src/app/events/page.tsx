@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -63,7 +62,7 @@ export default function EventsPage() {
               </h1>
               <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
               <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed font-medium">
-                SIARE organizes and partners with universities, research institutions, and academic societies worldwide to host impactful conferences, workshops, symposiums, and training programs.
+                SIARE organizes and partners with universities, research institutions, and academic societies worldwide to host impactful conferences, workshops, symposiums, and training programs. These events aim to strengthen global research collaboration and enhance academic excellence across disciplines.
               </p>
             </div>
           </div>
