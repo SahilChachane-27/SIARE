@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -18,21 +19,18 @@ export function Partners() {
     <section className="py-10 md:py-14 bg-white overflow-hidden">
       <div className="container mx-auto px-4 md:px-16 lg:px-32 mb-8">
         <div className="text-center" data-aos="fade-up">
-          <p className="text-[9px] font-medium text-foreground/40 tracking-[0.4em] uppercase mb-2">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-4">
             Institutional Network
           </p>
           <h2 className="text-2xl md:text-3xl font-bold italic text-primary font-headline mb-2">
             Global University Partners
           </h2>
           
-          {/* Custom Animated Line & Moving Point */}
-          <div className="w-[200px] h-[2px] bg-[#333] relative mx-auto mt-12 mb-8">
-            <div className="w-[10px] h-[10px] bg-[#ff0000] rounded-full absolute top-1/2 animate-move-point shadow-[0_0_10px_rgba(255,0,0,0.5)]"></div>
-          </div>
+          <div className="mt-4 w-24 h-1 bg-accent mx-auto"></div>
         </div>
       </div>
 
-      <div className="relative w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden" data-aos="fade-up" data-aos-delay="200">
         {/* Edge Gradient Masks */}
         <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
         <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
