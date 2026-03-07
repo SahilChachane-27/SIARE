@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -298,11 +297,11 @@ export default function EventsPage() {
                 <div className="p-6 bg-white/5 border border-white/10 rounded-2xl">
                   <h4 className="font-bold text-accent mb-4 uppercase tracking-widest text-[10px]">Benefits for Partner Institutions</h4>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] opacity-70 font-medium italic">
-                    <li>• Global visibility</li>
-                    <li>• High-quality proceedings</li>
                     <li>• Academic credibility</li>
-                    <li>• Expert Support</li>
-                    <li>• Access to network</li>
+                    <li>• Global visibility</li>
+                    <li>• High-quality proceedings publication</li>
+                    <li>• Expert support in planning & review</li>
+                    <li>• Access to SIARE’s editorial and reviewer network</li>
                   </ul>
                 </div>
               </div>
