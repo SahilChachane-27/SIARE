@@ -155,7 +155,7 @@ export default function MembershipPage() {
           <div className="container mx-auto px-8 md:px-16 lg:px-32 text-center">
             <div className="max-w-3xl mx-auto" data-aos="fade-up">
               <p className="text-lg text-foreground/70 leading-relaxed font-medium">
-                Becoming a member of SIARE connects you to a worldwide community committed to advancing integrated, multidisciplinary research and high-quality academic publishing. SIARE membership offers significant benefits such as publication support, conference privileges, and exclusive access to society resources.
+                Becoming a member of SIARE connects you to a worldwide community of researchers, educators, innovators, and institutions committed to advancing integrated, multidisciplinary research and high-quality academic publishing. SIARE membership offers significant benefits such as publication support, conference privileges, training programs, collaborative opportunities, and exclusive access to society resources.
               </p>
             </div>
           </div>
