@@ -39,11 +39,19 @@ export function About() {
               </p>
             </div>
 
-            <div className="bg-slate-50 p-8 rounded-2xl border-l-4 border-accent">
-              <h4 className="font-bold text-primary text-xl font-headline mb-2">Our Mission</h4>
-              <p className="text-sm text-foreground/70 leading-relaxed font-medium">
-                To accelerate innovative research, enhance academic visibility, and build globally connected scholarly communities through technology and collaboration.
-              </p>
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div className="bg-slate-50 p-6 rounded-2xl border-l-4 border-accent shadow-sm">
+                <h4 className="font-bold text-primary text-lg font-headline mb-2">Our Mission</h4>
+                <p className="text-xs text-foreground/70 leading-relaxed font-medium">
+                  To empower global academic communities by enabling high-quality research dissemination and multidisciplinary collaboration.
+                </p>
+              </div>
+              <div className="bg-slate-50 p-6 rounded-2xl border-l-4 border-accent shadow-sm">
+                <h4 className="font-bold text-primary text-lg font-headline mb-2">Our Vision</h4>
+                <p className="text-xs text-foreground/70 leading-relaxed font-medium">
+                  To become a globally trusted academic society known for shaping impactful research and a unified platform for scholarly exchange.
+                </p>
+              </div>
             </div>
 
             <Button asChild className="bg-primary hover:bg-accent text-white hover:text-primary rounded-xl px-10 h-14 text-sm font-bold uppercase tracking-widest shadow-xl transition-all">
