@@ -40,7 +40,7 @@ export function LearningHub() {
         </div>
 
         <div className="mt-16 text-center" data-aos="fade-up">
-          <Button asChild size="lg" className="bg-primary hover:bg-accent text-white hover:text-primary rounded-xl px-12 py-8 text-base font-black italic shadow-2xl transition-all hover:scale-105 h-auto">
+          <Button asChild size="lg" className="bg-primary hover:bg-accent text-white hover:text-primary rounded-xl px-10 h-12 text-base font-black italic shadow-2xl transition-all hover:scale-105">
             <Link href="/resources" className="flex items-center gap-2">
               Visit Learning Hub <ArrowRight className="h-5 w-5" />
             </Link>
