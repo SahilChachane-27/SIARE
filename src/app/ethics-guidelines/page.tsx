@@ -16,8 +16,13 @@ import {
   MessageSquare, 
   Search, 
   UserX,
-  AlertCircle,
-  AlertTriangle
+  AlertTriangle,
+  Zap,
+  Info,
+  Layers,
+  ArrowRight,
+  Archive,
+  Cloud
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -29,22 +34,34 @@ export default function EthicsGuidelinesPage() {
       title: "1. Publication Ethics Policy",
       content: (
         <div className="space-y-4">
-          <p className="text-xs">SIARE follows international ethical guidelines including COPE. All stakeholders must uphold responsibilities:</p>
-          <div className="grid grid-cols-1 gap-4">
+          <p className="text-xs">SIARE follows international ethical guidelines including COPE. All stakeholders must uphold specific responsibilities:</p>
+          <div className="space-y-4">
             <div className="space-y-1">
-              <h4 className="font-bold text-primary text-[10px] uppercase tracking-widest border-b border-primary/10 pb-1">Author</h4>
-              <ul className="text-[10px] space-y-0.5 text-foreground/70 italic">
-                <li>• Original, unpublished work</li>
-                <li>• No plagiarism/manipulation</li>
-                <li>• Disclose conflicts</li>
+              <h4 className="font-bold text-primary text-[10px] uppercase tracking-widest border-b border-primary/10 pb-1">Author Responsibilities</h4>
+              <ul className="text-[10px] space-y-1 text-foreground/70 italic">
+                <li>• Submit only original, unpublished work</li>
+                <li>• Avoid plagiarism, duplication, or data manipulation</li>
+                <li>• Provide accurate citations and references</li>
+                <li>• Disclose conflicts of interest</li>
+                <li>• Ensure all co-authors have approved the manuscript</li>
               </ul>
             </div>
             <div className="space-y-1">
-              <h4 className="font-bold text-primary text-[10px] uppercase tracking-widest border-b border-primary/10 pb-1">Editor & Reviewer</h4>
-              <ul className="text-[10px] space-y-0.5 text-foreground/70 italic">
-                <li>• Unbiased decision making</li>
-                <li>• Maintain confidentiality</li>
-                <li>• Constructive feedback</li>
+              <h4 className="font-bold text-primary text-[10px] uppercase tracking-widest border-b border-primary/10 pb-1">Editor Responsibilities</h4>
+              <ul className="text-[10px] space-y-1 text-foreground/70 italic">
+                <li>• Make unbiased decisions based on academic merit</li>
+                <li>• Maintain confidentiality of submitted manuscripts</li>
+                <li>• Prevent conflicts of interest</li>
+                <li>• Ensure timely review and communication</li>
+              </ul>
+            </div>
+            <div className="space-y-1">
+              <h4 className="font-bold text-primary text-[10px] uppercase tracking-widest border-b border-primary/10 pb-1">Reviewer Responsibilities</h4>
+              <ul className="text-[10px] space-y-1 text-foreground/70 italic">
+                <li>• Provide objective, constructive, and timely feedback</li>
+                <li>• Maintain confidentiality of manuscripts</li>
+                <li>• Identify ethical concerns (plagiarism, falsification)</li>
+                <li>• Avoid biases or conflicts of interest</li>
               </ul>
             </div>
           </div>
@@ -57,13 +74,23 @@ export default function EthicsGuidelinesPage() {
       title: "2. Peer Review Policy",
       content: (
         <div className="space-y-4">
-          <p className="text-xs">SIARE uses a double-blind peer review system. Reviewers and authors do not know each other’s identity.</p>
-          <div className="flex flex-wrap gap-1.5">
-            {["Screening", "Similarity", "Reviewer Assignment", "Feedback", "Revision", "Approval"].map((step, i) => (
-              <span key={i} className="px-2 py-0.5 bg-secondary rounded-lg text-[9px] font-bold text-primary/60 uppercase border border-primary/5">
-                {i + 1}. {step}
-              </span>
-            ))}
+          <p className="text-xs">SIARE uses a <strong>double-blind peer review</strong> system (reviewers and authors do not know each other’s identity).</p>
+          <div className="space-y-3">
+            <h4 className="font-bold text-primary text-[10px] uppercase tracking-widest">Review Stages:</h4>
+            <div className="grid grid-cols-2 gap-2">
+              {["Initial screening", "Similarity check", "Reviewer assignment", "Author feedback", "Revision round", "Final approval"].map((step, i) => (
+                <div key={i} className="flex items-center gap-2 p-2 bg-secondary/50 rounded-lg border border-primary/5">
+                  <span className="h-4 w-4 rounded-full bg-accent text-primary flex items-center justify-center text-[8px] font-black shrink-0">{i + 1}</span>
+                  <span className="text-[9px] font-bold text-primary/70 uppercase">{step}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 p-3 bg-primary/5 rounded-xl border border-primary/10">
+              <h4 className="font-bold text-primary text-[10px] uppercase tracking-widest mb-2">Evaluation Criteria:</h4>
+              <p className="text-[10px] text-foreground/60 italic leading-relaxed">
+                Originality, Significance, Methodological clarity, Ethical compliance, Literature relevance, and Strength of conclusions.
+              </p>
+            </div>
           </div>
         </div>
       )
@@ -74,11 +101,11 @@ export default function EthicsGuidelinesPage() {
       title: "3. Plagiarism Policy",
       content: (
         <div className="space-y-4">
-          <p className="text-xs">SIARE enforces strict rules. Similarity threshold limits:</p>
+          <p className="text-xs">SIARE enforces strict rules. Self-plagiarism and recycled content are treated as violations.</p>
           <div className="grid grid-cols-3 gap-2">
             <div className="p-2 bg-green-50 rounded-xl border border-green-100 text-center">
               <div className="text-sm font-black text-green-600">&lt; 15%</div>
-              <div className="text-[8px] font-bold uppercase text-green-800">OK</div>
+              <div className="text-[8px] font-bold uppercase text-green-800">Acceptable</div>
             </div>
             <div className="p-2 bg-amber-50 rounded-xl border border-amber-100 text-center">
               <div className="text-sm font-black text-amber-600">15–25%</div>
@@ -96,55 +123,103 @@ export default function EthicsGuidelinesPage() {
       id: "4",
       icon: UserX,
       title: "4. Conflict of Interest",
-      content: "All contributors must disclose financial relationships, institutional affiliations, personal connections, or reviewer-author relationships that could influence the work. Editors may reject papers with potential conflicts."
+      content: (
+        <div className="space-y-2">
+          <p className="text-xs">All contributors must disclose financial relationships, institutional affiliations, personal connections, or reviewer-author relationships. Editors may reject or reassign papers with potential conflicts.</p>
+        </div>
+      )
     },
     {
       id: "5",
       icon: Trash2,
       title: "5. Withdrawal & Retraction",
-      content: "Authors may request withdrawal before peer review is complete. Papers may be retracted if plagiarism, data fraud, or ethical violations are proven after publication. Retracted articles are clearly marked."
+      content: (
+        <div className="space-y-4">
+          <div className="space-y-1">
+            <h4 className="font-bold text-primary text-[10px] uppercase tracking-widest border-b border-primary/10 pb-1">Withdrawal</h4>
+            <p className="text-[10px] text-foreground/70 italic">Authors may request withdrawal before review completion. Post-review requires valid justification.</p>
+          </div>
+          <div className="space-y-1">
+            <h4 className="font-bold text-primary text-[10px] uppercase tracking-widest border-b border-primary/10 pb-1">Retraction</h4>
+            <p className="text-[10px] text-foreground/70 italic">Detected plagiarism, data fraud, fabrication, or ethical breaches lead to marked retraction for transparency.</p>
+          </div>
+        </div>
+      )
     },
     {
       id: "6",
       icon: Unlock,
       title: "6. Open Access Policy",
-      content: "SIARE follows a Gold Open Access model. All proceedings are freely accessible, ensuring global visibility and research impact while authors retain copyright and SIARE holds publishing rights."
+      content: (
+        <div className="space-y-2">
+          <p className="text-xs">SIARE follows a <strong>Gold Open Access</strong> model. All proceedings are freely accessible, authors retain copyright, and SIARE holds publishing rights for dissemination, ensuring global visibility.</p>
+        </div>
+      )
     },
     {
       id: "7",
       icon: Copyright,
       title: "7. Copyright & Licensing",
-      content: "Unless specified, SIARE uses the Creative Commons Attribution (CC BY) License. Authors can share, distribute, or reuse their work provided proper citation and attribution is given to the original publication."
+      content: (
+        <div className="space-y-2">
+          <p className="text-xs">Unless specified, SIARE uses the <strong>Creative Commons Attribution (CC BY) License</strong>. Authors can share and reuse work with proper citation. Copyright is shared for distribution purposes.</p>
+        </div>
+      )
     },
     {
       id: "8",
       icon: Database,
       title: "8. Data Availability",
-      content: "Authors must provide original data upon request and ensure ethical approval for studies involving human or animal subjects. Data cannot be fabricated, falsified, or manipulated in any way."
+      content: (
+        <div className="space-y-2">
+          <ul className="text-[10px] space-y-1 text-foreground/70 italic">
+            <li>• Provide original data upon request</li>
+            <li>• Ensure ethical approval for human/animal studies</li>
+            <li>• Maintain subject confidentiality and privacy</li>
+            <li>• Follow institutional data-sharing rules</li>
+          </ul>
+        </div>
+      )
     },
     {
       id: "9",
       icon: FileText,
       title: "9. Conference Proceedings",
-      content: "Conference organizers must ensure proper peer review, ethical standards, and accurate metadata transfer. Proceedings are published only after all ethical and technical checks are successfully completed."
+      content: (
+        <div className="space-y-2 text-xs">
+          Organizers must ensure proper peer review, ethical standards, transparent communication, and correct metadata transfer. Publication occurs only after all ethical and technical checks are completed.
+        </div>
+      )
     },
     {
       id: "10",
       icon: MessageSquare,
       title: "10. Appeals & Complaints",
-      content: "Authors may appeal editorial decisions by providing a clear scientific justification. Complaints regarding ethical misbehavior or bias are reviewed by the SIARE Academic Committee."
+      content: (
+        <div className="space-y-2 text-xs">
+          Authors may appeal editorial decisions with scientific justification. Complaints regarding ethical misbehavior or bias are reviewed by the SIARE Academic Committee.
+        </div>
+      )
     },
     {
       id: "11",
-      icon: Search,
+      icon: Cloud,
       title: "11. Indexing & Archiving",
-      content: "SIARE ensures long-term preservation via DOI-based permanent links, cloud archiving, and university repository metadata preservation. We apply for indexing for eligible proceedings."
+      content: (
+        <div className="space-y-2 text-xs">
+          SIARE ensures long-term preservation via DOI-based permanent links, cloud archiving, metadata preservation, and indexing applications for eligible proceedings.
+        </div>
+      )
     },
     {
       id: "12",
       icon: Scale,
-      title: "12. Anti-Fraud Policy",
-      content: "SIARE strictly prohibits paper mills, fake reviews, contract cheating, and purchased authorship. Violations lead to permanent blacklisting of authors or conference organizers from the society."
+      title: "12. Anti-Fraud & Misconduct",
+      content: (
+        <div className="space-y-2">
+          <p className="text-xs">SIARE strictly prohibits paper mills, fake reviews, contract cheating, and identity manipulation. Misconduct may lead to permanent blacklisting of authors or organizers.</p>
+        </div>
+      )
     }
   ];
 
@@ -177,8 +252,17 @@ export default function EthicsGuidelinesPage() {
           </div>
         </section>
 
+        {/* Intro Text */}
+        <section className="py-12 bg-white border-b border-slate-50">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+            <p className="max-w-4xl mx-auto text-center text-foreground/70 text-sm md:text-base font-medium italic leading-relaxed" data-aos="fade-up">
+              All authors, reviewers, editors, and conference partners must adhere to these policies to ensure transparent, credible, and globally acceptable scholarly practices.
+            </p>
+          </div>
+        </section>
+
         {/* Policies Grid */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-slate-50">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {policies.map((policy, idx) => (
@@ -197,8 +281,8 @@ export default function EthicsGuidelinesPage() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="p-6">
-                    <div className="text-foreground/70 text-xs md:text-sm leading-relaxed font-medium italic">
-                      {typeof policy.content === 'string' ? <p>{policy.content}</p> : policy.content}
+                    <div className="text-foreground/70 text-xs md:text-sm leading-relaxed font-medium">
+                      {policy.content}
                     </div>
                   </CardContent>
                 </Card>
