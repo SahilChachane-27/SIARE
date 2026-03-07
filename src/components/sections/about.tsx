@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -32,7 +31,7 @@ export function About() {
             </div>
             
             <div className="space-y-6">
-              <p className="text-lg text-foreground/80 leading-relaxed font-medium italic">
+              <p className="text-lg text-foreground/80 leading-relaxed font-medium">
                 SIARE is an international research society committed to integrating knowledge across disciplines and fostering high-impact academic collaboration.
               </p>
               <p className="text-base text-foreground/70 leading-relaxed">

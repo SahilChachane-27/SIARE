@@ -35,7 +35,7 @@ export default function NewsPage() {
             <h1 className="text-4xl md:text-6xl font-bold font-headline italic mb-6 leading-tight" data-aos="fade-right">
               News & <span className="text-accent">Updates</span>
             </h1>
-            <p className="text-lg md:text-xl text-white/80 max-w-3xl font-medium italic" data-aos="fade-up" data-aos-delay="100">
+            <p className="text-lg md:text-xl text-white/80 max-w-3xl font-medium" data-aos="fade-up" data-aos-delay="100">
               Stay informed with the latest announcements, academic developments, conference highlights, publication updates, and research opportunities from SIARE. This section provides dynamic insights into the activities, achievements, and global engagements of our society.
             </p>
           </div>
@@ -93,7 +93,7 @@ export default function NewsPage() {
               <Card className="rounded-3xl border-none shadow-2xl bg-white p-8 overflow-hidden relative group" data-aos="fade-right">
                 <div className="relative z-10">
                   <h3 className="text-xl font-bold text-primary mb-4 flex items-center gap-2">
-                    <Star className="h-5 w-5 text-accent fill-current" /> Featured Research of the Month
+                    <Star className="h-5 w-5 text-accent fill-current" /> A. Featured Research of the Month
                   </h3>
                   <p className="text-sm text-foreground/70 mb-6 italic">Each month, SIARE highlights outstanding research published in its proceedings, showcasing impactful studies that demonstrate innovation, relevance, and academic excellence.</p>
                   <div className="p-6 bg-primary/5 rounded-2xl border border-primary/10">
@@ -105,7 +105,7 @@ export default function NewsPage() {
               </Card>
 
               <Card className="rounded-3xl border-none shadow-2xl bg-white p-8" data-aos="fade-left">
-                <h3 className="text-xl font-bold text-primary mb-6">Emerging Trends & Insights</h3>
+                <h3 className="text-xl font-bold text-primary mb-6">B. Emerging Trends & Insights</h3>
                 <p className="text-sm text-foreground/70 mb-6">SIARE’s academic council publishes short notes on:</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
@@ -257,7 +257,7 @@ export default function NewsPage() {
                   <h2 className="text-3xl font-bold font-headline italic">6. Policy & Ethical Updates</h2>
                 </div>
                 <p className="text-lg text-white/70 mb-8 italic leading-relaxed">
-                  SIARE periodically updates its peer review policies, conference partnership guidelines, publication ethics, and data privacy policies to ensure transparency, ethical integrity, and credibility in academic publishing.
+                  SIARE periodically updates its peer review policies, conference partnership guidelines, publication ethics, and data privacy and archiving policies to ensure transparency, ethical integrity, and credibility in academic publishing.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {["Peer review policies", "Conference partnership guidelines", "Publication ethics", "Data privacy and archiving"].map((policy, i) => (
