@@ -86,6 +86,22 @@
       },
       "required": ["title", "date", "location"]
     },
+    "Workshop": {
+      "title": "Workshop",
+      "description": "An upcoming academic training session or workshop.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "instructor": { "type": "string" },
+        "description": { "type": "string" },
+        "status": { "type": "string", "description": "e.g. Registration Open, Limited Seats" },
+        "color": { "type": "string", "description": "Tailwind color class" },
+        "order": { "type": "number" }
+      },
+      "required": ["title", "date"]
+    },
     "PastEvent": {
       "title": "Past Event",
       "description": "A record of a completed academic event.",
@@ -113,6 +129,10 @@
     "/conferences/{conferenceId}": {
       "schema": { "$ref": "#/backend/entities/Conference" },
       "description": "Collection of upcoming conferences and events."
+    },
+    "/workshops/{workshopId}": {
+      "schema": { "$ref": "#/backend/entities/Workshop" },
+      "description": "Collection of upcoming academic workshops."
     },
     "/pastEvents/{eventId}": {
       "schema": { "$ref": "#/backend/entities/PastEvent" },

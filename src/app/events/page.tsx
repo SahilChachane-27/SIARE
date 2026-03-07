@@ -19,7 +19,9 @@ import {
   ArrowRight,
   RefreshCw,
   Zap,
-  History
+  History,
+  Clock,
+  User
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -36,6 +38,13 @@ export default function EventsPage() {
   }, [db]);
 
   const { data: dynamicEvents, loading } = useCollection(eventsQuery);
+
+  const workshopsQuery = useMemo(() => {
+    if (!db) return null;
+    return query(collection(db, 'workshops'), orderBy('order', 'asc'));
+  }, [db]);
+
+  const { data: workshops, loading: workshopsLoading } = useCollection(workshopsQuery);
 
   const pastEventsQuery = useMemo(() => {
     if (!db) return null;
@@ -81,12 +90,12 @@ export default function EventsPage() {
           </div>
         </section>
 
-        {/* Upcoming Events */}
+        {/* Upcoming Conferences */}
         <section className="py-20 bg-white">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
-                Upcoming Events
+                Upcoming Conferences
               </h2>
               <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
               <p className="text-foreground/60 mt-6 max-w-2xl mx-auto font-medium italic">Dynamically showcasing our latest academic gatherings.</p>
@@ -120,31 +129,62 @@ export default function EventsPage() {
                     </div>
                   </Card>
                 ))}
-                
-                <Card className="border-0 border-l-4 border-accent shadow-xl rounded-2xl bg-primary text-white p-8 hover:scale-[1.02] transition-all duration-300 flex flex-col" data-aos="fade-up" data-aos-delay="300">
-                  <div className="h-12 w-12 bg-white/10 rounded-xl flex items-center justify-center mb-6">
-                    <Trophy className="h-6 w-6 text-accent" />
-                  </div>
-                  <h3 className="text-2xl font-bold font-headline italic mb-4">Annual SIARE Research Excellence Summit</h3>
-                  <div className="space-y-3 mb-8 flex-1">
-                    <div className="flex items-center gap-2 text-sm opacity-80 font-medium"><Calendar className="h-4 w-4 text-accent" /> 2025</div>
-                    <div className="flex items-center gap-2 text-sm opacity-80 font-medium"><MapPin className="h-4 w-4 text-accent" /> UAE / Singapore (Tentative)</div>
-                    <p className="text-xs opacity-70 italic mt-2">Recognizing outstanding research, academic awards, and global networking.</p>
-                  </div>
-                  <Button asChild className="bg-accent hover:bg-white text-primary font-bold rounded-xl w-full">
-                    <Link href="/contact">Nominate Now</Link>
-                  </Button>
-                </Card>
               </div>
             ) : (
               <div className="text-center py-12 italic text-muted-foreground bg-slate-50 rounded-2xl border border-dashed border-primary/10">
-                No upcoming events listed at this time.
+                No upcoming conferences listed at this time.
               </div>
             )}
           </div>
         </section>
 
-        {/* Past Events Section (Now Dynamic) */}
+        {/* Upcoming Workshops Section */}
+        <section className="py-20 bg-slate-50/50">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
+                Upcoming Workshops
+              </h2>
+              <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
+              <p className="text-foreground/60 mt-6 max-w-2xl mx-auto font-medium italic">Hands-on training and capacity building sessions.</p>
+            </div>
+
+            {workshopsLoading ? (
+              <div className="flex justify-center py-12">
+                <RefreshCw className="h-8 w-8 text-accent animate-spin" />
+              </div>
+            ) : (workshops && workshops.length > 0) ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {workshops.map((workshop: any, idx: number) => (
+                  <Card key={idx} className="border-none shadow-xl rounded-2xl bg-white p-8 group hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay={idx * 100}>
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="h-10 w-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent">
+                        <GraduationCap className="h-5 w-5" />
+                      </div>
+                      <span className="text-[10px] font-black uppercase text-primary/40 tracking-widest">{workshop.status}</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-primary mb-4 italic leading-tight">{workshop.title}</h3>
+                    <div className="space-y-3 mb-8 text-sm text-foreground/70">
+                      <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-accent" /> {workshop.date}</div>
+                      {workshop.time && <div className="flex items-center gap-2"><Clock className="h-4 w-4 text-accent" /> {workshop.time}</div>}
+                      {workshop.instructor && <div className="flex items-center gap-2"><User className="h-4 w-4 text-accent" /> {workshop.instructor}</div>}
+                    </div>
+                    <p className="text-xs text-foreground/60 italic mb-8 leading-relaxed line-clamp-3">"{workshop.description}"</p>
+                    <Button asChild className="w-full bg-primary hover:bg-accent text-white rounded-xl">
+                      <Link href="/contact">Register Workshop</Link>
+                    </Button>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12 italic text-muted-foreground bg-white/50 rounded-2xl border border-dashed border-primary/5">
+                No workshops scheduled currently. Check back soon.
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Past Events Section */}
         <section className="py-20 bg-slate-50">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="text-center mb-16">
@@ -176,30 +216,6 @@ export default function EventsPage() {
                 History records are currently being archived.
               </div>
             )}
-          </div>
-        </section>
-
-        {/* Event Categories */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
-                Event Categories
-              </h2>
-              <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
-              {categories.map((cat, idx) => (
-                <div key={idx} className="p-6 bg-slate-50 rounded-2xl text-center group hover:bg-primary hover:text-white transition-all duration-500 flex flex-col items-center" data-aos="zoom-in" data-aos-delay={idx * 50}>
-                  <div className="h-12 w-12 bg-accent/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-accent transition-colors">
-                    <cat.icon className="h-6 w-6 text-accent group-hover:text-primary" />
-                  </div>
-                  <h4 className="font-bold text-sm mb-2">{cat.title}</h4>
-                  <p className="text-[10px] opacity-70 leading-relaxed font-medium">{cat.desc}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
@@ -246,108 +262,6 @@ export default function EventsPage() {
                   fill
                   className="object-cover"
                   data-ai-hint="scholars meeting"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Guidelines & Awards */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32">
-            <div className="grid lg:grid-cols-2 gap-12">
-              <Card className="p-8 md:p-10 rounded-3xl border border-slate-100 shadow-xl bg-slate-50/50" data-aos="fade-up">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="h-12 w-12 rounded-xl bg-primary flex items-center justify-center text-white">
-                    <ClipboardList className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-primary font-headline italic">Event Proposal Guidelines</h3>
-                </div>
-                <p className="text-sm text-foreground/60 mb-6 italic font-medium">Institutions seeking to collaborate must provide:</p>
-                <div className="space-y-4">
-                  {[
-                    "Conference theme & objectives",
-                    "Organizing committee details",
-                    "Paper submission timeline",
-                    "Review process framework",
-                    "Expected number of submissions",
-                    "Venue (physical/online/hybrid)",
-                    "Technical partners (if any)"
-                  ].map((item, i) => (
-                    <div key={i} className="flex gap-3 items-start group">
-                      <span className="h-5 w-5 rounded-full bg-accent text-primary flex items-center justify-center text-[10px] font-black shrink-0 shadow-sm">{i+1}</span>
-                      <p className="text-sm font-medium text-foreground/70 italic">{item}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-8 pt-6 border-t border-slate-200">
-                  <p className="text-[10px] text-foreground/40 font-bold uppercase tracking-widest italic leading-relaxed">Upon approval, SIARE will sign a publishing MoU and initiate workflows.</p>
-                </div>
-              </Card>
-
-              <Card className="p-8 md:p-10 rounded-3xl border border-slate-100 shadow-xl bg-slate-50/50" data-aos="fade-up" data-aos-delay="100">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="h-12 w-12 rounded-xl bg-accent flex items-center justify-center text-white">
-                    <Trophy className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-primary font-headline italic">Awards & Recognitions</h3>
-                </div>
-                <p className="text-sm text-foreground/60 mb-8 leading-relaxed italic font-medium">SIARE recognizes contributions to boost academic profiles and enhance visibility.</p>
-                <div className="grid gap-4">
-                  {[
-                    "Best Paper Award",
-                    "Young Researcher Award",
-                    "Outstanding Reviewer Award",
-                    "Excellence in Academic Contribution Award",
-                    "Distinguished Educator Award"
-                  ].map((award, i) => (
-                    <div key={i} className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm border border-primary/5 group hover:border-accent transition-all">
-                      <Zap className="h-5 w-5 text-accent" />
-                      <span className="text-sm font-bold text-primary/80 italic">{award}</span>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* Registration & Participation */}
-        <section className="py-20 bg-slate-50 border-y border-border/50">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
-                Registration & Participation
-              </h2>
-              <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="space-y-8" data-aos="fade-right">
-                <div className="p-6 bg-white rounded-2xl shadow-sm border border-slate-100">
-                  <h4 className="font-bold text-primary mb-4 flex items-center gap-2 italic"><ArrowRight className="h-4 w-4 text-accent" /> How to Participate</h4>
-                  <ul className="text-sm text-foreground/70 space-y-3 italic font-medium">
-                    <li className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 text-accent" /> Online registration portal access</li>
-                    <li className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 text-accent" /> Institutional nomination slots</li>
-                    <li className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 text-accent" /> Targeted conference invitations</li>
-                  </ul>
-                </div>
-                <div className="p-6 bg-white rounded-2xl shadow-sm border border-slate-100">
-                  <h4 className="font-bold text-primary mb-4 flex items-center gap-2 italic"><ArrowRight className="h-4 w-4 text-accent" /> Author Benefits</h4>
-                  <ul className="text-sm text-foreground/70 space-y-3 italic font-medium">
-                    <li className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 text-accent" /> Presentation slots (physical/hybrid)</li>
-                    <li className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 text-accent" /> Official academic E-certificates</li>
-                    <li className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 text-accent" /> Proceedings publication eligibility</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="relative aspect-[4/3] rounded-[40px] overflow-hidden shadow-2xl" data-aos="fade-left">
-                <Image
-                  src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
-                  alt="Participation"
-                  fill
-                  className="object-cover"
-                  data-ai-hint="scholars discussing"
                 />
               </div>
             </div>
