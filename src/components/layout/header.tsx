@@ -91,7 +91,7 @@ export function Header() {
                   return (
                     <DropdownMenu key={idx}>
                       <DropdownMenuTrigger asChild>
-                        <button className="flex items-center gap-1 px-3 py-2 text-[13px] font-medium text-white/80 hover:text-white transition-colors uppercase tracking-wider whitespace-nowrap outline-none group">
+                        <button className="flex items-center gap-1 px-3 py-2 text-[13px] font-medium text-white/80 hover:text-white transition-all uppercase tracking-wider whitespace-nowrap outline-none group hover:underline underline-offset-8 decoration-accent decoration-2">
                           {link.label}
                           <ChevronDown className="h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
                         </button>
@@ -109,7 +109,7 @@ export function Header() {
                   );
                 }
                 return (
-                  <Link key={idx} href={link.href!} className="px-3 py-2 text-[13px] font-medium text-white/80 hover:text-white transition-colors uppercase tracking-wider whitespace-nowrap">
+                  <Link key={idx} href={link.href!} className="px-3 py-2 text-[13px] font-medium text-white/80 hover:text-white transition-all uppercase tracking-wider whitespace-nowrap hover:underline underline-offset-8 decoration-accent decoration-2">
                     {link.label}
                   </Link>
                 );
