@@ -35,22 +35,22 @@ export function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground overflow-hidden">
       {/* CTA Section Integrated in Footer Top */}
-      <div className="bg-accent py-16 md:py-24 relative overflow-hidden">
+      <div className="bg-accent py-12 md:py-16 relative overflow-hidden">
         <div className="container mx-auto px-8 md:px-16 lg:px-32 text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-bold text-primary font-headline italic mb-6" data-aos="zoom-in">
+          <h2 className="text-2xl md:text-4xl font-bold text-primary font-headline italic mb-4" data-aos="zoom-in">
             Ready to Collaborate With SIARE?
           </h2>
-          <p className="text-primary/70 text-lg md:text-xl max-w-3xl mx-auto mb-12 font-medium italic" data-aos="fade-up">
+          <p className="text-primary/70 text-base md:text-lg max-w-2xl mx-auto mb-8 font-medium italic" data-aos="fade-up">
             Partner with us for conferences, proceedings, academic training, and global research activities.
           </p>
-          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-6" data-aos="fade-up" data-aos-delay="100">
-            <Button asChild size="lg" className="bg-primary text-white hover:bg-white hover:text-primary rounded-xl px-12 py-8 text-base font-black italic shadow-2xl transition-all hover:scale-105 h-auto">
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4" data-aos="fade-up" data-aos-delay="100">
+            <Button asChild size="lg" className="bg-primary text-white hover:bg-white hover:text-primary rounded-xl px-8 py-4 text-xs sm:text-sm font-black italic shadow-xl transition-all hover:scale-105 h-auto">
               <Link href="/contact">Partner With Us</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-xl px-12 py-8 text-base font-bold transition-all hover:scale-105 h-auto italic">
+            <Button asChild size="lg" variant="outline" className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-xl px-8 py-4 text-xs sm:text-sm font-bold transition-all hover:scale-105 h-auto italic">
               <Link href="/contact">Submit Conference Proposal</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-xl px-12 py-8 text-base font-bold transition-all hover:scale-105 h-auto italic">
+            <Button asChild size="lg" variant="outline" className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-xl px-8 py-4 text-xs sm:text-sm font-bold transition-all hover:scale-105 h-auto italic">
               <Link href="/contact">Contact SIARE</Link>
             </Button>
           </div>
