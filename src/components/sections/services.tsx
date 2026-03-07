@@ -92,7 +92,7 @@ export function Services() {
           <div className="lg:col-span-1 flex items-center justify-center" data-aos="fade-up" data-aos-delay="500">
             <div className="text-center space-y-6">
               <p className="text-primary/40 font-bold uppercase tracking-widest text-xs italic">Discover our full range of academic solutions</p>
-              <Button asChild className="bg-accent text-accent-foreground hover:bg-primary hover:text-white rounded-xl px-12 py-8 text-base font-black italic shadow-2xl transition-all hover:scale-105 h-auto">
+              <Button asChild className="bg-accent text-accent-foreground hover:bg-primary hover:text-white rounded-xl px-10 h-12 text-xs font-bold italic shadow-2xl transition-all hover:scale-105">
                 <Link href="/services">Explore All Services</Link>
               </Button>
             </div>
