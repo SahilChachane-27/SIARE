@@ -11,7 +11,9 @@ const partners = [
 ];
 
 export function Partners() {
-  const displayPartners = [...partners, ...partners];
+  // Duplicating the list multiple times to ensure seamless looping on all screen sizes
+  // and prevent gaps/white spaces at the end of the animation cycle.
+  const displayPartners = [...partners, ...partners, ...partners, ...partners, ...partners, ...partners];
 
   return (
     <section className="py-10 md:py-14 bg-white overflow-hidden">
@@ -28,7 +30,11 @@ export function Partners() {
       </div>
 
       <div className="relative w-full overflow-hidden">
-        <div className="flex animate-marquee whitespace-nowrap py-4 items-center">
+        {/* Edge Gradient Masks for a smoother fade effect */}
+        <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+        
+        <div className="flex animate-marquee whitespace-nowrap py-4 items-center w-max">
           {displayPartners.map((partner, index) => (
             <div
               key={`${partner.name}-${index}`}
