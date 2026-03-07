@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-export default function BlogPage() {
+export default function NewsPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground font-body overflow-x-hidden">
       <Header />
@@ -36,7 +36,7 @@ export default function BlogPage() {
               News & <span className="text-accent">Updates</span>
             </h1>
             <p className="text-lg md:text-xl text-white/80 max-w-3xl font-medium italic" data-aos="fade-up" data-aos-delay="100">
-              Stay informed with the latest announcements, academic developments, conference highlights, publication updates, and research opportunities from SIARE.
+              Stay informed with the latest announcements, academic developments, conference highlights, publication updates, and research opportunities from SIARE. This section provides dynamic insights into the activities, achievements, and global engagements of our society.
             </p>
           </div>
         </section>
@@ -48,7 +48,7 @@ export default function BlogPage() {
               <div className="h-12 w-12 rounded-xl bg-accent flex items-center justify-center text-primary shadow-lg">
                 <Bell className="h-6 w-6" />
               </div>
-              <h2 className="text-3xl font-bold text-primary font-headline italic">Latest Announcements</h2>
+              <h2 className="text-3xl font-bold text-primary font-headline italic">1. Latest Announcements</h2>
             </div>
             
             <div className="grid md:grid-cols-3 gap-8">
@@ -86,7 +86,7 @@ export default function BlogPage() {
               <div className="h-12 w-12 rounded-xl bg-primary flex items-center justify-center text-white shadow-lg">
                 <Beaker className="h-6 w-6" />
               </div>
-              <h2 className="text-3xl font-bold text-primary font-headline italic">Research Highlights</h2>
+              <h2 className="text-3xl font-bold text-primary font-headline italic">2. Research Highlights</h2>
             </div>
 
             <div className="grid lg:grid-cols-2 gap-12">
@@ -132,7 +132,7 @@ export default function BlogPage() {
               <div className="h-12 w-12 rounded-xl bg-accent flex items-center justify-center text-primary shadow-lg">
                 <Presentation className="h-6 w-6" />
               </div>
-              <h2 className="text-3xl font-bold text-primary font-headline italic">Conference Updates</h2>
+              <h2 className="text-3xl font-bold text-primary font-headline italic">3. Conference Updates</h2>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
@@ -172,7 +172,7 @@ export default function BlogPage() {
               <div className="h-12 w-12 rounded-xl bg-primary flex items-center justify-center text-white shadow-lg">
                 <GraduationCap className="h-6 w-6" />
               </div>
-              <h2 className="text-3xl font-bold text-primary font-headline italic">Workshops & Training Updates</h2>
+              <h2 className="text-3xl font-bold text-primary font-headline italic">4. Workshops & Training Updates</h2>
             </div>
 
             <div className="grid md:grid-cols-2 gap-12">
@@ -212,7 +212,7 @@ export default function BlogPage() {
               <div className="h-12 w-12 rounded-xl bg-accent flex items-center justify-center text-primary shadow-lg">
                 <Users className="h-6 w-6" />
               </div>
-              <h2 className="text-3xl font-bold text-primary font-headline italic">Society Announcements</h2>
+              <h2 className="text-3xl font-bold text-primary font-headline italic">5. Society Announcements</h2>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
@@ -254,10 +254,10 @@ export default function BlogPage() {
                   <div className="h-12 w-12 rounded-xl bg-accent flex items-center justify-center text-primary shadow-lg">
                     <ShieldCheck className="h-6 w-6" />
                   </div>
-                  <h2 className="text-3xl font-bold font-headline italic">Policy & Ethical Updates</h2>
+                  <h2 className="text-3xl font-bold font-headline italic">6. Policy & Ethical Updates</h2>
                 </div>
                 <p className="text-lg text-white/70 mb-8 italic leading-relaxed">
-                  SIARE periodically updates its policies to ensure transparency, ethical integrity, and credibility in academic publishing.
+                  SIARE periodically updates its peer review policies, conference partnership guidelines, publication ethics, and data privacy policies to ensure transparency, ethical integrity, and credibility in academic publishing.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {["Peer review policies", "Conference partnership guidelines", "Publication ethics", "Data privacy and archiving"].map((policy, i) => (
@@ -290,7 +290,7 @@ export default function BlogPage() {
               <div className="h-12 w-12 rounded-xl bg-accent flex items-center justify-center text-primary shadow-lg">
                 <Briefcase className="h-6 w-6" />
               </div>
-              <h2 className="text-3xl font-bold text-primary font-headline italic">Opportunities for Researchers</h2>
+              <h2 className="text-3xl font-bold text-primary font-headline italic">7. Opportunities for Researchers</h2>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">

@@ -7,8 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { 
   Plus, 
@@ -20,7 +19,6 @@ import {
   ArrowUpDown,
   MapPin,
   Presentation,
-  CheckCircle2,
   Clock,
   LayoutGrid
 } from 'lucide-react';
@@ -134,22 +132,25 @@ export default function EventsManagement() {
   };
 
   const handleDelete = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
     e.stopPropagation();
-    if (!db || !id) return;
-    if (!window.confirm("Are you sure you want to permanently remove this conference from the catalog?")) return;
     
-    const docRef = doc(db, 'conferences', id);
-    deleteDoc(docRef)
-      .then(() => {
-        toast({ title: "Entry Removed", description: "The conference record has been deleted." });
-      })
-      .catch(async (err) => {
-        const permissionError = new FirestorePermissionError({
-          path: docRef.path,
-          operation: 'delete',
+    if (!db || !id) return;
+    
+    if (window.confirm("Are you sure you want to permanently remove this conference from the catalog?")) {
+      const docRef = doc(db, 'conferences', id);
+      deleteDoc(docRef)
+        .then(() => {
+          toast({ title: "Entry Removed", description: "The conference record has been deleted." });
+        })
+        .catch(async (err) => {
+          const permissionError = new FirestorePermissionError({
+            path: docRef.path,
+            operation: 'delete',
+          });
+          errorEmitter.emit('permission-error', permissionError);
         });
-        errorEmitter.emit('permission-error', permissionError);
-      });
+    }
   };
 
   if (userLoading || !user) return null;
@@ -273,10 +274,22 @@ export default function EventsManagement() {
                             </h3>
                           </div>
                           <div className="flex gap-1.5">
-                            <Button variant="ghost" size="icon" onClick={() => handleEdit(event)} className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all shadow-sm">
+                            <Button 
+                              type="button"
+                              variant="ghost" 
+                              size="icon" 
+                              onClick={() => handleEdit(event)} 
+                              className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all shadow-sm"
+                            >
                               <Edit3 className="h-3.5 w-3.5" />
                             </Button>
-                            <Button variant="ghost" size="icon" onClick={(e) => handleDelete(e, event.id)} className="h-8 w-8 rounded-lg bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm">
+                            <Button 
+                              type="button"
+                              variant="ghost" 
+                              size="icon" 
+                              onClick={(e) => handleDelete(e, event.id)} 
+                              className="h-8 w-8 rounded-lg bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm"
+                            >
                               <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           </div>
