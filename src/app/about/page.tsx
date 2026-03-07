@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -121,7 +122,7 @@ export default function AboutPage() {
                   SIARE connects leading scholars, emerging researchers, universities, and research organizations through conferences, proceedings publications, and collaborative projects that accelerate knowledge creation.
                 </p>
                 
-                <div className="grid gap-6 sm:grid-cols-2">
+                <div className="flex flex-col gap-6">
                   <Card className="bg-card border-0 border-l-4 border-accent shadow-lg rounded-funky overflow-hidden h-full">
                     <CardHeader className="py-4">
                       <CardTitle className="text-primary text-xl font-headline">Our Mission</CardTitle>
