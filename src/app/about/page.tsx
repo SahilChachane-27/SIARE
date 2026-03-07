@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -140,7 +139,7 @@ export default function AboutPage() {
                     </CardHeader>
                     <CardContent className="pb-6">
                       <p className="text-sm text-foreground/80 leading-relaxed font-medium">
-                        To become a globally trusted academic society known for shaping impactful research and unified platform for scholarly exchange.
+                        To become a globally trusted academic society known for shaping impactful research, integrating innovation with education, and providing a unified platform for scholarly exchange across all major disciplines.
                       </p>
                     </CardContent>
                   </Card>

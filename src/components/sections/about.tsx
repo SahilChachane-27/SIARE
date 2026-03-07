@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -50,7 +49,7 @@ export function About() {
               <div className="bg-slate-50 p-6 rounded-2xl border-l-4 border-accent shadow-sm">
                 <h4 className="font-bold text-primary text-lg font-headline mb-2">Our Vision</h4>
                 <p className="text-xs text-foreground/70 leading-relaxed font-medium">
-                  To become a globally trusted academic society known for shaping impactful research and a unified platform for scholarly exchange.
+                  To become a globally trusted academic society known for shaping impactful research, integrating innovation with education, and providing a unified platform for scholarly exchange across all major disciplines.
                 </p>
               </div>
             </div>
