@@ -28,10 +28,10 @@ export default function AboutPage() {
   const objectives = [
     { icon: Globe, text: "Promote international academic research and scholarly communication" },
     { icon: FileText, text: "Support high-quality, peer-reviewed conference proceedings" },
-    { icon: School, text: "Build bridges between universities and research societies" },
-    { icon: Calendar, text: "Organize conferences, symposiums, and academic training" },
-    { icon: Lightbulb, text: "Encourage multidisciplinary and cross-domain knowledge" },
-    { icon: Zap, text: "Enhance research visibility through indexing and DOI assignment" }
+    { icon: School, text: "Build bridges between universities, researchers, and research societies" },
+    { icon: Calendar, text: "Organize conferences, symposiums, and academic training programs" },
+    { icon: Lightbulb, text: "Encourage multidisciplinary and cross-domain knowledge creation" },
+    { icon: Zap, text: "Enhance research visibility through indexing, DOI assignment, and open scholarly access" }
   ];
 
   const whatWeDo = [

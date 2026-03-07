@@ -33,7 +33,7 @@ export default function NewsPage() {
               Society of Integrated Academic Research and Education
             </div>
             <h1 className="text-4xl md:text-6xl font-bold font-headline italic mb-6 leading-tight" data-aos="fade-right">
-              News & <span className="text-accent">Updates</span>
+              SIARE <span className="text-accent">Insights</span>
             </h1>
             <p className="text-lg md:text-xl text-white/80 max-w-3xl font-medium" data-aos="fade-up" data-aos-delay="100">
               Stay informed with the latest announcements, academic developments, conference highlights, publication updates, and research opportunities from SIARE. This section provides dynamic insights into the activities, achievements, and global engagements of our society.
