@@ -129,7 +129,7 @@ export default function AboutPage() {
                     </CardHeader>
                     <CardContent className="pb-6">
                       <p className="text-sm text-foreground/80 leading-relaxed font-medium">
-                        To empower global academic communities by enabling high-quality research dissemination and multidisciplinary collaboration.
+                        To empower global academic communities by enabling high-quality research dissemination, fostering multidisciplinary collaboration, and building an ecosystem where researchers can exchange ideas, publish outcomes, and contribute to global scientific advancement.
                       </p>
                     </CardContent>
                   </Card>

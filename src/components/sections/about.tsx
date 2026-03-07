@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -43,7 +44,7 @@ export function About() {
               <div className="bg-slate-50 p-6 rounded-2xl border-l-4 border-accent shadow-sm">
                 <h4 className="font-bold text-primary text-lg font-headline mb-2">Our Mission</h4>
                 <p className="text-xs text-foreground/70 leading-relaxed font-medium">
-                  To empower global academic communities by enabling high-quality research dissemination and multidisciplinary collaboration.
+                  To empower global academic communities by enabling high-quality research dissemination, fostering multidisciplinary collaboration, and building an ecosystem where researchers can exchange ideas, publish outcomes, and contribute to global scientific advancement.
                 </p>
               </div>
               <div className="bg-slate-50 p-6 rounded-2xl border-l-4 border-accent shadow-sm">
