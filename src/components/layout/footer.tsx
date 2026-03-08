@@ -2,7 +2,19 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Facebook, Twitter, Linkedin, Instagram, Mail, PhoneCall, ArrowRight } from 'lucide-react';
+import { 
+  Facebook, 
+  Twitter, 
+  Linkedin, 
+  Instagram, 
+  Mail, 
+  PhoneCall, 
+  ArrowRight,
+  Youtube,
+  MessageCircle,
+  Pin,
+  MessageSquare
+} from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 
@@ -25,14 +37,14 @@ const quickLinks = [
 ];
 
 const connectLinks = [
-  { label: 'Facebook', href: '#' },
-  { label: 'Instagram', href: '#' },
-  { label: 'LinkedIn', href: '#' },
-  { label: 'WhatsApp', href: '#' },
-  { label: 'X', href: '#' },
-  { label: 'YouTube', href: '#' },
-  { label: 'Pinterest', href: '#' },
-  { label: 'WeChat', href: '#' },
+  { label: 'Facebook', href: '#', icon: Facebook },
+  { label: 'Instagram', href: '#', icon: Instagram },
+  { label: 'LinkedIn', href: '#', icon: Linkedin },
+  { label: 'WhatsApp', href: '#', icon: MessageCircle },
+  { label: 'X', href: '#', icon: Twitter },
+  { label: 'YouTube', href: '#', icon: Youtube },
+  { label: 'Pinterest', href: '#', icon: Pin },
+  { label: 'WeChat', href: '#', icon: MessageSquare },
 ];
 
 export function Footer() {
@@ -112,15 +124,15 @@ export function Footer() {
             <ul className="space-y-3">
               {connectLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-xs text-white/60 hover:text-accent transition-colors flex items-center gap-2 group italic">
-                    <ArrowRight className="h-3 w-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
+                  <Link href={link.href} className="text-xs text-white/60 hover:text-accent transition-colors flex items-center gap-3 group italic">
+                    <link.icon className="h-4 w-4 text-accent/60 group-hover:text-accent transition-colors" />
                     {link.label}
                   </Link>
                 </li>
               ))}
-              <li className="pt-4">
-                <p className="flex items-center gap-3 italic text-[11px] text-white/60">
-                  <span role="img" aria-label="email">📩</span>
+              <li className="pt-4 border-t border-white/5 mt-4">
+                <p className="flex items-center gap-3 italic text-[11px] text-white/60 group">
+                  <Mail className="h-4 w-4 text-accent/60 group-hover:text-accent transition-colors" />
                   <a href="mailto:editor@academicproceeding.org" className="hover:text-accent transition-colors truncate">editor@academicproceeding.org</a>
                 </p>
               </li>
