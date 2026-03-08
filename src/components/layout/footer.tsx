@@ -124,11 +124,24 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-10 text-center">
+        <div className="border-t border-white/10 pt-10 text-center px-4">
           {isClient && (
-            <p className="text-[10px] font-black tracking-[0.3em] text-white/30 uppercase">
-              Copyright © {year} SIARE – Society of Integrated Academic Research and Education. All Rights Reserved.
-            </p>
+            <div className="flex flex-col items-center gap-4">
+              <p className="text-[10px] font-black tracking-widest text-white/30 uppercase max-w-5xl mx-auto leading-relaxed">
+                Copyright © {year} Society of Integrated Academic Research and Education (SIARE), its licensors, and contributors. All rights are reserved, including those for text and data mining, AI training, and similar technologies.
+              </p>
+              <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-[10px] font-black tracking-widest text-white/30 uppercase">
+                <Link href="#" className="hover:text-accent transition-colors">Terms & Conditions</Link>
+                <span className="hidden sm:inline">|</span>
+                <Link href="/privacy-policy" className="hover:text-accent transition-colors">Privacy policy</Link>
+                <span className="hidden sm:inline">|</span>
+                <Link href="#" className="hover:text-accent transition-colors">Legal notice</Link>
+                <span className="hidden sm:inline">|</span>
+                <Link href="/accessibility-statement" className="hover:text-accent transition-colors">Accessibility</Link>
+                <span className="hidden sm:inline">|</span>
+                <button className="hover:text-accent transition-colors">Cookie settings</button>
+              </div>
+            </div>
           )}
         </div>
       </div>
