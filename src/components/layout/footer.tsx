@@ -24,6 +24,17 @@ const quickLinks = [
   { href: '/contact', label: 'Contact' },
 ];
 
+const connectLinks = [
+  { label: 'Facebook', href: '#' },
+  { label: 'Instagram', href: '#' },
+  { label: 'LinkedIn', href: '#' },
+  { label: 'WhatsApp', href: '#' },
+  { label: 'X', href: '#' },
+  { label: 'YouTube', href: '#' },
+  { label: 'Pinterest', href: '#' },
+  { label: 'WeChat', href: '#' },
+];
+
 export function Footer() {
   const [year, setYear] = useState<number>();
   const [isClient, setIsClient] = useState(false);
@@ -97,20 +108,23 @@ export function Footer() {
           </div>
 
           <div>
-            <h5 className="font-bold text-lg text-accent mb-6 font-headline italic">Contact Information</h5>
-            <div className="space-y-4 text-xs font-medium text-white/60">
-              <p className="flex items-center gap-3 italic">
-                <Mail className="h-4 w-4 text-accent" />
-                <a href="mailto:info@academicproceeding.org" className="hover:text-accent transition-colors">info@academicproceeding.org</a>
-              </p>
-              <p className="flex items-center gap-3 italic">
-                <PhoneCall className="h-4 w-4 text-accent" />
-                <span>+1 000 000 0000</span>
-              </p>
-              <p className="text-[10px] uppercase tracking-widest pt-4 opacity-40 leading-relaxed font-black">
-                SIARE Administrative Office<br/>[City, State, Country]
-              </p>
-            </div>
+            <h5 className="font-bold text-lg text-accent mb-6 font-headline italic">Connect</h5>
+            <ul className="space-y-3">
+              {connectLinks.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="text-xs text-white/60 hover:text-accent transition-colors flex items-center gap-2 group italic">
+                    <ArrowRight className="h-3 w-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+              <li className="pt-4">
+                <p className="flex items-center gap-3 italic text-[11px] text-white/60">
+                  <span role="img" aria-label="email">📩</span>
+                  <a href="mailto:editor@academicproceeding.org" className="hover:text-accent transition-colors truncate">editor@academicproceeding.org</a>
+                </p>
+              </li>
+            </ul>
           </div>
 
           <div>
