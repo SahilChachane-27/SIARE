@@ -46,7 +46,7 @@ const resourceLinks = [
 const connectLinks = [
   { label: 'Facebook', href: '#', icon: Facebook },
   { label: 'Instagram', href: '#', icon: Instagram },
-  { label: 'LinkedIn', href: '#', icon: LinkedIn },
+  { label: 'LinkedIn', href: '#', icon: Linkedin },
   { label: 'WhatsApp', href: '#', icon: MessageCircle },
   { label: 'X', href: '#', icon: Twitter },
   { label: 'YouTube', href: '#', icon: Youtube },
@@ -154,7 +154,7 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Social Icons Section - Moved to upper side of copyright */}
+        {/* Social Icons Section */}
         <div className="flex flex-wrap justify-center gap-6 mb-12 border-t border-white/5 pt-12">
           {connectLinks.map((link) => (
             <a 
