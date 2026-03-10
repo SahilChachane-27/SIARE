@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
   Facebook, 
   Twitter, 
@@ -144,6 +145,14 @@ export function Footer() {
         <div className="border-t border-white/10 pt-10 text-center px-4">
           {isClient && (
             <div className="flex flex-col items-center gap-4">
+              <div className="relative h-10 w-40 mb-2 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+                <Image 
+                  src="/logo.png" 
+                  alt="SIARE Logo" 
+                  fill 
+                  className="object-contain"
+                />
+              </div>
               <p className="text-[10px] font-black tracking-widest text-white/30 uppercase max-w-5xl mx-auto leading-relaxed">
                 Copyright © {year} Society of Integrated Academic Research and Education (SIARE), its licensors, and contributors. All rights are reserved, including those for text and data mining, AI training, and similar technologies.
               </p>
