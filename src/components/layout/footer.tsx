@@ -1,14 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { 
   Facebook, 
   Twitter, 
   Linkedin, 
   Instagram, 
   Mail, 
-  PhoneCall, 
   ArrowRight,
   Youtube,
   MessageCircle,
@@ -16,7 +14,6 @@ import {
   MessageSquare
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
 
 const quickLinks = [
   { href: '/about', label: 'About the Platform' },
@@ -65,40 +62,11 @@ export function Footer() {
 
   return (
     <footer className="bg-primary text-primary-foreground overflow-hidden">
-      {/* CTA Section Integrated in Footer Top */}
-      <div className="bg-accent py-12 md:py-16 relative overflow-hidden">
-        <div className="container mx-auto px-8 md:px-16 lg:px-32 text-center relative z-10">
-          <h2 className="text-2xl md:text-4xl font-bold text-primary font-headline italic mb-4" data-aos="zoom-in">
-            Ready to Collaborate With SIARE?
-          </h2>
-          <p className="text-primary/70 text-base md:text-lg max-w-2xl mx-auto mb-8 font-medium italic" data-aos="fade-up">
-            Partner with us for conferences, proceedings, academic training, and global research activities.
-          </p>
-          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4" data-aos="fade-up" data-aos-delay="100">
-            <Button asChild size="lg" className="bg-primary text-white hover:bg-white hover:text-primary rounded-xl px-8 py-4 text-xs sm:text-sm font-black italic shadow-xl transition-all hover:scale-105 h-auto">
-              <Link href="/contact">Partner With Us</Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-xl px-8 py-4 text-xs sm:text-sm font-bold transition-all hover:scale-105 h-auto italic">
-              <Link href="/contact">Submit Conference Proposal</Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-xl px-8 py-4 text-xs sm:text-sm font-bold transition-all hover:scale-105 h-auto italic">
-              <Link href="/contact">Contact SIARE</Link>
-            </Button>
-          </div>
-        </div>
-        <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
-          <Mail className="absolute top-10 left-10 w-32 h-32 -rotate-12" />
-          <PhoneCall className="absolute bottom-10 right-10 w-32 h-32 rotate-12" />
-        </div>
-      </div>
-
       <div className="container mx-auto px-8 md:px-16 lg:px-32 pt-20 pb-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div className="space-y-6 lg:col-span-1">
-            <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
-              <div className="relative h-16 w-48 sm:h-20 sm:w-64">
-                <Image src="/footer.png" alt="SIARE Logo" fill className="object-contain" />
-              </div>
+            <Link href="/" className="text-2xl font-bold font-headline text-accent italic transition-opacity hover:opacity-80">
+              SIARE
             </Link>
             <p className="text-xs leading-relaxed text-white/60 font-medium italic max-w-xs">
               Empowering global academic communities through integrated research, ethical publishing, and international collaboration.
