@@ -39,8 +39,8 @@ const navLinks: NavLink[] = [
   { href: '/about', label: 'About' },
   { href: '/why-us', label: 'Membership' },
   { href: '/journals', label: 'Proceedings' },
-  { href: '/ethics-guidelines', label: 'Publishing Policies' },
-  { href: '/resources', label: 'Authors & Conferences' },
+  { href: '/ethics-guidelines', label: 'Policies' },
+  { href: '/resources', label: 'Authors' },
   { href: '/events', label: 'Events' },
   {
     label: 'News',
@@ -71,10 +71,10 @@ export function Header() {
         scrolled ? 'bg-primary shadow-xl py-1 border-b border-accent/10' : 'bg-primary/95 backdrop-blur-md py-2'
       )}
     >
-      <div className="w-full px-4 md:px-8 max-w-[1600px] mx-auto">
-        <div className="flex items-center justify-between h-14 md:h-16">
-          <Link href="/" className="flex items-center gap-3 leading-tight font-headline transition-transform hover:scale-[1.02] shrink-0">
-            <div className="relative h-10 w-36 md:h-12 md:w-48 flex-shrink-0">
+      <div className="w-full px-4 sm:px-6 md:px-8 max-w-[1600px] mx-auto">
+        <div className="flex items-center justify-between h-14 md:h-16 lg:h-20">
+          <Link href="/" className="flex items-center gap-3 transition-transform hover:scale-[1.02] shrink-0">
+            <div className="relative h-8 w-28 sm:h-10 sm:w-36 md:h-12 md:w-48">
               <Image 
                 src="/logo.png" 
                 alt="SIARE Logo" 
@@ -85,14 +85,14 @@ export function Header() {
             </div>
           </Link>
           
-          <div className="hidden xl:flex items-center gap-4">
+          <div className="hidden xl:flex items-center gap-2">
             <nav className="flex items-center gap-0.5">
               {navLinks.map((link, idx) => {
                 if (link.children) {
                   return (
                     <DropdownMenu key={idx}>
                       <DropdownMenuTrigger asChild>
-                        <button className="flex items-center gap-1 px-2 py-1.5 text-[12px] font-medium text-white/80 hover:text-white transition-all uppercase tracking-wider whitespace-nowrap outline-none group hover:underline underline-offset-4 decoration-accent decoration-2">
+                        <button className="flex items-center gap-1 px-2 py-1.5 text-[11px] 2xl:text-[12px] font-medium text-white/80 hover:text-white transition-all uppercase tracking-wider whitespace-nowrap outline-none group hover:underline underline-offset-4 decoration-accent decoration-2">
                           {link.label}
                           <ChevronDown className="h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
                         </button>
@@ -110,18 +110,21 @@ export function Header() {
                   );
                 }
                 return (
-                  <Link key={idx} href={link.href!} className="px-2 py-1.5 text-[12px] font-medium text-white/80 hover:text-white transition-all uppercase tracking-wider whitespace-nowrap hover:underline underline-offset-4 decoration-accent decoration-2">
+                  <Link key={idx} href={link.href!} className="px-2 py-1.5 text-[11px] 2xl:text-[12px] font-medium text-white/80 hover:text-white transition-all uppercase tracking-wider whitespace-nowrap hover:underline underline-offset-4 decoration-accent decoration-2">
                     {link.label}
                   </Link>
                 );
               })}
             </nav>
-            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky text-[10px] h-9 px-5 shrink-0 transition-all hover:scale-105 active:scale-95 ml-2">
+            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky text-[10px] h-9 px-4 shrink-0 transition-all hover:scale-105 active:scale-95 ml-2">
               <Link href="/contact">Begin Research</Link>
             </Button>
           </div>
 
-          <div className="xl:hidden flex items-center">
+          <div className="xl:hidden flex items-center gap-2">
+            <Button asChild size="sm" className="bg-accent text-accent-foreground text-[10px] font-black uppercase tracking-tighter px-3 h-8 sm:h-9 sm:px-4 rounded-lg md:flex xl:hidden">
+              <Link href="/contact">Research</Link>
+            </Button>
             {isClient && (
               <Sheet>
                 <SheetTrigger asChild>
@@ -186,8 +189,8 @@ export function Header() {
 
                   <div className="pt-8 w-full">
                     <SheetClose asChild>
-                      <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky h-12 text-sm">
-                        <Link href="/contact">submit your paper</Link>
+                      <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky h-12 text-sm uppercase italic">
+                        <Link href="/contact">Submit Your Paper</Link>
                       </Button>
                     </SheetClose>
                   </div>

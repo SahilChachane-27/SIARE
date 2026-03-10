@@ -65,7 +65,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans antialiased;
     overflow-x: hidden !important;
     width: 100vw;
     position: relative;
@@ -81,21 +81,17 @@
 }
 
 @layer components {
-  .btn-responsive {
-    @apply transition-all duration-300 ease-in-out hover:scale-105 active:scale-95;
+  .section-container {
+    @apply container mx-auto px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32;
   }
   
-  @media (max-width: 450px) {
+  .btn-responsive {
+    @apply transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 text-center flex items-center justify-center;
+  }
+  
+  @media (max-width: 640px) {
     .btn-responsive {
-      @apply text-[10px] px-4 py-3 h-auto leading-normal;
-    }
-    
-    .hero-title-responsive {
-      @apply text-2xl leading-tight mb-4;
-    }
-    
-    .hero-text-responsive {
-      @apply text-xs mb-6;
+      @apply text-xs px-4 py-3 h-auto;
     }
   }
 }
