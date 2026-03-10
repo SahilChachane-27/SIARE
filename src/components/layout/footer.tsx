@@ -147,7 +147,7 @@ export function Footer() {
             <div className="flex flex-col items-center gap-4">
               <div className="relative h-12 w-48 mb-2">
                 <Image 
-                  src="/logo.png" 
+                  src="/footer.png" 
                   alt="SIARE Logo" 
                   fill 
                   className="object-contain"
