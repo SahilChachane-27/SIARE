@@ -18,28 +18,35 @@ import {
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 
-const socialLinks = [
-  { icon: Facebook, href: '#' },
-  { icon: Twitter, href: '#' },
-  { icon: Linkedin, href: '#' },
-  { icon: Instagram, href: '#' },
+const quickLinks = [
+  { href: '/about', label: 'About the Platform' },
+  { href: '/about', label: 'About Academic Proceeding' },
+  { href: '/about', label: 'About SIARE' },
+  { href: '/why-us', label: 'Join SIARE' },
+  { href: '/services', label: 'Publishing Model' },
+  { href: '/contact', label: 'Submit a Conference Proposal' },
 ];
 
-const quickLinks = [
-  { href: '/about', label: 'About' },
-  { href: '/why-us', label: 'Membership' },
-  { href: '/journals', label: 'Proceedings' },
-  { href: '/ethics-guidelines', label: 'Publishing Policies' },
-  { href: '/events', label: 'Events' },
-  { href: '/resources', label: 'Learning Hub' },
-  { href: '/privacy-policy', label: 'Policies' },
-  { href: '/contact', label: 'Contact' },
+const policyLinks = [
+  { href: '/ethics-guidelines', label: 'Publication Ethics' },
+  { href: '/ethics-guidelines', label: 'Peer Review Policy' },
+  { href: '/ethics-guidelines', label: 'Plagiarism and Similarity Policy' },
+  { href: '/ethics-guidelines', label: 'Conflict of Interest Policy' },
+  { href: '/ethics-guidelines', label: 'Open Access and Data Policy' },
+];
+
+const resourceLinks = [
+  { href: '/resources', label: 'Author Guidelines' },
+  { href: '/resources', label: 'Editorial Guidelines' },
+  { href: '/resources', label: 'Indexing & Archiving' },
+  { href: '/contact', label: 'FAQs' },
+  { href: '/contact', label: 'Contact Us' },
 ];
 
 const connectLinks = [
   { label: 'Facebook', href: '#', icon: Facebook },
   { label: 'Instagram', href: '#', icon: Instagram },
-  { label: 'LinkedIn', href: '#', icon: Linkedin },
+  { label: 'LinkedIn', href: '#', icon: LinkedIn },
   { label: 'WhatsApp', href: '#', icon: MessageCircle },
   { label: 'X', href: '#', icon: Twitter },
   { label: 'YouTube', href: '#', icon: Youtube },
@@ -96,21 +103,14 @@ export function Footer() {
             <p className="text-xs leading-relaxed text-white/60 font-medium italic max-w-xs">
               Empowering global academic communities through integrated research, ethical publishing, and international collaboration.
             </p>
-            <div className="flex space-x-4 pt-4">
-              {socialLinks.map((social, index) => (
-                <a key={index} href={social.href} className="h-10 w-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-accent hover:text-primary transition-all shadow-lg">
-                  <social.icon className="h-4 w-4" />
-                </a>
-              ))}
-            </div>
           </div>
 
           <div>
-            <h5 className="font-bold text-lg text-accent mb-6 font-headline italic">Quick Links</h5>
+            <h5 className="font-bold text-lg text-accent mb-6 font-headline italic">About the Platform</h5>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-xs text-white/60 hover:text-accent transition-colors flex items-center gap-2 group italic">
+                  <Link href={link.href} className="text-[11px] text-white/60 hover:text-accent transition-colors flex items-center gap-2 group italic">
                     <ArrowRight className="h-3 w-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                     {link.label}
                   </Link>
@@ -120,12 +120,26 @@ export function Footer() {
           </div>
 
           <div>
-            <h5 className="font-bold text-lg text-accent mb-6 font-headline italic">Connect</h5>
+            <h5 className="font-bold text-lg text-accent mb-6 font-headline italic">Publishing Policies</h5>
             <ul className="space-y-3">
-              {connectLinks.map((link) => (
+              {policyLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-xs text-white/60 hover:text-accent transition-colors flex items-center gap-3 group italic">
-                    <link.icon className="h-4 w-4 text-accent/60 group-hover:text-accent transition-colors" />
+                  <Link href={link.href} className="text-[11px] text-white/60 hover:text-accent transition-colors flex items-center gap-2 group italic">
+                    <ArrowRight className="h-3 w-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h5 className="font-bold text-lg text-accent mb-6 font-headline italic">Authors & Conferences</h5>
+            <ul className="space-y-3">
+              {resourceLinks.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="text-[11px] text-white/60 hover:text-accent transition-colors flex items-center gap-2 group italic">
+                    <ArrowRight className="h-3 w-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                     {link.label}
                   </Link>
                 </li>
@@ -138,16 +152,25 @@ export function Footer() {
               </li>
             </ul>
           </div>
+        </div>
 
-          <div>
-            <h5 className="font-bold text-lg text-accent mb-6 font-headline italic">Platform Values</h5>
-            <ul className="text-[10px] space-y-3 font-black uppercase tracking-widest opacity-40">
-              <li className="flex items-center gap-2">• Academic Integrity</li>
-              <li className="flex items-center gap-2">• University-Focused</li>
-              <li className="flex items-center gap-2">• Global Network</li>
-              <li className="flex items-center gap-2">• Ethical Publishing</li>
-            </ul>
-          </div>
+        {/* Social Icons Section - Moved to upper side of copyright */}
+        <div className="flex flex-wrap justify-center gap-6 mb-12 border-t border-white/5 pt-12">
+          {connectLinks.map((link) => (
+            <a 
+              key={link.label} 
+              href={link.href} 
+              className="group flex flex-col items-center gap-2"
+              aria-label={link.label}
+            >
+              <div className="h-10 w-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-accent hover:text-primary transition-all shadow-lg">
+                <link.icon className="h-4 w-4" />
+              </div>
+              <span className="text-[8px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-40 transition-opacity">
+                {link.label}
+              </span>
+            </a>
+          ))}
         </div>
 
         <div className="border-t border-white/10 pt-10 text-center px-4">
