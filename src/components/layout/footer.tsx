@@ -145,7 +145,7 @@ export function Footer() {
         <div className="border-t border-white/10 pt-10 text-center px-4">
           {isClient && (
             <div className="flex flex-col items-center gap-4">
-              <div className="relative h-10 w-40 mb-2 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+              <div className="relative h-12 w-48 mb-2">
                 <Image 
                   src="/logo.png" 
                   alt="SIARE Logo" 
