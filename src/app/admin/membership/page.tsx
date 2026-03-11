@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, doc, updateDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
+import { collection, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
@@ -17,7 +17,8 @@ import {
   UserPlus,
   Star,
   ListChecks,
-  LayoutGrid
+  LayoutGrid,
+  Trash2
 } from 'lucide-react';
 import Link from 'next/link';
 import { errorEmitter } from '@/firebase/error-emitter';
@@ -124,6 +125,23 @@ export default function MembershipManagement() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleDelete = (id: string, name: string) => {
+    if (!db || !window.confirm(`Are you sure you want to delete "${name}" membership tier?`)) return;
+
+    const docRef = doc(db, 'membershipTiers', id);
+    deleteDoc(docRef)
+      .then(() => {
+        toast({ title: "Tier Deleted", description: `${name} has been removed.` });
+      })
+      .catch(async (err) => {
+        const permissionError = new FirestorePermissionError({
+          path: docRef.path,
+          operation: 'delete',
+        });
+        errorEmitter.emit('permission-error', permissionError);
+      });
+  };
+
   if (userLoading || !user) return null;
 
   return (
@@ -228,6 +246,9 @@ export default function MembershipManagement() {
                         <div className="flex gap-1.5">
                           <Button variant="ghost" size="icon" onClick={() => handleEdit(tier)} className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all shadow-sm" title="Edit Tier">
                             <Edit3 className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button variant="ghost" size="icon" onClick={() => handleDelete(tier.id, tier.name)} className="h-8 w-8 rounded-lg bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm" title="Delete Tier">
+                            <Trash2 className="h-3.5 w-3.5" />
                           </Button>
                         </div>
                       </div>

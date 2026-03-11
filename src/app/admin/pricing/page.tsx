@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, doc, updateDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
+import { collection, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
@@ -18,7 +18,8 @@ import {
   CreditCard,
   Star,
   ListChecks,
-  ArrowUpDown
+  ArrowUpDown,
+  Trash2
 } from 'lucide-react';
 import Link from 'next/link';
 import { errorEmitter } from '@/firebase/error-emitter';
@@ -131,6 +132,23 @@ export default function PricingManagement() {
     setTag(plan.tag || '');
     setOrder(plan.order?.toString() || '0');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleDelete = (id: string, name: string) => {
+    if (!db || !window.confirm(`Are you sure you want to delete "${name}" plan?`)) return;
+
+    const docRef = doc(db, 'pricingPlans', id);
+    deleteDoc(docRef)
+      .then(() => {
+        toast({ title: "Plan Deleted", description: `${name} has been removed.` });
+      })
+      .catch(async (err) => {
+        const permissionError = new FirestorePermissionError({
+          path: docRef.path,
+          operation: 'delete',
+        });
+        errorEmitter.emit('permission-error', permissionError);
+      });
   };
 
   if (userLoading || !user) return null;
@@ -256,6 +274,9 @@ export default function PricingManagement() {
                           <div className="flex gap-2">
                             <Button variant="ghost" size="icon" onClick={() => handleEdit(plan)} className="h-8 w-8 rounded-full bg-slate-50 text-primary hover:bg-accent hover:text-white">
                               <Edit3 className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="icon" onClick={() => handleDelete(plan.id, plan.name)} className="h-8 w-8 rounded-full bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white">
+                              <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
                         </div>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, doc, updateDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
+import { collection, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
@@ -18,7 +18,8 @@ import {
   CheckCircle2,
   Clock,
   LayoutGrid,
-  ArrowUpDown
+  ArrowUpDown,
+  Trash2
 } from 'lucide-react';
 import Link from 'next/link';
 import { errorEmitter } from '@/firebase/error-emitter';
@@ -107,6 +108,23 @@ export default function PastEventsManagement() {
     setDescription(event.description);
     setOrder(event.order?.toString() || '0');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleDelete = (id: string, title: string) => {
+    if (!db || !window.confirm(`Are you sure you want to delete "${title}" from history?`)) return;
+
+    const docRef = doc(db, 'pastEvents', id);
+    deleteDoc(docRef)
+      .then(() => {
+        toast({ title: "History Removed", description: `"${title}" has been deleted.` });
+      })
+      .catch(async (err) => {
+        const permissionError = new FirestorePermissionError({
+          path: docRef.path,
+          operation: 'delete',
+        });
+        errorEmitter.emit('permission-error', permissionError);
+      });
   };
 
   if (userLoading || !user) return null;
@@ -207,8 +225,11 @@ export default function PastEventsManagement() {
                             </h3>
                           </div>
                           <div className="flex gap-1.5">
-                            <Button variant="ghost" size="icon" onClick={() => handleEdit(event)} className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all shadow-sm">
+                            <Button variant="ghost" size="icon" onClick={() => handleEdit(event)} className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all shadow-sm" title="Edit Entry">
                               <Edit3 className="h-3.5 w-3.5" />
+                            </Button>
+                            <Button variant="ghost" size="icon" onClick={() => handleDelete(event.id, event.title)} className="h-8 w-8 rounded-lg bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm" title="Delete Entry">
+                              <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           </div>
                         </div>

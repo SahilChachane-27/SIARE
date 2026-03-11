@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, doc, updateDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
+import { collection, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
@@ -19,7 +19,8 @@ import {
   Clock,
   LayoutGrid,
   GraduationCap,
-  User
+  User,
+  Trash2
 } from 'lucide-react';
 import Link from 'next/link';
 import { errorEmitter } from '@/firebase/error-emitter';
@@ -128,6 +129,23 @@ export default function WorkshopsManagement() {
     setColor(workshop.color || 'bg-amber-500');
     setOrder(workshop.order?.toString() || '0');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleDelete = (id: string, title: string) => {
+    if (!db || !window.confirm(`Are you sure you want to delete workshop "${title}"?`)) return;
+
+    const docRef = doc(db, 'workshops', id);
+    deleteDoc(docRef)
+      .then(() => {
+        toast({ title: "Workshop Deleted", description: `"${title}" has been removed.` });
+      })
+      .catch(async (err) => {
+        const permissionError = new FirestorePermissionError({
+          path: docRef.path,
+          operation: 'delete',
+        });
+        errorEmitter.emit('permission-error', permissionError);
+      });
   };
 
   if (userLoading || !user) return null;
@@ -244,8 +262,11 @@ export default function WorkshopsManagement() {
                             </h3>
                           </div>
                           <div className="flex gap-1.5">
-                            <Button variant="ghost" size="icon" onClick={() => handleEdit(workshop)} className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all shadow-sm">
+                            <Button variant="ghost" size="icon" onClick={() => handleEdit(workshop)} className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all shadow-sm" title="Edit Workshop">
                               <Edit3 className="h-3.5 w-3.5" />
+                            </Button>
+                            <Button variant="ghost" size="icon" onClick={() => handleDelete(workshop.id, workshop.title)} className="h-8 w-8 rounded-lg bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm" title="Delete Workshop">
+                              <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           </div>
                         </div>

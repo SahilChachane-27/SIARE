@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef, Suspense } from 'react';
 import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, doc, updateDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
+import { collection, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
@@ -28,6 +28,7 @@ import {
   ChevronRight,
   Star,
   Flag,
+  Trash2,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -211,6 +212,23 @@ function JournalManagementContent() {
     setImageUrl(journal.imageUrl || null);
     setIsFeatured(journal.isFeatured || false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleDelete = (id: string, name: string) => {
+    if (!db || !window.confirm(`Are you sure you want to delete "${name}"?`)) return;
+
+    const docRef = doc(db, 'journals', id);
+    deleteDoc(docRef)
+      .then(() => {
+        toast({ title: "Journal Deleted", description: `${name} has been removed from the catalog.` });
+      })
+      .catch(async (err) => {
+        const permissionError = new FirestorePermissionError({
+          path: docRef.path,
+          operation: 'delete',
+        });
+        errorEmitter.emit('permission-error', permissionError);
+      });
   };
 
   const filteredAndSortedJournals = useMemo(() => {
@@ -438,6 +456,19 @@ function JournalManagementContent() {
                               title="Edit Journal"
                             >
                               <Edit3 className="h-3.5 w-3.5 text-primary" />
+                            </Button>
+                            <Button 
+                              type="button"
+                              variant="secondary" 
+                              size="icon" 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDelete(journal.id, journal.name);
+                              }} 
+                              className="rounded-full h-7 w-7 bg-white shadow-md hover:bg-red-50 text-red-500"
+                              title="Delete Journal"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           </div>
                         </div>
