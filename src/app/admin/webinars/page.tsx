@@ -262,26 +262,40 @@ export default function WebinarsManagement() {
                     <Card key={webinar.id} className="rounded-2xl shadow-lg border-none overflow-hidden relative group bg-white hover:shadow-2xl transition-all duration-500">
                       <div className={`h-1.5 ${webinar.color || 'bg-purple-500'}`}></div>
                       <div className="p-6">
-                        <div className="flex justify-between items-start mb-4">
-                          <div>
+                        <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4">
+                          <div className="min-w-0 flex-1">
                             <div className="text-[8px] font-black text-accent uppercase tracking-widest mb-1 flex items-center gap-1">
                               <Star className="h-2.5 w-2.5 fill-current" /> {webinar.status || 'Active'}
                             </div>
-                            <h3 className="text-base font-bold text-primary font-headline italic leading-tight group-hover:text-accent transition-colors">
+                            <h3 className="text-base font-bold text-primary font-headline italic leading-tight group-hover:text-accent transition-colors break-words">
                               {webinar.title}
                             </h3>
                           </div>
-                          <div className="flex gap-1.5">
-                            <Button variant="ghost" size="icon" onClick={() => handleEdit(webinar)} className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all shadow-sm" title="Edit Session">
+                          <div className="flex gap-1.5 shrink-0">
+                            <Button 
+                              type="button"
+                              variant="ghost" 
+                              size="icon" 
+                              onClick={() => handleEdit(webinar)} 
+                              className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all shadow-sm"
+                              title="Edit Session"
+                            >
                               <Edit3 className="h-3.5 w-3.5" />
                             </Button>
-                            <Button variant="ghost" size="icon" onClick={() => handleDelete(webinar.id, webinar.title)} className="h-8 w-8 rounded-lg bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm" title="Delete Session">
+                            <Button 
+                              type="button"
+                              variant="ghost" 
+                              size="icon" 
+                              onClick={() => handleDelete(webinar.id, webinar.title)} 
+                              className="h-8 w-8 rounded-lg bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm"
+                              title="Delete Session"
+                            >
                               <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                           <div className="flex items-center gap-2 text-[10px] font-bold text-primary/60">
                             <Calendar className="h-3.5 w-3.5 text-accent" /> {webinar.date}
                           </div>
@@ -310,7 +324,7 @@ export default function WebinarsManagement() {
                           {webinar.description}
                         </p>
 
-                        <div className="flex items-center justify-between pt-4 mt-2 border-t border-slate-50">
+                        <div className="flex flex-col sm:flex-row items-center justify-between pt-4 mt-2 border-t border-slate-50 gap-2">
                           <span className="text-[8px] font-black text-primary/20 uppercase tracking-[0.2em]">Session ID: {webinar.id.slice(0,8)}</span>
                           <div className="text-[10px] font-black text-primary/40 italic">Order: {webinar.order}</div>
                         </div>

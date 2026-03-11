@@ -248,12 +248,12 @@ export default function EventsManagement() {
                     <Card key={event.id} className="rounded-2xl shadow-lg border-none overflow-hidden relative group bg-white hover:shadow-2xl transition-all duration-500">
                       <div className={`h-1.5 ${event.color || 'bg-primary'}`}></div>
                       <div className="p-6">
-                        <div className="flex justify-between items-start mb-4">
-                          <div className="min-w-0">
+                        <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4">
+                          <div className="min-w-0 flex-1">
                             <div className="text-[8px] font-black text-accent uppercase tracking-widest mb-1 flex items-center gap-1">
                               <Star className="h-2.5 w-2.5 fill-current" /> {event.status || 'Active'}
                             </div>
-                            <h3 className="text-base font-bold text-primary font-headline italic leading-tight group-hover:text-accent transition-colors truncate">
+                            <h3 className="text-base font-bold text-primary font-headline italic leading-tight group-hover:text-accent transition-colors break-words">
                               {event.title}
                             </h3>
                           </div>
@@ -281,7 +281,7 @@ export default function EventsManagement() {
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 mb-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
                           <div className="flex items-center gap-2 text-[10px] font-bold text-primary/60">
                             <Calendar className="h-3.5 w-3.5 text-accent shrink-0" /> {event.date}
                           </div>
@@ -298,7 +298,7 @@ export default function EventsManagement() {
                           </div>
                         )}
 
-                        <div className="flex items-center justify-between pt-4 mt-2 border-t border-slate-50">
+                        <div className="flex flex-col sm:flex-row items-center justify-between pt-4 mt-2 border-t border-slate-50 gap-2">
                           <span className="text-[8px] font-black text-primary/20 uppercase tracking-[0.2em]">Registry ID: {event.id.slice(0,8)}</span>
                           <div className="text-[10px] font-black text-primary/40 italic">Order: {event.order}</div>
                         </div>
