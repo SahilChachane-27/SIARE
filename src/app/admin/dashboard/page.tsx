@@ -27,17 +27,22 @@ import {
   History,
   GraduationCap,
   Video,
-  UserPlus
+  UserPlus,
+  Trash2
 } from 'lucide-react';
 import Link from 'next/link';
-import { collection, query, orderBy, limit } from 'firebase/firestore';
+import { collection, query, orderBy, limit, doc, deleteDoc } from 'firebase/firestore';
 import Image from 'next/image';
+import { useToast } from '@/hooks/use-toast';
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError } from '@/firebase/errors';
 
 export default function AdminDashboard() {
   const { user, loading } = useUser();
   const auth = useAuth();
   const db = useFirestore();
   const router = useRouter();
+  const { toast } = useToast();
 
   // Fetch all journals for stats
   const journalsQuery = useMemo(() => {
@@ -74,6 +79,23 @@ export default function AdminDashboard() {
       auth.signOut();
       router.push('/admin/login');
     }
+  };
+
+  const handleDeleteJournal = (id: string, name: string) => {
+    if (!db || !window.confirm(`Are you sure you want to delete "${name}"? This action cannot be undone.`)) return;
+
+    const docRef = doc(db, 'journals', id);
+    deleteDoc(docRef)
+      .then(() => {
+        toast({ title: "Journal Deleted", description: `"${name}" has been removed from the system.` });
+      })
+      .catch(async (err) => {
+        const permissionError = new FirestorePermissionError({
+          path: docRef.path,
+          operation: 'delete',
+        });
+        errorEmitter.emit('permission-error', permissionError);
+      });
   };
 
   const stats = useMemo(() => {
@@ -256,6 +278,14 @@ export default function AdminDashboard() {
                             </Button>
                             <Button asChild size="sm" variant="ghost" className="h-8 px-3 md:px-4 text-[10px] font-black uppercase text-accent hover:text-primary hover:bg-transparent">
                               <a href={journal.link} target="_blank">Live <ExternalLink className="ml-1 h-3 w-3" /></a>
+                            </Button>
+                            <Button 
+                              size="sm" 
+                              variant="ghost" 
+                              className="h-8 px-3 md:px-4 text-[10px] font-black uppercase text-red-500 hover:text-red-600 hover:bg-red-50"
+                              onClick={() => handleDeleteJournal(journal.id, journal.name)}
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           </div>
                         </div>
