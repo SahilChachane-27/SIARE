@@ -168,6 +168,11 @@ export default function AdminDashboard() {
                 </Link>
               </Button>
               <Button asChild size="sm" variant="outline" className="flex-1 lg:flex-none rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-4 h-10 shadow-sm transition-all hover:scale-105 active:scale-95">
+                <Link href="/admin/past-events">
+                  <History className="mr-2 h-4 w-4" /> Past Events
+                </Link>
+              </Button>
+              <Button asChild size="sm" variant="outline" className="flex-1 lg:flex-none rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-4 h-10 shadow-sm transition-all hover:scale-105 active:scale-95">
                 <Link href="/admin/journals">
                   <BookOpen className="mr-2 h-4 w-4" /> Edit Proceedings
                 </Link>
