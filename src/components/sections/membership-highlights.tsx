@@ -52,11 +52,13 @@ export function MembershipHighlights() {
           <div data-aos="fade-left" className="w-full max-w-lg lg:max-w-none mx-auto">
             <Card className="bg-white/10 border border-white/20 p-6 md:p-10 lg:p-12 rounded-[30px] md:rounded-[40px] backdrop-blur-md text-white shadow-2xl">
               <h4 className="text-lg md:text-xl font-bold font-headline italic mb-6 md:mb-8 text-center text-accent uppercase tracking-widest">Membership Tiers</h4>
-              <div className="grid grid-cols-2 gap-4 md:gap-6">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
                 {types.map((type, i) => (
-                  <div key={i} className="bg-white/5 p-4 md:p-6 rounded-2xl text-center group hover:bg-accent transition-all duration-500 cursor-default border border-white/5 hover:border-accent/50">
-                    <type.icon className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-3 md:mb-4 text-accent group-hover:text-primary transition-colors" />
-                    <span className="text-[10px] md:text-sm font-black uppercase tracking-widest group-hover:text-primary transition-colors">{type.name}</span>
+                  <div key={i} className="bg-white/5 p-3 sm:p-4 md:p-6 rounded-2xl text-center group hover:bg-accent transition-all duration-500 cursor-default border border-white/5 hover:border-accent/50 flex flex-col items-center justify-center min-h-[100px] sm:min-h-0">
+                    <type.icon className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-2 sm:mb-3 md:mb-4 text-accent group-hover:text-primary transition-colors" />
+                    <span className="text-[9px] sm:text-[10px] md:text-sm font-black uppercase tracking-wider md:tracking-widest group-hover:text-primary transition-colors block w-full truncate">
+                      {type.name}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -66,7 +68,7 @@ export function MembershipHighlights() {
         </div>
       </div>
       
-      {/* Background Decorative Elements - hidden on tiny mobile */}
+      {/* Background Decorative Elements */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full -mr-32 -mt-32 blur-3xl hidden sm:block"></div>
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/5 rounded-full -ml-32 -mb-32 blur-3xl hidden sm:block"></div>
     </section>
