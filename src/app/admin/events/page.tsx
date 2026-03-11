@@ -223,17 +223,6 @@ export default function EventsManagement() {
                     <Input value={tracks} onChange={(e) => setTracks(e.target.value)} placeholder="Engineering, AI, Management..." className="rounded-xl border-slate-100 h-11" />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">UI Color</label>
-                      <Input value={color} onChange={(e) => setColor(e.target.value)} placeholder="bg-blue-500" className="rounded-xl border-slate-100 h-11" />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Priority Order</label>
-                      <Input type="number" value={order} onChange={(e) => setOrder(e.target.value)} className="rounded-xl border-slate-100 h-11" />
-                    </div>
-                  </div>
-
                   <Button type="submit" className="w-full h-12 bg-primary text-accent font-black uppercase text-xs tracking-widest rounded-xl shadow-xl hover:scale-[1.02] transition-transform mt-4">
                     {editingId ? <><Edit3 className="mr-2 h-4 w-4" /> Sync Changes</> : <><Plus className="mr-2 h-4 w-4" /> Add to Catalog</>}
                   </Button>
