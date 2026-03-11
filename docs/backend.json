@@ -109,6 +109,7 @@
         "title": { "type": "string" },
         "date": { "type": "string" },
         "time": { "type": "string" },
+        "location": { "type": "string" },
         "instructor": { "type": "string" },
         "description": { "type": "string" },
         "status": { "type": "string", "description": "e.g. Registration Open, Limited Seats" },

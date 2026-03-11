@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
@@ -20,7 +21,8 @@ import {
   LayoutGrid,
   GraduationCap,
   User,
-  Trash2
+  Trash2,
+  MapPin
 } from 'lucide-react';
 import Link from 'next/link';
 import { errorEmitter } from '@/firebase/error-emitter';
@@ -36,6 +38,7 @@ export default function WorkshopsManagement() {
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
+  const [location, setLocation] = useState('');
   const [instructor, setInstructor] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('Registration Open');
@@ -58,6 +61,7 @@ export default function WorkshopsManagement() {
     setTitle(''); 
     setDate('');
     setTime('');
+    setLocation('');
     setInstructor('');
     setDescription('');
     setStatus('Registration Open');
@@ -73,6 +77,7 @@ export default function WorkshopsManagement() {
       title,
       date,
       time,
+      location,
       instructor,
       description,
       status,
@@ -123,6 +128,7 @@ export default function WorkshopsManagement() {
     setTitle(workshop.title);
     setDate(workshop.date);
     setTime(workshop.time || '');
+    setLocation(workshop.location || '');
     setInstructor(workshop.instructor || '');
     setDescription(workshop.description || '');
     setStatus(workshop.status || 'Registration Open');
@@ -205,6 +211,11 @@ export default function WorkshopsManagement() {
                   </div>
 
                   <div className="space-y-1.5">
+                    <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Location</label>
+                    <Input value={location} onChange={(e) => setLocation(e.target.value)} placeholder="e.g. Online or Pune, India" className="rounded-xl border-slate-100 h-11 focus:ring-accent/20" />
+                  </div>
+
+                  <div className="space-y-1.5">
                     <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Lead Instructor</label>
                     <Input value={instructor} onChange={(e) => setInstructor(e.target.value)} placeholder="Dr. Sarah Johnson" className="rounded-xl border-slate-100 h-11" />
                   </div>
@@ -252,12 +263,12 @@ export default function WorkshopsManagement() {
                     <Card key={workshop.id} className="rounded-2xl shadow-lg border-none overflow-hidden relative group bg-white hover:shadow-2xl transition-all duration-500">
                       <div className={`h-1.5 ${workshop.color || 'bg-amber-500'}`}></div>
                       <div className="p-6">
-                        <div className="flex justify-between items-start mb-4">
-                          <div>
+                        <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4">
+                          <div className="min-w-0 flex-1">
                             <div className="text-[8px] font-black text-accent uppercase tracking-widest mb-1 flex items-center gap-1">
                               <Star className="h-2.5 w-2.5 fill-current" /> {workshop.status || 'Active'}
                             </div>
-                            <h3 className="text-base font-bold text-primary font-headline italic leading-tight group-hover:text-accent transition-colors">
+                            <h3 className="text-base font-bold text-primary font-headline italic leading-tight group-hover:text-accent transition-colors break-words">
                               {workshop.title}
                             </h3>
                           </div>
@@ -281,6 +292,12 @@ export default function WorkshopsManagement() {
                             </div>
                           )}
                         </div>
+
+                        {workshop.location && (
+                          <div className="flex items-center gap-2 text-[10px] font-bold text-primary/60 mb-4">
+                            <MapPin className="h-3.5 w-3.5 text-accent" /> {workshop.location}
+                          </div>
+                        )}
 
                         {workshop.instructor && (
                           <div className="flex items-center gap-2 text-[10px] font-bold text-primary/60 mb-4">

@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -174,6 +175,7 @@ export default function EventsPage() {
                     <div className="space-y-3 mb-8 text-sm text-foreground/70">
                       <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-accent" /> {workshop.date}</div>
                       {workshop.time && <div className="flex items-center gap-2"><Clock className="h-4 w-4 text-accent" /> {workshop.time}</div>}
+                      {workshop.location && <div className="flex items-center gap-2"><MapPin className="h-4 w-4 text-accent" /> {workshop.location}</div>}
                       {workshop.instructor && <div className="flex items-center gap-2"><User className="h-4 w-4 text-accent" /> {workshop.instructor}</div>}
                     </div>
                     <p className="text-xs text-foreground/60 italic mb-8 leading-relaxed line-clamp-3">"{workshop.description}"</p>
