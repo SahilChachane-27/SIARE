@@ -131,13 +131,13 @@ export default function EventsManagement() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = (e: React.MouseEvent, id: string) => {
+  const handleDelete = (e: React.MouseEvent, id: string, name: string) => {
     e.preventDefault();
     e.stopPropagation();
     
     if (!db || !id) return;
     
-    if (window.confirm("Are you sure you want to permanently remove this conference from the catalog?")) {
+    if (window.confirm(`Are you sure you want to permanently remove "${name}" from the catalog?`)) {
       const docRef = doc(db, 'conferences', id);
       deleteDoc(docRef)
         .then(() => {
@@ -280,17 +280,20 @@ export default function EventsManagement() {
                               size="icon" 
                               onClick={() => handleEdit(event)} 
                               className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all shadow-sm"
+                              title="Edit Record"
                             >
                               <Edit3 className="h-3.5 w-3.5" />
                             </Button>
                             <Button 
                               type="button"
                               variant="ghost" 
-                              size="icon" 
-                              onClick={(e) => handleDelete(e, event.id)} 
-                              className="h-8 w-8 rounded-lg bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm"
+                              size="sm" 
+                              onClick={(e) => handleDelete(e, event.id, event.title)} 
+                              className="h-8 px-2 rounded-lg bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm flex items-center gap-1"
+                              title="Delete Record"
                             >
                               <Trash2 className="h-3.5 w-3.5" />
+                              <span className="text-[9px] font-black uppercase hidden xs:inline">Delete</span>
                             </Button>
                           </div>
                         </div>

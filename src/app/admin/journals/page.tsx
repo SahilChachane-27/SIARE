@@ -215,10 +215,10 @@ function JournalManagementContent() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = (e: React.MouseEvent, id: string) => {
+  const handleDelete = (e: React.MouseEvent, id: string, title: string) => {
     e.stopPropagation();
     if (!db || !id) return;
-    if (!window.confirm("Are you sure you want to permanently delete this journal record?")) return;
+    if (!window.confirm(`Are you sure you want to permanently delete "${title}" record?`)) return;
     
     const docRef = doc(db, 'journals', id);
     deleteDoc(docRef)
@@ -456,17 +456,20 @@ function JournalManagementContent() {
                                 handleEdit(journal);
                               }} 
                               className="rounded-full h-7 w-7 bg-white shadow-md hover:bg-slate-100"
+                              title="Edit Journal"
                             >
                               <Edit3 className="h-3.5 w-3.5 text-primary" />
                             </Button>
                             <Button 
                               type="button"
                               variant="destructive" 
-                              size="icon" 
-                              onClick={(e) => handleDelete(e, journal.id)} 
-                              className="rounded-full h-7 w-7 shadow-md"
+                              size="sm" 
+                              onClick={(e) => handleDelete(e, journal.id, journal.name)} 
+                              className="rounded-lg h-7 px-2 shadow-md flex items-center gap-1"
+                              title="Delete Journal"
                             >
                               <Trash2 className="h-3.5 w-3.5" />
+                              <span className="text-[8px] font-black uppercase hidden lg:inline">Delete</span>
                             </Button>
                           </div>
                         </div>
