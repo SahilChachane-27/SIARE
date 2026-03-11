@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, deleteDoc, doc, updateDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
+import { collection, addDoc, doc, updateDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
@@ -12,13 +12,11 @@ import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { 
   Plus, 
-  Trash2, 
   ArrowLeft, 
   Edit3, 
   UserPlus,
   Star,
   ListChecks,
-  ArrowUpDown,
   LayoutGrid
 } from 'lucide-react';
 import Link from 'next/link';
@@ -126,28 +124,6 @@ export default function MembershipManagement() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = (e: React.MouseEvent, id: string, title: string) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    if (!db || !id) return;
-    
-    if (window.confirm(`Are you sure you want to permanently remove "${title}" membership tier?`)) {
-      const docRef = doc(db, 'membershipTiers', id);
-      deleteDoc(docRef)
-        .then(() => {
-          toast({ title: "Tier Removed", description: "The membership record has been deleted." });
-        })
-        .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: docRef.path,
-            operation: 'delete',
-          });
-          errorEmitter.emit('permission-error', permissionError);
-        });
-    }
-  };
-
   if (userLoading || !user) return null;
 
   return (
@@ -252,10 +228,6 @@ export default function MembershipManagement() {
                         <div className="flex gap-1.5">
                           <Button variant="ghost" size="icon" onClick={() => handleEdit(tier)} className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all shadow-sm" title="Edit Tier">
                             <Edit3 className="h-3.5 w-3.5" />
-                          </Button>
-                          <Button variant="ghost" size="sm" onClick={(e) => handleDelete(e, tier.id, tier.name)} className="h-8 px-2 rounded-lg bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm flex items-center gap-1" title="Delete Tier">
-                            <Trash2 className="h-3.5 w-3.5" />
-                            <span className="text-[9px] font-black uppercase hidden xs:inline">Delete</span>
                           </Button>
                         </div>
                       </div>

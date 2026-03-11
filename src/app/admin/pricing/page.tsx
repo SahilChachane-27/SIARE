@@ -1,27 +1,23 @@
-
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
 import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, deleteDoc, doc, updateDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
+import { collection, addDoc, doc, updateDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Checkbox } from '@/components/ui/checkbox';
 import { 
   Plus, 
-  Trash2, 
   ArrowLeft, 
   Edit3, 
   CreditCard,
   Star,
   ListChecks,
-  ChevronLeft,
-  ChevronRight,
   ArrowUpDown
 } from 'lucide-react';
 import Link from 'next/link';
@@ -135,25 +131,6 @@ export default function PricingManagement() {
     setTag(plan.tag || '');
     setOrder(plan.order?.toString() || '0');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleDelete = (e: React.MouseEvent, id: string) => {
-    e.stopPropagation();
-    if (!db || !id) return;
-    if (!window.confirm("Are you sure you want to delete this pricing plan?")) return;
-    
-    const docRef = doc(db, 'pricingPlans', id);
-    deleteDoc(docRef)
-      .then(() => {
-        toast({ title: "Plan Deleted", description: "The plan has been removed from the repository." });
-      })
-      .catch(async (err) => {
-        const permissionError = new FirestorePermissionError({
-          path: docRef.path,
-          operation: 'delete',
-        });
-        errorEmitter.emit('permission-error', permissionError);
-      });
   };
 
   if (userLoading || !user) return null;
@@ -279,9 +256,6 @@ export default function PricingManagement() {
                           <div className="flex gap-2">
                             <Button variant="ghost" size="icon" onClick={() => handleEdit(plan)} className="h-8 w-8 rounded-full bg-slate-50 text-primary hover:bg-accent hover:text-white">
                               <Edit3 className="h-4 w-4" />
-                            </Button>
-                            <Button variant="ghost" size="icon" onClick={(e) => handleDelete(e, plan.id)} className="h-8 w-8 rounded-full bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white">
-                              <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
                         </div>

@@ -1,9 +1,8 @@
-
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
 import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, deleteDoc, doc, updateDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
+import { collection, addDoc, doc, updateDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
@@ -13,12 +12,10 @@ import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { 
   Plus, 
-  Trash2, 
   ArrowLeft, 
   Edit3, 
   Calendar,
   Star,
-  ArrowUpDown,
   Clock,
   LayoutGrid,
   GraduationCap,
@@ -131,28 +128,6 @@ export default function WorkshopsManagement() {
     setColor(workshop.color || 'bg-amber-500');
     setOrder(workshop.order?.toString() || '0');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleDelete = (e: React.MouseEvent, id: string) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    if (!db || !id) return;
-    
-    if (window.confirm("Are you sure you want to permanently remove this workshop?")) {
-      const docRef = doc(db, 'workshops', id);
-      deleteDoc(docRef)
-        .then(() => {
-          toast({ title: "Entry Removed", description: "The workshop record has been deleted." });
-        })
-        .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: docRef.path,
-            operation: 'delete',
-          });
-          errorEmitter.emit('permission-error', permissionError);
-        });
-    }
   };
 
   if (userLoading || !user) return null;
@@ -271,9 +246,6 @@ export default function WorkshopsManagement() {
                           <div className="flex gap-1.5">
                             <Button variant="ghost" size="icon" onClick={() => handleEdit(workshop)} className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all shadow-sm">
                               <Edit3 className="h-3.5 w-3.5" />
-                            </Button>
-                            <Button variant="ghost" size="icon" onClick={(e) => handleDelete(e, workshop.id)} className="h-8 w-8 rounded-lg bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm">
-                              <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           </div>
                         </div>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef, Suspense } from 'react';
 import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, deleteDoc, doc, updateDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
+import { collection, addDoc, doc, updateDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,6 @@ import { useToast } from '@/hooks/use-toast';
 import { Checkbox } from '@/components/ui/checkbox';
 import { 
   Plus, 
-  Trash2, 
   Building2, 
   Tag, 
   Globe, 
@@ -29,7 +28,6 @@ import {
   ChevronRight,
   Star,
   Flag,
-  ListChecks
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -213,25 +211,6 @@ function JournalManagementContent() {
     setImageUrl(journal.imageUrl || null);
     setIsFeatured(journal.isFeatured || false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleDelete = (e: React.MouseEvent, id: string, title: string) => {
-    e.stopPropagation();
-    if (!db || !id) return;
-    if (!window.confirm(`Are you sure you want to permanently delete "${title}" record?`)) return;
-    
-    const docRef = doc(db, 'journals', id);
-    deleteDoc(docRef)
-      .then(() => {
-        toast({ title: "Journal Removed", description: "The journal has been successfully deleted from the catalog." });
-      })
-      .catch(async (err) => {
-        const permissionError = new FirestorePermissionError({
-          path: docRef.path,
-          operation: 'delete',
-        });
-        errorEmitter.emit('permission-error', permissionError);
-      });
   };
 
   const filteredAndSortedJournals = useMemo(() => {
@@ -459,17 +438,6 @@ function JournalManagementContent() {
                               title="Edit Journal"
                             >
                               <Edit3 className="h-3.5 w-3.5 text-primary" />
-                            </Button>
-                            <Button 
-                              type="button"
-                              variant="destructive" 
-                              size="sm" 
-                              onClick={(e) => handleDelete(e, journal.id, journal.name)} 
-                              className="rounded-lg h-7 px-2 shadow-md flex items-center gap-1"
-                              title="Delete Journal"
-                            >
-                              <Trash2 className="h-3.5 w-3.5" />
-                              <span className="text-[8px] font-black uppercase hidden lg:inline">Delete</span>
                             </Button>
                           </div>
                         </div>
