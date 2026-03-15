@@ -1,13 +1,16 @@
 
 'use client';
 
-import { Card, CardContent } from '@/components/ui/card';
-import { Quote } from 'lucide-react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { cn } from '@/lib/utils';
 
 const testimonials = [
   {
+    id: 'nita',
     name: "Nita Patel",
     role: "Vice President, Engineering at Otis Elevator Co.",
     year: "1993",
@@ -16,6 +19,7 @@ const testimonials = [
     imgId: "testimonial-1"
   },
   {
+    id: 'vincent',
     name: "Vincent Kaabunga",
     role: "Director, GR8 Analytix",
     year: "2009",
@@ -24,6 +28,7 @@ const testimonials = [
     imgId: "testimonial-2"
   },
   {
+    id: 'john',
     name: "John McDonald",
     role: "Founder and CEO of JDM Associates, LLC",
     year: "1971",
@@ -34,59 +39,84 @@ const testimonials = [
 ];
 
 export function Testimonials() {
+  const [activeTab, setActiveTab] = useState(0);
+  const current = testimonials[activeTab];
+  const memberImg = PlaceHolderImages.find(img => img.id === current.imgId);
+
   return (
-    <section id="testimonials" className="py-20 md:py-28 bg-slate-50 overflow-hidden font-body">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16" data-aos="fade-up">
-          <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-4">Meet Our Members</h2>
-          <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold text-primary font-headline italic">
+    <section id="testimonials" className="py-20 md:py-32 bg-[#e6f4f9] overflow-hidden font-body">
+      <div className="container mx-auto px-4 md:px-16 lg:px-32">
+        {/* Header */}
+        <div className="text-center mb-12 md:mb-20" data-aos="fade-up">
+          <h2 className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-primary mb-6">
+            Meet Our Members
+          </h2>
+          <h3 className="text-3xl md:text-6xl font-bold text-primary font-headline italic leading-tight max-w-4xl mx-auto">
             'What SIARE Membership Means to Me'
           </h3>
-          <div className="mt-4 w-24 h-1 bg-accent mx-auto"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {testimonials.map((t, i) => {
-            const memberImg = PlaceHolderImages.find(img => img.id === t.imgId);
-            return (
-              <Card key={i} className="border-none shadow-2xl rounded-[2.5rem] bg-white overflow-hidden group flex flex-col h-full" data-aos="fade-up" data-aos-delay={i * 100}>
-                <div className="relative aspect-square w-full">
-                  {memberImg && (
-                    <Image
-                      src={memberImg.imageUrl}
-                      alt={memberImg.description}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      data-ai-hint={memberImg.imageHint}
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent"></div>
-                  <div className="absolute bottom-6 left-8 right-6">
-                    <h4 className="text-2xl font-bold text-white font-headline italic">{t.name}</h4>
-                    <p className="text-xs font-black text-accent uppercase tracking-widest mt-1">{t.role}</p>
-                  </div>
-                </div>
-                
-                <CardContent className="p-8 pt-10 flex-1 flex flex-col">
-                  <div className="mb-6 relative">
-                    <Quote className="h-8 w-8 text-accent/20 absolute -top-4 -left-4" />
-                    <p className="text-base text-primary/80 italic font-headline leading-relaxed relative z-10 pl-2">
-                      {t.quote}
-                    </p>
-                    <p className="text-[10px] font-black text-primary/30 uppercase tracking-[0.2em] mt-4 ml-2">
-                      Member since {t.year}
-                    </p>
-                  </div>
-                  
-                  <div className="mt-auto pt-6 border-t border-slate-100">
-                    <p className="text-xs text-foreground/60 leading-relaxed font-medium italic">
-                      {t.bio}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
+        {/* Member Navigation */}
+        <div className="border-b border-primary/20 mb-12 md:mb-16 relative" data-aos="fade-up">
+          <div className="flex flex-wrap gap-x-8 md:gap-x-16 gap-y-4">
+            {testimonials.map((t, i) => (
+              <button
+                key={t.id}
+                onClick={() => setActiveTab(i)}
+                className={cn(
+                  "pb-4 text-sm md:text-lg transition-all relative uppercase tracking-wider font-bold",
+                  activeTab === i 
+                    ? "text-primary font-black opacity-100" 
+                    : "text-primary opacity-60 hover:opacity-100"
+                )}
+              >
+                {t.name}
+                {activeTab === i && (
+                  <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-[#0091da]"></div>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Content Area */}
+        <div className="grid lg:grid-cols-12 gap-12 items-center min-h-[500px]">
+          <div className="lg:col-span-7 space-y-8 md:space-y-12" data-aos="fade-right" key={`text-${activeTab}`}>
+            <div className="space-y-6">
+              <p className="text-lg md:text-2xl text-primary/90 italic font-headline leading-relaxed">
+                "{current.quote}" <span className="not-italic font-sans text-xs md:text-sm font-black uppercase tracking-tighter opacity-60">—{current.name}, {current.role}. Member since {current.year}.</span>
+              </p>
+              
+              <p className="text-sm md:text-base text-primary/70 leading-relaxed font-medium">
+                {current.bio}
+              </p>
+            </div>
+
+            <div className="pt-4">
+              <Button 
+                variant="outline" 
+                className="rounded-full border-primary/20 text-primary hover:bg-primary hover:text-white px-8 h-12 text-[10px] font-black uppercase tracking-widest transition-all group"
+              >
+                More Member Stories <ArrowUpRight className="ml-2 h-4 w-4 group-hover:rotate-45 transition-transform" />
+              </Button>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 relative" data-aos="fade-left" key={`img-${activeTab}`}>
+            <div className="relative aspect-[4/5] md:aspect-square lg:aspect-[4/5] rounded-xl overflow-hidden shadow-2xl border-8 border-white/50">
+              {memberImg && (
+                <Image
+                  src={memberImg.imageUrl}
+                  alt={memberImg.description}
+                  fill
+                  className="object-cover transition-all duration-1000"
+                  data-ai-hint={memberImg.imageHint}
+                />
+              )}
+            </div>
+            {/* Decorative background shape */}
+            <div className="absolute -z-10 top-10 -right-10 w-full h-full bg-[#0091da]/10 rounded-xl"></div>
+          </div>
         </div>
       </div>
     </section>
