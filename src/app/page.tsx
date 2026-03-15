@@ -19,7 +19,7 @@ export default function Home() {
       <main className="flex-1 overflow-x-hidden">
         <Hero />
         <About />
-        <Services />
+        {/* <Services /> */}
         <Projects />
         <MembershipHighlights />
         <LearningHub />
