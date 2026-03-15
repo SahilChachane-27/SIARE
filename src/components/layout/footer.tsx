@@ -66,8 +66,15 @@ export function Footer() {
       <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 pt-16 md:pt-24 pb-8 md:pb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 mb-16">
           <div className="space-y-6 lg:col-span-1">
-            <Link href="/" className="text-xl md:text-2xl font-bold font-headline text-accent italic transition-opacity hover:opacity-80">
-              SIARE
+            <Link href="/" className="flex items-center gap-3 transition-transform hover:scale-[1.02] shrink-0">
+              <div className="relative h-10 w-36 md:h-12 md:w-48">
+                <Image 
+                  src="/logo.png" 
+                  alt="SIARE Logo" 
+                  fill 
+                  className="object-contain object-left"
+                />
+              </div>
             </Link>
             <p className="text-[11px] md:text-xs leading-relaxed text-white/60 font-medium italic max-w-xs">
               Empowering global academic communities through integrated research, ethical publishing, and international collaboration.
