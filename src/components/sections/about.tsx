@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -22,7 +21,7 @@ export function About() {
           
           <div className="space-y-6 md:space-y-10 order-1 lg:order-2" data-aos="fade-left">
             <div>
-              <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-3 font-body">About SIARE</h2>
+              <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-3 font-sans">About SIARE</h2>
               <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold text-primary font-headline italic leading-tight">
                 Advancing Scholarly Global Collaboration
               </h3>
@@ -30,10 +29,10 @@ export function About() {
             </div>
             
             <div className="space-y-4 md:space-y-6">
-              <p className="text-base md:text-lg text-foreground/80 leading-relaxed font-medium italic">
+              <p className="text-base md:text-lg text-foreground/80 leading-relaxed font-headline italic font-medium">
                 SIARE is an international research society committed to integrating knowledge across disciplines and fostering high-impact academic collaboration.
               </p>
-              <p className="text-sm md:text-base text-foreground/70 leading-relaxed font-body">
+              <p className="text-sm md:text-base text-foreground/70 leading-relaxed font-sans">
                 We support universities and researchers through peer-reviewed proceedings, academic training, and global research partnerships that bridge the gap between innovation and education.
               </p>
             </div>

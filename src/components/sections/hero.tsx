@@ -23,10 +23,10 @@ export function Hero() {
 
       <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 relative z-10">
         <div className="relative z-10 max-w-4xl" data-aos="fade-right">
-          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 drop-shadow-2xl font-headline text-white leading-tight hero-title-responsive">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 drop-shadow-2xl font-headline italic text-white leading-tight hero-title-responsive">
             Society of Integrated Academic Research and Education (SIARE)
           </h1>
-          <p className="text-xs sm:text-base md:text-lg lg:text-xl text-white/90 mb-8 md:mb-10 max-w-3xl drop-shadow-lg leading-relaxed font-medium hero-text-responsive">
+          <p className="text-xs sm:text-base md:text-lg lg:text-xl text-white/90 mb-8 md:mb-10 max-w-3xl drop-shadow-lg leading-relaxed font-headline italic font-medium hero-text-responsive">
             Integrating Knowledge. Empowering Scholars. Accelerating Global Research Impact through Peer-Reviewed Excellence.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-start">

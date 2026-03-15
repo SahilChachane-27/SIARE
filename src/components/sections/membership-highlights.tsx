@@ -28,7 +28,7 @@ export function MembershipHighlights() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div data-aos="fade-right" className="space-y-6 md:space-y-8">
             <div>
-              <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-3">Join The Society</h2>
+              <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-3 font-sans">Join The Society</h2>
               <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold font-headline italic leading-tight">Why Become a Member?</h3>
               <div className="mt-4 w-16 md:w-20 h-1 bg-accent"></div>
             </div>

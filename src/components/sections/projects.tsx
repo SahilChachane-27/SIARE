@@ -22,7 +22,7 @@ export function Projects() {
     <section id="conferences" className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32">
         <div className="text-center mb-12 md:mb-16" data-aos="fade-up">
-          <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-3">Academic Gatherings</h2>
+          <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-3 font-sans">Academic Gatherings</h2>
           <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold text-primary font-headline italic leading-tight">Upcoming Conferences</h3>
           <div className="mt-4 w-16 md:w-24 h-1 bg-accent mx-auto"></div>
         </div>
