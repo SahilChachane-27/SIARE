@@ -1,9 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
 
 export function About() {
   return (
@@ -53,12 +50,6 @@ export function About() {
                 </p>
               </div>
             </div>
-
-            <Button asChild className="bg-primary hover:bg-accent text-white hover:text-primary rounded-lg px-6 md:px-8 h-10 md:h-12 text-[10px] md:text-xs font-bold uppercase tracking-widest shadow-lg transition-all w-full sm:w-fit">
-              <Link href="/about" className="flex items-center justify-center gap-2">
-                Explore More <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
           </div>
         </div>
       </div>
