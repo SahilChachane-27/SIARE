@@ -59,6 +59,11 @@ const whyJoinPoints = [
     icon: Users,
     title: "Networking & Collaboration",
     desc: "Access collaborative groups, thematic clusters, and inter-university partnership opportunities."
+  },
+  {
+    icon: Award,
+    title: "Academic Recognition",
+    desc: "Eligibility for prestigious SIARE awards including Best Paper, Young Researcher, and Outstanding Reviewer awards."
   }
 ];
 
