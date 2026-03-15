@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -150,7 +149,7 @@ export default function MembershipPage() {
                 Membership at SIARE
               </h1>
               <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
-              <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed font-medium">
+              <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed font-headline italic">
                 Join a Global Network of Scholars. Connect with researchers, educators, and innovators committed to advancing multidisciplinary research.
               </p>
             </div>
@@ -167,22 +166,11 @@ export default function MembershipPage() {
           </div>
         </section>
 
-        {/* Introduction */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32 text-center">
-            <div className="max-w-3xl mx-auto" data-aos="fade-up">
-              <p className="text-lg text-foreground/70 leading-relaxed font-medium">
-                Becoming a member of SIARE connects you to a worldwide community of researchers, educators, innovators, and institutions committed to advancing integrated, multidisciplinary research and high-quality academic publishing. SIARE membership offers significant benefits such as publication support, conference privileges, training programs, collaborative opportunities, and exclusive access to society resources.
-              </p>
-            </div>
-          </div>
-        </section>
-
         {/* Why Join Section */}
         <section className="py-20 bg-slate-50">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
+              <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4 italic" data-aos="fade-up">
                 Why Join SIARE?
               </h2>
               <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
@@ -195,7 +183,7 @@ export default function MembershipPage() {
                     <point.icon className="h-7 w-7 text-accent group-hover:text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-primary mb-3 font-headline italic">{point.title}</h3>
-                  <p className="text-foreground/60 text-sm leading-relaxed font-medium">{point.desc}</p>
+                  <p className="text-foreground/60 text-sm leading-relaxed font-headline italic">{point.desc}</p>
                 </Card>
               ))}
             </div>
@@ -206,7 +194,7 @@ export default function MembershipPage() {
         <section className="py-20 bg-white">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
+              <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4 italic" data-aos="fade-up">
                 Membership Categories
               </h2>
               <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
@@ -231,10 +219,10 @@ export default function MembershipPage() {
                       <p className="text-[10px] uppercase font-bold tracking-widest text-white/60 mt-2">Yearly Membership</p>
                     </CardHeader>
                     <CardContent className="p-8 flex-1 flex flex-col">
-                      <p className="text-xs text-foreground/60 font-bold mb-6 italic">{cat.description}</p>
+                      <p className="text-xs text-foreground/60 font-bold mb-6 font-headline italic">{cat.description}</p>
                       <ul className="space-y-3 mb-8 flex-1">
                         {cat.benefits?.map((benefit: string, i: number) => (
-                          <li key={i} className="flex items-start gap-2 text-[11px] font-medium text-foreground/80">
+                          <li key={i} className="flex items-start gap-2 text-[11px] font-medium text-foreground/80 font-headline italic">
                             <CheckCircle2 className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5" />
                             {benefit}
                           </li>
@@ -255,7 +243,7 @@ export default function MembershipPage() {
         <section className="py-20 bg-slate-50">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
+              <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4 italic" data-aos="fade-up">
                 Benefits Summary
               </h2>
               <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
@@ -265,11 +253,11 @@ export default function MembershipPage() {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-primary hover:bg-primary">
-                    <TableHead className="text-white font-bold py-6 pl-8">Benefit</TableHead>
-                    <TableHead className="text-white font-bold text-center">Individual</TableHead>
-                    <TableHead className="text-white font-bold text-center">Student</TableHead>
-                    <TableHead className="text-white font-bold text-center">Institutional</TableHead>
-                    <TableHead className="text-white font-bold text-center">Affiliate</TableHead>
+                    <TableHead className="text-white font-bold py-6 pl-8 font-headline italic">Benefit</TableHead>
+                    <TableHead className="text-white font-bold text-center font-headline italic">Individual</TableHead>
+                    <TableHead className="text-white font-bold text-center font-headline italic">Student</TableHead>
+                    <TableHead className="text-white font-bold text-center font-headline italic">Institutional</TableHead>
+                    <TableHead className="text-white font-bold text-center font-headline italic">Affiliate</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -283,7 +271,7 @@ export default function MembershipPage() {
                     { label: "Member Certificate", ind: true, std: true, ins: true, aff: true },
                   ].map((row, i) => (
                     <TableRow key={i} className="hover:bg-secondary/10 transition-colors">
-                      <TableCell className="font-bold text-primary/80 py-4 pl-8 uppercase text-[10px] tracking-wider">{row.label}</TableCell>
+                      <TableCell className="font-bold text-primary/80 py-4 pl-8 uppercase text-[10px] tracking-wider font-headline italic">{row.label}</TableCell>
                       {[row.ind, row.std, row.ins, row.aff].map((val, idx) => (
                         <TableCell key={idx} className="text-center py-4">
                           {val ? <CheckCircle2 className="h-5 w-5 text-accent mx-auto" /> : <span className="text-primary/10">—</span>}
@@ -302,7 +290,7 @@ export default function MembershipPage() {
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div data-aos="fade-right">
-                <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-6 italic">
                   How to Become a Member
                 </h2>
                 <div className="w-20 h-1 bg-accent mb-10"></div>
@@ -317,7 +305,7 @@ export default function MembershipPage() {
                       <div className="h-12 w-12 rounded-full border-2 border-accent/20 flex items-center justify-center text-accent font-black group-hover:bg-accent group-hover:text-white transition-all shrink-0">
                         {step.num}
                       </div>
-                      <p className="text-lg font-medium text-foreground/80 pt-2">{step.text}</p>
+                      <p className="text-lg font-medium text-foreground/80 pt-2 font-headline italic">{step.text}</p>
                     </div>
                   ))}
                 </div>
@@ -351,7 +339,7 @@ export default function MembershipPage() {
                     "Contribute to research discussions and activities",
                     "Promote responsible and impactful research"
                   ].map((text, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-foreground/70">
+                    <li key={i} className="flex items-start gap-3 text-sm text-foreground/70 font-headline italic">
                       <CheckCircle2 className="h-4 w-4 text-accent shrink-0 mt-0.5" />
                       {text}
                     </li>
@@ -364,7 +352,7 @@ export default function MembershipPage() {
                   <RefreshCw className="h-8 w-8 text-accent" />
                   <h3 className="text-2xl font-bold text-primary font-headline italic">Membership Renewal</h3>
                 </div>
-                <p className="text-sm text-foreground/70 leading-relaxed mb-6">
+                <p className="text-sm text-foreground/70 leading-relaxed mb-6 font-headline italic">
                   Renewal reminders are sent 30 days before expiry. Members who renew on time retain:
                 </p>
                 <ul className="space-y-4">
@@ -373,7 +361,7 @@ export default function MembershipPage() {
                     "Active listing on member directories",
                     "Priority access to upcoming global events"
                   ].map((text, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-foreground/70">
+                    <li key={i} className="flex items-start gap-3 text-sm text-foreground/70 font-headline italic">
                       <CheckCircle2 className="h-4 w-4 text-accent shrink-0 mt-0.5" />
                       {text}
                     </li>
@@ -388,10 +376,10 @@ export default function MembershipPage() {
         <section className="py-12 bg-white text-center">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="max-w-4xl mx-auto" data-aos="zoom-in">
-              <h2 className="text-3xl md:text-5xl font-bold text-primary font-headline mb-6">
+              <h2 className="text-3xl md:text-5xl font-bold text-primary font-headline mb-6 italic">
                 Become a Member Today
               </h2>
-              <p className="text-xl text-foreground/70 mb-12 font-medium">
+              <p className="text-xl text-foreground/70 mb-12 font-medium font-headline italic">
                 Join a global research movement and accelerate your academic journey with SIARE.
               </p>
               
