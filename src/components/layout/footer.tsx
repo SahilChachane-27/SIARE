@@ -67,7 +67,7 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 mb-16">
           <div className="space-y-6 lg:col-span-1">
             <Link href="/" className="flex items-center gap-3 transition-transform hover:scale-[1.02] shrink-0">
-              <div className="relative h-10 w-36 md:h-12 md:w-48">
+              <div className="relative h-16 w-56 md:h-20 md:w-72">
                 <Image 
                   src="/logo.png" 
                   alt="SIARE Logo" 

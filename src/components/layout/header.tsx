@@ -74,7 +74,7 @@ export function Header() {
       <div className="w-full px-4 sm:px-6 md:px-8 max-w-[1600px] mx-auto">
         <div className="flex items-center justify-between h-14 md:h-16 lg:h-20">
           <Link href="/" className="flex items-center gap-3 transition-transform hover:scale-[1.02] shrink-0">
-            <div className="relative h-8 w-28 sm:h-10 sm:w-36 md:h-12 md:w-48">
+            <div className="relative h-10 w-36 sm:h-12 sm:w-44 md:h-16 md:w-64">
               <Image 
                 src="/logo.png" 
                 alt="SIARE Logo" 
@@ -136,7 +136,7 @@ export function Header() {
                 <SheetContent side="right" className="bg-primary border-l-0 text-white w-[85%] sm:w-80 p-6 overflow-y-auto">
                   <SheetHeader className="text-left mb-8 pr-8">
                     <SheetTitle className="sr-only">SIARE</SheetTitle>
-                    <div className="relative h-10 w-40 mb-4">
+                    <div className="relative h-12 w-48 mb-4">
                       <Image 
                         src="/logo.png" 
                         alt="SIARE Logo" 
