@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -8,6 +9,7 @@ import { Projects } from '@/components/sections/projects';
 import { ScrollToTop } from '@/components/layout/scroll-to-top';
 import { MembershipHighlights } from '@/components/sections/membership-highlights';
 import { Testimonials } from '@/components/sections/testimonials';
+import { About } from '@/components/sections/about';
 
 export default function Home() {
   return (
@@ -15,8 +17,10 @@ export default function Home() {
       <Header />
       <main className="flex-1 overflow-x-hidden">
         <Hero />
-        <Projects />
+        <About />
         <MembershipHighlights />
+        <Projects />
+        {/* <Services /> */}
         <Testimonials />
         <Partners />
       </main>
