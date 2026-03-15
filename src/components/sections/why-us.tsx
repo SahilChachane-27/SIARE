@@ -59,7 +59,7 @@ export function WhyUs() {
               <h4 className="text-lg font-bold text-primary mb-4 font-headline italic">
                 {reason.title}
               </h4>
-              <p className="text-foreground/60 text-xs leading-relaxed italic font-medium">
+              <p className="text-foreground/60 text-xs leading-relaxed italic font-headline">
                 {reason.description}
               </p>
             </Card>

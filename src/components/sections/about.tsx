@@ -29,10 +29,10 @@ export function About() {
             </div>
             
             <div className="space-y-4 md:space-y-6">
-              <p className="text-base md:text-lg text-foreground/80 leading-relaxed font-headline italic font-medium">
+              <p className="text-base md:text-lg text-foreground/80 leading-relaxed font-headline italic">
                 The Society of Integrated Academic Research and Education (SIARE) is an international scholarly organization dedicated to advancing cross-disciplinary research, promoting academic excellence, and supporting global collaboration.
               </p>
-              <p className="text-sm md:text-base text-foreground/70 leading-relaxed font-headline italic font-medium">
+              <p className="text-sm md:text-base text-foreground/70 leading-relaxed font-headline italic">
                 SIARE connects leading scholars, emerging researchers, universities, and research organizations through conferences, proceedings publications, and collaborative projects that accelerate knowledge creation.
               </p>
             </div>

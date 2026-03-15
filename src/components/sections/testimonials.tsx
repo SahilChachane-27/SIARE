@@ -36,7 +36,7 @@ export function Testimonials() {
             <Card key={i} className="border-none shadow-xl rounded-2xl bg-white p-10 relative group" data-aos="fade-up" data-aos-delay={i * 100}>
               <Quote className="h-10 w-10 text-accent/20 absolute top-6 right-6 group-hover:text-accent transition-colors" />
               <CardContent className="p-0">
-                <p className="text-lg text-primary/80 italic font-medium leading-relaxed mb-8">
+                <p className="text-lg text-primary/80 italic font-headline leading-relaxed mb-8">
                   "{t.quote}"
                 </p>
                 <div className="pt-6 border-t border-slate-100">

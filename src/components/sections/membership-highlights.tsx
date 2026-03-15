@@ -37,7 +37,7 @@ export function MembershipHighlights() {
               {benefits.map((benefit, i) => (
                 <div key={i} className="flex items-start gap-3 group">
                   <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-accent shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
-                  <span className="text-xs md:text-sm font-medium opacity-80 group-hover:opacity-100 transition-opacity font-headline italic">{benefit}</span>
+                  <span className="text-xs md:text-sm font-normal opacity-80 group-hover:opacity-100 transition-opacity font-headline italic">{benefit}</span>
                 </div>
               ))}
             </div>
