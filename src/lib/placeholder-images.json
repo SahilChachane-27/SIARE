@@ -50,21 +50,21 @@
     },
     {
       "id": "testimonial-1",
-      "description": "Portrait of Dr. Robert Johnson.",
-      "imageUrl": "https://images.unsplash.com/photo-1590086782792-42dd2350140d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=100",
-      "imageHint": "person portrait"
+      "description": "Portrait of Nita Patel.",
+      "imageUrl": "https://picsum.photos/seed/nita/400/400",
+      "imageHint": "woman smiling"
     },
     {
       "id": "testimonial-2",
-      "description": "Portrait of Prof. Sarah Williams.",
-      "imageUrl": "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=100",
-      "imageHint": "person portrait"
+      "description": "Portrait of Vincent Kaabunga.",
+      "imageUrl": "https://picsum.photos/seed/vincent/400/400",
+      "imageHint": "speaker podium"
     },
     {
       "id": "testimonial-3",
-      "description": "Portrait of Dr. Michael Chen.",
-      "imageUrl": "https://images.unsplash.com/flagged/photo-1595514191830-3e96a518989b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=100",
-      "imageHint": "person portrait"
+      "description": "Portrait of John McDonald.",
+      "imageUrl": "https://picsum.photos/seed/john/400/400",
+      "imageHint": "smiling man"
     },
     {
       "id": "map-placeholder",
