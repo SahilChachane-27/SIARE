@@ -299,20 +299,25 @@ export default function MembershipPage() {
                   How to Become a Member
                 </h2>
                 <div className="w-20 h-1 bg-accent mb-10"></div>
-                <div className="space-y-8">
+                <div className="space-y-6">
                   {[
                     { num: "01", text: "Fill the online membership application" },
                     { num: "02", text: "Upload academic profile (for individual & student)" },
                     { num: "03", text: "Complete secure online payment" },
                     { num: "04", text: "Receive digital membership certificate and portal login" }
                   ].map((step, i) => (
-                    <div key={i} className="flex gap-6 items-start group">
-                      <div className="h-12 w-12 rounded-full border-2 border-accent/20 flex items-center justify-center text-accent font-black group-hover:bg-accent group-hover:text-white transition-all shrink-0">
+                    <div key={i} className="flex gap-4 items-start group">
+                      <div className="h-8 w-8 rounded-full border-2 border-accent/20 flex items-center justify-center text-accent text-[10px] font-black group-hover:bg-accent group-hover:text-white transition-all shrink-0">
                         {step.num}
                       </div>
-                      <p className="text-lg font-medium text-foreground/80 pt-2 font-headline italic">{step.text}</p>
+                      <p className="text-sm md:text-base font-medium text-foreground/80 pt-1.5 font-headline italic">{step.text}</p>
                     </div>
                   ))}
+                </div>
+                <div className="mt-10">
+                  <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-black italic rounded-xl px-10 h-14 text-sm shadow-xl transition-all hover:scale-105 w-full sm:w-auto">
+                    <Link href="/contact">Apply for Membership Now</Link>
+                  </Button>
                 </div>
               </div>
               <div className="relative aspect-video rounded-funky overflow-hidden shadow-2xl" data-aos="fade-left">
