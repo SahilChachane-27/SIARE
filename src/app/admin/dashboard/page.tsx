@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useUser, useAuth, useFirestore, useCollection } from '@/firebase';
@@ -28,7 +29,8 @@ import {
   GraduationCap,
   Video,
   UserPlus,
-  Trash2
+  Trash2,
+  Mail
 } from 'lucide-react';
 import Link from 'next/link';
 import { collection, query, orderBy, limit, doc, deleteDoc } from 'firebase/firestore';
@@ -67,6 +69,14 @@ export default function AdminDashboard() {
   }, [db]);
 
   const { data: recentJournals, loading: recentLoading } = useCollection(recentQuery);
+
+  // Fetch count of pending inquiries
+  const inquiriesQuery = useMemo(() => {
+    if (!db) return null;
+    return query(collection(db, 'inquiries'));
+  }, [db]);
+  const { data: inquiries } = useCollection(inquiriesQuery);
+  const pendingInquiriesCount = inquiries?.filter((i: any) => i.status === 'pending').length || 0;
 
   useEffect(() => {
     if (!loading && !user) {
@@ -126,14 +136,14 @@ export default function AdminDashboard() {
         desc: "Partner institutions"
       },
       { 
-        title: "User Traffic", 
-        count: "Active", 
-        icon: Activity, 
+        title: "Pending Inquiries", 
+        count: pendingInquiriesCount.toString(), 
+        icon: Mail, 
         color: "bg-purple-500/10 text-purple-600",
-        desc: "99.9% Platform Uptime"
+        desc: "Action required"
       },
     ];
-  }, [journals, journalsLoading, conferences, confsLoading]);
+  }, [journals, journalsLoading, conferences, confsLoading, pendingInquiriesCount]);
 
   if (loading || !user) {
     return (
@@ -170,33 +180,23 @@ export default function AdminDashboard() {
             
             <div className="flex flex-wrap gap-2 md:gap-4 w-full lg:w-auto">
               <Button asChild size="sm" className="flex-1 lg:flex-none rounded-xl bg-primary hover:bg-primary/90 text-accent font-bold px-4 h-10 shadow-md border border-accent/20 transition-all hover:scale-105 active:scale-95">
+                <Link href="/admin/inquiries">
+                  <Mail className="mr-2 h-4 w-4" /> Inquiries {pendingInquiriesCount > 0 && `(${pendingInquiriesCount})`}
+                </Link>
+              </Button>
+              <Button asChild size="sm" variant="outline" className="flex-1 lg:flex-none rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-4 h-10 shadow-sm transition-all hover:scale-105 active:scale-95">
                 <Link href="/admin/events">
-                  <Plus className="mr-2 h-4 w-4" /> Manage Conferences
+                  <Plus className="mr-2 h-4 w-4" /> Conferences
                 </Link>
               </Button>
               <Button asChild size="sm" variant="outline" className="flex-1 lg:flex-none rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-4 h-10 shadow-sm transition-all hover:scale-105 active:scale-95">
                 <Link href="/admin/membership">
-                  <UserPlus className="mr-2 h-4 w-4" /> Memberships
-                </Link>
-              </Button>
-              <Button asChild size="sm" variant="outline" className="flex-1 lg:flex-none rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-4 h-10 shadow-sm transition-all hover:scale-105 active:scale-95">
-                <Link href="/admin/workshops">
-                  <GraduationCap className="mr-2 h-4 w-4" /> Workshops
-                </Link>
-              </Button>
-              <Button asChild size="sm" variant="outline" className="flex-1 lg:flex-none rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-4 h-10 shadow-sm transition-all hover:scale-105 active:scale-95">
-                <Link href="/admin/webinars">
-                  <Video className="mr-2 h-4 w-4" /> Webinars
-                </Link>
-              </Button>
-              <Button asChild size="sm" variant="outline" className="flex-1 lg:flex-none rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-4 h-10 shadow-sm transition-all hover:scale-105 active:scale-95">
-                <Link href="/admin/past-events">
-                  <History className="mr-2 h-4 w-4" /> Past Events
+                  <UserPlus className="mr-2 h-4 w-4" /> Membership Tiers
                 </Link>
               </Button>
               <Button asChild size="sm" variant="outline" className="flex-1 lg:flex-none rounded-xl border-primary/10 text-primary bg-white hover:bg-slate-50 px-4 h-10 shadow-sm transition-all hover:scale-105 active:scale-95">
                 <Link href="/admin/journals">
-                  <BookOpen className="mr-2 h-4 w-4" /> Edit Proceedings
+                  <BookOpen className="mr-2 h-4 w-4" /> Proceedings
                 </Link>
               </Button>
               <Button 
@@ -238,7 +238,7 @@ export default function AdminDashboard() {
                   <div>
                     <CardTitle className="text-xl md:text-2xl font-bold text-primary font-headline italic flex items-center gap-3">
                       <Clock className="h-5 w-5 md:h-6 md:w-6 text-accent" />
-                      Recent Activity
+                      Recent Proceedings
                     </CardTitle>
                     <CardDescription className="text-[10px] uppercase font-black tracking-widest mt-2 opacity-40">Latest publishing & metadata updates</CardDescription>
                   </div>
@@ -276,9 +276,6 @@ export default function AdminDashboard() {
                             <Button asChild size="sm" variant="ghost" className="h-8 px-3 md:px-4 text-[10px] font-black uppercase text-primary/60 hover:text-accent hover:bg-transparent">
                               <Link href={`/admin/journals?edit=${journal.id}`}>Edit</Link>
                             </Button>
-                            <Button asChild size="sm" variant="ghost" className="h-8 px-3 md:px-4 text-[10px] font-black uppercase text-accent hover:text-primary hover:bg-transparent">
-                              <a href={journal.link} target="_blank">Live <ExternalLink className="ml-1 h-3 w-3" /></a>
-                            </Button>
                             <Button 
                               size="sm" 
                               variant="ghost" 
@@ -295,7 +292,7 @@ export default function AdminDashboard() {
                 ) : (
                   <div className="p-40 text-center flex flex-col items-center gap-6">
                     <Activity className="h-16 w-16 text-primary/5" />
-                    <p className="text-sm text-muted-foreground italic font-medium">No system records found. Begin by adding your first series.</p>
+                    <p className="text-sm text-muted-foreground italic font-medium">No system records found.</p>
                   </div>
                 )}
               </CardContent>
@@ -304,34 +301,18 @@ export default function AdminDashboard() {
             {/* Admin Quick Actions Sidebar */}
             <div className="space-y-8 md:space-y-10">
               
-              {/* Event Manager Quick Card */}
+              {/* Inquiries Manager Quick Card */}
               <Card className="rounded-2xl border-none shadow-xl bg-primary text-white p-8 md:p-10 relative overflow-hidden group">
                 <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <Calendar className="h-24 w-24 md:h-32 md:w-32 -rotate-12" />
+                  <Mail className="h-24 w-24 md:h-32 md:w-32 -rotate-12" />
                 </div>
                 <div className="relative z-10">
-                  <h3 className="text-xl md:text-2xl font-bold font-headline italic mb-4 md:mb-6">Events Manager</h3>
+                  <h3 className="text-xl md:text-2xl font-bold font-headline italic mb-4 md:mb-6">Membership & Inquiries</h3>
                   <p className="text-white/60 text-xs mb-8 md:mb-10 leading-relaxed font-medium italic">
-                    Configure upcoming conferences, symposiums, and institutional workshops for the SIARE network.
+                    Review and manage membership applications, conference proposals, and general inquiries.
                   </p>
                   <Button asChild className="w-full bg-accent text-primary font-black uppercase text-[11px] tracking-widest rounded-xl hover:scale-[1.02] transition-transform shadow-xl h-12 md:h-14">
-                    <Link href="/admin/events" className="flex items-center justify-center">Launch Event Panel <ChevronRight className="ml-2 h-4 w-4" /></Link>
-                  </Button>
-                </div>
-              </Card>
-
-              {/* Past Events Quick Card */}
-              <Card className="rounded-2xl border-none shadow-xl bg-white p-8 md:p-10 relative overflow-hidden group border border-slate-100">
-                <div className="relative z-10">
-                  <h3 className="text-lg md:text-xl font-bold text-primary font-headline italic mb-3 flex items-center gap-3">
-                    <History className="h-5 w-5 md:h-6 md:w-6 text-accent" />
-                    Past Records
-                  </h3>
-                  <p className="text-muted-foreground text-[11px] mb-6 md:mb-8 leading-relaxed font-medium uppercase tracking-tighter italic">
-                    Manage the history of successfully completed academic activities and archival summaries.
-                  </p>
-                  <Button asChild variant="outline" className="w-full border-primary/10 text-primary font-black uppercase text-[10px] tracking-widest rounded-xl hover:bg-slate-50 transition-all h-12">
-                    <Link href="/admin/past-events">Manage History</Link>
+                    <Link href="/admin/inquiries" className="flex items-center justify-center">Manage Applications <ChevronRight className="ml-2 h-4 w-4" /></Link>
                   </Button>
                 </div>
               </Card>
@@ -346,14 +327,17 @@ export default function AdminDashboard() {
                   <div className="h-3 w-3 rounded-full bg-green-500 animate-pulse"></div>
                 </div>
                 <div className="space-y-4 md:space-y-6">
-                  <div className="p-4 md:p-5 rounded-xl bg-blue-50 border border-blue-100 flex gap-4">
-                    <CheckCircle2 className="h-5 w-5 text-blue-500 shrink-0" />
-                    <p className="text-[11px] text-blue-900 font-bold leading-relaxed uppercase tracking-tighter">ICMRI 2025 Metadata successfully verified for Scopus compliance.</p>
-                  </div>
-                  <div className="p-4 md:p-5 rounded-xl bg-amber-50 border border-amber-100 flex gap-4">
-                    <Clock className="h-5 w-5 text-amber-500 shrink-0" />
-                    <p className="text-[11px] text-amber-900 font-bold leading-relaxed uppercase tracking-tighter">Membership application pending review for Faculty of Law, VIT.</p>
-                  </div>
+                  {pendingInquiriesCount > 0 ? (
+                    <div className="p-4 md:p-5 rounded-xl bg-amber-50 border border-amber-100 flex gap-4">
+                      <Mail className="h-5 w-5 text-amber-500 shrink-0" />
+                      <p className="text-[11px] text-amber-900 font-bold leading-relaxed uppercase tracking-tighter">You have {pendingInquiriesCount} pending membership inquiries.</p>
+                    </div>
+                  ) : (
+                    <div className="p-4 md:p-5 rounded-xl bg-blue-50 border border-blue-100 flex gap-4">
+                      <CheckCircle2 className="h-5 w-5 text-blue-500 shrink-0" />
+                      <p className="text-[11px] text-blue-900 font-bold leading-relaxed uppercase tracking-tighter">All system inquiries have been reviewed.</p>
+                    </div>
+                  )}
                 </div>
               </Card>
 
@@ -361,11 +345,11 @@ export default function AdminDashboard() {
               <Card className="rounded-2xl border-none shadow-xl bg-white p-8 md:p-10">
                 <h3 className="text-base font-bold text-primary font-headline italic mb-6 md:mb-8">Quick Utilities</h3>
                 <div className="grid grid-cols-2 gap-4">
-                  <Button variant="outline" className="rounded-xl h-12 text-[10px] font-black uppercase tracking-tighter border-slate-100 hover:bg-slate-50">
-                    <Settings className="mr-2 h-4 w-4" /> Config
-                  </Button>
                   <Button variant="outline" className="rounded-xl h-12 text-[10px] font-black uppercase tracking-tighter border-slate-100 hover:bg-slate-50" asChild>
                     <Link href="/admin/pricing"><CreditCard className="mr-2 h-4 w-4" /> Pricing</Link>
+                  </Button>
+                  <Button variant="outline" className="rounded-xl h-12 text-[10px] font-black uppercase tracking-tighter border-slate-100 hover:bg-slate-50" asChild>
+                    <Link href="/admin/past-events"><History className="mr-2 h-4 w-4" /> History</Link>
                   </Button>
                 </div>
               </Card>

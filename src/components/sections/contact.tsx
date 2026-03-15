@@ -1,3 +1,4 @@
+
 'use client';
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +12,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
 import { Upload } from "lucide-react";
+import { useFirestore } from '@/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError } from '@/firebase/errors';
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -26,6 +31,7 @@ const formSchema = z.object({
 export function Contact() {
   const { toast } = useToast();
   const [isClient, setIsClient] = useState(false);
+  const db = useFirestore();
 
   useEffect(() => {
     setIsClient(true);
@@ -37,12 +43,30 @@ export function Contact() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    toast({
-      title: "Inquiry Submitted!",
-      description: "Our technical team will contact you within 24 hours.",
-    });
-    form.reset();
+    if (!db) return;
+
+    const data = {
+      ...values,
+      status: 'pending',
+      createdAt: serverTimestamp(),
+    };
+
+    addDoc(collection(db, 'inquiries'), data)
+      .then(() => {
+        toast({
+          title: "Inquiry Submitted!",
+          description: "Our technical team will contact you within 24 hours.",
+        });
+        form.reset();
+      })
+      .catch(async (err) => {
+        const permissionError = new FirestorePermissionError({
+          path: 'inquiries',
+          operation: 'create',
+          requestResourceData: data,
+        });
+        errorEmitter.emit('permission-error', permissionError);
+      });
   }
 
   return (

@@ -145,6 +145,22 @@
         "order": { "type": "number" }
       },
       "required": ["title", "description"]
+    },
+    "Inquiry": {
+      "title": "Inquiry",
+      "description": "A contact or membership inquiry submitted by a user.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "institution": { "type": "string" },
+        "purpose": { "type": "string" },
+        "message": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "reviewed", "contacted", "archived"] },
+        "createdAt": { "type": "object" }
+      },
+      "required": ["name", "email", "phone", "purpose", "message"]
     }
   },
   "auth": {
@@ -178,6 +194,10 @@
     "/pastEvents/{eventId}": {
       "schema": { "$ref": "#/backend/entities/PastEvent" },
       "description": "Collection of completed SIARE events."
+    },
+    "/inquiries/{inquiryId}": {
+      "schema": { "$ref": "#/backend/entities/Inquiry" },
+      "description": "Collection of user inquiries and membership applications."
     }
   }
 }
