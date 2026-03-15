@@ -44,7 +44,7 @@ export function Testimonials() {
   const memberImg = PlaceHolderImages.find(img => img.id === current.imgId);
 
   return (
-    <section id="testimonials" className="py-20 md:py-32 bg-[#e6f4f9] overflow-hidden font-body">
+    <section id="testimonials" className="py-20 md:py-32 bg-white overflow-hidden font-body">
       <div className="container mx-auto px-4 md:px-16 lg:px-32">
         {/* Header */}
         <div className="text-center mb-12 md:mb-20" data-aos="fade-up">
@@ -72,7 +72,7 @@ export function Testimonials() {
               >
                 {t.name}
                 {activeTab === i && (
-                  <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-[#0091da]"></div>
+                  <div className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-accent"></div>
                 )}
               </button>
             ))}
@@ -115,7 +115,7 @@ export function Testimonials() {
               )}
             </div>
             {/* Decorative background shape */}
-            <div className="absolute -z-10 top-10 -right-10 w-full h-full bg-[#0091da]/10 rounded-xl"></div>
+            <div className="absolute -z-10 top-10 -right-10 w-full h-full bg-accent/10 rounded-xl"></div>
           </div>
         </div>
       </div>
