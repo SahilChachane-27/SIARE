@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -54,6 +53,7 @@ export function Testimonials() {
           <h3 className="text-3xl md:text-6xl font-bold text-primary font-headline italic leading-tight max-w-4xl mx-auto">
             Testimonials
           </h3>
+          <div className="mt-4 w-16 md:w-20 h-1 bg-accent mx-auto"></div>
         </div>
 
         {/* Member Navigation */}
