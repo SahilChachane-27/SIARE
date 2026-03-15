@@ -49,10 +49,10 @@ export function Testimonials() {
         {/* Header */}
         <div className="text-center mb-12 md:mb-20" data-aos="fade-up">
           <h2 className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-primary mb-6">
-            Meet Our Members
+            Academic Community Feedback
           </h2>
           <h3 className="text-3xl md:text-6xl font-bold text-primary font-headline italic leading-tight max-w-4xl mx-auto">
-            'What SIARE Membership Means to Me'
+            Testimonials
           </h3>
         </div>
 
