@@ -48,7 +48,7 @@ export function Testimonials() {
       <div className="container mx-auto px-4 md:px-16 lg:px-32">
         {/* Header */}
         <div className="text-center mb-12 md:mb-20" data-aos="fade-up">
-          <h2 className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-primary mb-6">
+          <h2 className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-accent mb-6">
             Academic Community Feedback
           </h2>
           <h3 className="text-3xl md:text-6xl font-bold text-primary font-headline italic leading-tight max-w-4xl mx-auto">
