@@ -39,7 +39,7 @@ export function Projects() {
                 <CardContent className="p-6 md:p-8 space-y-4 md:space-y-6 flex-1 flex flex-col">
                   <div className="flex justify-between items-start">
                     {conf.status && (
-                      <div className="bg-accent/10 text-accent text-[9px] md:text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter flex items-center gap-1">
+                      <div className="bg-accent/10 text-accent text-[9px] md:text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter flex items-center gap-1 font-headline italic">
                         <Star className="h-2.5 w-2.5 md:h-3 md:w-3 fill-current" /> {conf.status}
                       </div>
                     )}
@@ -50,10 +50,10 @@ export function Projects() {
                   </h4>
                   
                   <div className="space-y-2 md:space-y-3 pt-4 border-t border-slate-100 mt-auto">
-                    <div className="flex items-center gap-2 md:gap-3 text-[11px] md:text-xs font-bold text-primary/60">
+                    <div className="flex items-center gap-2 md:gap-3 text-[11px] md:text-xs font-bold text-primary/60 font-headline italic">
                       <Calendar className="h-3.5 w-3.5 md:h-4 md:w-4 text-accent shrink-0" /> {conf.date}
                     </div>
-                    <div className="flex items-center gap-2 md:gap-3 text-[11px] md:text-xs font-bold text-primary/60">
+                    <div className="flex items-center gap-2 md:gap-3 text-[11px] md:text-xs font-bold text-primary/60 font-headline italic">
                       <MapPin className="h-3.5 w-3.5 md:h-4 md:w-4 text-accent shrink-0" /> {conf.location}
                     </div>
                   </div>

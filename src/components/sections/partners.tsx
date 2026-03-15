@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -19,10 +18,10 @@ export function Partners() {
     <section className="py-10 md:py-14 bg-white overflow-hidden">
       <div className="container mx-auto px-4 md:px-16 lg:px-32 mb-8">
         <div className="text-center" data-aos="fade-up">
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-4">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-4 font-sans">
             Institutional Network
           </p>
-          <h2 className="text-2xl md:text-3xl font-bold italic text-primary font-headline mb-2">
+          <h2 className="text-2xl md:text-3xl font-bold italic text-primary font-headline mb-2 leading-tight">
             Global University Partners
           </h2>
           

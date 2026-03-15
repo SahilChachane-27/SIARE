@@ -37,7 +37,7 @@ export function MembershipHighlights() {
               {benefits.map((benefit, i) => (
                 <div key={i} className="flex items-start gap-3 group">
                   <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-accent shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
-                  <span className="text-xs md:text-sm font-medium opacity-80 group-hover:opacity-100 transition-opacity italic">{benefit}</span>
+                  <span className="text-xs md:text-sm font-medium opacity-80 group-hover:opacity-100 transition-opacity font-headline italic">{benefit}</span>
                 </div>
               ))}
             </div>
@@ -56,13 +56,13 @@ export function MembershipHighlights() {
                 {types.map((type, i) => (
                   <div key={i} className="bg-white/5 p-3 sm:p-4 md:p-6 rounded-2xl text-center group hover:bg-accent transition-all duration-500 cursor-default border border-white/5 hover:border-accent/50 flex flex-col items-center justify-center min-h-[100px] sm:min-h-0">
                     <type.icon className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-2 sm:mb-3 md:mb-4 text-accent group-hover:text-primary transition-colors" />
-                    <span className="text-[9px] sm:text-[10px] md:text-sm font-black uppercase tracking-wider md:tracking-widest group-hover:text-primary transition-colors block w-full truncate">
+                    <span className="text-[9px] sm:text-[10px] md:text-sm font-black uppercase tracking-wider md:tracking-widest group-hover:text-primary transition-colors block w-full truncate font-headline italic">
                       {type.name}
                     </span>
                   </div>
                 ))}
               </div>
-              <p className="mt-8 md:mt-10 text-[10px] md:text-xs text-center opacity-60 italic font-medium">Join 1500+ scholars worldwide accelerating research impact.</p>
+              <p className="mt-8 md:mt-10 text-[10px] md:text-xs text-center opacity-60 font-headline italic font-medium">Join 1500+ scholars worldwide accelerating research impact.</p>
             </Card>
           </div>
         </div>

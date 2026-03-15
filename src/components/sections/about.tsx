@@ -30,10 +30,10 @@ export function About() {
             
             <div className="space-y-4 md:space-y-6">
               <p className="text-base md:text-lg text-foreground/80 leading-relaxed font-headline italic font-medium">
-                SIARE is an international research society committed to integrating knowledge across disciplines and fostering high-impact academic collaboration.
+                The Society of Integrated Academic Research and Education (SIARE) is an international scholarly organization dedicated to advancing cross-disciplinary research, promoting academic excellence, and supporting global collaboration.
               </p>
-              <p className="text-sm md:text-base text-foreground/70 leading-relaxed font-sans">
-                We support universities and researchers through peer-reviewed proceedings, academic training, and global research partnerships that bridge the gap between innovation and education.
+              <p className="text-sm md:text-base text-foreground/70 leading-relaxed font-headline italic font-medium">
+                SIARE connects leading scholars, emerging researchers, universities, and research organizations through conferences, proceedings publications, and collaborative projects that accelerate knowledge creation.
               </p>
             </div>
 
