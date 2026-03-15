@@ -142,21 +142,14 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="border-t border-white/10 pt-10 text-center">
+        {/* Bottom Copyright Bar */}
+        <div className="mt-12 text-center border-t border-white/5 pt-12 space-y-6">
           {isClient && (
-            <div className="flex flex-col items-center gap-6">
-              <div className="relative h-10 w-40 sm:h-12 sm:w-48 mb-2">
-                <Image 
-                  src="/logo.png" 
-                  alt="SIARE Logo" 
-                  fill 
-                  className="object-contain brightness-0 invert opacity-80"
-                />
-              </div>
+            <>
               <p className="text-[9px] md:text-[10px] font-black tracking-widest text-white/30 uppercase max-w-5xl mx-auto leading-relaxed px-4">
                 Copyright © {year} Society of Integrated Academic Research and Education (SIARE), its licensors, and contributors. All rights are reserved, including those for text and data mining, AI training, and similar technologies.
               </p>
-              <div className="flex flex-wrap justify-center gap-x-4 gap-y-3 text-[9px] md:text-[10px] font-black tracking-widest text-white/30 uppercase px-4">
+              <div className="flex flex-wrap justify-center gap-x-4 gap-y-3 text-[9px] md:text-[10px] font-black tracking-widest text-white/30 uppercase px-4 pb-8">
                 <Link href="#" className="hover:text-accent transition-colors">Terms & Conditions</Link>
                 <span className="hidden sm:inline opacity-20">|</span>
                 <Link href="/privacy-policy" className="hover:text-accent transition-colors">Privacy policy</Link>
@@ -167,7 +160,7 @@ export function Footer() {
                 <span className="hidden sm:inline opacity-20">|</span>
                 <button className="hover:text-accent transition-colors">Cookie settings</button>
               </div>
-            </div>
+            </>
           )}
         </div>
       </div>
