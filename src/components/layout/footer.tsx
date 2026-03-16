@@ -26,16 +26,16 @@ const quickLinks = [
 ];
 
 const policyLinks = [
-  { href: '/ethics-guidelines', label: 'Publication Ethics' },
-  { href: '/ethics-guidelines', label: 'Peer Review Policy' },
-  { href: '/ethics-guidelines', label: 'Plagiarism Policy' },
-  { href: '/ethics-guidelines', label: 'Conflict of Interest' },
-  { href: '/ethics-guidelines', label: 'Open Access Policy' },
+  { href: '/policies', label: 'Publication Ethics' },
+  { href: '/policies', label: 'Peer Review Policy' },
+  { href: '/policies', label: 'Plagiarism Policy' },
+  { href: '/policies', label: 'Conflict of Interest' },
+  { href: '/policies', label: 'Open Access Policy' },
 ];
 
 const resourceLinks = [
   { href: '/proceedings', label: 'Proceedings' },
-  { href: '/ethics-guidelines', label: 'Guidelines' },
+  { href: '/policies', label: 'Guidelines' },
   { href: '/contact', label: 'FAQs' },
   { href: '/contact', label: 'Contact Us' },
 ];
