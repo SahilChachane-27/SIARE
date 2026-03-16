@@ -27,7 +27,8 @@ import {
   ChevronRight,
   Star,
   Trash2,
-  BookOpen
+  BookOpen,
+  LayoutGrid
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
