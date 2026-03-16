@@ -82,7 +82,7 @@ export default function EventsPage() {
               </h1>
               <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
               <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed font-medium">
-                SIARE organizes and partners with universities, research institutions, and academic societies worldwide to host impactful conferences, workshops, symposiums, and training programs. These events aim to strengthen global research collaboration and enhance academic excellence across disciplines.
+                SIARE organizes and partners with universities, research institutions, and academic societies worldwide to host impactful conferences, workshops, symposiums, and training programs.
               </p>
             </div>
           </div>
@@ -106,7 +106,7 @@ export default function EventsPage() {
                 Upcoming Conferences
               </h2>
               <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
-              <p className="text-foreground/60 mt-6 max-w-2xl mx-auto font-medium italic">Dynamically showcasing our latest academic gatherings.</p>
+              <p className="text-foreground/60 mt-6 max-w-2xl mx-auto font-medium italic">Showcasing our latest academic gatherings.</p>
             </div>
 
             {loading ? (
@@ -187,7 +187,7 @@ export default function EventsPage() {
               </div>
             ) : (
               <div className="text-center py-12 italic text-muted-foreground bg-white/50 rounded-2xl border border-dashed border-primary/5">
-                No workshops scheduled currently. Check back soon.
+                No workshops scheduled currently.
               </div>
             )}
           </div>
@@ -300,16 +300,6 @@ export default function EventsPage() {
                     </div>
                   ))}
                 </div>
-                <div className="p-6 bg-white/5 border border-white/10 rounded-2xl">
-                  <h4 className="font-bold text-accent mb-4 uppercase tracking-widest text-[10px]">Benefits for Partner Institutions</h4>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] opacity-70 font-medium italic">
-                    <li>• Academic credibility</li>
-                    <li>• Global visibility</li>
-                    <li>• High-quality proceedings publication</li>
-                    <li>• Expert support in planning & review</li>
-                    <li>• Access to SIARE’s editorial and reviewer network</li>
-                  </ul>
-                </div>
               </div>
               <div className="relative aspect-square rounded-[40px] overflow-hidden shadow-2xl" data-aos="fade-left">
                 <Image
@@ -321,52 +311,6 @@ export default function EventsPage() {
                 />
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Event Proposal Guidelines */}
-        <section className="py-20 bg-slate-50">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32">
-            <div className="flex items-center gap-4 mb-12" data-aos="fade-right">
-              <div className="h-12 w-12 rounded-xl bg-accent flex items-center justify-center text-primary shadow-lg">
-                <FileEdit className="h-6 w-6" />
-              </div>
-              <h2 className="text-3xl font-bold text-primary font-headline italic">Event Proposal Guidelines</h2>
-            </div>
-
-            <Card className="rounded-3xl border-none shadow-2xl bg-white p-10" data-aos="fade-up">
-              <div className="grid lg:grid-cols-2 gap-12">
-                <div>
-                  <p className="text-lg text-foreground/70 mb-8 italic font-medium">
-                    Institutions seeking to collaborate must provide:
-                  </p>
-                  <ul className="space-y-4">
-                    {[
-                      "Conference theme & objectives",
-                      "Organizing committee details",
-                      "Paper submission timeline",
-                      "Review process framework",
-                      "Expected number of submissions",
-                      "Venue (physical/online/hybrid)",
-                      "Technical partners (if any)"
-                    ].map((item, i) => (
-                      <li key={i} className="flex items-center gap-3 text-sm font-bold text-primary/80">
-                        <CheckCircle2 className="h-5 w-5 text-accent" /> {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="bg-primary/5 rounded-[40px] p-10 flex flex-col justify-center border border-primary/5">
-                  <h4 className="text-xl font-bold text-primary font-headline italic mb-4">Post-Approval Workflow</h4>
-                  <p className="text-sm text-foreground/60 leading-relaxed italic">
-                    Upon approval, SIARE will sign a publishing MoU and initiate workflows for submission management, technical setup, and metadata coordination.
-                  </p>
-                  <Button asChild className="mt-8 bg-primary hover:bg-accent text-white rounded-xl w-fit">
-                    <Link href="/contact">Submit Proposal</Link>
-                  </Button>
-                </div>
-              </div>
-            </Card>
           </div>
         </section>
 
@@ -398,7 +342,7 @@ export default function EventsPage() {
               ))}
               <div className="flex flex-col justify-center p-8 bg-accent/10 rounded-2xl border border-accent/20" data-aos="fade-up">
                 <p className="text-xs font-bold text-primary/70 leading-relaxed italic">
-                  These recognitions help boost academic profiles and enhance researcher visibility across the global scholarly network.
+                  These recognitions help boost academic profiles and enhance researcher visibility.
                 </p>
               </div>
             </div>
@@ -444,7 +388,7 @@ export default function EventsPage() {
                   {[
                     { label: "Presentation slots", desc: "Showcase your research to global peers." },
                     { label: "E-certificates", desc: "Digital recognition of your participation." },
-                    { label: "Proceedings publication", desc: "Indexed archival of your conference paper (when applicable)." }
+                    { label: "Proceedings publication", desc: "Indexed archival of your conference paper." }
                   ].map((benefit, i) => (
                     <div key={i} className="flex items-start gap-4">
                       <div className="h-6 w-6 rounded-full bg-accent/10 flex items-center justify-center text-accent text-[10px] font-black shrink-0 mt-1">{i+1}</div>
@@ -461,29 +405,24 @@ export default function EventsPage() {
         </section>
 
         {/* Call to Action */}
-        <section className="py-16 bg-primary text-white text-center relative overflow-hidden">
+        <section className="py-24 bg-slate-50 border-t border-slate-200 text-center relative overflow-hidden">
           <div className="container mx-auto px-8 md:px-16 lg:px-32 relative z-10">
             <div className="max-w-4xl mx-auto" data-aos="zoom-in">
-              <h2 className="text-2xl md:text-4xl font-bold font-headline mb-6 italic">Empowering Global Research</h2>
-              <p className="text-lg text-white/70 mb-8 font-medium italic">
+              <h2 className="text-2xl md:text-4xl font-bold font-headline mb-6 italic text-primary">Empowering Global Research</h2>
+              <p className="text-lg text-foreground/60 mb-12 font-medium italic">
                 Connect with SIARE today to host your conference or join our upcoming academic events.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button asChild className="bg-accent hover:bg-white text-accent-foreground hover:text-primary font-black italic rounded-xl px-8 py-4 text-xs shadow-xl transition-all hover:scale-105 h-auto">
-                  <Link href="/contact">View All Events</Link>
-                </Button>
-                <Button asChild variant="outline" className="bg-transparent border-white/20 text-white rounded-xl px-8 py-4 text-xs font-bold transition-all hover:scale-105 h-auto italic">
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                <Button asChild className="bg-primary hover:bg-accent text-white font-black italic rounded-xl px-10 h-14 text-sm shadow-xl transition-all hover:scale-105">
                   <Link href="/contact">Submit Conference Proposal</Link>
                 </Button>
-                <Button asChild variant="outline" className="bg-transparent border-white/20 text-white rounded-xl px-8 py-4 text-xs font-bold transition-all hover:scale-105 h-auto italic">
+                <Button asChild variant="outline" className="bg-white border-primary/20 text-primary hover:bg-primary hover:text-white rounded-xl px-10 h-14 text-sm font-bold transition-all hover:scale-105 italic">
                   <Link href="/contact">Become a Partner</Link>
                 </Button>
               </div>
             </div>
           </div>
-          <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/5 rounded-full -ml-32 -mb-32 blur-3xl"></div>
         </section>
       </main>
       <Footer />
