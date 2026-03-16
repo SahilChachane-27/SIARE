@@ -41,12 +41,6 @@ const navLinks: NavLink[] = [
   { href: '/proceedings', label: 'Proceedings' },
   { href: '/policies', label: 'Policies' },
   { href: '/events', label: 'Events' },
-  {
-    label: 'News',
-    children: [
-      { href: '/blog', label: 'Latest News & Updates' },
-    ],
-  },
   { href: '/contact', label: 'Contact' },
 ];
 
