@@ -34,7 +34,7 @@ export function Hero() {
               <Link href="/contact">Join Us Today</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-accent text-white bg-transparent hover:bg-accent hover:text-accent-foreground transition-all duration-300 ease-in-out hover:scale-105 rounded-funky px-6 md:px-8 py-5 md:py-6 text-xs md:text-base font-bold shadow-xl w-full sm:w-auto btn-responsive">
-              <Link href="/journals">View Proceedings</Link>
+              <Link href="/proceedings">View Proceedings</Link>
             </Button>
           </div>
         </div>

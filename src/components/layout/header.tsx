@@ -38,9 +38,8 @@ const navLinks: NavLink[] = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/why-us', label: 'Membership' },
-  { href: '/journals', label: 'Proceedings' },
+  { href: '/proceedings', label: 'Proceedings' },
   { href: '/ethics-guidelines', label: 'Policies' },
-  { href: '/resources', label: 'Authors' },
   { href: '/events', label: 'Events' },
   {
     label: 'News',

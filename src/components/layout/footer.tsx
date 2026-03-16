@@ -34,9 +34,8 @@ const policyLinks = [
 ];
 
 const resourceLinks = [
-  { href: '/resources', label: 'Author Guidelines' },
-  { href: '/resources', label: 'Editorial Guidelines' },
-  { href: '/resources', label: 'Indexing & Archiving' },
+  { href: '/proceedings', label: 'Proceedings' },
+  { href: '/ethics-guidelines', label: 'Guidelines' },
   { href: '/contact', label: 'FAQs' },
   { href: '/contact', label: 'Contact Us' },
 ];

@@ -10,9 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, PhoneCall } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const formSchema = z.object({
@@ -27,9 +25,7 @@ const formSchema = z.object({
     .min(10, "Mobile number must be at least 10 digits.")
     .max(20, "Mobile number must be less than 20 digits.")
     .regex(/^[\d\s\-\+\(\)]+$/, "Please provide a valid phone number"),
-  hasIssn: z.enum(["yes", "no"], {
-    required_error: "Please select an option.",
-  }),
+  aboutConference: z.string().min(5, "Please provide some details about your conference."),
   message: z.string().max(2000, "Message must be less than 2000 characters.").optional(),
 });
 
@@ -43,7 +39,7 @@ export default function StartJournalPage() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { name: "", email: "", mobile: "", hasIssn: undefined, message: "" },
+    defaultValues: { name: "", email: "", mobile: "", aboutConference: "", message: "" },
   });
 
   const watchValues = form.watch();
@@ -72,25 +68,6 @@ export default function StartJournalPage() {
               <p className="max-w-5xl mx-auto text-sm sm:text-lg md:text-xl text-white/90 font-medium italic">
                 Empowering your institution with professional OJS Platform technology.
               </p>
-
-              <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 sm:gap-8 text-white/90">
-                <a 
-                  href="mailto:support@academicproceeding.org" 
-                  className="flex items-center gap-2 hover:text-white transition-colors sm:border-r sm:border-white/20 sm:pr-8 last:border-0"
-                >
-                  <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
-                  <span className="font-bold text-xs sm:text-base">Email:</span> 
-                  <span className="text-[10px] sm:text-base break-all">support@academicproceeding.org</span>
-                </a>
-                <a 
-                  href="tel:0000000000" 
-                  className="flex items-center gap-2 hover:text-white transition-colors"
-                >
-                  <PhoneCall className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
-                  <span className="font-bold text-xs sm:text-base">Mobile:</span> 
-                  <span className="text-[10px] sm:text-base">0000000000</span>
-                </a>
-              </div>
             </div>
           </div>
         </section>
@@ -153,29 +130,16 @@ export default function StartJournalPage() {
 
                   <FormField
                     control={form.control}
-                    name="hasIssn"
+                    name="aboutConference"
                     render={({ field }) => (
-                      <FormItem className="space-y-3">
-                        <FormLabel className="text-base font-bold text-primary">Do you have ISSN for your journal? <span className="text-destructive">*</span></FormLabel>
+                      <FormItem>
+                        <FormLabel className="text-base font-bold text-primary">About conference <span className="text-destructive">*</span></FormLabel>
                         <FormControl>
-                          <RadioGroup
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                            className="grid md:grid-cols-2 gap-4"
-                          >
-                            <div className="flex items-center space-x-3 border rounded-xl p-4 hover:bg-slate-50 transition-colors cursor-pointer">
-                              <RadioGroupItem value="yes" id="issn-yes" className="text-primary focus:ring-primary" />
-                              <FormLabel htmlFor="issn-yes" className="font-normal cursor-pointer flex-1 text-primary/80">
-                                Yes, I have ISSN
-                              </FormLabel>
-                            </div>
-                            <div className="flex items-center space-x-3 border rounded-xl p-4 hover:bg-slate-50 transition-colors cursor-pointer">
-                              <RadioGroupItem value="no" id="issn-no" className="text-primary focus:ring-primary" />
-                              <FormLabel htmlFor="issn-no" className="font-normal cursor-pointer flex-1 text-primary/80">
-                                No, I want to start a new journal
-                              </FormLabel>
-                            </div>
-                          </RadioGroup>
+                          <Textarea 
+                            placeholder="Briefly describe your conference, its goals, and requirements..." 
+                            className="rounded-xl min-h-[120px] border-input focus:ring-primary/50" 
+                            {...field} 
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
