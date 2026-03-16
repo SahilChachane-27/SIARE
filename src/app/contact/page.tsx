@@ -3,7 +3,7 @@
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Contact } from '@/components/sections/contact';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { 
   Mail, 
   MapPin, 
@@ -12,12 +12,7 @@ import {
   MessageSquare, 
   Handshake, 
   ShieldCheck, 
-  Laptop,
-  Facebook,
-  Twitter,
-  Linkedin,
-  Instagram,
-  Youtube
+  Laptop
 } from "lucide-react";
 import { ScrollToTop } from '@/components/layout/scroll-to-top';
 
@@ -52,24 +47,27 @@ const helpdesks = [
   {
     title: "Membership Helpdesk",
     desc: "For renewals, digital certificates, and member portal login issues.",
-    icon: Users
+    icon: Users,
+    email: "membership@academicproceeding.org"
   },
   {
     title: "Conference Support",
     desc: "For MoU formalities, event planning, and proceedings workflow coordination.",
-    icon: Handshake
+    icon: Handshake,
+    email: "proceedings@academicproceeding.org"
   },
   {
     title: "Technical Assistance",
     desc: "For submission portal issues, template downloads, and access problems.",
-    icon: Laptop
+    icon: Laptop,
+    email: "support@academicproceeding.org"
   }
 ];
 
 const responseTimes = [
-  { label: "General Queries", time: "Within 24 Hours" },
-  { label: "Conference Queries", time: "48–72 Hours" },
-  { label: "Partnership Proposals", time: "3–5 Business Days" }
+  { label: "General Queries", time: "3 Days" },
+  { label: "Conference Queries", time: "5 Days" },
+  { label: "Partnership Proposals", time: "7 Days" }
 ];
 
 export default function ContactPage() {
@@ -176,7 +174,12 @@ export default function ContactPage() {
                       </div>
                       <h3 className="font-bold text-primary italic">{help.title}</h3>
                     </div>
-                    <p className="text-xs text-foreground/60 leading-relaxed font-medium">{help.desc}</p>
+                    <p className="text-xs text-foreground/60 leading-relaxed font-medium mb-4">{help.desc}</p>
+                    <div className="pt-4 border-t border-slate-100">
+                      <a href={`mailto:${help.email}`} className="flex items-center gap-2 text-[10px] font-black uppercase text-accent hover:text-primary transition-colors">
+                        <Mail className="h-3 w-3" /> {help.email}
+                      </a>
+                    </div>
                   </Card>
                 ))}
               </div>
@@ -201,27 +204,6 @@ export default function ContactPage() {
                   <a href="mailto:feedback@academicproceeding.org" className="text-sm font-black text-primary hover:text-accent transition-colors break-all">feedback@academicproceeding.org</a>
                 </div>
               </Card>
-            </div>
-
-            {/* Social Media Links */}
-            <div className="mt-16 md:mt-20 text-center" data-aos="zoom-in">
-              <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic mb-8">Connect With Us Online</h2>
-              <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-                {[
-                  { icon: Linkedin, name: "LinkedIn" },
-                  { icon: Facebook, name: "Facebook" },
-                  { icon: Youtube, name: "YouTube" },
-                  { icon: Twitter, name: "X (Twitter)" },
-                  { icon: Instagram, name: "Instagram" }
-                ].map((social, i) => (
-                  <button key={i} className="group flex flex-col items-center gap-2">
-                    <div className="h-12 w-12 md:h-14 md:w-14 rounded-full bg-slate-100 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all shadow-md">
-                      <social.icon className="h-5 w-5 md:h-6 md:w-6" />
-                    </div>
-                    <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity text-primary">{social.name}</span>
-                  </button>
-                ))}
-              </div>
             </div>
 
           </div>

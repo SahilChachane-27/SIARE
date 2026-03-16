@@ -117,13 +117,13 @@ export function Header() {
               })}
             </nav>
             <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky text-[10px] h-9 px-4 shrink-0 transition-all hover:scale-105 active:scale-95 ml-2">
-              <Link href="/contact">Begin Research</Link>
+              <Link href="/contact">Contact us</Link>
             </Button>
           </div>
 
           <div className="xl:hidden flex items-center gap-2">
             <Button asChild size="sm" className="bg-accent text-accent-foreground text-[10px] font-black uppercase tracking-tighter px-3 h-8 sm:h-9 sm:px-4 rounded-lg md:flex xl:hidden">
-              <Link href="/contact">Research</Link>
+              <Link href="/contact">Contact us</Link>
             </Button>
             {isClient && (
               <Sheet>
