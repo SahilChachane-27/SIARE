@@ -159,7 +159,7 @@ export default function AdminDashboard() {
       <main className="flex-1 pt-24 md:pt-32 pb-16">
         <div className="container mx-auto px-4 md:px-8 max-w-7xl">
           
-          {/* Admin Command Header - REDUCED SIZE */}
+          {/* Admin Command Header */}
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-10 md:mb-12">
             <div className="space-y-3">
               <div className="flex items-center gap-3">
@@ -197,28 +197,28 @@ export default function AdminDashboard() {
 
           {/* QUICK MANAGEMENT */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10 md:mb-12">
-            <Button asChild variant="outline" className="h-24 md:h-28 rounded-2xl border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-2 transition-all">
-              <Link href="/admin/events">
-                <Presentation className="h-6 w-6 text-amber-500" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-primary">Conferences</span>
+            <Button asChild variant="outline" className="h-16 md:h-20 rounded-xl border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-1 transition-all">
+              <Link href="/admin/events" className="flex flex-col items-center">
+                <Presentation className="h-5 w-5 text-amber-500" />
+                <span className="text-[9px] font-black uppercase tracking-widest text-primary">Conferences</span>
               </Link>
             </Button>
-            <Button asChild variant="outline" className="h-24 md:h-28 rounded-2xl border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-2 transition-all">
-              <Link href="/admin/members">
-                <Users className="h-6 w-6 text-green-500" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-primary">Manage Members</span>
+            <Button asChild variant="outline" className="h-16 md:h-20 rounded-xl border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-1 transition-all">
+              <Link href="/admin/members" className="flex flex-col items-center">
+                <Users className="h-5 w-5 text-green-500" />
+                <span className="text-[9px] font-black uppercase tracking-widest text-primary">Manage Members</span>
               </Link>
             </Button>
-            <Button asChild variant="outline" className="h-24 md:h-28 rounded-2xl border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-2 transition-all">
-              <Link href="/admin/membership">
-                <UserPlus className="h-6 w-6 text-purple-500" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-primary">Tiers & Plans</span>
+            <Button asChild variant="outline" className="h-16 md:h-20 rounded-xl border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-1 transition-all">
+              <Link href="/admin/membership" className="flex flex-col items-center">
+                <UserPlus className="h-5 w-5 text-purple-500" />
+                <span className="text-[9px] font-black uppercase tracking-widest text-primary">Tiers & Plans</span>
               </Link>
             </Button>
-            <Button asChild variant="outline" className="h-24 md:h-28 rounded-2xl border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-2 transition-all">
-              <Link href="/admin/journals">
-                <BookOpen className="h-6 w-6 text-blue-500" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-primary">Proceedings</span>
+            <Button asChild variant="outline" className="h-16 md:h-20 rounded-xl border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-1 transition-all">
+              <Link href="/admin/journals" className="flex flex-col items-center">
+                <BookOpen className="h-5 w-5 text-blue-500" />
+                <span className="text-[9px] font-black uppercase tracking-widest text-primary">Proceedings</span>
               </Link>
             </Button>
           </div>
