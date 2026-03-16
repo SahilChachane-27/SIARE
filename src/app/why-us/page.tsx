@@ -304,10 +304,10 @@ export default function MembershipPage() {
                     { num: "04", text: "Receive digital membership certificate and portal login" }
                   ].map((step, i) => (
                     <div key={i} className="flex gap-4 items-start group">
-                      <div className="h-8 w-8 rounded-full border-2 border-accent/20 flex items-center justify-center text-accent text-[10px] font-black group-hover:bg-accent group-hover:text-white transition-all shrink-0">
+                      <div className="h-6 w-6 rounded-full border-2 border-accent/20 flex items-center justify-center text-accent text-[8px] font-black group-hover:bg-accent group-hover:text-white transition-all shrink-0">
                         {step.num}
                       </div>
-                      <p className="text-sm md:text-base font-medium text-foreground/80 pt-1.5 font-headline italic">{step.text}</p>
+                      <p className="text-xs md:text-sm font-medium text-foreground/80 pt-1 font-headline italic">{step.text}</p>
                     </div>
                   ))}
                 </div>
