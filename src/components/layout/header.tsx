@@ -37,7 +37,7 @@ interface NavLink {
 const navLinks: NavLink[] = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
-  { href: '/why-us', label: 'Membership' },
+  { href: '/membership', label: 'Membership' },
   { href: '/proceedings', label: 'Proceedings' },
   { href: '/policies', label: 'Policies' },
   { href: '/events', label: 'Events' },
@@ -183,7 +183,7 @@ export function Header() {
                   <div className="pt-8 w-full">
                     <SheetClose asChild>
                       <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky h-12 text-sm uppercase italic">
-                        <Link href="/contact">Submit Your Paper</Link>
+                        <Link href="/submit-paper">Submit Your Paper</Link>
                       </Button>
                     </SheetClose>
                   </div>

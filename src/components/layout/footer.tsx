@@ -18,11 +18,10 @@ import { useEffect, useState } from 'react';
 
 const quickLinks = [
   { href: '/about', label: 'About the Platform' },
-  { href: '/about', label: 'About Academic Proceeding' },
-  { href: '/about', label: 'About SIARE' },
-  { href: '/why-us', label: 'Join SIARE' },
+  { href: '/membership', label: 'About SIARE' },
+  { href: '/membership', label: 'Join SIARE' },
   { href: '/services', label: 'Publishing Model' },
-  { href: '/contact', label: 'Submit a Conference Proposal' },
+  { href: '/submit-paper', label: 'Submit a Conference Proposal' },
 ];
 
 const policyLinks = [
