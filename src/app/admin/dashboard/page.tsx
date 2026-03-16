@@ -159,27 +159,27 @@ export default function AdminDashboard() {
       <main className="flex-1 pt-24 md:pt-32 pb-16">
         <div className="container mx-auto px-4 md:px-8 max-w-7xl">
           
-          {/* Admin Command Header - BALANCED SIZE */}
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-12 md:mb-16">
-            <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 md:h-16 md:w-16 bg-primary rounded-2xl flex items-center justify-center shadow-xl">
-                  <LayoutDashboard className="h-6 w-6 md:h-8 md:w-8 text-accent" />
+          {/* Admin Command Header - REDUCED SIZE */}
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-10 md:mb-12">
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 md:h-12 md:w-12 bg-primary rounded-xl flex items-center justify-center shadow-lg">
+                  <LayoutDashboard className="h-5 w-5 md:h-6 md:w-6 text-accent" />
                 </div>
-                <h1 className="text-3xl md:text-5xl font-black text-primary font-headline italic tracking-tight">
+                <h1 className="text-2xl md:text-3xl font-bold text-primary font-headline italic tracking-tight">
                   SIARE Admin Portal
                 </h1>
               </div>
               <div className="flex items-center gap-3">
-                <div className="h-2.5 w-2.5 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
-                <p className="text-muted-foreground text-[10px] font-black uppercase tracking-[0.3em]">
+                <div className="h-2 w-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+                <p className="text-muted-foreground text-[9px] font-black uppercase tracking-[0.2em]">
                   Master System Console: {user.email}
                 </p>
               </div>
             </div>
             
             <div className="flex flex-wrap gap-3 w-full lg:w-auto">
-              <Button asChild size="lg" className="flex-1 lg:flex-none rounded-xl bg-primary hover:bg-primary/90 text-accent font-bold px-6 h-12 shadow-xl border border-accent/20 transition-all">
+              <Button asChild size="lg" className="flex-1 lg:flex-none rounded-xl bg-primary hover:bg-primary/90 text-accent font-bold px-6 h-11 shadow-lg border border-accent/20 transition-all text-xs">
                 <Link href="/admin/inquiries">
                   <Mail className="mr-3 h-4 w-4" /> Inquiries {pendingInquiriesCount > 0 && `(${pendingInquiriesCount})`}
                 </Link>
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
                 variant="ghost" 
                 size="icon"
                 onClick={handleLogout} 
-                className="h-12 w-12 rounded-xl text-red-500 hover:bg-red-50 hover:text-red-600 transition-all"
+                className="h-11 w-11 rounded-xl text-red-500 hover:bg-red-50 hover:text-red-600 transition-all"
               >
                 <LogOut className="h-5 w-5" />
               </Button>
@@ -196,7 +196,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* QUICK MANAGEMENT */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10 md:mb-12">
             <Button asChild variant="outline" className="h-24 md:h-28 rounded-2xl border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-2 transition-all">
               <Link href="/admin/events">
                 <Presentation className="h-6 w-6 text-amber-500" />
@@ -224,7 +224,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Stats Bar */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-12 md:mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-10 md:mb-12">
             {stats.map((stat, i) => (
               <Card key={i} className="rounded-2xl border-none shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden bg-white group">
                 <div className="p-6 md:p-8">
