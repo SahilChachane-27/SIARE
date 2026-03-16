@@ -154,9 +154,6 @@ export default function MembershipPage() {
                 Membership at SIARE
               </h1>
               <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
-              <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed font-headline italic">
-                Join a Global Network of Scholars. Connect with researchers, educators, and innovators committed to advancing multidisciplinary research.
-              </p>
             </div>
           </div>
           <div className="absolute inset-0 opacity-10">
