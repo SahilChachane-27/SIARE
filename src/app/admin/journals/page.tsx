@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect, useMemo, useRef, Suspense } from 'react';
@@ -254,66 +253,66 @@ function JournalManagementContent() {
     <div className="flex flex-col min-h-screen bg-slate-50 overflow-x-hidden">
       <Header />
       <main className="flex-1 pt-32 pb-24">
-        <div className="container mx-auto px-4 md:px-8 lg:px-12">
-          <div className="flex items-center gap-4 mb-12" data-aos="fade-right">
-            <Button variant="ghost" size="icon" asChild className="rounded-full bg-white shadow-sm hover:bg-primary hover:text-white transition-all">
-              <Link href="/admin/dashboard"><ArrowLeft className="h-6 w-6" /></Link>
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="flex items-center gap-4 mb-10" data-aos="fade-right">
+            <Button variant="ghost" size="icon" asChild className="rounded-xl bg-white shadow-sm hover:bg-primary hover:text-white transition-all h-12 w-12">
+              <Link href="/admin/dashboard"><ArrowLeft className="h-5 w-5" /></Link>
             </Button>
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-primary font-headline italic">
-                {editingId ? 'Edit Proceedings Record' : 'Proceedings Management'}
+              <h1 className="text-2xl md:text-3xl font-bold text-primary font-headline italic">
+                Proceedings Management
               </h1>
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/40 mt-1">SIARE Series & Catalog Registry</p>
+              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-primary/40 mt-1">SIARE Series Catalog Registry</p>
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-4 gap-12">
+          <div className="grid lg:grid-cols-4 gap-8 md:gap-12">
             {/* FORM CONSOLE */}
             <div className="lg:col-span-1" data-aos="fade-up">
-              <Card className="rounded-[2rem] border-none shadow-2xl p-8 lg:sticky lg:top-32 bg-white">
-                <div className="flex justify-between items-center mb-8 border-b border-slate-50 pb-4">
-                  <h2 className="text-lg font-bold text-primary italic flex items-center gap-2">
-                    <BookOpen className="h-5 w-5 text-accent" />
+              <Card className="rounded-[1.5rem] border-none shadow-2xl p-6 md:p-8 lg:sticky lg:top-32 bg-white">
+                <div className="flex justify-between items-center mb-6 border-b border-slate-50 pb-4">
+                  <h2 className="text-base font-bold text-primary italic flex items-center gap-2">
+                    <BookOpen className="h-4 w-4 text-accent" />
                     {editingId ? 'Update Record' : 'Catalog New Series'}
                   </h2>
                   {editingId && (
-                    <Button variant="ghost" size="sm" onClick={resetForm} className="text-[10px] font-black uppercase tracking-widest text-red-500 hover:bg-red-50">
+                    <Button variant="ghost" size="sm" onClick={resetForm} className="text-[8px] font-black uppercase tracking-widest text-red-500 hover:bg-red-50">
                       Cancel
                     </Button>
                   )}
                 </div>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Series/Journal Name</label>
-                    <Input value={name} onChange={(e) => setName(e.target.value)} required placeholder="e.g. SIARE Proceedings in AI" className="rounded-xl h-12 border-slate-100" />
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Series/Journal Name</label>
+                    <Input value={name} onChange={(e) => setName(e.target.value)} required placeholder="e.g. SIARE Proceedings in AI" className="rounded-xl h-11 border-slate-100 text-xs" />
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Academic Description</label>
-                    <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Summary of scope..." className="rounded-xl min-h-[100px] border-slate-100" />
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Academic Description</label>
+                    <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Summary of scope..." className="rounded-xl min-h-[80px] border-slate-100 text-xs" />
                   </div>
                   
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Visual Cover (Max 1MB)</label>
-                    <div className="flex flex-col gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Visual Cover (Max 1MB)</label>
+                    <div className="flex flex-col gap-3">
                       {imageUrl ? (
-                        <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden group shadow-lg bg-slate-50 border border-slate-100 flex items-center justify-center p-2">
+                        <div className="relative w-full aspect-[3/4] rounded-xl overflow-hidden group shadow-md bg-slate-50 border border-slate-100 flex items-center justify-center p-2">
                           <Image src={imageUrl} alt="Preview" fill className="object-contain" />
                           <button 
                             type="button" 
                             onClick={() => setImageUrl(null)}
-                            className="absolute top-3 right-3 bg-red-500 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-30 shadow-xl"
+                            className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-30 shadow-lg"
                           >
-                            <X className="h-4 w-4" />
+                            <X className="h-3 w-3" />
                           </button>
                         </div>
                       ) : (
                         <div 
                           onClick={() => fileInputRef.current?.click()}
-                          className="w-full aspect-[3/4] border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center gap-3 cursor-pointer hover:bg-slate-50 hover:border-accent/30 transition-all group"
+                          className="w-full aspect-[3/4] border-2 border-dashed border-slate-200 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-slate-50 transition-all group"
                         >
-                          <ImageIcon className="h-10 w-10 text-primary/10 group-hover:text-accent/40 transition-colors" />
-                          <span className="text-[10px] font-black text-primary/30 uppercase tracking-widest">Select Cover Image</span>
+                          <ImageIcon className="h-8 w-8 text-primary/10 group-hover:text-accent/40 transition-colors" />
+                          <span className="text-[8px] font-black text-primary/30 uppercase tracking-widest">Select Image</span>
                         </div>
                       )}
                       <input 
@@ -327,114 +326,115 @@ function JournalManagementContent() {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">ISSN</label>
-                      <Input value={issn} onChange={(e) => setIssn(e.target.value)} required placeholder="2345-6789" className="rounded-xl h-12 border-slate-100" />
+                    <div className="space-y-1.5">
+                      <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">ISSN</label>
+                      <Input value={issn} onChange={(e) => setIssn(e.target.value)} required placeholder="2345-6789" className="rounded-xl h-11 border-slate-100 text-xs" />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Primary Domain</label>
+                    <div className="space-y-1.5">
+                      <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Domain</label>
                       <Select value={domain} onValueChange={setDomain} required>
-                        <SelectTrigger className="rounded-xl h-12 border-slate-100">
-                          <SelectValue placeholder="Domain" />
+                        <SelectTrigger className="rounded-xl h-11 border-slate-100 text-xs">
+                          <SelectValue placeholder="Select" />
                         </SelectTrigger>
                         <SelectContent>
                           {domains.map((d) => (
-                            <SelectItem key={d} value={d}>{d}</SelectItem>
+                            <SelectItem key={d} value={d} className="text-xs">{d}</SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Indexing Metadata (Comma separated)</label>
-                    <Input value={indexing} onChange={(e) => setIndexing(e.target.value)} placeholder="Scopus, UGC CARE, Google Scholar" className="rounded-xl h-12 border-slate-100" />
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Indexing Metadata</label>
+                    <Input value={indexing} onChange={(e) => setIndexing(e.target.value)} placeholder="Scopus, UGC CARE..." className="rounded-xl h-11 border-slate-100 text-xs" />
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Public Series URL</label>
-                    <Input value={link} onChange={(e) => setLink(e.target.value)} required type="url" placeholder="https://academicproceeding.org/..." className="rounded-xl h-12 border-slate-100" />
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Public URL</label>
+                    <Input value={link} onChange={(e) => setLink(e.target.value)} required type="url" placeholder="https://..." className="rounded-xl h-11 border-slate-100 text-xs" />
                   </div>
 
-                  <div className="flex items-center space-x-3 py-4 px-5 bg-slate-50 rounded-2xl border border-slate-100">
+                  <div className="flex items-center space-x-3 py-3 px-4 bg-slate-50 rounded-xl border border-slate-100">
                     <Checkbox 
                       id="isFeatured" 
                       checked={isFeatured} 
                       onCheckedChange={(checked) => setIsFeatured(checked as boolean)}
-                      className="border-primary/20 data-[state=checked]:bg-accent data-[state=checked]:border-accent"
+                      className="h-3.5 w-3.5"
                     />
                     <label 
                       htmlFor="isFeatured" 
-                      className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] cursor-pointer"
+                      className="text-[8px] font-black text-primary/60 uppercase tracking-[0.2em] cursor-pointer"
                     >
-                      Featured on Homepage
+                      Featured on Home
                     </label>
                   </div>
 
-                  <Button type="submit" className="w-full h-14 bg-primary text-accent font-black uppercase text-xs tracking-widest rounded-2xl shadow-xl hover:scale-[1.02] transition-transform">
-                    {editingId ? <><Edit3 className="mr-3 h-5 w-5" /> Synchronize Update</> : <><Plus className="mr-3 h-5 w-5" /> Catalog Series</>}
+                  <Button type="submit" className="w-full h-12 bg-primary text-accent font-black uppercase text-[10px] tracking-widest rounded-xl shadow-xl hover:scale-[1.02] transition-transform">
+                    {editingId ? <><Edit3 className="mr-2 h-4 w-4" /> Sync Record</> : <><Plus className="mr-2 h-4 w-4" /> Catalog Series</>}
                   </Button>
                 </form>
               </Card>
             </div>
 
             {/* LIVE CATALOG DISPLAY */}
-            <div className="lg:col-span-3 space-y-10" data-aos="fade-left">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 px-4">
-                <h2 className="text-xl font-bold text-primary font-headline italic flex items-center gap-3">
-                  Live Registry {journals && <span className="text-xs font-black bg-primary/5 px-3 py-1 rounded-full text-primary/40 ml-2">({journals.length})</span>}
+            <div className="lg:col-span-3 space-y-8" data-aos="fade-left">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 px-4">
+                <h2 className="text-lg font-bold text-primary font-headline italic flex items-center gap-2">
+                  <LayoutGrid className="h-5 w-5 text-accent" />
+                  Live Registry {journals && <span className="text-xs font-black bg-primary/5 px-2 py-0.5 rounded-full text-primary/40 ml-1">({journals.length})</span>}
                 </h2>
-                <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
-                   <div className="relative flex-1 md:w-72">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-primary/30" />
+                <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                   <div className="relative flex-1 md:w-60">
+                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-primary/30" />
                     <Input 
                       placeholder="Filter records..." 
-                      className="pl-11 h-12 rounded-2xl bg-white border-none shadow-sm"
+                      className="pl-9 h-10 rounded-xl bg-white border-none shadow-sm text-xs"
                       value={searchFilter}
                       onChange={(e) => setSearchFilter(e.target.value)}
                     />
                   </div>
                   <Select value={sortOrder} onValueChange={(v: any) => setSortOrder(v)}>
-                    <SelectTrigger className="w-full sm:w-44 h-12 rounded-2xl bg-white border-none shadow-sm">
-                      <ArrowUpDown className="mr-2 h-4 w-4 text-primary/30" />
-                      <SelectValue placeholder="Sort Order" />
+                    <SelectTrigger className="w-full sm:w-36 h-10 rounded-xl bg-white border-none shadow-sm text-[10px]">
+                      <ArrowUpDown className="mr-1.5 h-3 w-3 text-primary/30" />
+                      <SelectValue placeholder="Sort" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="newest">Newest Records</SelectItem>
-                      <SelectItem value="oldest">Oldest Records</SelectItem>
-                      <SelectItem value="az">Title A-Z</SelectItem>
-                      <SelectItem value="za">Title Z-A</SelectItem>
+                      <SelectItem value="newest" className="text-xs">Newest</SelectItem>
+                      <SelectItem value="oldest" className="text-xs">Oldest</SelectItem>
+                      <SelectItem value="az" className="text-xs">A-Z</SelectItem>
+                      <SelectItem value="za" className="text-xs">Z-A</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
               
               {journalsLoading ? (
-                <div className="flex flex-col items-center justify-center p-32 bg-white rounded-[2rem] shadow-sm gap-6">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/20">Indexing Records...</p>
+                <div className="flex flex-col items-center justify-center p-24 bg-white rounded-[1.5rem] shadow-sm gap-4">
+                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-accent"></div>
+                  <p className="text-[9px] font-black uppercase tracking-[0.4em] text-primary/20">Indexing Records...</p>
                 </div>
               ) : paginatedJournals.length > 0 ? (
                 <>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
                     {paginatedJournals.map((journal: any) => (
-                      <Card key={journal.id} className="overflow-hidden group relative rounded-none shadow-2xl border-none flex flex-col h-full bg-white transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
-                        <div className="relative aspect-[3/4] w-full bg-slate-50 flex items-center justify-center p-6 shrink-0 shadow-inner">
+                      <Card key={journal.id} className="overflow-hidden group relative rounded-none shadow-xl border-none flex flex-col h-full bg-white transition-all duration-500 hover:shadow-2xl">
+                        <div className="relative aspect-[3/4] w-full bg-slate-50 flex items-center justify-center p-4 shrink-0 shadow-inner">
                           {journal.imageUrl ? (
-                            <Image src={journal.imageUrl} alt={journal.name} fill className="object-contain p-4 group-hover:scale-105 transition-transform duration-700" />
+                            <Image src={journal.imageUrl} alt={journal.name} fill className="object-contain p-3 group-hover:scale-105 transition-transform duration-700" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
-                              <BookOpen className="h-16 w-16 text-primary/5" />
+                              <BookOpen className="h-12 w-12 text-primary/5" />
                             </div>
                           )}
                           
                           {journal.isFeatured && (
-                            <div className="absolute top-4 left-4 bg-accent text-accent-foreground px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest shadow-xl flex items-center gap-1.5 z-30">
-                              <Star className="h-2.5 w-2.5 fill-current" /> Home Featured
+                            <div className="absolute top-3 left-3 bg-accent text-accent-foreground px-2 py-0.5 rounded-full text-[7px] font-black uppercase tracking-widest shadow-lg flex items-center gap-1 z-30">
+                              <Star className="h-2 w-2 fill-current" /> Featured
                             </div>
                           )}
 
-                          <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-30">
+                          <div className="absolute top-3 right-3 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity z-30">
                             <Button 
                               type="button"
                               variant="secondary" 
@@ -443,10 +443,9 @@ function JournalManagementContent() {
                                 e.stopPropagation();
                                 handleEdit(journal);
                               }} 
-                              className="rounded-xl h-10 w-10 bg-white shadow-xl hover:bg-accent hover:text-primary transition-all"
-                              title="Edit Series"
+                              className="rounded-lg h-8 w-8 bg-white shadow-lg hover:bg-accent transition-all"
                             >
-                              <Edit3 className="h-4 w-4" />
+                              <Edit3 className="h-3.5 w-3.5" />
                             </Button>
                             <Button 
                               type="button"
@@ -456,27 +455,26 @@ function JournalManagementContent() {
                                 e.stopPropagation();
                                 handleDelete(journal.id, journal.name);
                               }} 
-                              className="rounded-xl h-10 w-10 bg-white shadow-xl hover:bg-red-500 hover:text-white transition-all text-red-500"
-                              title="Delete Series"
+                              className="rounded-lg h-8 w-8 bg-white shadow-lg hover:bg-red-500 hover:text-white transition-all text-red-500"
                             >
-                              <Trash2 className="h-4 w-4" />
+                              <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           </div>
                         </div>
 
                         {/* HOVER OVERLAY */}
-                        <div className="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-primary/95 via-primary/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out z-20">
-                          <div className="transform translate-y-6 group-hover:translate-y-0 transition-transform duration-500 ease-in-out">
-                            <h3 className="text-base font-bold text-white font-headline leading-tight italic mb-2 line-clamp-2">{journal.name}</h3>
-                            <div className="flex flex-col gap-2 mb-6">
-                              <div className="flex items-center gap-3 text-[9px] font-bold text-white/70 uppercase tracking-widest"><Tag className="h-3 w-3 text-accent" /> ISSN: {journal.issn}</div>
-                              <div className="flex items-center gap-3 text-[9px] font-bold text-white/70 uppercase tracking-widest"><Globe className="h-3 w-3 text-accent" /> {journal.domain}</div>
+                        <div className="absolute inset-0 flex flex-col justify-end p-5 bg-gradient-to-t from-primary/95 via-primary/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out z-20">
+                          <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-in-out">
+                            <h3 className="text-sm font-bold text-white font-headline leading-tight italic mb-1.5 line-clamp-2">{journal.name}</h3>
+                            <div className="flex flex-col gap-1.5 mb-4">
+                              <div className="flex items-center gap-2 text-[8px] font-bold text-white/70 uppercase tracking-widest"><Tag className="h-2.5 w-2.5 text-accent" /> ISSN: {journal.issn}</div>
+                              <div className="flex items-center gap-2 text-[8px] font-bold text-white/70 uppercase tracking-widest"><Globe className="h-2.5 w-2.5 text-accent" /> {journal.domain}</div>
                             </div>
 
-                            <div className="pt-4 border-t border-white/10">
-                              <Button variant="link" asChild className="p-0 h-auto text-accent font-black italic text-[9px] hover:text-white tracking-[0.2em] uppercase">
-                                <a href={journal.link} target="_blank" className="flex items-center gap-2">
-                                  Access Repository <ExternalLink className="h-3 w-3" />
+                            <div className="pt-3 border-t border-white/10">
+                              <Button variant="link" asChild className="p-0 h-auto text-accent font-black italic text-[8px] hover:text-white tracking-[0.2em] uppercase">
+                                <a href={journal.link} target="_blank" className="flex items-center gap-1.5">
+                                  Access Repository <ExternalLink className="h-2.5 w-2.5" />
                                 </a>
                               </Button>
                             </div>
@@ -487,25 +485,25 @@ function JournalManagementContent() {
                   </div>
                   
                   {totalPages > 1 && (
-                    <div className="flex justify-center items-center gap-6 mt-16 flex-wrap">
+                    <div className="flex justify-center items-center gap-4 mt-12 flex-wrap">
                       <Button
                         variant="outline"
                         size="icon"
                         onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                         disabled={currentPage === 1}
-                        className="rounded-xl border-slate-200 h-10 w-10 bg-white shadow-sm"
+                        className="rounded-lg border-slate-200 h-8 w-8 bg-white shadow-sm"
                       >
-                        <ChevronLeft className="h-4 w-4" />
+                        <ChevronLeft className="h-3.5 w-3.5" />
                       </Button>
                       
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2">
                         {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                           <Button
                             key={page}
                             variant={currentPage === page ? "default" : "ghost"}
                             size="sm"
                             onClick={() => setCurrentPage(page)}
-                            className={`w-10 h-10 p-0 rounded-xl text-xs font-black ${currentPage === page ? 'bg-primary text-white shadow-xl' : 'text-primary/40 hover:bg-white hover:shadow-sm'}`}
+                            className={`w-8 h-8 p-0 rounded-lg text-[10px] font-black ${currentPage === page ? 'bg-primary text-white shadow-lg' : 'text-primary/40 hover:bg-white hover:shadow-sm'}`}
                           >
                             {page}
                           </Button>
@@ -517,17 +515,17 @@ function JournalManagementContent() {
                         size="icon"
                         onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                         disabled={currentPage === totalPages}
-                        className="rounded-xl border-slate-200 h-10 w-10 bg-white shadow-sm"
+                        className="rounded-lg border-slate-200 h-8 w-8 bg-white shadow-sm"
                       >
-                        <ChevronRight className="h-4 w-4" />
+                        <ChevronRight className="h-3.5 w-3.5" />
                       </Button>
                     </div>
                   )}
                 </>
               ) : (
-                <Card className="rounded-[2rem] border-dashed border-2 border-primary/5 p-32 text-center bg-white shadow-sm">
-                  <Filter className="h-12 w-12 text-primary/5 mx-auto mb-6" />
-                  <p className="text-primary/30 font-black uppercase tracking-[0.3em] text-xs italic">No matching series found in registry</p>
+                <Card className="rounded-[1.5rem] border-dashed border-2 border-primary/5 p-24 text-center bg-white shadow-sm">
+                  <Filter className="h-10 w-10 text-primary/5 mx-auto mb-4" />
+                  <p className="text-primary/30 font-black uppercase tracking-[0.3em] text-[10px] italic">No matching series found in registry</p>
                 </Card>
               )}
             </div>
