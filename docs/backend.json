@@ -10,10 +10,6 @@
           "type": "string",
           "description": "The name of the journal."
         },
-        "university": {
-          "type": "string",
-          "description": "The name of the university or institution owning the journal."
-        },
         "description": {
           "type": "string",
           "description": "A brief overview or description of the journal's scope."
@@ -25,10 +21,6 @@
         "domain": {
           "type": "string",
           "description": "The academic field or domain."
-        },
-        "country": {
-          "type": "string",
-          "description": "The country of origin."
         },
         "indexing": {
           "type": "array",
@@ -51,7 +43,22 @@
           "description": "Whether the journal is featured."
         }
       },
-      "required": ["name", "university", "issn", "domain", "link"]
+      "required": ["name", "issn", "domain", "link"]
+    },
+    "Member": {
+      "title": "Member",
+      "description": "An individual scholar or student member of SIARE.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "institution": { "type": "string" },
+        "tier": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "expired", "pending"] },
+        "joinedAt": { "type": "object" }
+      },
+      "required": ["name", "email", "tier"]
     },
     "PricingPlan": {
       "title": "Pricing Plan",
@@ -101,51 +108,6 @@
       },
       "required": ["title", "date", "location"]
     },
-    "Workshop": {
-      "title": "Workshop",
-      "description": "An upcoming academic training session or workshop.",
-      "type": "object",
-      "properties": {
-        "title": { "type": "string" },
-        "date": { "type": "string" },
-        "time": { "type": "string" },
-        "location": { "type": "string" },
-        "instructor": { "type": "string" },
-        "description": { "type": "string" },
-        "status": { "type": "string", "description": "e.g. Registration Open, Limited Seats" },
-        "color": { "type": "string", "description": "Tailwind color class" },
-        "order": { "type": "number" }
-      },
-      "required": ["title", "date"]
-    },
-    "Webinar": {
-      "title": "Webinar",
-      "description": "An upcoming academic webinar or online lecture.",
-      "type": "object",
-      "properties": {
-        "title": { "type": "string" },
-        "date": { "type": "string" },
-        "time": { "type": "string" },
-        "speaker": { "type": "string" },
-        "joinLink": { "type": "string", "format": "uri" },
-        "description": { "type": "string" },
-        "status": { "type": "string", "description": "e.g. Live Soon, Registration Open" },
-        "color": { "type": "string" },
-        "order": { "type": "number" }
-      },
-      "required": ["title", "date", "speaker"]
-    },
-    "PastEvent": {
-      "title": "Past Event",
-      "description": "A record of a completed academic event.",
-      "type": "object",
-      "properties": {
-        "title": { "type": "string" },
-        "description": { "type": "string" },
-        "order": { "type": "number" }
-      },
-      "required": ["title", "description"]
-    },
     "Inquiry": {
       "title": "Inquiry",
       "description": "A contact or membership inquiry submitted by a user.",
@@ -171,6 +133,10 @@
       "schema": { "$ref": "#/backend/entities/Journal" },
       "description": "Collection of university journals/proceedings."
     },
+    "/members/{memberId}": {
+      "schema": { "$ref": "#/backend/entities/Member" },
+      "description": "Collection of society members."
+    },
     "/pricingPlans/{planId}": {
       "schema": { "$ref": "#/backend/entities/PricingPlan" },
       "description": "Collection of dynamic pricing plans."
@@ -182,18 +148,6 @@
     "/conferences/{conferenceId}": {
       "schema": { "$ref": "#/backend/entities/Conference" },
       "description": "Collection of upcoming conferences and events."
-    },
-    "/workshops/{workshopId}": {
-      "schema": { "$ref": "#/backend/entities/Workshop" },
-      "description": "Collection of upcoming academic workshops."
-    },
-    "/webinars/{webinarId}": {
-      "schema": { "$ref": "#/backend/entities/Webinar" },
-      "description": "Collection of upcoming online webinars."
-    },
-    "/pastEvents/{eventId}": {
-      "schema": { "$ref": "#/backend/entities/PastEvent" },
-      "description": "Collection of completed SIARE events."
     },
     "/inquiries/{inquiryId}": {
       "schema": { "$ref": "#/backend/entities/Inquiry" },
