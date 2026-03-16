@@ -105,13 +105,13 @@ export default function ContactPage() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                 {contactEmails.map((item, i) => (
-                  <Card key={i} className="rounded-2xl border border-primary/5 shadow-xl bg-slate-50 hover:bg-white transition-all group" data-aos="fade-up" data-aos-delay={i * 100}>
-                    <CardContent className="p-6 md:p-8 flex flex-col items-center text-center">
-                      <div className="h-12 w-12 rounded-xl bg-primary/5 flex items-center justify-center mb-6 group-hover:bg-accent transition-colors">
+                  <Card key={i} className="rounded-2xl border border-primary/5 shadow-xl bg-slate-50 hover:bg-white transition-all group flex flex-col h-full" data-aos="fade-up" data-aos-delay={i * 100}>
+                    <CardContent className="p-6 md:p-8 flex flex-col items-center text-center flex-1">
+                      <div className="h-12 w-12 rounded-xl bg-primary/5 flex items-center justify-center mb-6 group-hover:bg-accent transition-colors shrink-0">
                         <item.icon className="h-6 w-6 text-primary group-hover:text-white" />
                       </div>
                       <h4 className="font-bold text-primary mb-3 text-sm">{item.title}</h4>
-                      <a href={item.link} className="text-[10px] sm:text-xs text-accent font-black break-all hover:text-primary transition-colors underline decoration-accent/20 underline-offset-4">
+                      <a href={item.link} className="text-[10px] sm:text-xs text-accent font-black break-all hover:text-primary transition-colors underline decoration-accent/20 underline-offset-4 mt-auto">
                         {item.email}
                       </a>
                     </CardContent>
@@ -167,17 +167,17 @@ export default function ContactPage() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
                 {helpdesks.map((help, i) => (
-                  <Card key={i} className="rounded-2xl border border-primary/5 shadow-lg p-6 md:p-8 bg-white hover:shadow-xl transition-all" data-aos="fade-up" data-aos-delay={i * 100}>
+                  <Card key={i} className="rounded-2xl border border-primary/5 shadow-lg p-6 md:p-8 bg-white hover:shadow-xl transition-all flex flex-col h-full" data-aos="fade-up" data-aos-delay={i * 100}>
                     <div className="flex items-center gap-4 mb-4">
-                      <div className="h-10 w-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent">
+                      <div className="h-10 w-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
                         <help.icon className="h-5 w-5" />
                       </div>
-                      <h3 className="font-bold text-primary italic">{help.title}</h3>
+                      <h3 className="font-bold text-primary italic leading-tight">{help.title}</h3>
                     </div>
-                    <p className="text-xs text-foreground/60 leading-relaxed font-medium mb-4">{help.desc}</p>
-                    <div className="pt-4 border-t border-slate-100">
-                      <a href={`mailto:${help.email}`} className="flex items-center gap-2 text-[10px] font-black uppercase text-accent hover:text-primary transition-colors">
-                        <Mail className="h-3 w-3" /> {help.email}
+                    <p className="text-xs text-foreground/60 leading-relaxed font-medium mb-6 flex-1">{help.desc}</p>
+                    <div className="pt-4 border-t border-slate-100 mt-auto">
+                      <a href={`mailto:${help.email}`} className="flex items-center gap-2 text-[10px] font-black uppercase text-accent hover:text-primary transition-colors break-all">
+                        <Mail className="h-3 w-3 shrink-0" /> {help.email}
                       </a>
                     </div>
                   </Card>
