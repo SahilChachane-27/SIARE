@@ -12,6 +12,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
+import { useFirestore } from '@/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError } from '@/firebase/errors';
 
 const formSchema = z.object({
   name: z.string()
@@ -32,6 +36,7 @@ const formSchema = z.object({
 export default function SubmitYourPaperPage() {
   const { toast } = useToast();
   const [isClient, setIsClient] = useState(false);
+  const db = useFirestore();
 
   useEffect(() => {
     setIsClient(true);
@@ -45,12 +50,35 @@ export default function SubmitYourPaperPage() {
   const watchValues = form.watch();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    toast({
-      title: "Inquiry Submitted!",
-      description: "Our technical team will contact you shortly to guide you through the process.",
-    });
-    form.reset();
+    if (!db) return;
+
+    const data = {
+      name: values.name,
+      email: values.email,
+      phone: values.mobile,
+      purpose: 'Paper Submission / Proposal',
+      message: values.message || "",
+      aboutDetails: values.aboutConference,
+      status: 'pending',
+      createdAt: serverTimestamp(),
+    };
+
+    addDoc(collection(db, 'inquiries'), data)
+      .then(() => {
+        toast({
+          title: "Inquiry Submitted!",
+          description: "Our technical team will contact you shortly to guide you through the process.",
+        });
+        form.reset();
+      })
+      .catch(async (err) => {
+        const permissionError = new FirestorePermissionError({
+          path: 'inquiries',
+          operation: 'create',
+          requestResourceData: data,
+        });
+        errorEmitter.emit('permission-error', permissionError);
+      });
   }
 
   if (!isClient) return null;

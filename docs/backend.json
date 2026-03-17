@@ -118,11 +118,13 @@
         "phone": { "type": "string" },
         "institution": { "type": "string" },
         "purpose": { "type": "string" },
+        "tier": { "type": "string", "description": "Optional membership tier" },
+        "aboutDetails": { "type": "string", "description": "Optional research/paper details" },
         "message": { "type": "string" },
         "status": { "type": "string", "enum": ["pending", "reviewed", "contacted", "archived"] },
         "createdAt": { "type": "object" }
       },
-      "required": ["name", "email", "phone", "purpose", "message"]
+      "required": ["name", "email", "phone", "purpose"]
     }
   },
   "auth": {
@@ -151,7 +153,7 @@
     },
     "/inquiries/{inquiryId}": {
       "schema": { "$ref": "#/backend/entities/Inquiry" },
-      "description": "Collection of user inquiries and membership applications."
+      "description": "Collection of user inquiries, membership applications, and paper proposals."
     }
   }
 }

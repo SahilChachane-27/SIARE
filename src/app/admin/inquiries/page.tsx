@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useUser, useFirestore, useCollection } from '@/firebase';
@@ -20,6 +19,8 @@ import {
   Tag,
   Search,
   Filter,
+  GraduationCap,
+  FileText,
   ChevronDown
 } from 'lucide-react';
 import Link from 'next/link';
@@ -58,7 +59,8 @@ export default function InquiriesManagement() {
       const matchesSearch = 
         (i.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
         (i.email || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (i.institution || '').toLowerCase().includes(searchTerm.toLowerCase());
+        (i.institution || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (i.purpose || '').toLowerCase().includes(searchTerm.toLowerCase());
       
       const matchesStatus = statusFilter === 'all' || i.status === statusFilter;
       
@@ -117,7 +119,7 @@ export default function InquiriesManagement() {
               <h1 className="text-3xl font-black text-primary font-headline italic">
                 Inquiries & Applications
               </h1>
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/40 ml-1">Member Requests & Proposals</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/40 ml-1">Portal Submissions Registry</p>
             </div>
           </div>
 
@@ -128,7 +130,7 @@ export default function InquiriesManagement() {
                   <div className="relative flex-1 max-w-sm">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-primary/30" />
                     <Input 
-                      placeholder="Search inquiries..." 
+                      placeholder="Search submissions..." 
                       className="pl-10 h-10 rounded-xl"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
@@ -149,7 +151,7 @@ export default function InquiriesManagement() {
                   </Select>
                 </div>
                 <div className="text-[10px] font-black uppercase text-primary/30 tracking-widest">
-                  Showing {filteredInquiries.length} results
+                  Showing {filteredInquiries.length} submissions
                 </div>
               </div>
             </CardHeader>
@@ -168,11 +170,16 @@ export default function InquiriesManagement() {
                             <div className="space-y-1">
                               <div className="flex items-center gap-3">
                                 <h3 className="text-lg font-bold text-primary italic">{inquiry.name}</h3>
-                                <div className={`px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest ${
-                                  inquiry.status === 'pending' ? 'bg-amber-100 text-amber-700' :
-                                  inquiry.status === 'reviewed' ? 'bg-blue-100 text-blue-700' :
-                                  inquiry.status === 'contacted' ? 'bg-green-100 text-green-700' :
+                                <div className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${
+                                  inquiry.purpose?.includes('Membership') ? 'bg-amber-100 text-amber-700' :
+                                  inquiry.purpose?.includes('Paper') ? 'bg-blue-100 text-blue-700' :
                                   'bg-slate-100 text-slate-700'
+                                }`}>
+                                  {inquiry.purpose}
+                                </div>
+                                <div className={`px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest border ${
+                                  inquiry.status === 'pending' ? 'border-red-200 text-red-600 bg-red-50' :
+                                  'border-green-200 text-green-600 bg-green-50'
                                 }`}>
                                   {inquiry.status}
                                 </div>
@@ -189,30 +196,45 @@ export default function InquiriesManagement() {
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                              <p className="text-[10px] font-black uppercase text-primary/30 tracking-widest flex items-center gap-2">
-                                <Tag className="h-3 w-3" /> Inquiry Purpose
-                              </p>
-                              <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 text-sm font-bold text-primary/70">
-                                {inquiry.purpose}
+                            {inquiry.tier && (
+                              <div className="space-y-2">
+                                <p className="text-[10px] font-black uppercase text-primary/30 tracking-widest flex items-center gap-2">
+                                  <GraduationCap className="h-3 w-3" /> Applied Tier
+                                </p>
+                                <div className="p-3 rounded-xl bg-amber-50/50 border border-amber-100 text-sm font-bold text-amber-900 italic">
+                                  {inquiry.tier}
+                                </div>
                               </div>
-                            </div>
-                            <div className="space-y-2">
-                              <p className="text-[10px] font-black uppercase text-primary/30 tracking-widest flex items-center gap-2">
-                                <Building2 className="h-3 w-3" /> Institution
-                              </p>
-                              <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 text-sm font-bold text-primary/70">
-                                {inquiry.institution || 'Not specified'}
+                            )}
+                            {inquiry.institution && (
+                              <div className="space-y-2">
+                                <p className="text-[10px] font-black uppercase text-primary/30 tracking-widest flex items-center gap-2">
+                                  <Building2 className="h-3 w-3" /> Institution
+                                </p>
+                                <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 text-sm font-bold text-primary/70">
+                                  {inquiry.institution}
+                                </div>
                               </div>
-                            </div>
+                            )}
                           </div>
+
+                          {inquiry.aboutDetails && (
+                            <div className="space-y-2">
+                              <p className="text-[10px] font-black uppercase text-primary/30 tracking-widest flex items-center gap-2">
+                                <FileText className="h-3 w-3" /> Research / Conference Details
+                              </p>
+                              <div className="p-4 rounded-xl bg-blue-50/30 border border-blue-100 text-sm font-medium text-blue-900 leading-relaxed italic">
+                                {inquiry.aboutDetails}
+                              </div>
+                            </div>
+                          )}
 
                           <div className="space-y-2">
                             <p className="text-[10px] font-black uppercase text-primary/30 tracking-widest flex items-center gap-2">
-                              <MessageSquare className="h-3 w-3" /> Message/Requirements
+                              <MessageSquare className="h-3 w-3" /> Message / Statement
                             </p>
                             <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 text-sm italic text-foreground/70 leading-relaxed whitespace-pre-wrap">
-                              "{inquiry.message}"
+                              "{inquiry.message || 'No additional message.'}"
                             </div>
                           </div>
                         </div>
@@ -261,7 +283,7 @@ export default function InquiriesManagement() {
               ) : (
                 <div className="p-40 text-center flex flex-col items-center gap-6">
                   <Mail className="h-16 w-16 text-primary/5" />
-                  <p className="text-sm text-muted-foreground italic font-medium">No inquiries found matching your filters.</p>
+                  <p className="text-sm text-muted-foreground italic font-medium">No submissions found matching your filters.</p>
                 </div>
               )}
             </CardContent>

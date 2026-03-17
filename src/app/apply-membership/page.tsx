@@ -60,7 +60,8 @@ export default function ApplyMembershipPage() {
       phone: values.phone,
       institution: values.institution,
       purpose: 'Membership Application',
-      message: `Tier: ${values.tier}\n\nStatement: ${values.statement}`,
+      tier: values.tier,
+      message: values.statement,
       status: 'pending',
       createdAt: serverTimestamp(),
     };
