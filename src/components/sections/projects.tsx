@@ -6,27 +6,42 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Calendar, MapPin, ArrowRight, Star, RefreshCw, Video, GraduationCap, Presentation, User } from 'lucide-react';
 import { useFirestore, useCollection } from '@/firebase';
-import { collection, query, orderBy, limit } from 'firebase/firestore';
+import { collection, query, orderBy, limit, where } from 'firebase/firestore';
 import { useMemo } from 'react';
 import Image from 'next/image';
 
 export function Projects() {
   const db = useFirestore();
   
-  // Fetch top items from each category
+  // Fetch featured items from each category
   const conferencesQuery = useMemo(() => {
     if (!db) return null;
-    return query(collection(db, 'conferences'), orderBy('order', 'asc'), limit(2));
+    return query(
+      collection(db, 'conferences'), 
+      where('isFeatured', '==', true),
+      orderBy('order', 'asc'), 
+      limit(2)
+    );
   }, [db]);
 
   const workshopsQuery = useMemo(() => {
     if (!db) return null;
-    return query(collection(db, 'workshops'), orderBy('order', 'asc'), limit(2));
+    return query(
+      collection(db, 'workshops'), 
+      where('isFeatured', '==', true),
+      orderBy('order', 'asc'), 
+      limit(2)
+    );
   }, [db]);
 
   const webinarsQuery = useMemo(() => {
     if (!db) return null;
-    return query(collection(db, 'webinars'), orderBy('order', 'asc'), limit(2));
+    return query(
+      collection(db, 'webinars'), 
+      where('isFeatured', '==', true),
+      orderBy('order', 'asc'), 
+      limit(2)
+    );
   }, [db]);
 
   const { data: conferences, loading: confLoading } = useCollection(conferencesQuery);

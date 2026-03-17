@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect, useMemo, useRef } from 'react';
@@ -9,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { 
   Plus, 
@@ -48,6 +50,7 @@ export default function WebinarsManagement() {
   const [color, setColor] = useState('bg-purple-500');
   const [order, setOrder] = useState('0');
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [isFeatured, setIsFeatured] = useState(false);
 
   const webinarsQuery = useMemo(() => {
     if (!db) return null;
@@ -91,6 +94,7 @@ export default function WebinarsManagement() {
     setColor('bg-purple-500');
     setOrder('0');
     setImageUrl(null);
+    setIsFeatured(false);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
@@ -109,6 +113,7 @@ export default function WebinarsManagement() {
       color,
       order: parseInt(order) || 0,
       imageUrl,
+      isFeatured,
       updatedAt: serverTimestamp(),
     };
 
@@ -161,6 +166,7 @@ export default function WebinarsManagement() {
     setColor(webinar.color || 'bg-purple-500');
     setOrder(webinar.order?.toString() || '0');
     setImageUrl(webinar.imageUrl || null);
+    setIsFeatured(webinar.isFeatured || false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -294,6 +300,21 @@ export default function WebinarsManagement() {
                       <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Priority Order</label>
                       <Input type="number" value={order} onChange={(e) => setOrder(e.target.value)} className="rounded-xl border-slate-100 h-11" />
                     </div>
+                  </div>
+
+                  <div className="flex items-center space-x-3 py-3 px-4 bg-slate-50 rounded-xl border border-slate-100">
+                    <Checkbox 
+                      id="isFeatured" 
+                      checked={isFeatured} 
+                      onCheckedChange={(checked) => setIsFeatured(checked as boolean)}
+                      className="h-3.5 w-3.5"
+                    />
+                    <label 
+                      htmlFor="isFeatured" 
+                      className="text-[8px] font-black text-primary/60 uppercase tracking-[0.2em] cursor-pointer"
+                    >
+                      Featured on Home
+                    </label>
                   </div>
 
                   <Button type="submit" className="w-full h-12 bg-primary text-accent font-black uppercase text-xs tracking-widest rounded-xl shadow-xl hover:scale-[1.02] transition-transform mt-4">

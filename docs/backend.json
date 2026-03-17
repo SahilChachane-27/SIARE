@@ -1,3 +1,4 @@
+
 {
   "entities": {
     "Journal": {
@@ -123,7 +124,8 @@
         "status": { "type": "string" },
         "color": { "type": "string" },
         "order": { "type": "number" },
-        "imageUrl": { "type": "string" }
+        "imageUrl": { "type": "string" },
+        "isFeatured": { "type": "boolean" }
       },
       "required": ["title", "date", "description"]
     },
@@ -141,7 +143,8 @@
         "status": { "type": "string" },
         "color": { "type": "string" },
         "order": { "type": "number" },
-        "imageUrl": { "type": "string" }
+        "imageUrl": { "type": "string" },
+        "isFeatured": { "type": "boolean" }
       },
       "required": ["title", "date", "speaker"]
     },

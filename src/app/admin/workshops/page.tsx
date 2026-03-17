@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect, useMemo, useRef } from 'react';
@@ -9,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { 
   Plus, 
@@ -48,6 +50,7 @@ export default function WorkshopsManagement() {
   const [color, setColor] = useState('bg-amber-500');
   const [order, setOrder] = useState('0');
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [isFeatured, setIsFeatured] = useState(false);
 
   const workshopsQuery = useMemo(() => {
     if (!db) return null;
@@ -91,6 +94,7 @@ export default function WorkshopsManagement() {
     setColor('bg-amber-500');
     setOrder('0');
     setImageUrl(null);
+    setIsFeatured(false);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
@@ -109,6 +113,7 @@ export default function WorkshopsManagement() {
       color,
       order: parseInt(order) || 0,
       imageUrl,
+      isFeatured,
       updatedAt: serverTimestamp(),
     };
 
@@ -161,6 +166,7 @@ export default function WorkshopsManagement() {
     setColor(workshop.color || 'bg-amber-500');
     setOrder(workshop.order?.toString() || '0');
     setImageUrl(workshop.imageUrl || null);
+    setIsFeatured(workshop.isFeatured || false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -296,6 +302,21 @@ export default function WorkshopsManagement() {
                     </div>
                   </div>
 
+                  <div className="flex items-center space-x-3 py-3 px-4 bg-slate-50 rounded-xl border border-slate-100">
+                    <Checkbox 
+                      id="isFeatured" 
+                      checked={isFeatured} 
+                      onCheckedChange={(checked) => setIsFeatured(checked as boolean)}
+                      className="h-3.5 w-3.5"
+                    />
+                    <label 
+                      htmlFor="isFeatured" 
+                      className="text-[8px] font-black text-primary/60 uppercase tracking-[0.2em] cursor-pointer"
+                    >
+                      Featured on Home
+                    </label>
+                  </div>
+
                   <Button type="submit" className="w-full h-12 bg-primary text-accent font-black uppercase text-xs tracking-widest rounded-xl shadow-xl hover:scale-[1.02] transition-transform mt-4">
                     {editingId ? <><Edit3 className="mr-2 h-4 w-4" /> Sync Changes</> : <><Plus className="mr-2 h-4 w-4" /> Add Workshop</>}
                   </Button>
@@ -332,8 +353,13 @@ export default function WorkshopsManagement() {
                       <div className="p-6">
                         <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4">
                           <div className="min-w-0 flex-1">
-                            <div className="text-[8px] font-black text-accent uppercase tracking-widest mb-1 flex items-center gap-1">
-                              <Star className="h-2.5 w-2.5 fill-current" /> {workshop.status || 'Active'}
+                            <div className="flex items-center gap-2 mb-1">
+                              <div className="text-[8px] font-black text-accent uppercase tracking-widest mb-1 flex items-center gap-1">
+                                <Star className="h-2.5 w-2.5 fill-current" /> {workshop.status || 'Active'}
+                              </div>
+                              {workshop.isFeatured && (
+                                <span className="bg-primary/5 text-primary/40 text-[7px] font-black uppercase px-1.5 rounded-full">Featured</span>
+                              )}
                             </div>
                             <h3 className="text-base font-bold text-primary font-headline italic leading-tight group-hover:text-accent transition-colors break-words">
                               {workshop.title}

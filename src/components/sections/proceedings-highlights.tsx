@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Card, CardContent } from '@/components/ui/card';
@@ -16,6 +17,7 @@ export function ProceedingsHighlights() {
     if (!db) return null;
     return query(
       collection(db, 'journals'), 
+      where('isFeatured', '==', true),
       orderBy('createdAt', 'desc'),
       limit(3)
     );
@@ -71,7 +73,7 @@ export function ProceedingsHighlights() {
           </div>
         ) : (
           <div className="text-center py-12 italic text-muted-foreground bg-white rounded-2xl border-2 border-dashed border-slate-100">
-            No proceedings series found in the catalog.
+            No featured proceedings series found in the catalog.
           </div>
         )}
 
