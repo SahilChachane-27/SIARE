@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -10,6 +9,7 @@ import { ScrollToTop } from '@/components/layout/scroll-to-top';
 import { MembershipHighlights } from '@/components/sections/membership-highlights';
 import { Testimonials } from '@/components/sections/testimonials';
 import { About } from '@/components/sections/about';
+import { ProceedingsHighlights } from '@/components/sections/proceedings-highlights';
 
 export default function Home() {
   return (
@@ -20,7 +20,7 @@ export default function Home() {
         <About />
         <MembershipHighlights />
         <Projects />
-        {/* <Services /> */}
+        <ProceedingsHighlights />
         <Testimonials />
         <Partners />
       </main>
