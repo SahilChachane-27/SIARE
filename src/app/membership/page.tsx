@@ -231,7 +231,7 @@ export default function MembershipPage() {
                         ))}
                       </ul>
                       <Button asChild className="w-full bg-accent hover:bg-primary text-accent-foreground hover:text-white rounded-xl font-bold text-xs uppercase tracking-widest">
-                        <Link href="/contact">Apply Now</Link>
+                        <Link href="/apply-membership">Apply Now</Link>
                       </Button>
                     </CardContent>
                   </Card>
@@ -313,7 +313,7 @@ export default function MembershipPage() {
                 </div>
                 <div className="mt-10">
                   <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-black italic rounded-xl px-10 h-14 text-sm shadow-xl transition-all hover:scale-105 w-full sm:w-auto">
-                    <Link href="/contact">Apply for Membership Now</Link>
+                    <Link href="/apply-membership">Apply for Membership Now</Link>
                   </Button>
                 </div>
               </div>
@@ -392,7 +392,7 @@ export default function MembershipPage() {
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
                 <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-extrabold rounded-funky px-8 h-10 text-sm shadow-xl shadow-accent/20 transition-all hover:scale-105">
-                  <Link href="/contact">Apply for Membership</Link>
+                  <Link href="/apply-membership">Apply for Membership</Link>
                 </Button>
                 <Button asChild variant="outline" className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-funky px-8 h-10 text-sm font-bold transition-all hover:scale-105">
                   <Link href="/policies" className="flex items-center gap-2">
