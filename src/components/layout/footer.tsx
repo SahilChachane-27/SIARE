@@ -21,7 +21,7 @@ const quickLinks = [
   { href: '/membership', label: 'About SIARE' },
   { href: '/membership', label: 'Join SIARE' },
   { href: '/services', label: 'Publishing Model' },
-  { href: '/submit-paper', label: 'Submit a Conference Proposal' },
+  { href: '/submit-your-paper', label: 'Submit a Conference Proposal' },
 ];
 
 const policyLinks = [
@@ -151,10 +151,10 @@ export function Footer() {
         <div className="mt-12 text-center border-t border-white/5 pt-12 space-y-6">
           {isClient && (
             <>
-              <p className="text-[10px] md:text-xs font-black tracking-widest text-white/40 uppercase max-w-5xl mx-auto leading-relaxed px-4">
+              <p className="text-[10px] md:text-xs font-black tracking-widest text-white uppercase max-w-5xl mx-auto leading-relaxed px-4">
                 Copyright © {year} Society of Integrated Academic Research and Education (SIARE), its licensors, and contributors. All rights are reserved, including those for text and data mining, AI training, and similar technologies.
               </p>
-              <div className="flex flex-wrap justify-center gap-x-4 gap-y-3 text-[10px] md:text-xs font-black tracking-widest text-white/40 uppercase px-4 pb-8">
+              <div className="flex flex-wrap justify-center gap-x-4 gap-y-3 text-[10px] md:text-xs font-black tracking-widest text-white uppercase px-4 pb-8">
                 <Link href="#" className="hover:text-accent transition-colors">Terms & Conditions</Link>
                 <span className="hidden sm:inline opacity-20">|</span>
                 <Link href="/privacy-policy" className="hover:text-accent transition-colors">Privacy policy</Link>

@@ -148,47 +148,24 @@ export function Header() {
                       </SheetHeader>
                       
                       <Accordion type="single" collapsible className="w-full">
-                        {navLinks.map((link, idx) => {
-                          if (link.children) {
-                            return (
-                              <AccordionItem value={`item-${idx}`} key={idx} className="border-white/10">
-                                <AccordionTrigger className="text-white/80 hover:text-accent font-medium py-3 uppercase tracking-widest text-xs">
-                                  {link.label}
-                                </AccordionTrigger>
-                                <AccordionContent className="flex flex-col space-y-1 pb-3">
-                                  {link.children.map((child, childIdx) => (
-                                    <SheetClose asChild key={childIdx}>
-                                      <Link 
-                                        href={child.href} 
-                                        className="text-white/60 hover:text-accent py-2 pl-4 text-xs font-medium border-l border-white/10 transition-colors"
-                                      >
-                                        {child.label}
-                                      </Link>
-                                    </SheetClose>
-                                  ))}
-                                </AccordionContent>
-                              </AccordionItem>
-                            );
-                          }
-                          return (
-                            <div key={idx} className="border-b border-white/10">
-                              <SheetClose asChild>
-                                <Link 
-                                  href={link.href!} 
-                                  className="text-white/80 hover:text-accent font-medium py-3 flex w-full transition-colors uppercase tracking-widest text-xs"
-                                >
-                                  {link.label}
-                                </Link>
-                              </SheetClose>
-                            </div>
-                          );
-                        })}
+                        {navLinks.map((link, idx) => (
+                          <div key={idx} className="border-b border-white/10">
+                            <SheetClose asChild>
+                              <Link 
+                                href={link.href!} 
+                                className="text-white/80 hover:text-accent font-medium py-3 flex w-full transition-colors uppercase tracking-widest text-xs"
+                              >
+                                {link.label}
+                              </Link>
+                            </SheetClose>
+                          </div>
+                        ))}
                       </Accordion>
 
                       <div className="pt-8 w-full">
                         <SheetClose asChild>
                           <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky h-12 text-sm uppercase italic">
-                            <Link href="/submit-paper">Submit Your Paper</Link>
+                            <Link href="/submit-your-paper">Submit Your Paper</Link>
                           </Button>
                         </SheetClose>
                       </div>

@@ -7,7 +7,7 @@ export default function StartJournalRedirect() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace('/submit-paper');
+    router.replace('/submit-your-paper');
   }, [router]);
 
   return (
