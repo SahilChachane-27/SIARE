@@ -45,7 +45,7 @@ export function About() {
                 <div>
                   <h4 className="font-bold text-primary text-lg md:text-xl font-headline mb-2 italic">Our Mission</h4>
                   <p className="text-xs md:text-sm text-foreground/70 leading-relaxed font-medium">
-                    To empower global academic communities by enabling high-quality research dissemination and building an ecosystem where researchers can contribute to scientific advancement.
+                    To empower global academic communities by enabling high-quality research dissemination, fostering multidisciplinary collaboration, and building an ecosystem where researchers can exchange ideas, publish outcomes, and contribute to global scientific advancement.
                   </p>
                 </div>
               </div>
@@ -57,7 +57,7 @@ export function About() {
                 <div>
                   <h4 className="font-bold text-primary text-lg md:text-xl font-headline mb-2 italic">Our Vision</h4>
                   <p className="text-xs md:text-sm text-foreground/70 leading-relaxed font-medium">
-                    To become a globally trusted academic society known for shaping impactful research and providing a unified platform for scholarly exchange across all major disciplines.
+                    To become a globally trusted academic society known for shaping impactful research, integrating innovation with education, and providing a unified platform for scholarly exchange across all major disciplines.
                   </p>
                 </div>
               </div>
