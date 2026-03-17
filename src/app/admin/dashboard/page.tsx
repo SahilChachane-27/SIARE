@@ -9,13 +9,10 @@ import { Button } from '@/components/ui/button';
 import { 
   LayoutDashboard, 
   BookOpen, 
-  Plus, 
   LogOut, 
   Activity, 
   ChevronRight,
   Clock,
-  Globe,
-  CreditCard,
   Presentation,
   CheckCircle2,
   Bell,
@@ -23,7 +20,10 @@ import {
   UserPlus,
   Trash2,
   Mail,
-  Users
+  Users,
+  Video,
+  GraduationCap,
+  CreditCard
 } from 'lucide-react';
 import Link from 'next/link';
 import { collection, query, orderBy, limit, doc, deleteDoc } from 'firebase/firestore';
@@ -161,25 +161,25 @@ export default function AdminDashboard() {
           
           {/* Admin Command Header */}
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-10 md:mb-12">
-            <div className="space-y-3">
+            <div className="space-y-2">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 md:h-12 md:w-12 bg-primary rounded-xl flex items-center justify-center shadow-lg">
-                  <LayoutDashboard className="h-5 w-5 md:h-6 md:w-6 text-accent" />
+                <div className="h-10 w-10 bg-primary rounded-lg flex items-center justify-center shadow-lg">
+                  <LayoutDashboard className="h-5 w-5 text-accent" />
                 </div>
-                <h1 className="text-2xl md:text-3xl font-bold text-primary font-headline italic tracking-tight">
+                <h1 className="text-xl md:text-2xl font-bold text-primary font-headline italic tracking-tight">
                   SIARE Admin Portal
                 </h1>
               </div>
               <div className="flex items-center gap-3">
-                <div className="h-2 w-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
-                <p className="text-muted-foreground text-[9px] font-black uppercase tracking-[0.2em]">
+                <div className="h-1.5 w-1.5 rounded-full bg-green-500"></div>
+                <p className="text-muted-foreground text-[8px] font-black uppercase tracking-widest">
                   Master System Console: {user.email}
                 </p>
               </div>
             </div>
             
             <div className="flex flex-wrap gap-3 w-full lg:w-auto">
-              <Button asChild size="lg" className="flex-1 lg:flex-none rounded-xl bg-primary hover:bg-primary/90 text-accent font-bold px-6 h-11 shadow-lg border border-accent/20 transition-all text-xs">
+              <Button asChild size="sm" className="flex-1 lg:flex-none rounded-lg bg-primary hover:bg-primary/90 text-accent font-bold px-6 h-10 shadow-lg border border-accent/20 transition-all text-[10px]">
                 <Link href="/admin/inquiries">
                   <Mail className="mr-3 h-4 w-4" /> Inquiries {pendingInquiriesCount > 0 && `(${pendingInquiriesCount})`}
                 </Link>
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
                 variant="ghost" 
                 size="icon"
                 onClick={handleLogout} 
-                className="h-11 w-11 rounded-xl text-red-500 hover:bg-red-50 hover:text-red-600 transition-all"
+                className="h-10 w-10 rounded-lg text-red-500 hover:bg-red-50 hover:text-red-600 transition-all"
               >
                 <LogOut className="h-5 w-5" />
               </Button>
@@ -196,29 +196,41 @@ export default function AdminDashboard() {
           </div>
 
           {/* QUICK MANAGEMENT */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10 md:mb-12">
-            <Button asChild variant="outline" className="h-16 md:h-20 rounded-xl border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-1 transition-all">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 mb-10 md:mb-12">
+            <Button asChild variant="outline" className="h-14 rounded-lg border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-1 transition-all">
               <Link href="/admin/events" className="flex flex-col items-center">
-                <Presentation className="h-5 w-5 text-amber-500" />
-                <span className="text-[9px] font-black uppercase tracking-widest text-primary">Conferences</span>
+                <Presentation className="h-4 w-4 text-amber-500" />
+                <span className="text-[8px] font-black uppercase tracking-widest text-primary">Conferences</span>
               </Link>
             </Button>
-            <Button asChild variant="outline" className="h-16 md:h-20 rounded-xl border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-1 transition-all">
+            <Button asChild variant="outline" className="h-14 rounded-lg border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-1 transition-all">
+              <Link href="/admin/workshops" className="flex flex-col items-center">
+                <GraduationCap className="h-4 w-4 text-orange-500" />
+                <span className="text-[8px] font-black uppercase tracking-widest text-primary">Workshops</span>
+              </Link>
+            </Button>
+            <Button asChild variant="outline" className="h-14 rounded-lg border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-1 transition-all">
+              <Link href="/admin/webinars" className="flex flex-col items-center">
+                <Video className="h-4 w-4 text-purple-500" />
+                <span className="text-[8px] font-black uppercase tracking-widest text-primary">Webinars</span>
+              </Link>
+            </Button>
+            <Button asChild variant="outline" className="h-14 rounded-lg border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-1 transition-all">
               <Link href="/admin/members" className="flex flex-col items-center">
-                <Users className="h-5 w-5 text-green-500" />
-                <span className="text-[9px] font-black uppercase tracking-widest text-primary">Manage Members</span>
+                <Users className="h-4 w-4 text-green-500" />
+                <span className="text-[8px] font-black uppercase tracking-widest text-primary">Members</span>
               </Link>
             </Button>
-            <Button asChild variant="outline" className="h-16 md:h-20 rounded-xl border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-1 transition-all">
+            <Button asChild variant="outline" className="h-14 rounded-lg border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-1 transition-all">
               <Link href="/admin/membership" className="flex flex-col items-center">
-                <UserPlus className="h-5 w-5 text-purple-500" />
-                <span className="text-[9px] font-black uppercase tracking-widest text-primary">Tiers & Plans</span>
+                <UserPlus className="h-4 w-4 text-blue-500" />
+                <span className="text-[8px] font-black uppercase tracking-widest text-primary">Tiers</span>
               </Link>
             </Button>
-            <Button asChild variant="outline" className="h-16 md:h-20 rounded-xl border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-1 transition-all">
+            <Button asChild variant="outline" className="h-14 rounded-lg border-2 border-primary/5 bg-white shadow-sm hover:shadow-xl hover:border-accent/20 flex flex-col gap-1 transition-all">
               <Link href="/admin/journals" className="flex flex-col items-center">
-                <BookOpen className="h-5 w-5 text-blue-500" />
-                <span className="text-[9px] font-black uppercase tracking-widest text-primary">Proceedings</span>
+                <BookOpen className="h-4 w-4 text-cyan-500" />
+                <span className="text-[8px] font-black uppercase tracking-widest text-primary">Proceedings</span>
               </Link>
             </Button>
           </div>
@@ -226,17 +238,17 @@ export default function AdminDashboard() {
           {/* Stats Bar */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-10 md:mb-12">
             {stats.map((stat, i) => (
-              <Card key={i} className="rounded-2xl border-none shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden bg-white group">
+              <Card key={i} className="rounded-xl border-none shadow-sm hover:shadow-lg transition-all duration-500 overflow-hidden bg-white group">
                 <div className="p-6 md:p-8">
                   <div className="flex items-center justify-between mb-4 md:mb-6">
-                    <div className={`p-3 md:p-4 rounded-xl ${stat.color} group-hover:scale-110 transition-transform shadow-inner`}>
+                    <div className={`p-3 md:p-4 rounded-lg ${stat.color} group-hover:scale-110 transition-transform shadow-inner`}>
                       <stat.icon className="h-5 w-5 md:h-6 md:w-6" />
                     </div>
-                    <span className="text-[9px] font-black text-primary/20 uppercase tracking-[0.2em]">Live Registry</span>
+                    <span className="text-[8px] font-black text-primary/20 uppercase tracking-[0.2em]">Live Registry</span>
                   </div>
-                  <div className="text-3xl md:text-4xl font-black text-primary mb-1 tracking-tighter">{stat.count}</div>
-                  <div className="text-xs font-bold text-primary/60 italic">{stat.title}</div>
-                  <p className="text-[9px] text-muted-foreground mt-4 uppercase tracking-widest font-medium opacity-40">{stat.desc}</p>
+                  <div className="text-2xl md:text-3xl font-black text-primary mb-1 tracking-tighter">{stat.count}</div>
+                  <div className="text-[10px] font-bold text-primary/60 italic">{stat.title}</div>
+                  <p className="text-[8px] text-muted-foreground mt-4 uppercase tracking-widest font-medium opacity-40">{stat.desc}</p>
                 </div>
               </Card>
             ))}
@@ -245,32 +257,32 @@ export default function AdminDashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
             
             {/* Main Activity Monitor */}
-            <Card className="lg:col-span-2 rounded-[1.5rem] border-none shadow-2xl bg-white overflow-hidden">
-              <CardHeader className="border-b border-slate-50 bg-white/50 px-6 md:px-8 py-6 md:py-8">
+            <Card className="lg:col-span-2 rounded-2xl border-none shadow-xl bg-white overflow-hidden">
+              <CardHeader className="border-b border-slate-50 bg-white/50 px-6 py-6">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div>
-                    <CardTitle className="text-xl md:text-2xl font-bold text-primary font-headline italic flex items-center gap-3">
+                    <CardTitle className="text-lg md:text-xl font-bold text-primary font-headline italic flex items-center gap-3">
                       <Clock className="h-5 w-5 text-accent" />
                       Recent Activity
                     </CardTitle>
-                    <CardDescription className="text-[9px] uppercase font-black tracking-widest mt-2 opacity-40">Live synchronization from global proceedings series</CardDescription>
+                    <CardDescription className="text-[8px] uppercase font-black tracking-widest mt-1 opacity-40">Live synchronization from global proceedings series</CardDescription>
                   </div>
-                  <Button variant="ghost" size="sm" asChild className="text-accent font-black text-[9px] uppercase tracking-[0.2em] hover:bg-accent/10 h-10 px-4 rounded-xl">
-                    <Link href="/admin/journals" className="flex items-center">Open Full Catalog <ChevronRight className="ml-2 h-3.5 w-3.5" /></Link>
+                  <Button variant="ghost" size="sm" asChild className="text-accent font-black text-[8px] uppercase tracking-[0.2em] hover:bg-accent/10 h-9 px-4 rounded-lg">
+                    <Link href="/admin/journals" className="flex items-center">Open Catalog <ChevronRight className="ml-2 h-3 w-3" /></Link>
                   </Button>
                 </div>
               </CardHeader>
               <CardContent className="p-0">
                 {recentLoading ? (
                   <div className="p-20 text-center flex flex-col items-center gap-6">
-                    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-accent"></div>
-                    <p className="text-[9px] font-black uppercase tracking-[0.4em] text-primary/20">Accessing Records...</p>
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"></div>
+                    <p className="text-[8px] font-black uppercase tracking-[0.4em] text-primary/20">Accessing Records...</p>
                   </div>
                 ) : (recentJournals && recentJournals.length > 0) ? (
                   <div className="divide-y divide-slate-50">
                     {recentJournals.map((journal: any) => (
-                      <div key={journal.id} className="px-6 md:px-8 py-6 md:py-8 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 hover:bg-slate-50/50 transition-colors group">
-                        <div className="h-14 w-14 md:h-16 md:w-16 rounded-xl bg-slate-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-inner">
+                      <div key={journal.id} className="px-6 py-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 hover:bg-slate-50/50 transition-colors group">
+                        <div className="h-14 w-14 rounded-lg bg-slate-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-inner border border-slate-50">
                           {journal.imageUrl ? (
                             <Image src={journal.imageUrl} alt={journal.name} fill className="object-contain p-2" />
                           ) : (
@@ -278,15 +290,15 @@ export default function AdminDashboard() {
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-bold text-primary truncate text-base md:text-lg italic mb-0.5">{journal.name}</h4>
-                          <p className="text-[9px] text-muted-foreground uppercase font-black tracking-widest truncate opacity-40">ISSN: {journal.issn}</p>
+                          <h4 className="font-bold text-primary truncate text-base italic mb-0.5">{journal.name}</h4>
+                          <p className="text-[8px] text-muted-foreground uppercase font-black tracking-widest truncate opacity-40">ISSN: {journal.issn}</p>
                         </div>
                         <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-4 sm:gap-2 shrink-0">
-                          <div className="text-[9px] font-black text-primary/30 uppercase tracking-widest order-2 sm:order-1 bg-slate-100 px-2 py-0.5 rounded-full">
+                          <div className="text-[8px] font-black text-primary/30 uppercase tracking-widest order-2 sm:order-1 bg-slate-100 px-2 py-0.5 rounded-full">
                             {journal.createdAt?.seconds ? new Date(journal.createdAt.seconds * 1000).toLocaleDateString() : 'Just now'}
                           </div>
                           <div className="flex items-center gap-2 order-1 sm:order-2">
-                            <Button asChild size="sm" variant="ghost" className="h-8 px-3 text-[9px] font-black uppercase text-primary/60 hover:text-accent hover:bg-accent/5 rounded-lg transition-all">
+                            <Button asChild size="sm" variant="ghost" className="h-8 px-3 text-[8px] font-black uppercase text-primary/60 hover:text-accent hover:bg-accent/5 rounded-lg transition-all">
                               <Link href={`/admin/journals?edit=${journal.id}`}>Edit</Link>
                             </Button>
                             <Button 
@@ -315,54 +327,54 @@ export default function AdminDashboard() {
             <div className="space-y-8 md:space-y-10">
               
               {/* Members Manager Quick Card */}
-              <Card className="rounded-[2rem] border-none shadow-2xl bg-primary text-white p-8 md:p-10 relative overflow-hidden group">
+              <Card className="rounded-[1.5rem] border-none shadow-2xl bg-primary text-white p-8 relative overflow-hidden group">
                 <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
                   <Users className="h-24 w-24 md:h-32 md:w-32 -rotate-12" />
                 </div>
                 <div className="relative z-10">
-                  <h3 className="text-xl md:text-2xl font-bold font-headline italic mb-4">Society Members</h3>
-                  <p className="text-white/60 text-xs mb-8 leading-relaxed font-medium italic">
+                  <h3 className="text-xl font-bold font-headline italic mb-4">Society Members</h3>
+                  <p className="text-white/60 text-[10px] mb-8 leading-relaxed font-medium italic">
                     Manage the global directory of scholars, students, and institutional partners enrolled in SIARE.
                   </p>
-                  <Button asChild className="w-full bg-accent text-primary font-black uppercase text-[10px] tracking-[0.2em] rounded-xl hover:scale-[1.02] transition-transform shadow-2xl h-12 md:h-14">
+                  <Button asChild className="w-full bg-accent text-primary font-black uppercase text-[9px] tracking-[0.2em] rounded-lg hover:scale-[1.02] transition-transform shadow-2xl h-11">
                     <Link href="/admin/members" className="flex items-center justify-center">Manage Directory <ChevronRight className="ml-2 h-4 w-4" /></Link>
                   </Button>
                 </div>
               </Card>
 
               {/* System Alerts */}
-              <Card className="rounded-[1.5rem] border-none shadow-2xl bg-white p-8">
+              <Card className="rounded-xl border-none shadow-lg bg-white p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-base font-bold text-primary font-headline italic flex items-center gap-3">
-                    <Bell className="h-5 w-5 text-accent" />
+                  <h3 className="text-sm font-bold text-primary font-headline italic flex items-center gap-3">
+                    <Bell className="h-4 w-4 text-accent" />
                     System Status
                   </h3>
-                  <div className="h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse"></div>
+                  <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse"></div>
                 </div>
                 <div className="space-y-4">
                   {pendingInquiriesCount > 0 ? (
-                    <div className="p-4 rounded-xl bg-amber-50 border border-amber-100 flex gap-4">
-                      <Mail className="h-5 w-5 text-amber-500 shrink-0" />
-                      <p className="text-[10px] text-amber-900 font-bold leading-relaxed uppercase tracking-tight">You have {pendingInquiriesCount} unresolved membership inquiries awaiting response.</p>
+                    <div className="p-4 rounded-lg bg-amber-50 border border-amber-100 flex gap-4">
+                      <Mail className="h-4 w-4 text-amber-500 shrink-0" />
+                      <p className="text-[9px] text-amber-900 font-bold leading-relaxed uppercase tracking-tight">You have {pendingInquiriesCount} unresolved membership inquiries awaiting response.</p>
                     </div>
                   ) : (
-                    <div className="p-4 rounded-xl bg-blue-50 border border-blue-100 flex gap-4">
-                      <CheckCircle2 className="h-5 w-5 text-blue-500 shrink-0" />
-                      <p className="text-[10px] text-blue-900 font-bold leading-relaxed uppercase tracking-tight">All academic inquiries have been successfully processed.</p>
+                    <div className="p-4 rounded-lg bg-blue-50 border border-blue-100 flex gap-4">
+                      <CheckCircle2 className="h-4 w-4 text-blue-500 shrink-0" />
+                      <p className="text-[9px] text-blue-900 font-bold leading-relaxed uppercase tracking-tight">All academic inquiries have been successfully processed.</p>
                     </div>
                   )}
                 </div>
               </Card>
 
               {/* Utility Tools */}
-              <Card className="rounded-[1.5rem] border-none shadow-2xl bg-white p-8">
-                <h3 className="text-base font-bold text-primary font-headline italic mb-6">System Utilities</h3>
+              <Card className="rounded-xl border-none shadow-lg bg-white p-6">
+                <h3 className="text-sm font-bold text-primary font-headline italic mb-6">System Utilities</h3>
                 <div className="grid grid-cols-2 gap-4">
-                  <Button variant="outline" className="rounded-xl h-12 text-[9px] font-black uppercase tracking-widest border-slate-100 hover:bg-slate-50 transition-all" asChild>
-                    <Link href="/admin/pricing"><CreditCard className="mr-2 h-4 w-4" /> Plans</Link>
+                  <Button variant="outline" size="sm" className="rounded-lg h-10 text-[8px] font-black uppercase tracking-widest border-slate-100 hover:bg-slate-50 transition-all" asChild>
+                    <Link href="/admin/pricing"><CreditCard className="mr-2 h-3.5 w-3.5" /> Plans</Link>
                   </Button>
-                  <Button variant="outline" className="rounded-xl h-12 text-[9px] font-black uppercase tracking-widest border-slate-100 hover:bg-slate-50 transition-all" asChild>
-                    <Link href="/admin/past-events"><History className="mr-2 h-4 w-4" /> Archive</Link>
+                  <Button variant="outline" size="sm" className="rounded-lg h-10 text-[8px] font-black uppercase tracking-widest border-slate-100 hover:bg-slate-50 transition-all" asChild>
+                    <Link href="/admin/past-events"><History className="mr-2 h-3.5 w-3.5" /> Archive</Link>
                   </Button>
                 </div>
               </Card>

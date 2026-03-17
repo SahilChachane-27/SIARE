@@ -272,11 +272,25 @@ export default function WorkshopsManagement() {
                               {workshop.title}
                             </h3>
                           </div>
-                          <div className="flex gap-1.5">
-                            <Button variant="ghost" size="icon" onClick={() => handleEdit(workshop)} className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all shadow-sm" title="Edit Workshop">
+                          <div className="flex gap-1.5 shrink-0">
+                            <Button 
+                              type="button"
+                              variant="ghost" 
+                              size="icon" 
+                              onClick={() => handleEdit(workshop)} 
+                              className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all shadow-sm"
+                              title="Edit Workshop"
+                            >
                               <Edit3 className="h-3.5 w-3.5" />
                             </Button>
-                            <Button variant="ghost" size="icon" onClick={() => handleDelete(workshop.id, workshop.title)} className="h-8 w-8 rounded-lg bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm" title="Delete Workshop">
+                            <Button 
+                              type="button" 
+                              variant="ghost" 
+                              size="icon" 
+                              onClick={() => handleDelete(workshop.id, workshop.title)} 
+                              className="h-8 w-8 rounded-lg bg-slate-50 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm"
+                              title="Delete Workshop"
+                            >
                               <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           </div>

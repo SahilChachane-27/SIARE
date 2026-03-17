@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
@@ -283,7 +284,7 @@ export default function WebinarsManagement() {
                               <Edit3 className="h-3.5 w-3.5" />
                             </Button>
                             <Button 
-                              type="button"
+                              type="button" 
                               variant="ghost" 
                               size="icon" 
                               onClick={() => handleDelete(webinar.id, webinar.title)} 

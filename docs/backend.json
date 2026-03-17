@@ -1,4 +1,3 @@
-
 {
   "entities": {
     "Journal": {
@@ -110,6 +109,40 @@
       },
       "required": ["title", "date", "location"]
     },
+    "Workshop": {
+      "title": "Workshop",
+      "description": "A technical training workshop or academic seminar.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "location": { "type": "string" },
+        "instructor": { "type": "string" },
+        "description": { "type": "string" },
+        "status": { "type": "string" },
+        "color": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["title", "date", "description"]
+    },
+    "Webinar": {
+      "title": "Webinar",
+      "description": "An online academic webinar or virtual lecture.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "speaker": { "type": "string" },
+        "joinLink": { "type": "string", "format": "uri" },
+        "description": { "type": "string" },
+        "status": { "type": "string" },
+        "color": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["title", "date", "speaker"]
+    },
     "Inquiry": {
       "title": "Inquiry",
       "description": "A contact or membership inquiry submitted by a user.",
@@ -152,6 +185,14 @@
     "/conferences/{conferenceId}": {
       "schema": { "$ref": "#/backend/entities/Conference" },
       "description": "Collection of upcoming conferences and events."
+    },
+    "/workshops/{workshopId}": {
+      "schema": { "$ref": "#/backend/entities/Workshop" },
+      "description": "Collection of upcoming academic workshops."
+    },
+    "/webinars/{webinarId}": {
+      "schema": { "$ref": "#/backend/entities/Webinar" },
+      "description": "Collection of scheduled academic webinars."
     },
     "/inquiries/{inquiryId}": {
       "schema": { "$ref": "#/backend/entities/Inquiry" },
