@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Card, CardContent } from '@/components/ui/card';
@@ -7,12 +8,14 @@ import { Calendar, MapPin, ArrowRight, Star, RefreshCw } from 'lucide-react';
 import { useFirestore, useCollection } from '@/firebase';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
 import { useMemo } from 'react';
+import Image from 'next/image';
 
 export function Projects() {
   const db = useFirestore();
   
   const conferencesQuery = useMemo(() => {
     if (!db) return null;
+    // Prefer ordering by order, showing top 3
     return query(collection(db, 'conferences'), orderBy('order', 'asc'), limit(3));
   }, [db]);
 
@@ -34,8 +37,22 @@ export function Projects() {
         ) : (conferences && conferences.length > 0) ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {conferences.map((conf: any, index: number) => (
-              <Card key={index} className="overflow-hidden border-none shadow-2xl rounded-2xl group flex flex-col" data-aos="fade-up" data-aos-delay={index * 100}>
-                <div className={`h-1.5 md:h-2 ${conf.color || 'bg-primary'}`}></div>
+              <Card key={index} className="overflow-hidden border-none shadow-2xl rounded-2xl group flex flex-col bg-white" data-aos="fade-up" data-aos-delay={index * 100}>
+                
+                {conf.imageUrl ? (
+                  <div className="relative aspect-video w-full overflow-hidden">
+                    <Image 
+                      src={conf.imageUrl} 
+                      alt={conf.title} 
+                      fill 
+                      className="object-cover transition-transform duration-700 group-hover:scale-110" 
+                    />
+                    <div className={`absolute top-0 left-0 w-full h-1 md:h-1.5 ${conf.color || 'bg-primary'}`}></div>
+                  </div>
+                ) : (
+                  <div className={`h-1.5 md:h-2 ${conf.color || 'bg-primary'}`}></div>
+                )}
+
                 <CardContent className="p-6 md:p-8 space-y-4 md:space-y-6 flex-1 flex flex-col">
                   <div className="flex justify-between items-start">
                     {conf.status && (

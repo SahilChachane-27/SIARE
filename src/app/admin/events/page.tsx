@@ -1,6 +1,7 @@
+
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useUser, useFirestore, useCollection } from '@/firebase';
 import { collection, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
@@ -8,6 +9,7 @@ import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { 
   Plus, 
@@ -20,9 +22,12 @@ import {
   Presentation,
   Clock,
   LayoutGrid,
-  Trash2
+  Trash2,
+  Image as ImageIcon,
+  X
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError } from '@/firebase/errors';
 
@@ -31,6 +36,7 @@ export default function EventsManagement() {
   const db = useFirestore();
   const router = useRouter();
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [title, setTitle] = useState('');
@@ -41,6 +47,8 @@ export default function EventsManagement() {
   const [highlights, setHighlights] = useState('');
   const [color, setColor] = useState('bg-blue-500');
   const [order, setOrder] = useState('0');
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [isFeatured, setIsFeatured] = useState(false);
 
   const eventsQuery = useMemo(() => {
     if (!db) return null;
@@ -53,6 +61,25 @@ export default function EventsManagement() {
     if (!userLoading && !user) router.push('/admin/login');
   }, [user, userLoading, router]);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 1024 * 1024) { 
+        toast({
+          variant: "destructive",
+          title: "File too large",
+          description: "Please upload an image smaller than 1MB."
+        });
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const resetForm = () => {
     setEditingId(null);
     setTitle(''); 
@@ -63,6 +90,9 @@ export default function EventsManagement() {
     setHighlights('');
     setColor('bg-blue-500');
     setOrder('0');
+    setImageUrl(null);
+    setIsFeatured(false);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -78,6 +108,8 @@ export default function EventsManagement() {
       highlights,
       color,
       order: parseInt(order) || 0,
+      imageUrl,
+      isFeatured,
       updatedAt: serverTimestamp(),
     };
 
@@ -128,6 +160,8 @@ export default function EventsManagement() {
     setHighlights(event.highlights || '');
     setColor(event.color || 'bg-blue-500');
     setOrder(event.order?.toString() || '0');
+    setImageUrl(event.imageUrl || null);
+    setIsFeatured(event.isFeatured || false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -197,6 +231,39 @@ export default function EventsManagement() {
                     <Input value={title} onChange={(e) => setTitle(e.target.value)} required placeholder="e.g. ICMRI 2025" className="rounded-xl border-slate-100 h-11 focus:ring-accent/20" />
                   </div>
 
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Cover Image (Max 1MB)</label>
+                    <div className="flex flex-col gap-3">
+                      {imageUrl ? (
+                        <div className="relative w-full aspect-video rounded-xl overflow-hidden group shadow-md bg-slate-50 border border-slate-100 flex items-center justify-center p-2">
+                          <Image src={imageUrl} alt="Preview" fill className="object-cover" />
+                          <button 
+                            type="button" 
+                            onClick={() => setImageUrl(null)}
+                            className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-30 shadow-lg"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </div>
+                      ) : (
+                        <div 
+                          onClick={() => fileInputRef.current?.click()}
+                          className="w-full aspect-video border-2 border-dashed border-slate-200 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-slate-50 transition-all group"
+                        >
+                          <ImageIcon className="h-8 w-8 text-primary/10 group-hover:text-accent/40 transition-colors" />
+                          <span className="text-[8px] font-black text-primary/30 uppercase tracking-widest">Select Cover Image</span>
+                        </div>
+                      )}
+                      <input 
+                        type="file" 
+                        ref={fileInputRef} 
+                        onChange={handleFileChange} 
+                        accept="image/*" 
+                        className="hidden" 
+                      />
+                    </div>
+                  </div>
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Schedule</label>
@@ -216,6 +283,21 @@ export default function EventsManagement() {
                   <div className="space-y-1.5">
                     <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Research Tracks</label>
                     <Input value={tracks} onChange={(e) => setTracks(e.target.value)} placeholder="Engineering, AI, Management..." className="rounded-xl border-slate-100 h-11" />
+                  </div>
+
+                  <div className="flex items-center space-x-3 py-3 px-4 bg-slate-50 rounded-xl border border-slate-100">
+                    <Checkbox 
+                      id="isFeatured" 
+                      checked={isFeatured} 
+                      onCheckedChange={(checked) => setIsFeatured(checked as boolean)}
+                      className="h-3.5 w-3.5"
+                    />
+                    <label 
+                      htmlFor="isFeatured" 
+                      className="text-[8px] font-black text-primary/60 uppercase tracking-[0.2em] cursor-pointer"
+                    >
+                      Featured on Home
+                    </label>
                   </div>
 
                   <Button type="submit" className="w-full h-12 bg-primary text-accent font-black uppercase text-xs tracking-widest rounded-xl shadow-xl hover:scale-[1.02] transition-transform mt-4">
@@ -247,11 +329,23 @@ export default function EventsManagement() {
                   {events.map((event: any) => (
                     <Card key={event.id} className="rounded-2xl shadow-lg border-none overflow-hidden relative group bg-white hover:shadow-2xl transition-all duration-500">
                       <div className={`h-1.5 ${event.color || 'bg-primary'}`}></div>
+                      
+                      {event.imageUrl && (
+                        <div className="relative aspect-video w-full overflow-hidden">
+                          <Image src={event.imageUrl} alt={event.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                        </div>
+                      )}
+
                       <div className="p-6">
                         <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4">
                           <div className="min-w-0 flex-1">
-                            <div className="text-[8px] font-black text-accent uppercase tracking-widest mb-1 flex items-center gap-1">
-                              <Star className="h-2.5 w-2.5 fill-current" /> {event.status || 'Active'}
+                            <div className="flex items-center gap-2 mb-1">
+                              <div className="text-[8px] font-black text-accent uppercase tracking-widest flex items-center gap-1">
+                                <Star className="h-2.5 w-2.5 fill-current" /> {event.status || 'Active'}
+                              </div>
+                              {event.isFeatured && (
+                                <span className="bg-primary/5 text-primary/40 text-[7px] font-black uppercase px-1.5 rounded-full">Featured</span>
+                              )}
                             </div>
                             <h3 className="text-base font-bold text-primary font-headline italic leading-tight group-hover:text-accent transition-colors break-words">
                               {event.title}
