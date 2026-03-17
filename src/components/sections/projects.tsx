@@ -6,21 +6,20 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Calendar, MapPin, ArrowRight, Star, RefreshCw, Video, GraduationCap, Presentation, User } from 'lucide-react';
 import { useFirestore, useCollection } from '@/firebase';
-import { collection, query, orderBy, limit, where } from 'firebase/firestore';
+import { collection, query, limit, where } from 'firebase/firestore';
 import { useMemo } from 'react';
 import Image from 'next/image';
 
 export function Projects() {
   const db = useFirestore();
   
-  // Fetch featured items from each category
+  // Fetch featured items from each category without server-side ordering to avoid index errors
   const conferencesQuery = useMemo(() => {
     if (!db) return null;
     return query(
       collection(db, 'conferences'), 
       where('isFeatured', '==', true),
-      orderBy('order', 'asc'), 
-      limit(2)
+      limit(5)
     );
   }, [db]);
 
@@ -29,8 +28,7 @@ export function Projects() {
     return query(
       collection(db, 'workshops'), 
       where('isFeatured', '==', true),
-      orderBy('order', 'asc'), 
-      limit(2)
+      limit(5)
     );
   }, [db]);
 
@@ -39,8 +37,7 @@ export function Projects() {
     return query(
       collection(db, 'webinars'), 
       where('isFeatured', '==', true),
-      orderBy('order', 'asc'), 
-      limit(2)
+      limit(5)
     );
   }, [db]);
 
@@ -54,7 +51,7 @@ export function Projects() {
       ...(workshops || []).map(item => ({ ...item, type: 'Workshop', icon: GraduationCap, tagColor: 'bg-amber-500' })),
       ...(webinars || []).map(item => ({ ...item, type: 'Webinar', icon: Video, tagColor: 'bg-purple-500' }))
     ];
-    // Sort by order across types
+    // Sort by order across types in JavaScript memory
     return combined.sort((a, b) => (a.order || 0) - (b.order || 0)).slice(0, 6);
   }, [conferences, workshops, webinars]);
 

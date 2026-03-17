@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { BookOpen, ExternalLink, RefreshCw, ArrowRight } from 'lucide-react';
 import { useFirestore, useCollection } from '@/firebase';
-import { collection, query, orderBy, limit, where } from 'firebase/firestore';
+import { collection, query, limit, where } from 'firebase/firestore';
 import { useMemo } from 'react';
 import Image from 'next/image';
 
@@ -18,12 +18,18 @@ export function ProceedingsHighlights() {
     return query(
       collection(db, 'journals'), 
       where('isFeatured', '==', true),
-      orderBy('createdAt', 'desc'),
-      limit(3)
+      limit(10) // Fetch slightly more to sort in memory
     );
   }, [db]);
 
   const { data: journals, loading } = useCollection(proceedingsQuery);
+
+  const featuredJournals = useMemo(() => {
+    if (!journals) return [];
+    return [...journals]
+      .sort((a: any, b: any) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0))
+      .slice(0, 3);
+  }, [journals]);
 
   return (
     <section id="proceedings-highlights" className="py-16 md:py-24 bg-slate-50">
@@ -38,9 +44,9 @@ export function ProceedingsHighlights() {
           <div className="flex justify-center p-12">
             <RefreshCw className="h-8 w-8 md:h-10 md:w-10 text-accent animate-spin" />
           </div>
-        ) : (journals && journals.length > 0) ? (
+        ) : (featuredJournals && featuredJournals.length > 0) ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {journals.map((journal: any, index: number) => (
+            {featuredJournals.map((journal: any, index: number) => (
               <Card key={index} className="overflow-hidden border-none shadow-2xl rounded-2xl group flex flex-col bg-white" data-aos="fade-up" data-aos-delay={index * 100}>
                 <div className="relative aspect-[3/4] w-full shrink-0 flex items-center justify-center p-4 bg-secondary/5">
                   {journal.imageUrl ? (
