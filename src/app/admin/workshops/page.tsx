@@ -1,7 +1,6 @@
-
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useUser, useFirestore, useCollection } from '@/firebase';
 import { collection, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
@@ -22,9 +21,12 @@ import {
   GraduationCap,
   User,
   Trash2,
-  MapPin
+  MapPin,
+  Image as ImageIcon,
+  X
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError } from '@/firebase/errors';
 
@@ -33,6 +35,7 @@ export default function WorkshopsManagement() {
   const db = useFirestore();
   const router = useRouter();
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [title, setTitle] = useState('');
@@ -44,6 +47,7 @@ export default function WorkshopsManagement() {
   const [status, setStatus] = useState('Registration Open');
   const [color, setColor] = useState('bg-amber-500');
   const [order, setOrder] = useState('0');
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const workshopsQuery = useMemo(() => {
     if (!db) return null;
@@ -56,6 +60,25 @@ export default function WorkshopsManagement() {
     if (!userLoading && !user) router.push('/admin/login');
   }, [user, userLoading, router]);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 1024 * 1024) { 
+        toast({
+          variant: "destructive",
+          title: "File too large",
+          description: "Please upload an image smaller than 1MB."
+        });
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const resetForm = () => {
     setEditingId(null);
     setTitle(''); 
@@ -67,6 +90,8 @@ export default function WorkshopsManagement() {
     setStatus('Registration Open');
     setColor('bg-amber-500');
     setOrder('0');
+    setImageUrl(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -83,6 +108,7 @@ export default function WorkshopsManagement() {
       status,
       color,
       order: parseInt(order) || 0,
+      imageUrl,
       updatedAt: serverTimestamp(),
     };
 
@@ -134,6 +160,7 @@ export default function WorkshopsManagement() {
     setStatus(workshop.status || 'Registration Open');
     setColor(workshop.color || 'bg-amber-500');
     setOrder(workshop.order?.toString() || '0');
+    setImageUrl(workshop.imageUrl || null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -199,6 +226,39 @@ export default function WorkshopsManagement() {
                     <Input value={title} onChange={(e) => setTitle(e.target.value)} required placeholder="e.g. Research Ethics Workshop" className="rounded-xl border-slate-100 h-11 focus:ring-accent/20" />
                   </div>
 
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Cover Image (Max 1MB)</label>
+                    <div className="flex flex-col gap-3">
+                      {imageUrl ? (
+                        <div className="relative w-full aspect-video rounded-xl overflow-hidden group shadow-md bg-slate-50 border border-slate-100 flex items-center justify-center p-2">
+                          <Image src={imageUrl} alt="Preview" fill className="object-cover" />
+                          <button 
+                            type="button" 
+                            onClick={() => setImageUrl(null)}
+                            className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity z-30 shadow-lg"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </div>
+                      ) : (
+                        <div 
+                          onClick={() => fileInputRef.current?.click()}
+                          className="w-full aspect-video border-2 border-dashed border-slate-200 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-slate-50 transition-all group"
+                        >
+                          <ImageIcon className="h-8 w-8 text-primary/10 group-hover:text-accent/40 transition-colors" />
+                          <span className="text-[8px] font-black text-primary/30 uppercase tracking-widest">Select Cover Image</span>
+                        </div>
+                      )}
+                      <input 
+                        type="file" 
+                        ref={fileInputRef} 
+                        onChange={handleFileChange} 
+                        accept="image/*" 
+                        className="hidden" 
+                      />
+                    </div>
+                  </div>
+
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Date</label>
@@ -262,6 +322,13 @@ export default function WorkshopsManagement() {
                   {workshops.map((workshop: any) => (
                     <Card key={workshop.id} className="rounded-2xl shadow-lg border-none overflow-hidden relative group bg-white hover:shadow-2xl transition-all duration-500">
                       <div className={`h-1.5 ${workshop.color || 'bg-amber-500'}`}></div>
+                      
+                      {workshop.imageUrl && (
+                        <div className="relative aspect-video w-full overflow-hidden">
+                          <Image src={workshop.imageUrl} alt={workshop.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                        </div>
+                      )}
+
                       <div className="p-6">
                         <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4">
                           <div className="min-w-0 flex-1">

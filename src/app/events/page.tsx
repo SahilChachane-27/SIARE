@@ -109,8 +109,13 @@ export default function EventsPage() {
             ) : (dynamicEvents && dynamicEvents.length > 0) ? (
               <div className="grid lg:grid-cols-2 gap-8">
                 {dynamicEvents.map((event: any, idx: number) => (
-                  <Card key={idx} className={`border-0 border-l-4 ${event.color || 'border-primary'} shadow-xl rounded-2xl bg-slate-50 p-8 hover:bg-white transition-all duration-300 group`} data-aos="fade-up" data-aos-delay={idx * 100}>
-                    <div className="flex flex-col h-full">
+                  <Card key={idx} className={`border-0 border-l-4 overflow-hidden ${event.color || 'border-primary'} shadow-xl rounded-2xl bg-slate-50 hover:bg-white transition-all duration-300 group`} data-aos="fade-up" data-aos-delay={idx * 100}>
+                    {event.imageUrl && (
+                      <div className="relative aspect-video w-full overflow-hidden">
+                        <Image src={event.imageUrl} alt={event.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                      </div>
+                    )}
+                    <div className="p-8 flex flex-col h-full">
                       <h3 className="text-xl font-bold text-primary mb-4 italic group-hover:text-accent transition-colors">{event.title}</h3>
                       <div className="space-y-3 mb-8 flex-1">
                         <div className="flex items-center gap-2 text-sm text-foreground/70 font-medium"><Calendar className="h-4 w-4 text-accent" /> <strong>Date:</strong> {event.date}</div>
@@ -156,24 +161,31 @@ export default function EventsPage() {
             ) : (workshops && workshops.length > 0) ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {workshops.map((workshop: any, idx: number) => (
-                  <Card key={idx} className="border-none shadow-xl rounded-2xl bg-white p-8 group hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay={idx * 100}>
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="h-10 w-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent">
-                        <GraduationCap className="h-5 w-5" />
+                  <Card key={idx} className="border-none shadow-xl rounded-2xl bg-white overflow-hidden group hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay={idx * 100}>
+                    {workshop.imageUrl && (
+                      <div className="relative aspect-video w-full overflow-hidden">
+                        <Image src={workshop.imageUrl} alt={workshop.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                       </div>
-                      <span className="text-[10px] font-black uppercase text-primary/40 tracking-widest">{workshop.status}</span>
+                    )}
+                    <div className="p-8">
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="h-10 w-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent">
+                          <GraduationCap className="h-5 w-5" />
+                        </div>
+                        <span className="text-[10px] font-black uppercase text-primary/40 tracking-widest">{workshop.status}</span>
+                      </div>
+                      <h3 className="text-lg font-bold text-primary mb-4 italic leading-tight">{workshop.title}</h3>
+                      <div className="space-y-3 mb-8 text-sm text-foreground/70">
+                        <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-accent" /> {workshop.date}</div>
+                        {workshop.time && <div className="flex items-center gap-2"><Clock className="h-4 w-4 text-accent" /> {workshop.time}</div>}
+                        {workshop.location && <div className="flex items-center gap-2"><MapPin className="h-4 w-4 text-accent" /> {workshop.location}</div>}
+                        {workshop.instructor && <div className="flex items-center gap-2"><User className="h-4 w-4 text-accent" /> {workshop.instructor}</div>}
+                      </div>
+                      <p className="text-xs text-foreground/60 italic mb-8 leading-relaxed line-clamp-3">"{workshop.description}"</p>
+                      <Button asChild className="w-full bg-primary hover:bg-accent text-white rounded-xl">
+                        <Link href="/contact">Register Workshop</Link>
+                      </Button>
                     </div>
-                    <h3 className="text-lg font-bold text-primary mb-4 italic leading-tight">{workshop.title}</h3>
-                    <div className="space-y-3 mb-8 text-sm text-foreground/70">
-                      <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-accent" /> {workshop.date}</div>
-                      {workshop.time && <div className="flex items-center gap-2"><Clock className="h-4 w-4 text-accent" /> {workshop.time}</div>}
-                      {workshop.location && <div className="flex items-center gap-2"><MapPin className="h-4 w-4 text-accent" /> {workshop.location}</div>}
-                      {workshop.instructor && <div className="flex items-center gap-2"><User className="h-4 w-4 text-accent" /> {workshop.instructor}</div>}
-                    </div>
-                    <p className="text-xs text-foreground/60 italic mb-8 leading-relaxed line-clamp-3">"{workshop.description}"</p>
-                    <Button asChild className="w-full bg-primary hover:bg-accent text-white rounded-xl">
-                      <Link href="/contact">Register Workshop</Link>
-                    </Button>
                   </Card>
                 ))}
               </div>
@@ -203,24 +215,31 @@ export default function EventsPage() {
             ) : (webinars && webinars.length > 0) ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {webinars.map((webinar: any, idx: number) => (
-                  <Card key={idx} className="border-none shadow-xl rounded-2xl bg-slate-50 p-8 group hover:bg-white transition-all duration-300" data-aos="fade-up" data-aos-delay={idx * 100}>
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="h-10 w-10 rounded-xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-accent transition-colors">
-                        <Video className="h-5 w-5" />
+                  <Card key={idx} className="border-none shadow-xl rounded-2xl bg-slate-50 overflow-hidden group hover:bg-white transition-all duration-300" data-aos="fade-up" data-aos-delay={idx * 100}>
+                    {webinar.imageUrl && (
+                      <div className="relative aspect-video w-full overflow-hidden">
+                        <Image src={webinar.imageUrl} alt={webinar.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                       </div>
-                      <span className="text-[10px] font-black uppercase text-accent tracking-widest">{webinar.status}</span>
+                    )}
+                    <div className="p-8">
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="h-10 w-10 rounded-xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-accent transition-colors">
+                          <Video className="h-5 w-5" />
+                        </div>
+                        <span className="text-[10px] font-black uppercase text-accent tracking-widest">{webinar.status}</span>
+                      </div>
+                      <h3 className="text-lg font-bold text-primary mb-4 italic leading-tight">{webinar.title}</h3>
+                      <div className="space-y-2 mb-8 text-xs text-foreground/70">
+                        <div className="flex items-center gap-2"><Calendar className="h-3.5 w-3.5 text-accent" /> {webinar.date}</div>
+                        {webinar.time && <div className="flex items-center gap-2"><Clock className="h-3.5 w-3.5 text-accent" /> {webinar.time}</div>}
+                        <div className="flex items-center gap-2"><User className="h-3.5 w-3.5 text-accent" /> Speaker: {webinar.speaker}</div>
+                      </div>
+                      <Button asChild className="w-full bg-primary hover:bg-accent text-white rounded-xl group">
+                        <a href={webinar.joinLink || '/contact'} target={webinar.joinLink ? "_blank" : "_self"} className="flex items-center justify-center gap-2">
+                          {webinar.joinLink ? 'Join Webinar' : 'Register Soon'} <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      </Button>
                     </div>
-                    <h3 className="text-lg font-bold text-primary mb-4 italic leading-tight">{webinar.title}</h3>
-                    <div className="space-y-2 mb-8 text-xs text-foreground/70">
-                      <div className="flex items-center gap-2"><Calendar className="h-3.5 w-3.5 text-accent" /> {webinar.date}</div>
-                      {webinar.time && <div className="flex items-center gap-2"><Clock className="h-3.5 w-3.5 text-accent" /> {webinar.time}</div>}
-                      <div className="flex items-center gap-2"><User className="h-3.5 w-3.5 text-accent" /> Speaker: {webinar.speaker}</div>
-                    </div>
-                    <Button asChild className="w-full bg-primary hover:bg-accent text-white rounded-xl group">
-                      <a href={webinar.joinLink || '/contact'} target={webinar.joinLink ? "_blank" : "_self"} className="flex items-center justify-center gap-2">
-                        {webinar.joinLink ? 'Join Webinar' : 'Register Soon'} <ExternalLink className="h-3.5 w-3.5" />
-                      </a>
-                    </Button>
                   </Card>
                 ))}
               </div>

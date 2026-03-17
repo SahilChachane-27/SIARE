@@ -122,7 +122,8 @@
         "description": { "type": "string" },
         "status": { "type": "string" },
         "color": { "type": "string" },
-        "order": { "type": "number" }
+        "order": { "type": "number" },
+        "imageUrl": { "type": "string" }
       },
       "required": ["title", "date", "description"]
     },
@@ -139,7 +140,8 @@
         "description": { "type": "string" },
         "status": { "type": "string" },
         "color": { "type": "string" },
-        "order": { "type": "number" }
+        "order": { "type": "number" },
+        "imageUrl": { "type": "string" }
       },
       "required": ["title", "date", "speaker"]
     },
