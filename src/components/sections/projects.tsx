@@ -39,7 +39,7 @@ export function Projects() {
       ...(workshops || []).map(item => ({ ...item, type: 'Workshop', icon: GraduationCap, tagColor: 'bg-amber-500' })),
       ...(webinars || []).map(item => ({ ...item, type: 'Webinar', icon: Video, tagColor: 'bg-purple-500' }))
     ];
-    // Sort by order across types if order exists, or just keep them grouped
+    // Sort by order across types
     return combined.sort((a, b) => (a.order || 0) - (b.order || 0)).slice(0, 6);
   }, [conferences, workshops, webinars]);
 
@@ -77,11 +77,6 @@ export function Projects() {
                       <event.icon className="h-12 w-12" />
                     </div>
                   )}
-                  {/* Category Tag */}
-                  <div className={`absolute top-4 left-4 ${event.tagColor} text-white text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-[0.2em] shadow-lg z-10 flex items-center gap-1.5`}>
-                    <event.icon className="h-3 w-3" />
-                    {event.type}
-                  </div>
                 </div>
 
                 <CardContent className="p-6 md:p-8 space-y-4 md:space-y-6 flex-1 flex flex-col">
