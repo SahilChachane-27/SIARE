@@ -1,32 +1,24 @@
-
 'use client';
 
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { ScrollToTop } from '@/components/layout/scroll-to-top';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { 
   Calendar, 
   MapPin, 
-  Trophy, 
   Users, 
-  Lightbulb, 
   Video, 
   GraduationCap,
-  ClipboardList,
   CheckCircle2,
   ArrowRight,
   RefreshCw,
   Zap,
-  History,
   Clock,
   User,
   ExternalLink,
-  FileEdit,
-  Award,
-  UserPlus,
-  Star
+  UserPlus
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -81,7 +73,7 @@ export default function EventsPage() {
                 Events at SIARE
               </h1>
               <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
-              <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed font-medium">
+              <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed font-medium">
                 SIARE organizes and partners with universities, research institutions, and academic societies worldwide to host impactful conferences, workshops, symposiums, and training programs.
               </p>
             </div>
@@ -309,41 +301,6 @@ export default function EventsPage() {
                   className="object-cover"
                   data-ai-hint="scholars meeting"
                 />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Awards & Recognitions */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32">
-            <div className="flex items-center gap-4 mb-12" data-aos="fade-right">
-              <div className="h-12 w-12 rounded-xl bg-primary flex items-center justify-center text-white shadow-lg">
-                <Award className="h-6 w-6" />
-              </div>
-              <h2 className="text-3xl font-bold text-primary font-headline italic">Awards & Recognitions</h2>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                { title: "Best Paper Award", icon: Star, desc: "Recognizing outstanding research quality and contribution." },
-                { title: "Young Researcher Award", icon: Trophy, desc: "Empowering emerging scholars and early-career researchers." },
-                { title: "Outstanding Reviewer Award", icon: CheckCircle2, desc: "Acknowledging excellence in the peer review process." },
-                { title: "Excellence in Academic Contribution Award", icon: Zap, desc: "For significant impact on multidisciplinary research." },
-                { title: "Distinguished Educator Award", icon: GraduationCap, desc: "Honoring leadership in academic training and pedagogy." }
-              ].map((award, i) => (
-                <Card key={i} className="p-8 border-none shadow-xl bg-slate-50 hover:bg-white transition-all group rounded-2xl" data-aos="fade-up" data-aos-delay={i * 100}>
-                  <div className="h-12 w-12 rounded-xl bg-primary/5 flex items-center justify-center text-accent mb-6 group-hover:bg-accent group-hover:text-primary transition-colors">
-                    <award.icon className="h-6 w-6" />
-                  </div>
-                  <h4 className="text-lg font-bold text-primary mb-3 italic">{award.title}</h4>
-                  <p className="text-xs text-foreground/60 leading-relaxed italic">{award.desc}</p>
-                </Card>
-              ))}
-              <div className="flex flex-col justify-center p-8 bg-accent/10 rounded-2xl border border-accent/20" data-aos="fade-up">
-                <p className="text-xs font-bold text-primary/70 leading-relaxed italic">
-                  These recognitions help boost academic profiles and enhance researcher visibility.
-                </p>
               </div>
             </div>
           </div>
