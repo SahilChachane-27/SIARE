@@ -137,6 +137,14 @@ export default function EventsManagement() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Safeguard: If user is on Step 1 or 2, don't submit, just go to next step
+    // This handles the "Enter" key press behavior or accidental submissions
+    if (currentStep < 3) {
+      setCurrentStep(prev => prev + 1);
+      return;
+    }
+
     if (!db) return;
 
     const conferenceData = {
@@ -236,7 +244,7 @@ export default function EventsManagement() {
                       {editingId ? 'Modify Record' : 'Add Conference'}
                     </h2>
                     {editingId && (
-                      <Button variant="ghost" size="sm" onClick={resetForm} className="text-[10px] font-black uppercase text-accent hover:bg-white/10">
+                      <Button type="button" variant="ghost" size="sm" onClick={resetForm} className="text-[10px] font-black uppercase text-accent hover:bg-white/10">
                         Cancel
                       </Button>
                     )}
