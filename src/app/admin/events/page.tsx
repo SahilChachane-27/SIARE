@@ -31,7 +31,8 @@ import {
   Settings,
   Users,
   FileText,
-  RefreshCw
+  RefreshCw,
+  FileDown
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -44,46 +45,45 @@ export default function EventsManagement() {
   const router = useRouter();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const brochureInputRef = useRef<HTMLInputElement>(null);
 
   const [currentStep, setCurrentStep] = useState(1);
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  // Step 1: Basic Details
+  // Logistics & Identity (Mostly Step 1 + some Step 3)
   const [title, setTitle] = useState('');
   const [shortTitle, setShortTitle] = useState('');
   const [theme, setTheme] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [venue, setVenue] = useState('');
-  const [country, setCountry] = useState('');
-  const [modes, setModes] = useState<string[]>([]); // Physical, Virtual, Hybrid
-  const [isActive, setIsActive] = useState(true);
-
-  // Step 2: Content & People
-  const [about, setAbout] = useState('');
-  const [websiteUrl, setWebsiteUrl] = useState('');
-  const [contactEmail, setContactEmail] = useState('');
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [organizingCommittee, setOrganizingCommittee] = useState('');
-  const [keynoteSpeakers, setKeynoteSpeakers] = useState('');
-  const [editorialBoard, setEditorialBoard] = useState('');
-
-  // Step 3: Submission Details
-  const [tracks, setTracks] = useState('');
-  const [brochureUrl, setBrochureUrl] = useState<string | null>(null);
-  const [keywords, setKeywords] = useState('');
-  const [submissionInstructions, setSubmissionInstructions] = useState('');
   const [submissionStartDate, setSubmissionStartDate] = useState('');
   const [abstractDeadline, setAbstractDeadline] = useState('');
   const [fullPaperDeadline, setFullPaperDeadline] = useState('');
   const [registrationDeadline, setRegistrationDeadline] = useState('');
+  const [venue, setVenue] = useState('');
+  const [country, setCountry] = useState('');
+  const [modes, setModes] = useState<string[]>([]); // Physical, Virtual, Hybrid
+  const [isActive, setIsActive] = useState(true);
+  const [isFeatured, setIsFeatured] = useState(false);
+  const [order, setOrder] = useState('0');
+
+  // Content, People & Requirements (Mostly Step 2 + rest of Step 3)
+  const [about, setAbout] = useState('');
+  const [websiteUrl, setWebsiteUrl] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [brochureUrl, setBrochureUrl] = useState<string | null>(null);
+  const [organizingCommittee, setOrganizingCommittee] = useState('');
+  const [keynoteSpeakers, setKeynoteSpeakers] = useState('');
+  const [editorialBoard, setEditorialBoard] = useState('');
+  const [tracks, setTracks] = useState('');
+  const [keywords, setKeywords] = useState('');
+  const [submissionInstructions, setSubmissionInstructions] = useState('');
   const [paperCategories, setPaperCategories] = useState<string[]>([]); // Full Paper, Abstract
   const [peerReviewMethod, setPeerReviewMethod] = useState('');
 
-  // Legacy/UI Fields
+  // UI Fields
   const [color, setColor] = useState('bg-blue-500');
-  const [order, setOrder] = useState('0');
-  const [isFeatured, setIsFeatured] = useState(false);
 
   const eventsQuery = useMemo(() => {
     if (!db) return null;
@@ -125,6 +125,7 @@ export default function EventsManagement() {
     setPaperCategories([]); setPeerReviewMethod('');
     setColor('bg-blue-500'); setOrder('0'); setIsFeatured(false);
     if (fileInputRef.current) fileInputRef.current.value = '';
+    if (brochureInputRef.current) brochureInputRef.current.value = '';
   };
 
   const toggleMode = (mode: string) => {
@@ -138,8 +139,7 @@ export default function EventsManagement() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Safeguard: Only allow submission from Step 3
-    if (currentStep < 3) {
+    if (currentStep < 2) {
       return;
     }
 
@@ -248,11 +248,11 @@ export default function EventsManagement() {
                     )}
                   </div>
                   <div className="flex items-center gap-2">
-                    {[1, 2, 3].map((s) => (
+                    {[1, 2].map((s) => (
                       <div key={s} className="flex-1 flex flex-col gap-1.5">
                         <div className={`h-1 rounded-full transition-all ${currentStep >= s ? 'bg-accent' : 'bg-white/20'}`}></div>
                         <span className={`text-[8px] font-black uppercase tracking-widest ${currentStep === s ? 'text-accent' : 'text-white/40'}`}>
-                          Step {s}
+                          {s === 1 ? 'Logistics' : 'Academic Content'}
                         </span>
                       </div>
                     ))}
@@ -262,7 +262,6 @@ export default function EventsManagement() {
                 <form 
                   onSubmit={handleSubmit} 
                   onKeyDown={(e) => {
-                    // Prevent form submission on Enter key, except within textareas
                     if (e.key === 'Enter' && (e.target as HTMLElement).tagName !== 'TEXTAREA') {
                       e.preventDefault();
                     }
@@ -270,7 +269,7 @@ export default function EventsManagement() {
                   className="p-6 md:p-8 space-y-6"
                 >
                   
-                  {/* STEP 1: BASIC DETAILS */}
+                  {/* STEP 1: IDENTITY, DATES & LOGISTICS */}
                   {currentStep === 1 && (
                     <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
                       <div className="space-y-1.5">
@@ -283,23 +282,50 @@ export default function EventsManagement() {
                           <Input value={shortTitle} onChange={(e) => setShortTitle(e.target.value)} placeholder="e.g. ICML 2025" className="rounded-xl h-11" />
                         </div>
                         <div className="space-y-1.5">
-                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Conference Theme / Tagline</label>
+                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Tagline</label>
                           <Input value={theme} onChange={(e) => setTheme(e.target.value)} placeholder="Optional theme" className="rounded-xl h-11" />
                         </div>
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-1.5">
-                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Start Date *</label>
-                          <Input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required className="rounded-xl h-11" />
-                        </div>
-                        <div className="space-y-1.5">
-                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">End Date</label>
-                          <Input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="rounded-xl h-11" />
+
+                      <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-4">
+                        <p className="text-[8px] font-black uppercase tracking-widest text-primary/30 text-center">Event Schedule</p>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-1.5">
+                            <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Start Date *</label>
+                            <Input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required className="rounded-xl h-11" />
+                          </div>
+                          <div className="space-y-1.5">
+                            <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">End Date</label>
+                            <Input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="rounded-xl h-11" />
+                          </div>
                         </div>
                       </div>
+
+                      <div className="p-4 bg-blue-50/30 rounded-xl border border-blue-100 space-y-4">
+                        <p className="text-[8px] font-black uppercase tracking-widest text-blue-900/30 text-center">Submission Deadlines</p>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-1.5">
+                            <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Submissions Open</label>
+                            <Input type="date" value={submissionStartDate} onChange={(e) => setSubmissionStartDate(e.target.value)} className="rounded-xl h-11" />
+                          </div>
+                          <div className="space-y-1.5">
+                            <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Abstract Deadline</label>
+                            <Input type="date" value={abstractDeadline} onChange={(e) => setAbstractDeadline(e.target.value)} className="rounded-xl h-11" />
+                          </div>
+                          <div className="space-y-1.5">
+                            <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Full Paper Deadline</label>
+                            <Input type="date" value={fullPaperDeadline} onChange={(e) => setFullPaperDeadline(e.target.value)} className="rounded-xl h-11" />
+                          </div>
+                          <div className="space-y-1.5">
+                            <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Reg. Deadline</label>
+                            <Input type="date" value={registrationDeadline} onChange={(e) => setRegistrationDeadline(e.target.value)} className="rounded-xl h-11" />
+                          </div>
+                        </div>
+                      </div>
+
                       <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-1.5">
-                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Venue Name *</label>
+                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Venue *</label>
                           <Input value={venue} onChange={(e) => setVenue(e.target.value)} required placeholder="e.g. Grand Hall" className="rounded-xl h-11" />
                         </div>
                         <div className="space-y-1.5">
@@ -307,6 +333,7 @@ export default function EventsManagement() {
                           <Input value={country} onChange={(e) => setCountry(e.target.value)} required placeholder="e.g. India" className="rounded-xl h-11" />
                         </div>
                       </div>
+
                       <div className="space-y-2">
                         <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Mode of Conference</label>
                         <div className="flex flex-wrap gap-4 px-4 py-3 bg-slate-50 rounded-xl border border-slate-100">
@@ -318,23 +345,34 @@ export default function EventsManagement() {
                           ))}
                         </div>
                       </div>
-                      <div className="flex items-center justify-between px-4 py-3 bg-slate-50 rounded-xl border border-slate-100">
-                        <span className="text-[10px] font-black text-primary/60 uppercase tracking-widest">Conference Status (Active)</span>
-                        <Switch checked={isActive} onCheckedChange={setIsActive} />
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="flex items-center justify-between px-4 py-3 bg-slate-50 rounded-xl border border-slate-100">
+                          <span className="text-[10px] font-black text-primary/60 uppercase tracking-widest">Active</span>
+                          <Switch checked={isActive} onCheckedChange={setIsActive} />
+                        </div>
+                        <div className="flex items-center justify-between px-4 py-3 bg-slate-50 rounded-xl border border-slate-100">
+                          <div className="flex items-center gap-2">
+                            <Checkbox id="isFeatured" checked={isFeatured} onCheckedChange={(c) => setIsFeatured(c as boolean)} />
+                            <label htmlFor="isFeatured" className="text-[10px] font-black text-primary/60 uppercase tracking-widest">Featured</label>
+                          </div>
+                          <Input type="number" value={order} onChange={(e) => setOrder(e.target.value)} className="w-14 h-8 text-[10px] text-center" />
+                        </div>
                       </div>
                     </div>
                   )}
 
-                  {/* STEP 2: CONTENT & PEOPLE */}
+                  {/* STEP 2: CONTENT, PEOPLE & ACADEMIC DOCUMENTS */}
                   {currentStep === 2 && (
                     <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
                       <div className="space-y-1.5">
                         <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">About Conference</label>
                         <Textarea value={about} onChange={(e) => setAbout(e.target.value)} placeholder="Detailed description..." className="rounded-xl min-h-[100px]" />
                       </div>
+                      
                       <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-1.5">
-                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Official URL</label>
+                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Official Website</label>
                           <Input type="url" value={websiteUrl} onChange={(e) => setWebsiteUrl(e.target.value)} placeholder="https://..." className="rounded-xl h-11" />
                         </div>
                         <div className="space-y-1.5">
@@ -342,80 +380,79 @@ export default function EventsManagement() {
                           <Input type="email" value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} placeholder="info@conf.org" className="rounded-xl h-11" />
                         </div>
                       </div>
-                      <div className="space-y-1.5">
-                        <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Banner / Logo (Max 2MB)</label>
-                        <div 
-                          onClick={() => fileInputRef.current?.click()}
-                          className="w-full aspect-video border-2 border-dashed border-slate-200 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-slate-50 transition-all relative overflow-hidden"
-                        >
-                          {imageUrl ? (
-                            <Image src={imageUrl} alt="Preview" fill className="object-cover" />
-                          ) : (
-                            <>
-                              <ImageIcon className="h-8 w-8 text-primary/10" />
-                              <span className="text-[8px] font-black text-primary/30 uppercase tracking-widest">Select Image</span>
-                            </>
-                          )}
-                        </div>
-                        <input type="file" ref={fileInputRef} onChange={(e) => handleFileChange(e, 'image')} accept="image/*" className="hidden" />
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Organizing Committee</label>
-                        <Textarea value={organizingCommittee} onChange={(e) => setOrganizingCommittee(e.target.value)} placeholder="Names and affiliations..." className="rounded-xl h-20" />
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Keynote Speakers</label>
-                        <Textarea value={keynoteSpeakers} onChange={(e) => setKeynoteSpeakers(e.target.value)} placeholder="List main speakers..." className="rounded-xl h-20" />
-                      </div>
-                    </div>
-                  )}
 
-                  {/* STEP 3: SUBMISSION DETAILS */}
-                  {currentStep === 3 && (
-                    <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
-                      <div className="space-y-1.5">
-                        <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">List of Tracks / Themes</label>
-                        <Textarea value={tracks} onChange={(e) => setTracks(e.target.value)} placeholder="Research domains..." className="rounded-xl h-20" />
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Banner (Max 2MB)</label>
+                          <div 
+                            onClick={() => fileInputRef.current?.click()}
+                            className="w-full aspect-video border-2 border-dashed border-slate-200 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-slate-50 transition-all relative overflow-hidden"
+                          >
+                            {imageUrl ? (
+                              <Image src={imageUrl} alt="Banner" fill className="object-cover" />
+                            ) : (
+                              <>
+                                <ImageIcon className="h-6 w-6 text-primary/10" />
+                                <span className="text-[7px] font-black text-primary/30 uppercase">Select Image</span>
+                              </>
+                            )}
+                          </div>
+                          <input type="file" ref={fileInputRef} onChange={(e) => handleFileChange(e, 'image')} accept="image/*" className="hidden" />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Brochure/Template</label>
+                          <div 
+                            onClick={() => brochureInputRef.current?.click()}
+                            className="w-full aspect-video border-2 border-dashed border-slate-200 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-slate-50 transition-all relative overflow-hidden"
+                          >
+                            {brochureUrl ? (
+                              <div className="flex flex-col items-center gap-1">
+                                <FileDown className="h-6 w-6 text-green-500" />
+                                <span className="text-[7px] font-black text-green-600 uppercase">File Attached</span>
+                              </div>
+                            ) : (
+                              <>
+                                <FileText className="h-6 w-6 text-primary/10" />
+                                <span className="text-[7px] font-black text-primary/30 uppercase">Upload PDF/Doc</span>
+                              </>
+                            )}
+                          </div>
+                          <input type="file" ref={brochureInputRef} onChange={(e) => handleFileChange(e, 'brochure')} accept=".pdf,.doc,.docx" className="hidden" />
+                        </div>
                       </div>
+
+                      <div className="space-y-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <p className="text-[8px] font-black uppercase tracking-widest text-primary/30 text-center">Board & Committees</p>
+                        <Textarea value={organizingCommittee} onChange={(e) => setOrganizingCommittee(e.target.value)} placeholder="Organizing Committee..." className="rounded-xl h-16 text-xs" />
+                        <Textarea value={keynoteSpeakers} onChange={(e) => setKeynoteSpeakers(e.target.value)} placeholder="Keynote Speakers..." className="rounded-xl h-16 text-xs" />
+                        <Textarea value={editorialBoard} onChange={(e) => setEditorialBoard(e.target.value)} placeholder="Editorial Board..." className="rounded-xl h-16 text-xs" />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Tracks & Themes</label>
+                        <Textarea value={tracks} onChange={(e) => setTracks(e.target.value)} placeholder="Research domains..." className="rounded-xl h-20 text-xs" />
+                      </div>
+
                       <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-1.5">
                           <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Keywords / SDG Tags</label>
-                          <Input value={keywords} onChange={(e) => setKeywords(e.target.value)} placeholder="AI, Sustainability, etc." className="rounded-xl h-11" />
+                          <Input value={keywords} onChange={(e) => setKeywords(e.target.value)} placeholder="AI, Sustainable..." className="rounded-xl h-11 text-xs" />
                         </div>
                         <div className="space-y-1.5">
-                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Peer Review Method</label>
-                          <Input value={peerReviewMethod} onChange={(e) => setPeerReviewMethod(e.target.value)} placeholder="e.g. Double-Blind" className="rounded-xl h-11" />
+                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Review Method</label>
+                          <Input value={peerReviewMethod} onChange={(e) => setPeerReviewMethod(e.target.value)} placeholder="e.g. Double-Blind" className="rounded-xl h-11 text-xs" />
                         </div>
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-1.5">
-                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Abstract Deadline</label>
-                          <Input type="date" value={abstractDeadline} onChange={(e) => setAbstractDeadline(e.target.value)} className="rounded-xl h-11" />
-                        </div>
-                        <div className="space-y-1.5">
-                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Registration Deadline</label>
-                          <Input type="date" value={registrationDeadline} onChange={(e) => setRegistrationDeadline(e.target.value)} className="rounded-xl h-11" />
-                        </div>
-                      </div>
+
                       <div className="space-y-2">
                         <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Paper Categories</label>
-                        <div className="flex flex-wrap gap-4 px-4 py-3 bg-slate-50 rounded-xl border border-slate-100">
-                          {['Full Paper', 'Abstract', 'Poster', 'Workshop Paper'].map(c => (
+                        <div className="flex flex-wrap gap-2 px-4 py-3 bg-slate-50 rounded-xl border border-slate-100">
+                          {['Full Paper', 'Abstract', 'Poster', 'Workshop'].map(c => (
                             <div key={c} className="flex items-center space-x-2">
                               <Checkbox id={`cat-${c}`} checked={paperCategories.includes(c)} onCheckedChange={() => toggleCategory(c)} />
                               <label htmlFor={`cat-${c}`} className="text-[10px] font-bold text-primary/70">{c}</label>
                             </div>
                           ))}
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between px-4 py-3 bg-slate-50 rounded-xl border border-slate-100">
-                        <div className="flex items-center gap-3">
-                          <Checkbox id="isFeatured" checked={isFeatured} onCheckedChange={(c) => setIsFeatured(c as boolean)} />
-                          <label htmlFor="isFeatured" className="text-[10px] font-black text-primary/60 uppercase tracking-widest">Featured on Home</label>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <label className="text-[8px] font-bold uppercase text-primary/30">Order</label>
-                          <Input type="number" value={order} onChange={(e) => setOrder(e.target.value)} className="w-16 h-8 text-xs rounded-lg" />
                         </div>
                       </div>
                     </div>
@@ -424,12 +461,12 @@ export default function EventsManagement() {
                   <div className="flex gap-3 pt-4 border-t border-slate-50">
                     {currentStep > 1 && (
                       <Button type="button" variant="outline" onClick={() => setCurrentStep(prev => prev - 1)} className="flex-1 rounded-xl h-12 text-[10px] font-black uppercase tracking-widest">
-                        <ChevronLeft className="mr-2 h-4 w-4" /> Previous
+                        <ChevronLeft className="mr-2 h-4 w-4" /> Logistics
                       </Button>
                     )}
-                    {currentStep < 3 ? (
+                    {currentStep < 2 ? (
                       <Button type="button" onClick={() => setCurrentStep(prev => prev + 1)} className="flex-1 bg-primary text-accent rounded-xl h-12 text-[10px] font-black uppercase tracking-widest">
-                        Next Step <ChevronRight className="ml-2 h-4 w-4" />
+                        Content & Deadlines <ChevronRight className="ml-2 h-4 w-4" />
                       </Button>
                     ) : (
                       <Button type="submit" className="flex-1 bg-accent text-primary rounded-xl h-12 text-[10px] font-black uppercase tracking-widest shadow-xl">
