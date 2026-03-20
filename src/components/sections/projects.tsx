@@ -82,58 +82,68 @@ export function Projects() {
             <div className="flex animate-marquee whitespace-nowrap py-4 items-stretch w-max group-hover:[animation-play-state:paused]">
               {/* Double the array for a seamless infinite loop */}
               {[...allEvents, ...allEvents].map((event: any, index: number) => (
-                <div key={`${event.type}-${event.id}-${index}`} className="px-4 shrink-0 w-[300px] md:w-[400px]">
-                  <Card className="h-full overflow-hidden border-none shadow-2xl rounded-2xl flex flex-col bg-white hover:shadow-primary/5 transition-all duration-500">
+                <div key={`${event.type}-${event.id}-${index}`} className="px-4 shrink-0 w-[280px] md:w-[350px]">
+                  <Card className="h-full overflow-hidden border-none shadow-2xl rounded-2xl relative group bg-white hover:shadow-primary/5 transition-all duration-500">
                     
-                    <div className="relative aspect-video w-full overflow-hidden bg-slate-50 shrink-0">
+                    {/* Image Layer */}
+                    <div className="relative aspect-[4/5] w-full overflow-hidden bg-slate-50 shrink-0">
                       {event.imageUrl ? (
                         <Image 
                           src={event.imageUrl} 
                           alt={event.title} 
                           fill 
-                          className="object-cover transition-transform duration-700 hover:scale-110" 
+                          className="object-cover transition-transform duration-700 group-hover:scale-110" 
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center opacity-10">
-                          <event.icon className="h-12 w-12" />
+                          <event.icon className="h-16 w-16" />
+                        </div>
+                      )}
+                      
+                      {/* Floating Status Tag - Always visible on image */}
+                      {event.status && (
+                        <div className="absolute top-4 left-4 z-30 group-hover:opacity-0 transition-opacity duration-300">
+                          <div className="bg-accent text-accent-foreground text-[8px] md:text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter flex items-center gap-1 font-headline italic shadow-xl">
+                            <Star className="h-2.5 w-2.5 fill-current" /> {event.status}
+                          </div>
                         </div>
                       )}
                     </div>
 
-                    <CardContent className="p-6 md:p-8 space-y-4 md:space-y-6 flex-1 flex flex-col whitespace-normal">
-                      <div className="flex justify-between items-start">
-                        {event.status && (
-                          <div className="bg-accent/10 text-accent text-[9px] md:text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter flex items-center gap-1 font-headline italic">
-                            <Star className="h-2.5 w-2.5 md:h-3 md:w-3 fill-current" /> {event.status}
-                          </div>
-                        )}
-                      </div>
-                      
-                      <h4 className="text-lg md:text-xl font-bold text-primary font-headline italic leading-tight group-hover:text-accent transition-colors min-h-[3rem] md:min-h-[3.5rem] line-clamp-2">
-                        {event.title}
-                      </h4>
-                      
-                      <div className="space-y-2 md:space-y-3 pt-4 border-t border-slate-100 mt-auto">
-                        <div className="flex items-center gap-2 md:gap-3 text-[11px] md:text-xs font-bold text-primary/60 font-headline italic">
-                          <Calendar className="h-3.5 w-3.5 md:h-4 md:w-4 text-accent shrink-0" /> {event.date}
+                    {/* Absolute Overlay (Details revealed on hover) */}
+                    <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8 bg-gradient-to-t from-primary/95 via-primary/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out z-20">
+                      <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-in-out whitespace-normal">
+                        
+                        <div className="mb-2">
+                           <div className="bg-accent/20 text-accent text-[8px] font-black px-2 py-0.5 rounded-full uppercase inline-block italic mb-2">
+                             {event.type}
+                           </div>
                         </div>
-                        {event.location ? (
-                          <div className="flex items-center gap-2 md:gap-3 text-[11px] md:text-xs font-bold text-primary/60 font-headline italic">
-                            <MapPin className="h-3.5 w-3.5 md:h-4 md:w-4 text-accent shrink-0" /> {event.location}
-                          </div>
-                        ) : event.speaker ? (
-                          <div className="flex items-center gap-2 md:gap-3 text-[11px] md:text-xs font-bold text-primary/60 font-headline italic">
-                            <User className="h-3.5 w-3.5 md:h-4 md:w-4 text-accent shrink-0" /> {event.speaker}
-                          </div>
-                        ) : null}
-                      </div>
 
-                      <div className="pt-2 md:pt-4">
-                        <Button asChild className="w-full bg-primary hover:bg-accent text-white hover:text-primary rounded-xl h-10 md:h-12 text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-all">
+                        <h4 className="text-lg md:text-xl font-bold text-white font-headline italic leading-tight mb-4 line-clamp-3">
+                          {event.title}
+                        </h4>
+                        
+                        <div className="space-y-2 mb-6">
+                          <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-white/80 italic">
+                            <Calendar className="h-3.5 w-3.5 text-accent shrink-0" /> {event.date}
+                          </div>
+                          {event.location ? (
+                            <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-white/80 italic">
+                              <MapPin className="h-3.5 w-3.5 text-accent shrink-0" /> {event.location}
+                            </div>
+                          ) : event.speaker ? (
+                            <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-white/80 italic">
+                              <User className="h-3.5 w-3.5 text-accent shrink-0" /> {event.speaker}
+                            </div>
+                          ) : null}
+                        </div>
+
+                        <Button asChild className="w-full bg-accent hover:bg-white text-primary font-black uppercase text-[10px] tracking-widest h-10 md:h-12 rounded-xl transition-all">
                           <Link href="/events">Register / Details</Link>
                         </Button>
                       </div>
-                    </CardContent>
+                    </div>
                   </Card>
                 </div>
               ))}
