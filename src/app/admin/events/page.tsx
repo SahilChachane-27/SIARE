@@ -138,10 +138,8 @@ export default function EventsManagement() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Safeguard: If user is on Step 1 or 2, don't submit, just go to next step
-    // This handles the "Enter" key press behavior or accidental submissions
+    // Safeguard: Only allow submission from Step 3
     if (currentStep < 3) {
-      setCurrentStep(prev => prev + 1);
       return;
     }
 
@@ -261,7 +259,16 @@ export default function EventsManagement() {
                   </div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-6">
+                <form 
+                  onSubmit={handleSubmit} 
+                  onKeyDown={(e) => {
+                    // Prevent form submission on Enter key, except within textareas
+                    if (e.key === 'Enter' && (e.target as HTMLElement).tagName !== 'TEXTAREA') {
+                      e.preventDefault();
+                    }
+                  }}
+                  className="p-6 md:p-8 space-y-6"
+                >
                   
                   {/* STEP 1: BASIC DETAILS */}
                   {currentStep === 1 && (
@@ -276,7 +283,7 @@ export default function EventsManagement() {
                           <Input value={shortTitle} onChange={(e) => setShortTitle(e.target.value)} placeholder="e.g. ICML 2025" className="rounded-xl h-11" />
                         </div>
                         <div className="space-y-1.5">
-                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Theme / Tagline</label>
+                          <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Conference Theme / Tagline</label>
                           <Input value={theme} onChange={(e) => setTheme(e.target.value)} placeholder="Optional theme" className="rounded-xl h-11" />
                         </div>
                       </div>
