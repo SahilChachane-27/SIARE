@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect, useMemo, useRef } from 'react';
@@ -31,7 +30,8 @@ import {
   ChevronLeft,
   Settings,
   Users,
-  FileText
+  FileText,
+  RefreshCw
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
