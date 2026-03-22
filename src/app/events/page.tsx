@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -14,9 +13,9 @@ import {
   CheckCircle2,
   RefreshCw,
   User,
-  ExternalLink,
   Presentation,
-  History
+  History,
+  ArrowRight
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -29,7 +28,7 @@ export default function EventsPage() {
   const [today, setToday] = useState(new Date());
 
   useEffect(() => {
-    const timer = setInterval(() => setToday(new Date()), 1000 * 60 * 60); // Refresh every hour
+    const timer = setInterval(() => setToday(new Date()), 1000 * 60 * 60);
     return () => clearInterval(timer);
   }, []);
 
@@ -41,23 +40,22 @@ export default function EventsPage() {
     return eventDate < now;
   };
 
-  // Dynamic Data Fetching
   const confQuery = useMemo(() => db ? query(collection(db, 'conferences'), orderBy('order', 'asc')) : null, [db]);
   const workQuery = useMemo(() => db ? query(collection(db, 'workshops'), orderBy('order', 'asc')) : null, [db]);
   const webQuery = useMemo(() => db ? query(collection(db, 'webinars'), orderBy('order', 'asc')) : null, [db]);
   const pastQuery = useMemo(() => db ? query(collection(db, 'pastEvents'), orderBy('order', 'asc')) : null, [db]);
 
-  const { data: allConfs, loading: confLoading } = useCollection(confQuery);
-  const { data: allWorks, loading: workLoading } = useCollection(workQuery);
-  const { data: allWebs, loading: webLoading } = useCollection(webQuery);
+  const { data: allConfs, loading: confLoading } = useCollection(allConfsQuery);
+  const { data: allWorks, loading: workLoading } = useCollection(allWorksQuery);
+  const { data: allWebs, loading: webLoading } = useCollection(allWebsQuery);
   const { data: manualPast, loading: pastLoading } = useCollection(pastQuery);
 
-  // Filter Upcoming
+  // Dynamic filtering based on current date
   const upcomingConfs = useMemo(() => allConfs?.filter(c => !isPast(c.startDate || c.date)), [allConfs, today]);
   const upcomingWorks = useMemo(() => allWorks?.filter(w => !isPast(w.date)), [allWorks, today]);
   const upcomingWebs = useMemo(() => allWebs?.filter(w => !isPast(w.date)), [allWebs, today]);
 
-  // Combine Past
+  // Combine passed events into one archive
   const combinedPast = useMemo(() => {
     const pastFromConfs = allConfs?.filter(c => isPast(c.startDate || c.date)).map(c => ({ ...c, type: 'Conference', icon: Presentation }));
     const pastFromWorks = allWorks?.filter(w => isPast(w.date)).map(w => ({ ...w, type: 'Workshop', icon: GraduationCap }));
@@ -85,15 +83,15 @@ export default function EventsPage() {
         </div>
         <h3 className="text-base font-bold text-primary mb-4 italic group-hover:text-accent transition-colors line-clamp-2 leading-tight">{event.title}</h3>
         
-        {event.type !== 'History' && (
+        {event.type !== 'History' ? (
           <div className="space-y-2 mb-6 flex-1 text-[11px]">
-            {event.date && <div className="flex items-center gap-2 text-foreground/70 font-medium"><Calendar className="h-3 w-3 text-accent shrink-0" /> {event.date}</div>}
+            {(event.startDate || event.date) && <div className="flex items-center gap-2 text-foreground/70 font-medium"><Calendar className="h-3 w-3 text-accent shrink-0" /> {event.startDate || event.date}</div>}
             {(event.location || event.venue) && <div className="flex items-center gap-2 text-foreground/70 font-medium"><MapPin className="h-3 w-3 text-accent shrink-0" /> {event.location || event.venue}</div>}
             {event.speaker && <div className="flex items-center gap-2 text-foreground/70 font-medium"><User className="h-3 w-3 text-accent shrink-0" /> {event.speaker}</div>}
           </div>
+        ) : (
+          <p className="text-[10px] text-foreground/60 italic mb-6 line-clamp-3 flex-1">{event.description}</p>
         )}
-
-        {event.type === 'History' && <p className="text-[10px] text-foreground/60 italic mb-6 line-clamp-3">{event.description}</p>}
 
         {!isPastCard ? (
           <Button asChild size="sm" className="w-full bg-primary hover:bg-accent text-white rounded-xl text-[10px] uppercase font-bold tracking-widest mt-auto">
@@ -143,7 +141,7 @@ export default function EventsPage() {
             <p className="text-xs font-bold uppercase tracking-widest text-primary/40">Synchronizing Global Registry...</p>
           </div>
         ) : (
-          <>
+          <div className="space-y-0">
             {/* Upcoming Conferences */}
             <section className="py-20 bg-white">
               <div className="container mx-auto px-4 md:px-8">
@@ -212,7 +210,7 @@ export default function EventsPage() {
                 )}
               </div>
             </section>
-          </>
+          </div>
         )}
 
         {/* Call to Action */}
