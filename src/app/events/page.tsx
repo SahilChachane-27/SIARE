@@ -92,7 +92,7 @@ export default function EventsPage() {
 
         {/* Upcoming Conferences */}
         <section className="py-20 bg-white">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+          <div className="container mx-auto px-4 md:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
                 Upcoming Conferences
@@ -107,27 +107,25 @@ export default function EventsPage() {
                 <p className="text-xs font-bold uppercase tracking-widest text-primary/40">Updating Catalog...</p>
               </div>
             ) : (dynamicEvents && dynamicEvents.length > 0) ? (
-              <div className="grid lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {dynamicEvents.map((event: any, idx: number) => (
-                  <Card key={idx} className={`border-0 border-l-4 overflow-hidden ${event.color || 'border-primary'} shadow-xl rounded-2xl bg-slate-50 hover:bg-white transition-all duration-300 group`} data-aos="fade-up" data-aos-delay={idx * 100}>
+                  <Card key={idx} className={`flex flex-col border-0 border-l-4 overflow-hidden ${event.color || 'border-primary'} shadow-xl rounded-2xl bg-slate-50 hover:bg-white transition-all duration-300 group`} data-aos="fade-up" data-aos-delay={idx * 100}>
                     {event.imageUrl && (
                       <div className="relative aspect-video w-full overflow-hidden">
                         <Image src={event.imageUrl} alt={event.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                       </div>
                     )}
-                    <div className="p-8 flex flex-col h-full">
-                      <h3 className="text-xl font-bold text-primary mb-4 italic group-hover:text-accent transition-colors">{event.title}</h3>
-                      <div className="space-y-3 mb-8 flex-1">
-                        <div className="flex items-center gap-2 text-sm text-foreground/70 font-medium"><Calendar className="h-4 w-4 text-accent" /> <strong>Date:</strong> {event.date}</div>
-                        <div className="flex items-center gap-2 text-sm text-foreground/70 font-medium"><MapPin className="h-4 w-4 text-accent" /> <strong>Location:</strong> {event.location}</div>
-                        {event.tracks && <div className="text-xs text-foreground/60 italic mt-2"><strong>Tracks:</strong> {event.tracks}</div>}
-                        {event.highlights && <div className="text-xs text-foreground/60 italic"><strong>Highlights:</strong> {event.highlights}</div>}
+                    <div className="p-6 flex flex-col flex-1">
+                      <h3 className="text-lg font-bold text-primary mb-4 italic group-hover:text-accent transition-colors line-clamp-2">{event.title}</h3>
+                      <div className="space-y-3 mb-6 flex-1 text-xs">
+                        <div className="flex items-center gap-2 text-foreground/70 font-medium"><Calendar className="h-3.5 w-3.5 text-accent shrink-0" /> <strong>Date:</strong> {event.date}</div>
+                        <div className="flex items-center gap-2 text-foreground/70 font-medium"><MapPin className="h-3.5 w-3.5 text-accent shrink-0" /> <strong>Location:</strong> {event.location}</div>
                       </div>
-                      <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-200">
-                        <Button asChild size="sm" className="bg-primary hover:bg-accent text-white rounded-xl">
+                      <div className="flex flex-col gap-2 pt-4 border-t border-slate-200">
+                        <Button asChild size="sm" className="w-full bg-primary hover:bg-accent text-white rounded-xl text-[10px] uppercase font-bold tracking-widest">
                           <Link href="/contact">Register Now</Link>
                         </Button>
-                        <Button variant="outline" size="sm" asChild className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-xl">
+                        <Button variant="outline" size="sm" asChild className="w-full border-primary/20 text-primary hover:bg-primary hover:text-white rounded-xl text-[10px] uppercase font-bold tracking-widest">
                           <Link href="/contact">Submit Paper</Link>
                         </Button>
                       </div>
@@ -145,7 +143,7 @@ export default function EventsPage() {
 
         {/* Upcoming Workshops Section */}
         <section className="py-20 bg-slate-50/50">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+          <div className="container mx-auto px-4 md:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
                 Upcoming Workshops
@@ -159,30 +157,27 @@ export default function EventsPage() {
                 <RefreshCw className="h-8 w-8 text-accent animate-spin" />
               </div>
             ) : (workshops && workshops.length > 0) ? (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {workshops.map((workshop: any, idx: number) => (
-                  <Card key={idx} className="border-none shadow-xl rounded-2xl bg-white overflow-hidden group hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay={idx * 100}>
+                  <Card key={idx} className="flex flex-col border-none shadow-xl rounded-2xl bg-white overflow-hidden group hover:-translate-y-1 transition-all duration-300" data-aos="fade-up" data-aos-delay={idx * 100}>
                     {workshop.imageUrl && (
                       <div className="relative aspect-video w-full overflow-hidden">
                         <Image src={workshop.imageUrl} alt={workshop.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                       </div>
                     )}
-                    <div className="p-8">
-                      <div className="flex items-center gap-3 mb-6">
-                        <div className="h-10 w-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent">
-                          <GraduationCap className="h-5 w-5" />
+                    <div className="p-6 flex flex-col flex-1">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="h-8 w-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent">
+                          <GraduationCap className="h-4 w-4" />
                         </div>
-                        <span className="text-[10px] font-black uppercase text-primary/40 tracking-widest">{workshop.status}</span>
+                        <span className="text-[8px] font-black uppercase text-primary/40 tracking-widest">{workshop.status}</span>
                       </div>
-                      <h3 className="text-lg font-bold text-primary mb-4 italic leading-tight">{workshop.title}</h3>
-                      <div className="space-y-3 mb-8 text-sm text-foreground/70">
-                        <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-accent" /> {workshop.date}</div>
-                        {workshop.time && <div className="flex items-center gap-2"><Clock className="h-4 w-4 text-accent" /> {workshop.time}</div>}
-                        {workshop.location && <div className="flex items-center gap-2"><MapPin className="h-4 w-4 text-accent" /> {workshop.location}</div>}
-                        {workshop.instructor && <div className="flex items-center gap-2"><User className="h-4 w-4 text-accent" /> {workshop.instructor}</div>}
+                      <h3 className="text-base font-bold text-primary mb-4 italic leading-tight line-clamp-2">{workshop.title}</h3>
+                      <div className="space-y-2 mb-6 text-[11px] text-foreground/70 flex-1">
+                        <div className="flex items-center gap-2"><Calendar className="h-3 w-3 text-accent shrink-0" /> {workshop.date}</div>
+                        {workshop.instructor && <div className="flex items-center gap-2"><User className="h-3 w-3 text-accent shrink-0" /> {workshop.instructor}</div>}
                       </div>
-                      <p className="text-xs text-foreground/60 italic mb-8 leading-relaxed line-clamp-3">"{workshop.description}"</p>
-                      <Button asChild className="w-full bg-primary hover:bg-accent text-white rounded-xl">
+                      <Button asChild className="w-full bg-primary hover:bg-accent text-white rounded-xl text-[10px] uppercase font-bold tracking-widest mt-auto">
                         <Link href="/contact">Register Workshop</Link>
                       </Button>
                     </div>
@@ -199,7 +194,7 @@ export default function EventsPage() {
 
         {/* Upcoming Webinars Section */}
         <section className="py-20 bg-white">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+          <div className="container mx-auto px-4 md:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
                 Upcoming Webinars
@@ -213,30 +208,29 @@ export default function EventsPage() {
                 <RefreshCw className="h-8 w-8 text-accent animate-spin" />
               </div>
             ) : (webinars && webinars.length > 0) ? (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {webinars.map((webinar: any, idx: number) => (
-                  <Card key={idx} className="border-none shadow-xl rounded-2xl bg-slate-50 overflow-hidden group hover:bg-white transition-all duration-300" data-aos="fade-up" data-aos-delay={idx * 100}>
+                  <Card key={idx} className="flex flex-col border-none shadow-xl rounded-2xl bg-slate-50 overflow-hidden group hover:bg-white transition-all duration-300" data-aos="fade-up" data-aos-delay={idx * 100}>
                     {webinar.imageUrl && (
                       <div className="relative aspect-video w-full overflow-hidden">
                         <Image src={webinar.imageUrl} alt={webinar.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                       </div>
                     )}
-                    <div className="p-8">
-                      <div className="flex items-center gap-3 mb-6">
-                        <div className="h-10 w-10 rounded-xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-accent transition-colors">
-                          <Video className="h-5 w-5" />
+                    <div className="p-6 flex flex-col flex-1">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="h-8 w-8 rounded-lg bg-primary/5 flex items-center justify-center text-primary group-hover:bg-accent transition-colors">
+                          <Video className="h-4 w-4" />
                         </div>
-                        <span className="text-[10px] font-black uppercase text-accent tracking-widest">{webinar.status}</span>
+                        <span className="text-[8px] font-black uppercase text-accent tracking-widest">{webinar.status}</span>
                       </div>
-                      <h3 className="text-lg font-bold text-primary mb-4 italic leading-tight">{webinar.title}</h3>
-                      <div className="space-y-2 mb-8 text-xs text-foreground/70">
-                        <div className="flex items-center gap-2"><Calendar className="h-3.5 w-3.5 text-accent" /> {webinar.date}</div>
-                        {webinar.time && <div className="flex items-center gap-2"><Clock className="h-3.5 w-3.5 text-accent" /> {webinar.time}</div>}
-                        <div className="flex items-center gap-2"><User className="h-3.5 w-3.5 text-accent" /> Speaker: {webinar.speaker}</div>
+                      <h3 className="text-base font-bold text-primary mb-4 italic leading-tight line-clamp-2">{webinar.title}</h3>
+                      <div className="space-y-2 mb-6 text-[11px] text-foreground/70 flex-1">
+                        <div className="flex items-center gap-2"><Calendar className="h-3 w-3 text-accent shrink-0" /> {webinar.date}</div>
+                        <div className="flex items-center gap-2"><User className="h-3 w-3 text-accent shrink-0" /> Speaker: {webinar.speaker}</div>
                       </div>
-                      <Button asChild className="w-full bg-primary hover:bg-accent text-white rounded-xl group">
+                      <Button asChild className="w-full bg-primary hover:bg-accent text-white rounded-xl text-[10px] uppercase font-bold tracking-widest mt-auto">
                         <a href={webinar.joinLink || '/contact'} target={webinar.joinLink ? "_blank" : "_self"} className="flex items-center justify-center gap-2">
-                          {webinar.joinLink ? 'Join Webinar' : 'Register Soon'} <ExternalLink className="h-3.5 w-3.5" />
+                          {webinar.joinLink ? 'Join Webinar' : 'Register Soon'} <ExternalLink className="h-3 w-3" />
                         </a>
                       </Button>
                     </div>
@@ -253,7 +247,7 @@ export default function EventsPage() {
 
         {/* Past Events Section */}
         <section className="py-20 bg-slate-50">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+          <div className="container mx-auto px-4 md:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4" data-aos="fade-up">
                 Past Events
@@ -267,12 +261,12 @@ export default function EventsPage() {
                 <RefreshCw className="h-8 w-8 text-accent animate-spin" />
               </div>
             ) : (pastEvents && pastEvents.length > 0) ? (
-              <div className="grid md:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {pastEvents.map((event: any, idx: number) => (
-                  <div key={idx} className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col h-full group hover:shadow-md transition-all" data-aos="fade-up" data-aos-delay={idx * 100}>
-                    <h4 className="font-bold text-primary mb-4 italic leading-tight text-lg">{event.title}</h4>
-                    <p className="text-xs text-foreground/60 leading-relaxed font-medium flex-1 italic">"{event.description}"</p>
-                    <div className="mt-6 flex items-center gap-2 text-[10px] font-black uppercase text-accent group-hover:text-primary transition-colors">
+                  <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col h-full group hover:shadow-md transition-all" data-aos="fade-up" data-aos-delay={idx * 100}>
+                    <h4 className="font-bold text-primary mb-4 italic leading-tight text-base line-clamp-2">{event.title}</h4>
+                    <p className="text-[10px] text-foreground/60 leading-relaxed font-medium flex-1 italic line-clamp-4">"{event.description}"</p>
+                    <div className="mt-6 flex items-center gap-2 text-[8px] font-black uppercase text-accent group-hover:text-primary transition-colors">
                       <CheckCircle2 className="h-3 w-3" /> Successfully Completed
                     </div>
                   </div>
@@ -321,61 +315,6 @@ export default function EventsPage() {
                   data-ai-hint="scholars meeting"
                 />
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Registration & Participation */}
-        <section className="py-20 bg-slate-50">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32">
-            <div className="flex items-center gap-4 mb-12" data-aos="fade-right">
-              <div className="h-12 w-12 rounded-xl bg-accent flex items-center justify-center text-primary shadow-lg">
-                <UserPlus className="h-6 w-6" />
-              </div>
-              <h2 className="text-3xl font-bold text-primary font-headline italic">Registration & Participation</h2>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-12">
-              <Card className="rounded-3xl border-none shadow-2xl bg-white p-10 overflow-hidden relative group" data-aos="fade-right">
-                <div className="relative z-10">
-                  <h3 className="text-xl font-bold text-primary mb-6 flex items-center gap-2">
-                    <ArrowRight className="h-5 w-5 text-accent" /> How to Join
-                  </h3>
-                  <div className="space-y-4">
-                    {[
-                      "Online registration portal",
-                      "Institutional nomination",
-                      "Conference invitations"
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100">
-                        <CheckCircle2 className="h-4 w-4 text-accent" />
-                        <span className="text-sm font-bold text-primary/80 uppercase tracking-widest">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </Card>
-
-              <Card className="rounded-3xl border-none shadow-2xl bg-white p-10" data-aos="fade-left">
-                <h3 className="text-xl font-bold text-primary mb-6 flex items-center gap-2">
-                  <Zap className="h-5 w-5 text-accent" /> Benefits for Accepted Authors
-                </h3>
-                <div className="grid gap-4">
-                  {[
-                    { label: "Presentation slots", desc: "Showcase your research to global peers." },
-                    { label: "E-certificates", desc: "Digital recognition of your participation." },
-                    { label: "Proceedings publication", desc: "Indexed archival of your conference paper." }
-                  ].map((benefit, i) => (
-                    <div key={i} className="flex items-start gap-4">
-                      <div className="h-6 w-6 rounded-full bg-accent/10 flex items-center justify-center text-accent text-[10px] font-black shrink-0 mt-1">{i+1}</div>
-                      <div>
-                        <p className="text-sm font-bold text-primary leading-tight mb-1">{benefit.label}</p>
-                        <p className="text-[10px] text-foreground/50 italic leading-relaxed">{benefit.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Card>
             </div>
           </div>
         </section>
