@@ -103,7 +103,7 @@ export default function ProceedingsPage() {
                   <Link href="/contact">Partner for Proceedings</Link>
                 </Button>
                 <Button variant="outline" asChild className="bg-transparent border-white/20 text-white hover:bg-white hover:text-primary rounded-xl h-12 px-8 shadow-xl transition-all">
-                  <Link href="/start-journal">Submit Conference Proposal</Link>
+                  <Link href="/submit-your-paper">Submit Conference Proposal</Link>
                 </Button>
               </div>
             </div>
@@ -170,9 +170,7 @@ export default function ProceedingsPage() {
                 {
                   title: "Rigorous Editorial & Peer Review",
                   desc: "Every manuscript undergoes a structured screening process including similarity checks, reviewer assignment, reviewer evaluation, and final editorial approval.",
-                  icon: ShieldCheck,
-                  isList: true,
-                  points: ["Similarity check", "Review assignment", "Reviewer evaluation", "Final editorial approval"]
+                  icon: ShieldCheck
                 },
                 {
                   title: "DOI Assignment",
@@ -187,9 +185,7 @@ export default function ProceedingsPage() {
                 {
                   title: "Multidisciplinary Scope",
                   desc: "We publish across a wide range of disciplines ensuring global academic reach.",
-                  icon: Layers,
-                  isList: true,
-                  points: ["Engineering", "Management", "Social Sciences", "Education", "Arts & Humanities", "Agriculture", "Biological Sciences", "Computer Science", "Pharmacy & Health Sciences", "Interdisciplinary Themes"]
+                  icon: Layers
                 },
                 {
                   title: "University-Focused",
@@ -208,16 +204,6 @@ export default function ProceedingsPage() {
                   </div>
                   <h3 className="text-xl font-bold text-primary mb-4 italic leading-tight">{item.title}</h3>
                   <p className="text-sm text-foreground/60 leading-relaxed font-medium mb-4">{item.desc}</p>
-                  
-                  {item.isList && item.points && (
-                    <ul className="space-y-2 mt-2">
-                      {item.points.map((pt, pIdx) => (
-                        <li key={pIdx} className="flex items-center gap-2 text-xs text-foreground/70 font-bold">
-                          <Check className="h-3 w-3 text-accent shrink-0" /> {pt}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
                 </Card>
               ))}
             </div>
