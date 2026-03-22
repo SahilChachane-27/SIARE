@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -8,17 +9,12 @@ import { Button } from '@/components/ui/button';
 import { 
   Calendar, 
   MapPin, 
-  Users, 
   Video, 
   GraduationCap,
   CheckCircle2,
-  ArrowRight,
   RefreshCw,
-  Zap,
-  Clock,
   User,
-  ExternalLink,
-  UserPlus
+  ExternalLink
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';

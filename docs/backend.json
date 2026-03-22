@@ -167,6 +167,17 @@
       },
       "required": ["title", "date", "speaker"]
     },
+    "PastEvent": {
+      "title": "Past Event",
+      "description": "A record of a successfully completed academic event.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["title", "description"]
+    },
     "Inquiry": {
       "title": "Inquiry",
       "description": "A contact or membership inquiry submitted by a user.",
@@ -217,6 +228,10 @@
     "/webinars/{webinarId}": {
       "schema": { "$ref": "#/backend/entities/Webinar" },
       "description": "Collection of scheduled academic webinars."
+    },
+    "/pastEvents/{pastEventId}": {
+      "schema": { "$ref": "#/backend/entities/PastEvent" },
+      "description": "Collection of completed academic activities."
     },
     "/inquiries/{inquiryId}": {
       "schema": { "$ref": "#/backend/entities/Inquiry" },
