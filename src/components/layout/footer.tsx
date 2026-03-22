@@ -17,15 +17,18 @@ import {
 import { useEffect, useState } from 'react';
 
 const platformLinks = [
+  { href: '/about', label: 'About SIARE' },
+  { href: '/membership', label: 'Join SIARE' },
   { href: '/proceedings', label: 'Proceedings' },
   { href: '/events', label: 'Events' },
   { href: '/services', label: 'Academic Solutions' },
+  { href: '/submit-your-paper', label: 'Submit a Conference Proposal' },
 ];
 
 const communityLinks = [
-  { href: '/about', label: 'About SIARE' },
+  { href: '/about', label: 'Guidelines' },
+  { href: '/contact', label: 'FAQs' },
   { href: '/membership', label: 'Membership' },
-  { href: '/submit-your-paper', label: 'Submit Paper' },
   { href: '/contact', label: 'Contact Us' },
 ];
 
@@ -35,9 +38,6 @@ const legalLinks = [
   { href: '/plagiarism-policy', label: 'Plagiarism Policy' },
   { href: '/conflicts-of-interest', label: 'Conflicts of Interest' },
   { href: '/open-access-policy', label: 'Open Access Policy' },
-  { href: '/privacy-policy', label: 'Privacy Policy' },
-  { href: '/accessibility-statement', label: 'Accessibility' },
-  { href: '/hosting-agreement', label: 'Hosting Agreement' },
 ];
 
 const connectLinks = [
