@@ -24,9 +24,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import {
   Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
 } from '@/components/ui/accordion';
 
 interface NavLink {
@@ -41,7 +38,6 @@ const navLinks: NavLink[] = [
   { href: '/membership', label: 'Membership' },
   { href: '/proceedings', label: 'Proceedings' },
   { href: '/events', label: 'Events' },
-  { href: '/contact', label: 'Contact' },
 ];
 
 export function Header() {
@@ -146,7 +142,7 @@ export function Header() {
                         </SheetDescription>
                       </SheetHeader>
                       
-                      <Accordion type="single" collapsible className="w-full">
+                      <div className="flex flex-col w-full">
                         {navLinks.map((link, idx) => (
                           <div key={idx} className="border-b border-white/10">
                             <SheetClose asChild>
@@ -159,7 +155,7 @@ export function Header() {
                             </SheetClose>
                           </div>
                         ))}
-                      </Accordion>
+                      </div>
 
                       <div className="pt-8 w-full">
                         <SheetClose asChild>
