@@ -1,7 +1,7 @@
 
 'use client';
 
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { BookOpen, ExternalLink, RefreshCw, ArrowRight } from 'lucide-react';
@@ -47,33 +47,58 @@ export function ProceedingsHighlights() {
         ) : (featuredJournals && featuredJournals.length > 0) ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {featuredJournals.map((journal: any, index: number) => (
-              <Card key={index} className="overflow-hidden border-none shadow-2xl rounded-2xl group flex flex-col bg-white" data-aos="fade-up" data-aos-delay={index * 100}>
-                <div className="relative aspect-[3/4] w-full shrink-0 flex items-center justify-center p-4 bg-secondary/5">
+              <Card key={index} className="h-full overflow-hidden border-none shadow-2xl rounded-2xl relative group bg-white hover:shadow-primary/5 transition-all duration-500" data-aos="fade-up" data-aos-delay={index * 100}>
+                
+                {/* Image Layer */}
+                <div className="relative aspect-[4/5] w-full overflow-hidden bg-slate-50 shrink-0 flex items-center justify-center p-4">
                   {journal.imageUrl ? (
-                    <Image src={journal.imageUrl} alt={journal.name} fill className="object-contain p-4 transition-transform duration-700 group-hover:scale-110" />
+                    <Image 
+                      src={journal.imageUrl} 
+                      alt={journal.name} 
+                      fill 
+                      className="object-contain p-4 transition-transform duration-700 group-hover:scale-110" 
+                    />
                   ) : (
-                    <BookOpen className="h-12 w-12 text-primary/10" />
+                    <div className="w-full h-full flex items-center justify-center opacity-10">
+                      <BookOpen className="h-16 w-16" />
+                    </div>
                   )}
-                  <div className="absolute top-3 left-3 z-10">
-                    <div className="bg-primary/90 text-white backdrop-blur-sm px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest shadow-sm">{journal.domain}</div>
+                  
+                  {/* Floating Domain Tag - Hidden on hover like events */}
+                  <div className="absolute top-4 left-4 z-30 group-hover:opacity-0 transition-opacity duration-300">
+                    <div className="bg-primary/90 text-white backdrop-blur-sm px-2.5 py-1 rounded-full text-[8px] md:text-[9px] font-black uppercase tracking-widest shadow-sm font-headline italic">
+                      {journal.domain}
+                    </div>
                   </div>
                 </div>
-                <CardContent className="p-6 md:p-8 flex-1 flex flex-col justify-between">
-                  <div className="mb-6">
-                    <h4 className="text-lg font-bold text-primary font-headline italic leading-tight mb-2 line-clamp-2">
+
+                {/* Absolute Overlay (Details revealed on hover) */}
+                <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8 bg-gradient-to-t from-primary/95 via-primary/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out z-20">
+                  <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-in-out whitespace-normal">
+                    
+                    <div className="mb-2">
+                       <div className="bg-accent/20 text-accent text-[8px] font-black px-2 py-0.5 rounded-full uppercase inline-block italic mb-2">
+                         Repository Series
+                       </div>
+                    </div>
+
+                    <h4 className="text-lg md:text-xl font-bold text-white font-headline italic leading-tight mb-4 line-clamp-3">
                       {journal.name}
                     </h4>
-                    <p className="text-[10px] font-bold text-primary/40 uppercase tracking-widest">ISSN: {journal.issn}</p>
-                  </div>
-                  
-                  <div className="pt-4 border-t border-slate-100">
-                    <Button asChild className="w-full bg-primary hover:bg-accent text-white hover:text-primary rounded-xl h-10 text-[9px] font-bold uppercase tracking-widest transition-all">
+                    
+                    <div className="space-y-2 mb-6">
+                      <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-white/80 italic">
+                        <BookOpen className="h-3.5 w-3.5 text-accent shrink-0" /> ISSN: {journal.issn}
+                      </div>
+                    </div>
+
+                    <Button asChild className="w-full bg-accent hover:bg-white text-primary font-black uppercase text-[10px] tracking-widest h-10 md:h-12 rounded-xl transition-all">
                       <a href={journal.link} target="_blank" className="flex items-center justify-center gap-2">
                         View Repository <ExternalLink className="h-3 w-3" />
                       </a>
                     </Button>
                   </div>
-                </CardContent>
+                </div>
               </Card>
             ))}
           </div>
