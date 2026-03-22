@@ -13,7 +13,6 @@ import {
   GraduationCap, 
   Award, 
   Zap, 
-  Download, 
   ShieldCheck, 
   RefreshCw, 
   Trophy, 
@@ -22,14 +21,6 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
-} from "@/components/ui/table";
 import { useFirestore, useCollection } from '@/firebase';
 import { collection, query, orderBy } from 'firebase/firestore';
 import { useMemo } from 'react';
@@ -238,52 +229,6 @@ export default function MembershipPage() {
                 ))}
               </div>
             )}
-          </div>
-        </section>
-
-        {/* Benefits Summary Table */}
-        <section className="py-20 bg-slate-50">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline mb-4 italic" data-aos="fade-up">
-                Benefits Summary
-              </h2>
-              <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
-            </div>
-
-            <div className="overflow-x-auto shadow-2xl rounded-2xl bg-white border border-border/50" data-aos="fade-up">
-              <Table>
-                <TableHeader>
-                  <TableRow className="bg-primary hover:bg-primary">
-                    <TableHead className="text-white font-bold py-6 pl-8 font-headline italic">Benefit</TableHead>
-                    <TableHead className="text-white font-bold text-center font-headline italic">Individual</TableHead>
-                    <TableHead className="text-white font-bold text-center font-headline italic">Student</TableHead>
-                    <TableHead className="text-white font-bold text-center font-headline italic">Institutional</TableHead>
-                    <TableHead className="text-white font-bold text-center font-headline italic">Affiliate</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {[
-                    { label: "Conference Discounts", ind: true, std: true, ins: true, aff: true },
-                    { label: "Proceedings Submission", ind: true, std: true, ins: true, aff: true },
-                    { label: "Training Programs", ind: true, std: true, ins: true, aff: true },
-                    { label: "Host Events", ind: false, std: false, ins: true, aff: true },
-                    { label: "Research Collaboration Access", ind: true, std: true, ins: true, aff: true },
-                    { label: "Editorial Participation", ind: true, std: false, ins: true, aff: true },
-                    { label: "Member Certificate", ind: true, std: true, ins: true, aff: true },
-                  ].map((row, i) => (
-                    <TableRow key={i} className="hover:bg-secondary/10 transition-colors">
-                      <TableCell className="font-bold text-primary/80 py-4 pl-8 uppercase text-[10px] tracking-wider font-headline italic">{row.label}</TableCell>
-                      {[row.ind, row.std, row.ins, row.aff].map((val, idx) => (
-                        <TableCell key={idx} className="text-center py-4">
-                          {val ? <CheckCircle2 className="h-5 w-5 text-accent mx-auto" /> : <span className="text-primary/10">—</span>}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
           </div>
         </section>
 
