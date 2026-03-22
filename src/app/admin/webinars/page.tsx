@@ -268,7 +268,7 @@ export default function WebinarsManagement() {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Date</label>
-                      <Input value={date} onChange={(e) => setDate(e.target.value)} required placeholder="20 June 2025" className="rounded-xl border-slate-100 h-11" />
+                      <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} required className="rounded-xl border-slate-100 h-11" />
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Time</label>
@@ -384,7 +384,7 @@ export default function WebinarsManagement() {
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                        <div className="grid grid-cols-2 gap-4 mb-4">
                           <div className="flex items-center gap-2 text-[10px] font-bold text-primary/60">
                             <Calendar className="h-3.5 w-3.5 text-accent" /> {webinar.date}
                           </div>

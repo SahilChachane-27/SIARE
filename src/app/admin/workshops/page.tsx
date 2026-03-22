@@ -268,7 +268,7 @@ export default function WorkshopsManagement() {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Date</label>
-                      <Input value={date} onChange={(e) => setDate(e.target.value)} required placeholder="15 May 2025" className="rounded-xl border-slate-100 h-11" />
+                      <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} required className="rounded-xl border-slate-100 h-11" />
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-[9px] font-black uppercase text-primary/40 tracking-[0.2em] ml-1">Time</label>
