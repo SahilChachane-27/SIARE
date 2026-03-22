@@ -40,7 +40,6 @@ const navLinks: NavLink[] = [
   { href: '/about', label: 'About' },
   { href: '/membership', label: 'Membership' },
   { href: '/proceedings', label: 'Proceedings' },
-  { href: '/policies', label: 'Policies' },
   { href: '/events', label: 'Events' },
   { href: '/contact', label: 'Contact' },
 ];

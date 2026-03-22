@@ -7,7 +7,7 @@ export default function EthicsGuidelinesRedirect() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace('/policies');
+    router.replace('/about');
   }, [router]);
 
   return (

@@ -394,11 +394,6 @@ export default function MembershipPage() {
                 <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-extrabold rounded-funky px-8 h-10 text-sm shadow-xl shadow-accent/20 transition-all hover:scale-105">
                   <Link href="/apply-membership">Apply for Membership</Link>
                 </Button>
-                <Button asChild variant="outline" className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-funky px-8 h-10 text-sm font-bold transition-all hover:scale-105">
-                  <Link href="/policies" className="flex items-center gap-2">
-                    <Download className="h-5 w-5" /> Download Brochure
-                  </Link>
-                </Button>
               </div>
             </div>
           </div>

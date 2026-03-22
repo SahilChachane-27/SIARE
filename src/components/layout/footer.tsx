@@ -24,17 +24,8 @@ const quickLinks = [
   { href: '/submit-your-paper', label: 'Submit a Conference Proposal' },
 ];
 
-const policyLinks = [
-  { href: '/policies', label: 'Publication Ethics' },
-  { href: '/policies', label: 'Peer Review Policy' },
-  { href: '/policies', label: 'Plagiarism Policy' },
-  { href: '/policies', label: 'Conflict of Interest' },
-  { href: '/policies', label: 'Open Access Policy' },
-];
-
 const resourceLinks = [
   { href: '/proceedings', label: 'Proceedings' },
-  { href: '/policies', label: 'Guidelines' },
   { href: '/contact', label: 'FAQs' },
   { href: '/contact', label: 'Contact Us' },
 ];
@@ -62,7 +53,7 @@ export function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 pt-16 md:pt-24 pb-8 md:pb-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12 mb-16">
           <div className="space-y-6 lg:col-span-1">
             <Link href="/" className="flex items-center gap-3 transition-transform hover:scale-[1.02] shrink-0">
               <div className="relative h-20 w-56 md:h-28 md:w-80">
@@ -83,20 +74,6 @@ export function Footer() {
             <h5 className="font-bold text-lg md:text-xl text-accent mb-6 font-headline italic">Platform</h5>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className="text-sm md:text-base text-white hover:text-accent transition-colors flex items-center gap-2 group italic">
-                    <ArrowRight className="h-3 w-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h5 className="font-bold text-lg md:text-xl text-accent mb-6 font-headline italic">Policies</h5>
-            <ul className="space-y-3">
-              {policyLinks.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="text-sm md:text-base text-white hover:text-accent transition-colors flex items-center gap-2 group italic">
                     <ArrowRight className="h-3 w-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all" />
