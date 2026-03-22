@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Header } from '@/components/layout/header';
@@ -28,6 +27,7 @@ export default function EventsPage() {
   const [today, setToday] = useState(new Date());
 
   useEffect(() => {
+    // Update "today" reference every hour to keep dynamic filtering accurate
     const timer = setInterval(() => setToday(new Date()), 1000 * 60 * 60);
     return () => clearInterval(timer);
   }, []);
@@ -48,12 +48,12 @@ export default function EventsPage() {
   const { data: allWorks, loading: workLoading } = useCollection(workshopsQuery);
   const { data: allWebs, loading: webLoading } = useCollection(webinarsQuery);
 
-  // Dynamic filtering based on current date
+  // Filter Upcoming Events
   const upcomingConfs = useMemo(() => allConfs?.filter(c => !isPast(c.startDate || c.date)), [allConfs, today]);
   const upcomingWorks = useMemo(() => allWorks?.filter(w => !isPast(w.date)), [allWorks, today]);
   const upcomingWebs = useMemo(() => allWebs?.filter(w => !isPast(w.date)), [allWebs, today]);
 
-  // Combine passed events into one archive based on dates
+  // Automated Archive (Pass-through filtering for all event types)
   const combinedPast = useMemo(() => {
     const pastFromConfs = allConfs?.filter(c => isPast(c.startDate || c.date)).map(c => ({ ...c, type: 'Conference', icon: Presentation }));
     const pastFromWorks = allWorks?.filter(w => isPast(w.date)).map(w => ({ ...w, type: 'Workshop', icon: GraduationCap }));
@@ -63,7 +63,7 @@ export default function EventsPage() {
       .sort((a, b) => {
         const dateA = new Date(a.startDate || a.date).getTime();
         const dateB = new Date(b.startDate || b.date).getTime();
-        return dateB - dateA; // Newest past events first
+        return dateB - dateA; // Newest archived events first
       });
   }, [allConfs, allWorks, allWebs, today]);
 
@@ -74,29 +74,47 @@ export default function EventsPage() {
       {event.imageUrl && (
         <div className="relative aspect-video w-full overflow-hidden">
           <Image src={event.imageUrl} alt={event.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
-          {isPastCard && <div className="absolute inset-0 bg-black/40 flex items-center justify-center"><span className="bg-white/90 text-primary text-[8px] font-black uppercase px-2 py-1 rounded-full">Completed</span></div>}
+          {isPastCard && (
+            <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+              <span className="bg-white/90 text-primary text-[8px] font-black uppercase px-2 py-1 rounded-full shadow-lg">Archived</span>
+            </div>
+          )}
         </div>
       )}
       <div className="p-6 flex flex-col flex-1">
         <div className="flex items-center gap-2 mb-3">
           {event.icon && <event.icon className="h-3.5 w-3.5 text-accent" />}
-          <span className="text-[8px] font-black uppercase text-primary/40 tracking-widest">{event.type || 'Event'}</span>
+          <span className="text-[8px] font-black uppercase text-primary/40 tracking-widest">{event.type || 'Academic Event'}</span>
         </div>
-        <h3 className="text-base font-bold text-primary mb-4 italic group-hover:text-accent transition-colors line-clamp-2 leading-tight">{event.title}</h3>
+        <h3 className="text-base font-bold text-primary mb-4 italic group-hover:text-accent transition-colors line-clamp-2 leading-tight uppercase tracking-tighter">
+          {event.title}
+        </h3>
         
         <div className="space-y-2 mb-6 flex-1 text-[11px]">
-          {(event.startDate || event.date) && <div className="flex items-center gap-2 text-foreground/70 font-medium"><Calendar className="h-3 w-3 text-accent shrink-0" /> {event.startDate || event.date}</div>}
-          {(event.location || event.venue) && <div className="flex items-center gap-2 text-foreground/70 font-medium"><MapPin className="h-3 w-3 text-accent shrink-0" /> {event.location || event.venue}</div>}
-          {event.speaker && <div className="flex items-center gap-2 text-foreground/70 font-medium"><User className="h-3 w-3 text-accent shrink-0" /> {event.speaker}</div>}
+          {(event.startDate || event.date) && (
+            <div className="flex items-center gap-2 text-foreground/70 font-medium">
+              <Calendar className="h-3 w-3 text-accent shrink-0" /> {event.startDate || event.date}
+            </div>
+          )}
+          {(event.location || event.venue) && (
+            <div className="flex items-center gap-2 text-foreground/70 font-medium">
+              <MapPin className="h-3 w-3 text-accent shrink-0" /> {event.location || event.venue}
+            </div>
+          )}
+          {event.speaker && (
+            <div className="flex items-center gap-2 text-foreground/70 font-medium">
+              <User className="h-3 w-3 text-accent shrink-0" /> {event.speaker}
+            </div>
+          )}
         </div>
 
         {!isPastCard ? (
-          <Button asChild size="sm" className="w-full bg-primary hover:bg-accent text-white rounded-xl text-[10px] uppercase font-bold tracking-widest mt-auto">
+          <Button asChild size="sm" className="w-full bg-primary hover:bg-accent text-white rounded-xl text-[10px] uppercase font-bold tracking-widest mt-auto shadow-md">
             <Link href="/contact">Register Now</Link>
           </Button>
         ) : (
           <div className="mt-auto pt-4 border-t border-slate-200 flex items-center gap-2 text-[8px] font-black uppercase text-green-600">
-            <CheckCircle2 className="h-3.5 w-3.5" /> Successfully Completed
+            <CheckCircle2 className="h-3.5 w-3.5" /> Event Successfully Completed
           </div>
         )}
       </div>
@@ -116,7 +134,7 @@ export default function EventsPage() {
               </h1>
               <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
               <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed font-medium italic font-headline">
-                SIARE organizes and partners with universities worldwide to host impactful academic gatherings and training programs.
+                Empowering scholars through international conferences, thematic workshops, and virtual lectures.
               </p>
             </div>
           </div>
@@ -135,13 +153,13 @@ export default function EventsPage() {
         {loading ? (
           <div className="flex flex-col items-center justify-center py-32 gap-4">
             <RefreshCw className="h-10 w-10 text-accent animate-spin" />
-            <p className="text-xs font-bold uppercase tracking-widest text-primary/40">Synchronizing Global Registry...</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-primary/40">Synchronizing Global Event Registry...</p>
           </div>
         ) : (
           <div className="space-y-0">
             {/* Upcoming Conferences */}
             <section className="py-20 bg-white">
-              <div className="container mx-auto px-4 md:px-8">
+              <div className="container mx-auto px-4 md:px-8 max-w-[1400px]">
                 <div className="text-center mb-16">
                   <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic mb-4" data-aos="fade-up">Upcoming Conferences</h2>
                   <div className="w-16 h-1 bg-accent mx-auto"></div>
@@ -149,7 +167,7 @@ export default function EventsPage() {
                 {upcomingConfs && upcomingConfs.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {upcomingConfs.map(e => (
-                      <div key={e.id}>
+                      <div key={e.id} data-aos="fade-up">
                         <EventCard event={{...e, type: 'Conference', icon: Presentation}} />
                       </div>
                     ))}
@@ -162,7 +180,7 @@ export default function EventsPage() {
 
             {/* Upcoming Workshops */}
             <section className="py-20 bg-slate-50/50">
-              <div className="container mx-auto px-4 md:px-8">
+              <div className="container mx-auto px-4 md:px-8 max-w-[1400px]">
                 <div className="text-center mb-16">
                   <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic mb-4" data-aos="fade-up">Upcoming Workshops</h2>
                   <div className="w-16 h-1 bg-accent mx-auto"></div>
@@ -170,7 +188,7 @@ export default function EventsPage() {
                 {upcomingWorks && upcomingWorks.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {upcomingWorks.map(e => (
-                      <div key={e.id}>
+                      <div key={e.id} data-aos="fade-up">
                         <EventCard event={{...e, type: 'Workshop', icon: GraduationCap}} />
                       </div>
                     ))}
@@ -183,7 +201,7 @@ export default function EventsPage() {
 
             {/* Upcoming Webinars */}
             <section className="py-20 bg-white">
-              <div className="container mx-auto px-4 md:px-8">
+              <div className="container mx-auto px-4 md:px-8 max-w-[1400px]">
                 <div className="text-center mb-16">
                   <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic mb-4" data-aos="fade-up">Upcoming Webinars</h2>
                   <div className="w-16 h-1 bg-accent mx-auto"></div>
@@ -191,7 +209,7 @@ export default function EventsPage() {
                 {upcomingWebs && upcomingWebs.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {upcomingWebs.map(e => (
-                      <div key={e.id}>
+                      <div key={e.id} data-aos="fade-up">
                         <EventCard event={{...e, type: 'Webinar', icon: Video}} />
                       </div>
                     ))}
@@ -202,24 +220,24 @@ export default function EventsPage() {
               </div>
             </section>
 
-            {/* Archive Section - Automated based on dates */}
-            <section className="py-20 bg-slate-50">
-              <div className="container mx-auto px-4 md:px-8">
+            {/* Automated Archive Section */}
+            <section className="py-24 bg-slate-50 border-t border-slate-200">
+              <div className="container mx-auto px-4 md:px-8 max-w-[1400px]">
                 <div className="text-center mb-16">
-                  <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic mb-4" data-aos="fade-up">Archive & Completed Activities</h2>
+                  <h2 className="text-2xl md:text-3xl font-bold text-primary font-headline italic mb-4" data-aos="fade-up">Archive & Past Events</h2>
                   <div className="w-16 h-1 bg-accent mx-auto"></div>
-                  <p className="text-foreground/60 mt-6 max-w-2xl mx-auto text-xs font-medium italic">Building credibility through a global academic footprint.</p>
+                  <p className="text-foreground/60 mt-6 max-w-2xl mx-auto text-xs font-medium italic">Building a global academic footprint through successful collaborations.</p>
                 </div>
                 {combinedPast.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {combinedPast.map((e, idx) => (
-                      <div key={e.id || idx}>
+                      <div key={e.id || idx} data-aos="fade-up" data-aos-delay={idx * 50}>
                         <EventCard event={e} isPastCard={true} />
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-12 italic text-primary/30 text-sm">Historical archive is currently empty.</div>
+                  <div className="text-center py-12 italic text-primary/30 text-sm">The historical archive is currently empty.</div>
                 )}
               </div>
             </section>
@@ -230,11 +248,13 @@ export default function EventsPage() {
         <section className="py-20 bg-primary text-white text-center relative overflow-hidden">
           <div className="container mx-auto px-8 md:px-16 lg:px-32 relative z-10">
             <div className="max-w-4xl mx-auto" data-aos="zoom-in">
-              <h2 className="text-2xl md:text-4xl font-bold font-headline mb-6 italic text-accent">Ready to Partner?</h2>
-              <p className="text-sm md:text-lg text-white/70 mb-10 font-medium italic">Connect with our academic committee to establish a conference partnership or propose a workshop.</p>
+              <h2 className="text-2xl md:text-4xl font-bold font-headline mb-6 italic text-accent uppercase tracking-tighter">Collaborate With SIARE</h2>
+              <p className="text-sm md:text-lg text-white/70 mb-10 font-medium italic leading-relaxed">
+                Interested in co-hosting a conference or proposing a training workshop? Our committee is ready to support your academic initiative.
+              </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild className="bg-accent hover:bg-white text-accent-foreground hover:text-primary font-extrabold rounded-xl px-10 h-14 text-sm shadow-xl transition-all hover:scale-105 italic">
-                  <Link href="/contact">Inquire Now</Link>
+                  <Link href="/contact">Inquire for Partnership</Link>
                 </Button>
               </div>
             </div>
