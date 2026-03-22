@@ -62,7 +62,7 @@ export function Footer() {
 
   return (
     <footer className="bg-primary text-primary-foreground overflow-hidden border-t border-accent/10">
-      <div className="container mx-auto px-8 sm:px-12 md:px-20 lg:px-40 pt-16 pb-10">
+      <div className="container mx-auto px-8 sm:px-12 md:px-20 lg:px-32 pt-16 pb-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand Identity Column */}
           <div className="space-y-6 lg:col-span-1">
@@ -76,18 +76,18 @@ export function Footer() {
                 />
               </div>
             </Link>
-            <p className="text-base leading-relaxed text-white/60 font-medium italic max-w-xs">
+            <p className="text-sm leading-relaxed text-white/60 font-medium italic max-w-xs">
               Empowering global academic communities through integrated research, ethical publishing, and international collaboration.
             </p>
           </div>
 
           {/* Platform Column */}
           <div>
-            <h5 className="font-bold text-lg text-accent mb-6 uppercase tracking-widest italic">Platform</h5>
+            <h5 className="font-bold text-base text-accent mb-6 uppercase tracking-widest italic">Platform</h5>
             <ul className="space-y-3">
               {platformLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-base text-white/80 hover:text-accent transition-all flex items-center group italic">
+                  <Link href={link.href} className="text-sm text-white/80 hover:text-accent transition-all flex items-center group italic">
                     <ChevronRight className="h-3 w-3 mr-2 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
                     {link.label}
                   </Link>
@@ -98,11 +98,11 @@ export function Footer() {
 
           {/* Legal Column */}
           <div>
-            <h5 className="font-bold text-lg text-accent mb-6 uppercase tracking-widest italic">Legal</h5>
+            <h5 className="font-bold text-base text-accent mb-6 uppercase tracking-widest italic">Legal</h5>
             <ul className="space-y-3">
               {legalLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-base text-white/80 hover:text-accent transition-all flex items-center group italic">
+                  <Link href={link.href} className="text-sm text-white/80 hover:text-accent transition-all flex items-center group italic">
                     <ChevronRight className="h-3 w-3 mr-2 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
                     {link.label}
                   </Link>
@@ -113,19 +113,19 @@ export function Footer() {
 
           {/* Community Column */}
           <div>
-            <h5 className="font-bold text-lg text-accent mb-6 uppercase tracking-widest italic">Community</h5>
+            <h5 className="font-bold text-base text-accent mb-6 uppercase tracking-widest italic">Community</h5>
             <ul className="space-y-3">
               {communityLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-base text-white/80 hover:text-accent transition-all flex items-center group italic">
+                  <Link href={link.href} className="text-sm text-white/80 hover:text-accent transition-all flex items-center group italic">
                     <ChevronRight className="h-3 w-3 mr-2 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
                     {link.label}
                   </Link>
                 </li>
               ))}
               <li className="pt-4 border-t border-white/5 mt-4">
-                <p className="flex items-center gap-3 italic text-base text-white group">
-                  <Mail className="h-5 w-5 text-accent shrink-0" />
+                <p className="flex items-center gap-3 italic text-sm text-white group">
+                  <Mail className="h-4 w-4 text-accent shrink-0" />
                   <a href="mailto:editor@academicproceeding.org" className="hover:text-accent transition-colors truncate">editor@academicproceeding.org</a>
                 </p>
               </li>
@@ -133,8 +133,8 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Social Icons Section */}
-        <div className="flex flex-wrap justify-start gap-4 mb-10 border-t border-white/5 pt-10">
+        {/* Social Icons Section - Centered as requested */}
+        <div className="flex flex-wrap justify-center gap-4 mb-10 border-t border-white/5 pt-10">
           {connectLinks.map((link) => (
             <a 
               key={link.label} 
@@ -153,10 +153,10 @@ export function Footer() {
         <div className="text-left border-t border-white/5 pt-10 space-y-4">
           {isClient && (
             <>
-              <p className="text-sm font-black tracking-widest text-white uppercase max-w-5xl leading-relaxed opacity-40">
+              <p className="text-[10px] font-black tracking-widest text-white uppercase max-w-5xl leading-relaxed opacity-40">
                 Copyright © {year} Society of Integrated Academic Research and Education (SIARE). All rights are reserved.
               </p>
-              <div className="flex flex-wrap justify-start gap-x-6 gap-y-2 text-xs font-black tracking-widest text-white/30 uppercase pb-6">
+              <div className="flex flex-wrap justify-start gap-x-6 gap-y-2 text-[9px] font-black tracking-widest text-white/30 uppercase pb-6">
                 <button className="hover:text-white transition-colors">Terms & Conditions</button>
                 <span className="opacity-20 hidden sm:inline">|</span>
                 <button className="hover:text-white transition-colors">Legal Notice</button>
