@@ -45,9 +45,9 @@ export default function EventsPage() {
   const webQuery = useMemo(() => db ? query(collection(db, 'webinars'), orderBy('order', 'asc')) : null, [db]);
   const pastQuery = useMemo(() => db ? query(collection(db, 'pastEvents'), orderBy('order', 'asc')) : null, [db]);
 
-  const { data: allConfs, loading: confLoading } = useCollection(allConfsQuery);
-  const { data: allWorks, loading: workLoading } = useCollection(allWorksQuery);
-  const { data: allWebs, loading: webLoading } = useCollection(allWebsQuery);
+  const { data: allConfs, loading: confLoading } = useCollection(confQuery);
+  const { data: allWorks, loading: workLoading } = useCollection(workQuery);
+  const { data: allWebs, loading: webLoading } = useCollection(webQuery);
   const { data: manualPast, loading: pastLoading } = useCollection(pastQuery);
 
   // Dynamic filtering based on current date
@@ -69,7 +69,7 @@ export default function EventsPage() {
   const loading = confLoading || workLoading || webLoading || pastLoading;
 
   const EventCard = ({ event, isPastCard = false }: { event: any, isPastCard?: boolean }) => (
-    <Card className={`flex flex-col border-0 border-l-4 overflow-hidden ${event.color || 'border-primary'} shadow-xl rounded-2xl bg-slate-50 hover:bg-white transition-all duration-300 group`}>
+    <Card className={`flex flex-col border-0 border-l-4 overflow-hidden ${event.color || 'border-primary'} shadow-xl rounded-2xl bg-slate-50 hover:bg-white transition-all duration-300 group h-full`}>
       {event.imageUrl && (
         <div className="relative aspect-video w-full overflow-hidden">
           <Image src={event.imageUrl} alt={event.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
@@ -99,7 +99,7 @@ export default function EventsPage() {
           </Button>
         ) : (
           <div className="mt-auto pt-4 border-t border-slate-200 flex items-center gap-2 text-[8px] font-black uppercase text-green-600">
-            <CheckCircle2 className="h-3 w-3" /> Successfully Completed
+            <CheckCircle2 className="h-3.5 w-3.5" /> Successfully Completed
           </div>
         )}
       </div>
@@ -151,7 +151,11 @@ export default function EventsPage() {
                 </div>
                 {upcomingConfs && upcomingConfs.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {upcomingConfs.map(e => <EventCard key={e.id} event={{...e, type: 'Conference', icon: Presentation}} />)}
+                    {upcomingConfs.map(e => (
+                      <div key={e.id}>
+                        <EventCard event={{...e, type: 'Conference', icon: Presentation}} />
+                      </div>
+                    ))}
                   </div>
                 ) : (
                   <div className="text-center py-12 italic text-primary/30 text-sm">No upcoming conferences currently scheduled.</div>
@@ -168,7 +172,11 @@ export default function EventsPage() {
                 </div>
                 {upcomingWorks && upcomingWorks.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {upcomingWorks.map(e => <EventCard key={e.id} event={{...e, type: 'Workshop', icon: GraduationCap}} />)}
+                    {upcomingWorks.map(e => (
+                      <div key={e.id}>
+                        <EventCard event={{...e, type: 'Workshop', icon: GraduationCap}} />
+                      </div>
+                    ))}
                   </div>
                 ) : (
                   <div className="text-center py-12 italic text-primary/30 text-sm">No workshops listed at this time.</div>
@@ -185,7 +193,11 @@ export default function EventsPage() {
                 </div>
                 {upcomingWebs && upcomingWebs.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {upcomingWebs.map(e => <EventCard key={e.id} event={{...e, type: 'Webinar', icon: Video}} />)}
+                    {upcomingWebs.map(e => (
+                      <div key={e.id}>
+                        <EventCard event={{...e, type: 'Webinar', icon: Video}} />
+                      </div>
+                    ))}
                   </div>
                 ) : (
                   <div className="text-center py-12 italic text-primary/30 text-sm">No online sessions scheduled for the near future.</div>
@@ -203,7 +215,11 @@ export default function EventsPage() {
                 </div>
                 {combinedPast.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {combinedPast.map((e, idx) => <EventCard key={e.id || idx} event={e} isPastCard={true} />)}
+                    {combinedPast.map((e, idx) => (
+                      <div key={e.id || idx}>
+                        <EventCard event={e} isPastCard={true} />
+                      </div>
+                    ))}
                   </div>
                 ) : (
                   <div className="text-center py-12 italic text-primary/30 text-sm">Historical archive is currently empty.</div>
