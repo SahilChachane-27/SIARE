@@ -30,6 +30,11 @@ const communityLinks = [
 ];
 
 const legalLinks = [
+  { href: '/publication-ethics', label: 'Publication Ethics' },
+  { href: '/peer-review-policy', label: 'Peer Review Policy' },
+  { href: '/plagiarism-policy', label: 'Plagiarism Policy' },
+  { href: '/conflicts-of-interest', label: 'Conflicts of Interest' },
+  { href: '/open-access-policy', label: 'Open Access Policy' },
   { href: '/privacy-policy', label: 'Privacy Policy' },
   { href: '/accessibility-statement', label: 'Accessibility' },
   { href: '/hosting-agreement', label: 'Hosting Agreement' },
@@ -57,7 +62,7 @@ export function Footer() {
 
   return (
     <footer className="bg-primary text-primary-foreground overflow-hidden border-t border-accent/10">
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 pt-8 pb-4">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 pt-6 pb-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           <div className="space-y-2 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 transition-transform hover:scale-[1.02] shrink-0">
@@ -90,9 +95,9 @@ export function Footer() {
           </div>
 
           <div>
-            <h5 className="font-bold text-[10px] text-accent mb-2 uppercase tracking-widest italic">Community</h5>
+            <h5 className="font-bold text-[10px] text-accent mb-2 uppercase tracking-widest italic">Legal</h5>
             <ul className="space-y-1">
-              {communityLinks.map((link) => (
+              {legalLinks.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="text-[10px] text-white/80 hover:text-accent transition-colors flex items-center gap-2 group italic">
                     <ArrowRight className="h-2 w-2 opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all" />
@@ -104,9 +109,9 @@ export function Footer() {
           </div>
 
           <div>
-            <h5 className="font-bold text-[10px] text-accent mb-2 uppercase tracking-widest italic">Legal</h5>
+            <h5 className="font-bold text-[10px] text-accent mb-2 uppercase tracking-widest italic">Community</h5>
             <ul className="space-y-1">
-              {legalLinks.map((link) => (
+              {communityLinks.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="text-[10px] text-white/80 hover:text-accent transition-colors flex items-center gap-2 group italic">
                     <ArrowRight className="h-2 w-2 opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all" />
