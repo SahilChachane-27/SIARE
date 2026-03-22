@@ -69,7 +69,7 @@ export function Footer() {
             <Link href="/" className="flex items-center gap-2 transition-transform hover:scale-[1.02] shrink-0">
               <div className="relative h-10 w-44 md:h-12 md:w-52">
                 <Image 
-                  src="/footer.png" 
+                  src="/logo.png" 
                   alt="SIARE Logo" 
                   fill 
                   className="object-contain object-left"
