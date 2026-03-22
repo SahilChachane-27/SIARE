@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useUser, useAuth, useFirestore, useCollection } from '@/firebase';
@@ -16,7 +17,6 @@ import {
   Presentation,
   CheckCircle2,
   Bell,
-  History,
   UserPlus,
   Trash2,
   Mail,
@@ -369,12 +369,9 @@ export default function AdminDashboard() {
               {/* Utility Tools */}
               <Card className="rounded-xl border-none shadow-lg bg-white p-6">
                 <h3 className="text-sm font-bold text-primary font-headline italic mb-6">System Utilities</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <Button variant="outline" size="sm" className="rounded-lg h-10 text-[8px] font-black uppercase tracking-widest border-slate-100 hover:bg-slate-50 transition-all" asChild>
-                    <Link href="/admin/pricing"><CreditCard className="mr-2 h-3.5 w-3.5" /> Plans</Link>
-                  </Button>
-                  <Button variant="outline" size="sm" className="rounded-lg h-10 text-[8px] font-black uppercase tracking-widest border-slate-100 hover:bg-slate-50 transition-all" asChild>
-                    <Link href="/admin/past-events"><History className="mr-2 h-3.5 w-3.5" /> Archive</Link>
+                <div className="grid grid-cols-1 gap-4">
+                  <Button variant="outline" size="sm" className="rounded-lg h-10 text-[8px] font-black uppercase tracking-widest border-slate-100 hover:bg-slate-50 transition-all w-full justify-start" asChild>
+                    <Link href="/admin/pricing"><CreditCard className="mr-2 h-3.5 w-3.5" /> Manage Pricing Plans</Link>
                   </Button>
                 </div>
               </Card>
