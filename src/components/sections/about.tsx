@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { Target, Lightbulb } from 'lucide-react';
 
 export function About() {
   return (
@@ -35,32 +34,6 @@ export function About() {
               <p className="text-base md:text-lg text-foreground/80 leading-relaxed font-medium">
                 SIARE connects leading scholars, emerging researchers, universities, and research organizations through conferences, proceedings publications, and collaborative projects that accelerate knowledge creation.
               </p>
-            </div>
-
-            <div className="grid gap-6 md:gap-8">
-              <div className="flex gap-5 p-6 md:p-8 bg-slate-50 rounded-[2rem] border-l-4 border-accent shadow-sm hover:shadow-md transition-shadow group">
-                <div className="h-12 w-12 rounded-xl bg-accent/10 flex items-center justify-center shrink-0 group-hover:bg-accent transition-colors">
-                  <Target className="h-6 w-6 text-accent group-hover:text-white" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-primary text-lg md:text-xl font-headline mb-2 italic">Our Mission</h4>
-                  <p className="text-xs md:text-sm text-foreground/70 leading-relaxed font-medium">
-                    To empower global academic communities by enabling high-quality research dissemination, fostering multidisciplinary collaboration, and building an ecosystem where researchers can exchange ideas, publish outcomes, and contribute to global scientific advancement.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex gap-5 p-6 md:p-8 bg-slate-50 rounded-[2rem] border-l-4 border-accent shadow-sm hover:shadow-md transition-shadow group">
-                <div className="h-12 w-12 rounded-xl bg-accent/10 flex items-center justify-center shrink-0 group-hover:bg-accent transition-colors">
-                  <Lightbulb className="h-6 w-6 text-accent group-hover:text-white" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-primary text-lg md:text-xl font-headline mb-2 italic">Our Vision</h4>
-                  <p className="text-xs md:text-sm text-foreground/70 leading-relaxed font-medium">
-                    To become a globally trusted academic society known for shaping impactful research, integrating innovation with education, and providing a unified platform for scholarly exchange across all major disciplines.
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </div>
