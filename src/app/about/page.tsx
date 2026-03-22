@@ -97,8 +97,8 @@ export default function AboutPage() {
         {/* Who We Are Section */}
         <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="relative aspect-square rounded-[2rem] overflow-hidden shadow-2xl" data-aos="fade-right">
+            <div className="grid lg:grid-cols-2 gap-16 items-stretch">
+              <div className="relative h-full min-h-[400px] rounded-[2rem] overflow-hidden shadow-2xl" data-aos="fade-right">
                 <Image
                   src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
                   alt="SIARE Academic Community"
@@ -107,7 +107,7 @@ export default function AboutPage() {
                   data-ai-hint="academic publishing"
                 />
               </div>
-              <div className="space-y-8" data-aos="fade-left">
+              <div className="space-y-8 flex flex-col justify-center" data-aos="fade-left">
                 <div>
                   <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline italic">
                     Who We Are
