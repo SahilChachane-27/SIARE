@@ -107,38 +107,38 @@ export default function AboutPage() {
                   data-ai-hint="academic publishing"
                 />
               </div>
-              <div className="space-y-8 flex flex-col justify-center" data-aos="fade-left">
+              <div className="space-y-6 flex flex-col justify-center" data-aos="fade-left">
                 <div>
                   <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline italic">
                     Who We Are
                   </h2>
                   <div className="w-20 h-1 bg-accent mt-2"></div>
                 </div>
-                <p className="text-lg text-foreground/80 leading-relaxed font-medium">
+                <p className="text-sm text-foreground/80 leading-relaxed font-medium">
                   The Society of Integrated Academic Research and Education (SIARE) is an international scholarly organization dedicated to advancing cross-disciplinary research, promoting academic excellence, and supporting global collaboration.
                 </p>
-                <p className="text-lg text-foreground/80 leading-relaxed font-medium">
+                <p className="text-sm text-foreground/80 leading-relaxed font-medium">
                   SIARE connects leading scholars, emerging researchers, universities, and research organizations through conferences, proceedings publications, and collaborative projects that accelerate knowledge creation.
                 </p>
                 
-                <div className="flex flex-col gap-6">
-                  <Card className="bg-card border-0 border-l-4 border-accent shadow-lg rounded-[2rem] overflow-hidden h-full">
-                    <CardHeader className="py-4">
-                      <CardTitle className="text-primary text-xl font-headline italic">Our Mission</CardTitle>
+                <div className="flex flex-col gap-4">
+                  <Card className="bg-card border-0 border-l-4 border-accent shadow-lg rounded-[1.5rem] overflow-hidden">
+                    <CardHeader className="py-3 px-6">
+                      <CardTitle className="text-primary text-base font-headline italic">Our Mission</CardTitle>
                     </CardHeader>
-                    <CardContent className="pb-6">
-                      <p className="text-sm text-foreground/80 leading-relaxed font-medium">
+                    <CardContent className="pb-4 px-6">
+                      <p className="text-xs text-foreground/80 leading-relaxed font-medium">
                         To empower global academic communities by enabling high-quality research dissemination, fostering multidisciplinary collaboration, and building an ecosystem where researchers can exchange ideas, publish outcomes, and contribute to global scientific advancement.
                       </p>
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-card border-0 border-l-4 border-accent shadow-lg rounded-[2rem] overflow-hidden h-full">
-                    <CardHeader className="py-4">
-                      <CardTitle className="text-primary text-xl font-headline italic">Our Vision</CardTitle>
+                  <Card className="bg-card border-0 border-l-4 border-accent shadow-lg rounded-[1.5rem] overflow-hidden">
+                    <CardHeader className="py-3 px-6">
+                      <CardTitle className="text-primary text-base font-headline italic">Our Vision</CardTitle>
                     </CardHeader>
-                    <CardContent className="pb-6">
-                      <p className="text-sm text-foreground/80 leading-relaxed font-medium">
+                    <CardContent className="pb-4 px-6">
+                      <p className="text-xs text-foreground/80 leading-relaxed font-medium">
                         To become a globally trusted academic society known for shaping impactful research, integrating innovation with education, and providing a unified platform for scholarly exchange across all major disciplines.
                       </p>
                     </CardContent>
