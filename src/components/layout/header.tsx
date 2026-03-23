@@ -160,7 +160,7 @@ export function Header() {
                       <div className="pt-8 w-full">
                         <SheetClose asChild>
                           <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-funky h-12 text-sm uppercase italic">
-                            <Link href="/submit-your-paper">Submit Your Paper</Link>
+                            <Link href="/contact">Contact us</Link>
                           </Button>
                         </SheetClose>
                       </div>
