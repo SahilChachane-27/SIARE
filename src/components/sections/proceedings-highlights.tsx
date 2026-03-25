@@ -35,7 +35,7 @@ export function ProceedingsHighlights() {
       <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32">
         <div className="text-center mb-6 md:mb-8" data-aos="fade-up">
           <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-1.5 font-sans">Research Repository</h2>
-          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary font-headline italic leading-tight">Featured Proceedings</h3>
+          <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold text-primary font-headline italic leading-tight">Featured Proceedings</h3>
           <div className="mt-2.5 w-12 md:w-16 h-1 bg-accent mx-auto"></div>
         </div>
 
