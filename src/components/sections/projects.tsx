@@ -60,9 +60,9 @@ export function Projects() {
   return (
     <section id="upcoming-events" className="py-16 md:py-24 bg-white overflow-hidden font-body">
       <div className="w-full">
-        <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 mb-12 md:mb-16">
+        <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 mb-8 md:mb-8">
           <div className="text-center" data-aos="fade-up">
-            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-3 font-sans">Academic Opportunities</h2>
+            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-1 font-sans">Academic Opportunities</h2>
             <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold text-primary font-headline italic leading-tight">Upcoming Events</h3>
             <div className="mt-4 w-16 md:w-24 h-1 bg-accent mx-auto"></div>
           </div>
@@ -157,7 +157,7 @@ export function Projects() {
           </div>
         )}
 
-        <div className="container mx-auto px-4 mt-12 md:mt-16 text-center" data-aos="fade-up">
+        <div className="container mx-auto px-4 mt-8 md:mt-8 text-center" data-aos="fade-up">
           <Button asChild className="bg-accent text-accent-foreground hover:bg-primary hover:text-white rounded-xl px-8 md:px-10 h-10 md:h-12 text-[10px] md:text-xs font-black italic shadow-2xl transition-all hover:scale-105 w-full sm:w-auto">
             <Link href="/events" className="flex items-center justify-center gap-2">
               View All Events <ArrowRight className="h-4 w-4" />
