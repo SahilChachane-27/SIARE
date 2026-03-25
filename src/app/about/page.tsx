@@ -227,7 +227,7 @@ export default function AboutPage() {
         </section>
 
         {/* Organizational Structure */}
-        <section className="py-20 bg-white">
+        <section className="pb-20 bg-white">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline italic mb-4" data-aos="fade-up">
