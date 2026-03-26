@@ -169,14 +169,14 @@ export default function MembershipPage() {
               <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
             </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {whyJoinPoints.map((point, idx) => (
-                <Card key={idx} className="border-none shadow-lg rounded-2xl bg-white p-8 group hover:-translate-y-1 transition-all" data-aos="fade-up" data-aos-delay={idx * 100}>
-                  <div className="h-14 w-14 rounded-xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent transition-colors">
-                    <point.icon className="h-7 w-7 text-accent group-hover:text-white" />
+                <Card key={idx} className="border-none shadow-lg rounded-2xl bg-white p-6 group hover:-translate-y-1 transition-all" data-aos="fade-up" data-aos-delay={idx * 100}>
+                  <div className="h-12 w-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5 group-hover:bg-accent transition-colors">
+                    <point.icon className="h-6 w-6 text-accent group-hover:text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-primary mb-3 font-headline italic">{point.title}</h3>
-                  <p className="text-foreground/60 text-sm leading-relaxed font-headline italic">{point.desc}</p>
+                  <h3 className="text-lg font-bold text-primary mb-2 font-headline italic">{point.title}</h3>
+                  <p className="text-foreground/60 text-xs leading-relaxed font-headline italic">{point.desc}</p>
                 </Card>
               ))}
             </div>
