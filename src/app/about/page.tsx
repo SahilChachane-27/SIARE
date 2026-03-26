@@ -65,6 +65,24 @@ export default function AboutPage() {
     { icon: Target, title: "Impact", desc: "Ensuring research contributes to global development goals" }
   ];
 
+  const uniqueness = [
+    "100% dedicated to university-based academic research",
+    "Multidisciplinary approach across major Scopus clusters",
+    "Transparent peer review and rigorous editorial workflows",
+    "Global partnerships with universities and institutions",
+    "Strong focus on integrating Sustainable Development Goals",
+    "Emphasis on academic ethics and responsible publishing"
+  ];
+
+  const impactPoints = [
+    { title: "Quality research dissemination", icon: CheckCircle2 },
+    { title: "University research enhancement", icon: School },
+    { title: "International networking", icon: Globe },
+    { title: "Scholarly visibility", icon: BookOpen },
+    { title: "Research citations", icon: Zap },
+    { title: "Sustainable growth", icon: Target }
+  ];
+
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground font-body overflow-x-hidden">
       <Header />
@@ -164,14 +182,7 @@ export default function AboutPage() {
                 </div>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {[
-                    { title: "Quality research dissemination", icon: CheckCircle2 },
-                    { title: "University research enhancement", icon: School },
-                    { title: "International networking", icon: Globe },
-                    { title: "Scholarly visibility", icon: BookOpen },
-                    { title: "Research citations", icon: Zap },
-                    { title: "Sustainable growth", icon: Target }
-                  ].map((item, i) => (
+                  {impactPoints.map((item, i) => (
                     <div key={i} className="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100 group hover:border-accent transition-colors">
                       <item.icon className="h-5 w-5 text-accent" />
                       <span className="text-xs font-bold text-primary/70">{item.title}</span>
@@ -283,7 +294,7 @@ export default function AboutPage() {
         </section>
 
         {/* Organizational Structure */}
-        <section className="pt-24 pb-24 bg-white">
+        <section className="pt-24 pb-12 bg-white">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline italic mb-4" data-aos="fade-up">
@@ -312,6 +323,59 @@ export default function AboutPage() {
                   <p className="text-foreground/70 text-sm leading-relaxed font-medium">{struct.desc}</p>
                 </Card>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Why SIARE is Unique & Global Impact */}
+        <section className="py-24 bg-slate-50 border-t border-slate-100">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+            <div className="grid lg:grid-cols-2 gap-16 items-start">
+              
+              {/* Why SIARE is Unique */}
+              <div data-aos="fade-right" className="space-y-8">
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline italic mb-4">
+                    Why SIARE is Unique
+                  </h2>
+                  <div className="w-20 h-1 bg-accent"></div>
+                </div>
+                
+                <div className="grid gap-4">
+                  {uniqueness.map((point, i) => (
+                    <div key={i} className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm border border-slate-100 group hover:border-accent transition-all">
+                      <div className="h-8 w-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0 group-hover:bg-accent group-hover:text-white transition-colors">
+                        <ShieldCheck className="h-4 w-4" />
+                      </div>
+                      <span className="text-sm font-bold text-primary/70 leading-tight">{point}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Global Impact Details */}
+              <div data-aos="fade-left" className="space-y-8">
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline italic mb-4">
+                    Global Impact
+                  </h2>
+                  <div className="w-20 h-1 bg-accent"></div>
+                </div>
+                
+                <p className="text-sm text-foreground/60 leading-relaxed font-medium italic">
+                  Through its proceedings, conferences, and collaborations, SIARE contributes to:
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {impactPoints.map((item, i) => (
+                    <div key={i} className="flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-100 group hover:border-accent transition-colors shadow-sm">
+                      <item.icon className="h-5 w-5 text-accent" />
+                      <span className="text-[11px] font-black uppercase tracking-tight text-primary/70">{item.title}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
