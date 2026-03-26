@@ -227,7 +227,7 @@ export default function AboutPage() {
         </section>
 
         {/* Organizational Structure */}
-        <section className="pb-20 bg-white">
+        <section className="pt-32 pb-24 bg-white">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline italic mb-4" data-aos="fade-up">
@@ -256,50 +256,6 @@ export default function AboutPage() {
                   <p className="text-foreground/70 text-sm leading-relaxed font-medium">{struct.desc}</p>
                 </Card>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Why Unique & Impact */}
-        <section className="py-24 bg-secondary/30 border-y border-border/50">
-          <div className="container mx-auto px-8 md:px-16 lg:px-32">
-            <div className="grid lg:grid-cols-2 gap-16">
-              <div data-aos="fade-right">
-                <h3 className="text-2xl font-bold text-primary font-headline mb-8 italic">Why SIARE is Unique</h3>
-                <ul className="space-y-4">
-                  {[
-                    "100% dedicated to university-based academic research",
-                    "Multidisciplinary approach across major Scopus clusters",
-                    "Transparent peer review and rigorous editorial workflows",
-                    "Global partnerships with universities and institutions",
-                    "Strong focus on integrating Sustainable Development Goals",
-                    "Emphasis on academic ethics and responsible publishing"
-                  ].map((point, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-accent shrink-0 mt-0.5" />
-                      <span className="text-foreground/80 font-medium">{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div data-aos="fade-left">
-                <h3 className="text-2xl font-bold text-primary font-headline mb-8 italic">Global Impact</h3>
-                <p className="text-foreground/70 mb-8 font-medium">Through its proceedings, conferences, and collaborations, SIARE contributes to:</p>
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    "Quality research dissemination",
-                    "University research enhancement",
-                    "International networking",
-                    "Scholarly visibility",
-                    "Research citations",
-                    "Sustainable growth"
-                  ].map((impact, i) => (
-                    <div key={i} className="p-4 bg-white rounded-xl shadow-sm border border-primary/5 text-xs font-bold text-primary text-center uppercase tracking-wider">
-                      {impact}
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
         </section>
