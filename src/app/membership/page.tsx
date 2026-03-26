@@ -171,12 +171,12 @@ export default function MembershipPage() {
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {whyJoinPoints.map((point, idx) => (
-                <Card key={idx} className="border-none shadow-lg rounded-2xl bg-white p-6 group hover:-translate-y-1 transition-all" data-aos="fade-up" data-aos-delay={idx * 100}>
-                  <div className="h-12 w-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5 group-hover:bg-accent transition-colors">
-                    <point.icon className="h-6 w-6 text-accent group-hover:text-white" />
+                <Card key={idx} className="border-none shadow-lg rounded-2xl bg-white p-5 group hover:-translate-y-1 transition-all" data-aos="fade-up" data-aos-delay={idx * 100}>
+                  <div className="h-10 w-10 rounded-xl bg-accent/10 flex items-center justify-center mb-4 group-hover:bg-accent transition-colors">
+                    <point.icon className="h-5 w-5 text-accent group-hover:text-white" />
                   </div>
-                  <h3 className="text-lg font-bold text-primary mb-2 font-headline italic">{point.title}</h3>
-                  <p className="text-foreground/60 text-xs leading-relaxed font-headline italic">{point.desc}</p>
+                  <h3 className="text-base font-bold text-primary mb-2 font-headline italic">{point.title}</h3>
+                  <p className="text-foreground/60 text-[11px] leading-relaxed font-headline italic">{point.desc}</p>
                 </Card>
               ))}
             </div>
@@ -199,29 +199,29 @@ export default function MembershipPage() {
                 <p className="text-[10px] font-black uppercase text-primary/40 tracking-widest">Synchronizing Tiers...</p>
               </div>
             ) : (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {tiers.map((cat: any, idx: number) => (
-                  <Card key={idx} className="flex flex-col rounded-funky shadow-xl border-accent/10 overflow-hidden group hover:shadow-2xl transition-all" data-aos="fade-up" data-aos-delay={idx * 100}>
-                    <CardHeader className="bg-primary text-white p-8 text-center">
-                      <IconComponent name={cat.icon} className="h-10 w-10 mx-auto mb-4 text-accent" />
-                      <CardTitle className="text-lg font-headline italic">{cat.name}</CardTitle>
-                      <div className="mt-4">
-                        <span className="text-2xl font-black">{cat.priceINR}</span>
-                        <span className="text-white/40 text-xs ml-2">/ {cat.priceUSD}</span>
+                  <Card key={idx} className="flex flex-col rounded-funky shadow-xl border-accent/10 overflow-hidden group hover:shadow-2xl transition-all max-w-sm mx-auto" data-aos="fade-up" data-aos-delay={idx * 100}>
+                    <CardHeader className="bg-primary text-white p-6 text-center">
+                      <IconComponent name={cat.icon} className="h-8 w-8 mx-auto mb-3 text-accent" />
+                      <CardTitle className="text-base font-headline italic">{cat.name}</CardTitle>
+                      <div className="mt-3">
+                        <span className="text-xl font-black">{cat.priceINR}</span>
+                        <span className="text-white/40 text-[10px] ml-1.5">/ {cat.priceUSD}</span>
                       </div>
-                      <p className="text-[10px] uppercase font-bold tracking-widest text-white/60 mt-2">Yearly Membership</p>
+                      <p className="text-[9px] uppercase font-bold tracking-widest text-white/60 mt-1.5">Yearly Membership</p>
                     </CardHeader>
-                    <CardContent className="p-8 flex-1 flex flex-col">
-                      <p className="text-xs text-foreground/60 font-bold mb-6 font-headline italic">{cat.description}</p>
-                      <ul className="space-y-3 mb-8 flex-1">
+                    <CardContent className="p-6 flex-1 flex flex-col">
+                      <p className="text-[11px] text-foreground/60 font-bold mb-4 font-headline italic leading-snug">{cat.description}</p>
+                      <ul className="space-y-2.5 mb-6 flex-1">
                         {cat.benefits?.map((benefit: string, i: number) => (
-                          <li key={i} className="flex items-start gap-2 text-[11px] font-medium text-foreground/80 font-headline italic">
-                            <CheckCircle2 className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5" />
+                          <li key={i} className="flex items-start gap-2 text-[10px] font-medium text-foreground/80 font-headline italic leading-tight">
+                            <CheckCircle2 className="h-3 w-3 text-accent shrink-0 mt-0.5" />
                             {benefit}
                           </li>
                         ))}
                       </ul>
-                      <Button asChild className="w-full bg-accent hover:bg-primary text-accent-foreground hover:text-white rounded-xl font-bold text-xs uppercase tracking-widest">
+                      <Button asChild className="w-full bg-accent hover:bg-primary text-accent-foreground hover:text-white rounded-xl font-bold text-[10px] uppercase tracking-widest h-9">
                         <Link href="/apply-membership">Apply Now</Link>
                       </Button>
                     </CardContent>
