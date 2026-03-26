@@ -98,14 +98,16 @@ export default function AboutPage() {
         <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="grid lg:grid-cols-2 gap-16 items-stretch">
-              <div className="relative aspect-square sm:aspect-video lg:aspect-auto h-full min-h-[400px] rounded-[2rem] overflow-hidden shadow-2xl bg-slate-50 border border-slate-100" data-aos="fade-right">
-                <Image
-                  src="/back.png"
-                  alt="SIARE Academic Community"
-                  fill
-                  className="object-contain"
-                  data-ai-hint="academic publishing"
-                />
+              <div className="relative aspect-square sm:aspect-video lg:aspect-auto h-full min-h-[400px] rounded-[2rem] overflow-hidden shadow-2xl bg-slate-50 border border-slate-100 p-8" data-aos="fade-right">
+                <div className="relative w-full h-full">
+                  <Image
+                    src="/back.png"
+                    alt="SIARE Academic Community"
+                    fill
+                    className="object-contain"
+                    data-ai-hint="academic publishing"
+                  />
+                </div>
               </div>
               <div className="space-y-6 flex flex-col justify-center" data-aos="fade-left">
                 <div>
@@ -143,6 +145,60 @@ export default function AboutPage() {
                       </p>
                     </CardContent>
                   </Card>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Why Unique & Impact Section */}
+        <section className="py-20 bg-white overflow-hidden">
+          <div className="container mx-auto px-8 md:px-16 lg:px-32">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div data-aos="fade-right" className="space-y-8">
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline italic mb-4">
+                    Why Unique & Impact
+                  </h2>
+                  <div className="w-20 h-1 bg-accent"></div>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {[
+                    { title: "Quality research dissemination", icon: CheckCircle2 },
+                    { title: "University research enhancement", icon: School },
+                    { title: "International networking", icon: Globe },
+                    { title: "Scholarly visibility", icon: BookOpen },
+                    { title: "Research citations", icon: Zap },
+                    { title: "Sustainable growth", icon: Target }
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100 group hover:border-accent transition-colors">
+                      <item.icon className="h-5 w-5 text-accent" />
+                      <span className="text-xs font-bold text-primary/70">{item.title}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div data-aos="fade-left" className="flex flex-col items-center justify-center">
+                <div className="relative w-64 h-64 md:w-80 md:h-80 group cursor-pointer">
+                  {/* Outer animated ring */}
+                  <div className="absolute inset-0 rounded-full border-2 border-dashed border-accent/30 animate-[spin_20s_linear_infinite] group-hover:border-accent group-hover:scale-110 transition-all duration-700"></div>
+                  
+                  {/* Inner animated ring */}
+                  <div className="absolute inset-4 rounded-full border border-primary/10 animate-[spin_15s_linear_infinite_reverse] group-hover:border-accent/50 transition-all duration-700"></div>
+
+                  {/* Main Circle */}
+                  <div className="absolute inset-8 rounded-full bg-primary flex items-center justify-center shadow-2xl overflow-hidden group-hover:scale-105 transition-transform duration-700">
+                    <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                    <div className="text-center z-10">
+                      <h3 className="text-4xl md:text-5xl font-black text-accent italic font-headline tracking-tighter group-hover:scale-110 transition-transform duration-700">SIARE</h3>
+                      <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.3em] mt-2">Est. 2024</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-8 text-center max-w-xs">
+                  <p className="text-[10px] font-black uppercase text-primary/30 tracking-[0.4em]">Global Scholarly Identity</p>
                 </div>
               </div>
             </div>
@@ -227,7 +283,7 @@ export default function AboutPage() {
         </section>
 
         {/* Organizational Structure */}
-        <section className="pt-32 pb-24 bg-white">
+        <section className="pt-24 pb-24 bg-white">
           <div className="container mx-auto px-8 md:px-16 lg:px-32">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-primary font-headline italic mb-4" data-aos="fade-up">
