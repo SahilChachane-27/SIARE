@@ -48,14 +48,14 @@ export function ProceedingsHighlights() {
             {featuredJournals.map((journal: any, index: number) => (
               <Card key={index} className="h-full overflow-hidden border-none shadow-xl rounded-xl relative group bg-white hover:shadow-primary/5 transition-all duration-500" data-aos="fade-up" data-aos-delay={index * 100}>
                 
-                {/* Image Layer - Switched to 4:3 aspect for a shorter card */}
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-50 shrink-0 flex items-center justify-center p-4">
+                {/* Portrait aspect ratio for scholarly journal covers */}
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-white shrink-0 flex items-center justify-center p-2">
                   {journal.imageUrl ? (
                     <Image 
                       src={journal.imageUrl} 
                       alt={journal.name} 
                       fill 
-                      className="object-contain p-4 transition-transform duration-700 group-hover:scale-110" 
+                      className="object-contain transition-transform duration-700 group-hover:scale-110" 
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center opacity-10">
