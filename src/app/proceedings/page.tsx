@@ -165,7 +165,7 @@ export default function ProceedingsPage() {
               <div className="w-20 h-1 bg-accent mx-auto" data-aos="fade-up"></div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 {
                   title: "Rigorous Editorial & Peer Review",
@@ -198,12 +198,12 @@ export default function ProceedingsPage() {
                   icon: Zap
                 }
               ].map((item, i) => (
-                <Card key={i} className="p-8 bg-white rounded-3xl shadow-xl border border-slate-100 flex flex-col group hover:shadow-2xl transition-all duration-500" data-aos="fade-up" data-aos-delay={i * 100}>
-                  <div className="h-14 w-14 bg-primary/5 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-accent transition-colors">
-                    <item.icon className="h-7 w-7 text-accent group-hover:text-primary" />
+                <Card key={i} className="p-5 bg-white rounded-2xl shadow-lg border border-slate-100 flex flex-col group hover:shadow-xl transition-all duration-500" data-aos="fade-up" data-aos-delay={i * 100}>
+                  <div className="h-10 w-10 bg-primary/5 rounded-xl flex items-center justify-center mb-4 group-hover:bg-accent transition-colors">
+                    <item.icon className="h-5 w-5 text-accent group-hover:text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold text-primary mb-4 italic leading-tight">{item.title}</h3>
-                  <p className="text-sm text-foreground/60 leading-relaxed font-medium mb-4">{item.desc}</p>
+                  <h3 className="text-base font-bold text-primary mb-2 italic leading-tight">{item.title}</h3>
+                  <p className="text-[11px] text-foreground/60 leading-relaxed font-medium mb-2">{item.desc}</p>
                 </Card>
               ))}
             </div>
