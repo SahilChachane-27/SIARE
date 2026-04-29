@@ -1,15 +1,12 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 
-const secretKey = process.env.SESSION_SECRET;
-
-if (!secretKey) {
-  throw new Error('SESSION_SECRET is required');
-}
-
-const key = new TextEncoder().encode(secretKey);
-
 export async function encrypt(payload: any) {
+  const secretKey = process.env.SESSION_SECRET;
+  if (!secretKey) {
+    throw new Error('SESSION_SECRET is required');
+  }
+  const key = new TextEncoder().encode(secretKey);
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
@@ -18,6 +15,11 @@ export async function encrypt(payload: any) {
 }
 
 export async function decrypt(input: string): Promise<any> {
+  const secretKey = process.env.SESSION_SECRET;
+  if (!secretKey) {
+    throw new Error('SESSION_SECRET is required');
+  }
+  const key = new TextEncoder().encode(secretKey);
   const { payload } = await jwtVerify(input, key, {
     algorithms: ['HS256'],
   });
