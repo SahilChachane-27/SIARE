@@ -19,18 +19,32 @@ function createAdapter() {
   })
 }
 
-const prismaClientSingleton = () => {
-  return new PrismaClient({
-    adapter: createAdapter(),
-  })
-}
-
 declare const globalThis: {
-  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
+  prismaGlobal: PrismaClient;
 } & typeof global;
 
-const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
+let prisma: PrismaClient
 
-export default prisma
+function getPrismaClient() {
+  if (!prisma) {
+    const databaseUrl = process.env.DATABASE_URL
+    if (!databaseUrl) {
+      throw new Error('DATABASE_URL is not set')
+    }
+    prisma = new PrismaClient({
+      adapter: createAdapter(),
+    })
+    if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma
+  }
+  return prisma
+}
 
-if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma
+// Export a proxy that creates the client on first access
+const prismaProxy = new Proxy({}, {
+  get(target, prop) {
+    const client = getPrismaClient()
+    return client[prop as keyof PrismaClient]
+  }
+})
+
+export default prismaProxy as PrismaClient
