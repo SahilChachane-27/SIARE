@@ -12,10 +12,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
 import { Upload } from "lucide-react";
-import { useFirestore } from '@/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError } from '@/firebase/errors';
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -31,7 +27,6 @@ const formSchema = z.object({
 export function Contact() {
   const { toast } = useToast();
   const [isClient, setIsClient] = useState(false);
-  const db = useFirestore();
 
   useEffect(() => {
     setIsClient(true);
@@ -42,31 +37,36 @@ export function Contact() {
     defaultValues: { name: "", email: "", phone: "", institution: "", purpose: undefined, message: "" },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    if (!db) return;
-
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const data = {
       ...values,
       status: 'pending',
-      createdAt: serverTimestamp(),
     };
 
-    addDoc(collection(db, 'inquiries'), data)
-      .then(() => {
-        toast({
-          title: "Inquiry Submitted!",
-          description: "Our technical team will contact you within 24 hours.",
-        });
-        form.reset();
-      })
-      .catch(async (err) => {
-        const permissionError = new FirestorePermissionError({
-          path: 'inquiries',
-          operation: 'create',
-          requestResourceData: data,
-        });
-        errorEmitter.emit('permission-error', permissionError);
+    try {
+      const response = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
       });
+
+      if (!response.ok) {
+        const result = await response.json();
+        throw new Error(result?.error || 'Unable to submit your inquiry');
+      }
+
+      toast({
+        title: "Inquiry Submitted!",
+        description: "Our technical team will contact you within 24 hours.",
+      });
+      form.reset();
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Submission Failed',
+        description: error?.message || 'Please try again later.',
+      });
+    }
   }
 
   return (

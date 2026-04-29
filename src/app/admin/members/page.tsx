@@ -1,9 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
-import { useRouter } from 'next/navigation';
+import { getMembers, createMember, updateMember, deleteMember } from '@/actions/members';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,8 +26,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError } from '@/firebase/errors';
+
 
 const tiers = [
   'Individual Researcher',
@@ -39,10 +36,10 @@ const tiers = [
 ];
 
 export default function MembersManagement() {
-  const { user, loading: userLoading } = useUser();
-  const db = useFirestore();
-  const router = useRouter();
   const { toast } = useToast();
+
+  const [members, setMembers] = useState<any[]>([]);
+  const [membersLoading, setMembersLoading] = useState(true);
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [name, setName] = useState('');
@@ -53,16 +50,22 @@ export default function MembersManagement() {
   const [status, setStatus] = useState('active');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const membersQuery = useMemo(() => {
-    if (!db) return null;
-    return query(collection(db, 'members'), orderBy('joinedAt', 'desc'));
-  }, [db]);
-
-  const { data: members, loading: membersLoading } = useCollection(membersQuery);
+  const loadData = async () => {
+    try {
+      setMembersLoading(true);
+      const data = await getMembers();
+      setMembers(data);
+    } catch (e) {
+      console.error(e);
+      toast({ variant: 'destructive', title: 'Failed to load members' });
+    } finally {
+      setMembersLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (!userLoading && !user) router.push('/admin/login');
-  }, [user, userLoading, router]);
+    loadData();
+  }, []);
 
   const resetForm = () => {
     setEditingId(null);
@@ -74,9 +77,8 @@ export default function MembersManagement() {
     setStatus('active');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!db) return;
 
     const memberData = {
       name,
@@ -85,44 +87,22 @@ export default function MembersManagement() {
       institution,
       tier,
       status,
-      updatedAt: serverTimestamp(),
     };
 
-    if (editingId) {
-      const docRef = doc(db, 'members', editingId);
-      updateDoc(docRef, memberData)
-        .then(() => {
-          toast({ title: "Member Synchronized", description: `${name}'s record has been updated.` });
-        })
-        .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: docRef.path,
-            operation: 'update',
-            requestResourceData: memberData,
-          });
-          errorEmitter.emit('permission-error', permissionError);
-        });
-    } else {
-      const colRef = collection(db, 'members');
-      const newMember = {
-        ...memberData,
-        joinedAt: serverTimestamp(),
-      };
-      addDoc(colRef, newMember)
-        .then(() => {
-          toast({ title: "Scholar Enrolled", description: `New member "${name}" added to the society.` });
-        })
-        .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: colRef.path,
-            operation: 'create',
-            requestResourceData: newMember,
-          });
-          errorEmitter.emit('permission-error', permissionError);
-        });
+    try {
+      if (editingId) {
+        await updateMember(Number(editingId), memberData);
+        toast({ title: "Member Synchronized", description: `${name}'s record has been updated.` });
+      } else {
+        await createMember(memberData);
+        toast({ title: "Scholar Enrolled", description: `New member "${name}" added to the society.` });
+      }
+      resetForm();
+      loadData();
+    } catch (err) {
+      console.error(err);
+      toast({ variant: 'destructive', title: "Error", description: "Failed to save member." });
     }
-    
-    resetForm();
   };
 
   const handleEdit = (member: any) => {
@@ -136,21 +116,16 @@ export default function MembersManagement() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = (id: string, name: string) => {
-    if (!db || !window.confirm(`Are you sure you want to remove ${name} from the society?`)) return;
+  const handleDelete = async (id: string, name: string) => {
+    if (!window.confirm(`Are you sure you want to remove ${name} from the society?`)) return;
 
-    const docRef = doc(db, 'members', id);
-    deleteDoc(docRef)
-      .then(() => {
-        toast({ title: "Record Expunged", description: `${name} removed from registry.` });
-      })
-      .catch(async (err) => {
-        const permissionError = new FirestorePermissionError({
-          path: docRef.path,
-          operation: 'delete',
-        });
-        errorEmitter.emit('permission-error', permissionError);
-      });
+    try {
+      await deleteMember(Number(id));
+      toast({ title: "Record Expunged", description: `${name} removed from registry.` });
+      loadData();
+    } catch (err) {
+      toast({ variant: 'destructive', title: "Error", description: "Failed to delete member." });
+    }
   };
 
   const filteredMembers = useMemo(() => {
@@ -162,7 +137,7 @@ export default function MembersManagement() {
     );
   }, [members, searchTerm]);
 
-  if (userLoading || !user) return null;
+
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 overflow-x-hidden">
@@ -347,13 +322,13 @@ export default function MembersManagement() {
 
                           <div className="mt-6 pt-4 border-t border-slate-50 flex items-center justify-between">
                             <div className="flex items-center gap-4">
-                              <span className="text-[7px] font-black text-primary/20 uppercase tracking-[0.2em]">ID: {member.id.slice(0,8)}</span>
+                              <span className="text-[7px] font-black text-primary/20 uppercase tracking-[0.2em]">ID: {member.id}</span>
                               {member.phone && (
                                 <span className="flex items-center gap-1.5 text-[8px] font-bold text-primary/40"><Phone className="h-2.5 w-2.5 text-accent" /> {member.phone}</span>
                               )}
                             </div>
                             <div className="flex items-center gap-1.5 text-[8px] font-bold text-primary/30 italic">
-                              <Clock className="h-2.5 w-2.5" /> {member.joinedAt?.seconds ? new Date(member.joinedAt.seconds * 1000).toLocaleDateString() : 'Pending'}
+                              <Clock className="h-2.5 w-2.5" /> {member.joinedAt ? new Date(member.joinedAt).toLocaleDateString() : 'Pending'}
                             </div>
                           </div>
                         </div>

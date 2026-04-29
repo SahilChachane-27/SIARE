@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { AOSInit } from '@/components/AOSInit';
-import { FirebaseClientProvider } from '@/firebase/client-provider';
-import { FirebaseErrorListener } from '@/components/FirebaseErrorListener';
 
 export const metadata: Metadata = {
   title: 'SIARE | Society of Integrated Academic Research and Education',
@@ -28,12 +26,9 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="antialiased overflow-x-hidden">
-        <FirebaseClientProvider>
-          <AOSInit />
-          <FirebaseErrorListener />
-          {children}
-          <Toaster />
-        </FirebaseClientProvider>
+        <AOSInit />
+        {children}
+        <Toaster />
       </body>
     </html>
   );

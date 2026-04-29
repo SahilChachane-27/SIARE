@@ -1,9 +1,8 @@
 'use client';
 
 import { useState, useEffect, useMemo, useRef, Suspense } from 'react';
-import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { getJournals, createJournal, updateJournal, deleteJournal } from '@/actions/journals';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -33,8 +32,6 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError } from '@/firebase/errors';
 
 const ITEMS_PER_PAGE = 9;
 
@@ -50,11 +47,12 @@ const domains = [
 ];
 
 function JournalManagementContent() {
-  const { user, loading: userLoading } = useUser();
-  const db = useFirestore();
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
+
+  const [journals, setJournals] = useState<any[]>([]);
+  const [journalsLoading, setJournalsLoading] = useState(true);
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [name, setName] = useState('');
@@ -71,16 +69,22 @@ function JournalManagementContent() {
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest' | 'az' | 'za'>('newest');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const journalsQuery = useMemo(() => {
-    if (!db) return null;
-    return query(collection(db, 'journals'), orderBy('createdAt', 'desc'));
-  }, [db]);
-
-  const { data: journals, loading: journalsLoading } = useCollection(journalsQuery);
+  const loadData = async () => {
+    try {
+      setJournalsLoading(true);
+      const data = await getJournals();
+      setJournals(data);
+    } catch (e) {
+      console.error(e);
+      toast({ variant: 'destructive', title: 'Failed to load journals' });
+    } finally {
+      setJournalsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (!userLoading && !user) router.push('/admin/login');
-  }, [user, userLoading, router]);
+    loadData();
+  }, []);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -129,9 +133,8 @@ function JournalManagementContent() {
     router.replace('/admin/journals');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!db) return;
 
     if (!domain) {
       toast({
@@ -151,44 +154,22 @@ function JournalManagementContent() {
       link,
       imageUrl,
       isFeatured,
-      updatedAt: serverTimestamp(),
     };
 
-    if (editingId) {
-      const docRef = doc(db, 'journals', editingId);
-      updateDoc(docRef, journalData)
-        .then(() => {
-          toast({ title: "Journal Updated", description: `${name} has been updated successfully.` });
-        })
-        .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: docRef.path,
-            operation: 'update',
-            requestResourceData: journalData,
-          });
-          errorEmitter.emit('permission-error', permissionError);
-        });
-    } else {
-      const colRef = collection(db, 'journals');
-      const newJournal = {
-        ...journalData,
-        createdAt: serverTimestamp(),
-      };
-      addDoc(colRef, newJournal)
-        .then(() => {
-          toast({ title: "Journal Added", description: `${name} has been published successfully.` });
-        })
-        .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: colRef.path,
-            operation: 'create',
-            requestResourceData: newJournal,
-          });
-          errorEmitter.emit('permission-error', permissionError);
-        });
+    try {
+      if (editingId) {
+        await updateJournal(Number(editingId), journalData);
+        toast({ title: "Journal Updated", description: `${name} has been updated successfully.` });
+      } else {
+        await createJournal(journalData);
+        toast({ title: "Journal Added", description: `${name} has been published successfully.` });
+      }
+      resetForm();
+      loadData();
+    } catch (err) {
+      console.error(err);
+      toast({ variant: 'destructive', title: "Error", description: "Failed to save journal." });
     }
-    
-    resetForm();
   };
 
   const handleEdit = (journal: any) => {
@@ -204,21 +185,16 @@ function JournalManagementContent() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = (id: string, name: string) => {
-    if (!db || !window.confirm(`Are you sure you want to delete "${name}"?`)) return;
+  const handleDelete = async (id: string, name: string) => {
+    if (!window.confirm(`Are you sure you want to delete "${name}"?`)) return;
 
-    const docRef = doc(db, 'journals', id);
-    deleteDoc(docRef)
-      .then(() => {
-        toast({ title: "Journal Deleted", description: `${name} has been removed from the catalog.` });
-      })
-      .catch(async (err) => {
-        const permissionError = new FirestorePermissionError({
-          path: docRef.path,
-          operation: 'delete',
-        });
-        errorEmitter.emit('permission-error', permissionError);
-      });
+    try {
+      await deleteJournal(Number(id));
+      toast({ title: "Journal Deleted", description: `${name} has been removed from the catalog.` });
+      loadData();
+    } catch (err) {
+      toast({ variant: 'destructive', title: "Error", description: "Failed to delete journal." });
+    }
   };
 
   const filteredAndSortedJournals = useMemo(() => {
@@ -231,8 +207,8 @@ function JournalManagementContent() {
 
     result.sort((a: any, b: any) => {
       switch (sortOrder) {
-        case 'newest': return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0);
-        case 'oldest': return (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0);
+        case 'newest': return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        case 'oldest': return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
         case 'az': return (a.name || '').localeCompare(b.name || '');
         case 'za': return (b.name || '').localeCompare(a.name || '');
         default: return 0;
@@ -248,7 +224,6 @@ function JournalManagementContent() {
     return filteredAndSortedJournals.slice(start, start + ITEMS_PER_PAGE);
   }, [filteredAndSortedJournals, currentPage]);
 
-  if (userLoading || !user) return null;
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 overflow-x-hidden">

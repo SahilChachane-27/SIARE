@@ -21,9 +21,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useFirestore, useCollection } from '@/firebase';
-import { collection, query, orderBy } from 'firebase/firestore';
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 
 const whyJoinPoints = [
   {
@@ -124,14 +122,29 @@ const IconComponent = ({ name, className }: { name: string, className?: string }
 };
 
 export default function MembershipPage() {
-  const db = useFirestore();
-  const tiersQuery = useMemo(() => {
-    if (!db) return null;
-    return query(collection(db, 'membershipTiers'), orderBy('order', 'asc'));
-  }, [db]);
+  const [tiers, setTiers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const { data: dynamicTiers, loading } = useCollection(tiersQuery);
-  const tiers = dynamicTiers && dynamicTiers.length > 0 ? dynamicTiers : defaultCategories;
+  useEffect(() => {
+    const loadTiers = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('/api/membership-tiers');
+        if (response.ok) {
+          const data = await response.json();
+          setTiers(data.length > 0 ? data : defaultCategories);
+        } else {
+          setTiers(defaultCategories);
+        }
+      } catch (_error) {
+        setTiers(defaultCategories);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadTiers();
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground font-body overflow-x-hidden">

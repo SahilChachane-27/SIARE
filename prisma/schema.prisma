@@ -1,0 +1,185 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+// ------------------------------------------------------
+// 1. Members Registry
+// ------------------------------------------------------
+model Member {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String   @unique
+  phone       String?
+  institution String?
+  tier        String?
+  status      String   @default("active") // active, expired, pending
+  
+  joinedAt    DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ------------------------------------------------------
+// 2. Proceedings / Journals
+// ------------------------------------------------------
+model Journal {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?  @db.Text
+  issn        String?
+  domain      String?
+  indexing    Json?    // Storing array of strings as JSON
+  link        String?
+  imageUrl    String?  @db.LongText
+  isFeatured  Boolean  @default(false)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ------------------------------------------------------
+// 2b. Membership Tiers
+// ------------------------------------------------------
+model MembershipTier {
+  id          Int      @id @default(autoincrement())
+  name        String
+  icon        String?
+  priceINR    String
+  priceUSD    String
+  description String?
+  benefits    Json?
+  order       Int      @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ------------------------------------------------------
+// 3. Conferences / Events
+// ------------------------------------------------------
+model Conference {
+  id                     Int      @id @default(autoincrement())
+  title                  String
+  shortTitle             String?
+  theme                  String?
+  
+  // Logistics
+  startDate              String?
+  endDate                String?
+  venue                  String?
+  country                String?
+  modes                  Json?    // Array of strings (Physical, Virtual, Hybrid)
+  
+  // Content & People
+  about                  String?  @db.Text
+  websiteUrl             String?
+  contactEmail           String?
+  imageUrl               String?  @db.LongText
+  brochureUrl            String?  @db.LongText
+  organizingCommittee    String?  @db.Text
+  keynoteSpeakers        String?  @db.Text
+  editorialBoard         String?  @db.Text
+  tracks                 String?  @db.Text
+  keywords               String?
+  
+  // Submissions & Requirements
+  submissionInstructions String?  @db.Text
+  submissionStartDate    String?
+  abstractDeadline       String?
+  fullPaperDeadline      String?
+  registrationDeadline   String?
+  paperCategories        Json?    // Array of strings
+  peerReviewMethod       String?
+  
+  // UI & Metadata
+  color                  String?  @default("bg-blue-500")
+  order                  Int      @default(0)
+  isFeatured             Boolean  @default(false)
+  isActive               Boolean  @default(true)
+  
+  // Legacy Firebase Compatibility Fields
+  date                   String?
+  location               String?
+  status                 String?
+  
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+}
+
+// ------------------------------------------------------
+// 4. Inquiries
+// ------------------------------------------------------
+model Inquiry {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  phone       String?
+  institution String?
+  subject     String?
+  purpose     String?
+  tier        String?
+  message     String   @db.Text
+  aboutDetails String? @db.Text
+  status      String   @default("pending") // pending, resolved
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ------------------------------------------------------
+// 5. Workshops & Webinars (Unified Model)
+// ------------------------------------------------------
+model Event {
+  id          Int      @id @default(autoincrement())
+  type        String   // "workshop" or "webinar"
+  title       String
+  description String?  @db.Text
+  speaker     String?
+  instructor  String?
+  date        String?
+  time        String?
+  location    String?
+  link        String?
+  status      String?
+  color       String?  @default("bg-slate-500")
+  order       Int      @default(0)
+  isFeatured  Boolean  @default(false)
+  imageUrl    String?   @db.LongText
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PricingPlan {
+  id          Int      @id @default(autoincrement())
+  name        String
+  priceINR    String
+  priceUSD    String
+  description String?
+  features    Json?
+  cta         String?
+  highlight   Boolean  @default(false)
+  tag         String?
+  order       Int      @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ------------------------------------------------------
+// 6. Admin Authentication
+// ------------------------------------------------------
+model Admin {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String   // Hashed password
+  name      String?
+  role      String   @default("superadmin")
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

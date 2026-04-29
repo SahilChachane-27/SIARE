@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
-import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
+import { useState, useEffect } from 'react';
+import { useAdminSession } from '@/hooks/use-admin-session';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
@@ -22,12 +21,9 @@ import {
   Trash2
 } from 'lucide-react';
 import Link from 'next/link';
-import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError } from '@/firebase/errors';
 
 export default function PricingManagement() {
-  const { user, loading: userLoading } = useUser();
-  const db = useFirestore();
+  const { user, loading: userLoading } = useAdminSession();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -41,17 +37,33 @@ export default function PricingManagement() {
   const [highlight, setHighlight] = useState(false);
   const [tag, setTag] = useState('');
   const [order, setOrder] = useState('0');
+  const [plans, setPlans] = useState<any[]>([]);
+  const [plansLoading, setPlansLoading] = useState(true);
 
-  const plansQuery = useMemo(() => {
-    if (!db) return null;
-    return query(collection(db, 'pricingPlans'), orderBy('order', 'asc'));
-  }, [db]);
-
-  const { data: plans, loading: plansLoading } = useCollection(plansQuery);
+  const loadPlans = async () => {
+    setPlansLoading(true);
+    try {
+      const response = await fetch('/api/pricing');
+      if (response.ok) {
+        const data = await response.json();
+        setPlans(data);
+      } else {
+        setPlans([]);
+      }
+    } catch (_error) {
+      setPlans([]);
+    } finally {
+      setPlansLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (!userLoading && !user) router.push('/admin/login');
   }, [user, userLoading, router]);
+
+  useEffect(() => {
+    loadPlans();
+  }, []);
 
   const resetForm = () => {
     setEditingId(null);
@@ -66,58 +78,56 @@ export default function PricingManagement() {
     setOrder('0');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!db) return;
 
     const planData = {
       name,
       priceINR,
       priceUSD,
       description,
-      features: features.split('\n').map(f => f.trim()).filter(Boolean),
+      features: features.split('\n').map((f) => f.trim()).filter(Boolean),
       cta,
       highlight,
       tag,
-      order: parseInt(order) || 0,
-      updatedAt: serverTimestamp(),
+      order: parseInt(order, 10) || 0,
     };
 
-    if (editingId) {
-      const docRef = doc(db, 'pricingPlans', editingId);
-      updateDoc(docRef, planData)
-        .then(() => {
-          toast({ title: "Plan Updated", description: `${name} has been updated successfully.` });
-        })
-        .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: docRef.path,
-            operation: 'update',
-            requestResourceData: planData,
-          });
-          errorEmitter.emit('permission-error', permissionError);
-        });
-    } else {
-      const colRef = collection(db, 'pricingPlans');
-      const newPlan = {
-        ...planData,
-        createdAt: serverTimestamp(),
-      };
-      addDoc(colRef, newPlan)
-        .then(() => {
-          toast({ title: "Plan Created", description: `${name} is now live.` });
-        })
-        .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: colRef.path,
-            operation: 'create',
-            requestResourceData: newPlan,
-          });
-          errorEmitter.emit('permission-error', permissionError);
-        });
+    try {
+      const endpoint = editingId ? `/api/admin/pricing/${editingId}` : '/api/admin/pricing';
+      const method = editingId ? 'PUT' : 'POST';
+      const response = await fetch(endpoint, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(planData),
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          router.push('/admin/login');
+          return;
+        }
+        const error = await response.json();
+        throw new Error(error?.error || 'Unable to save plan');
+      }
+
+      if (editingId) {
+        toast({ title: 'Plan Updated', description: `${name} has been updated successfully.` });
+      } else {
+        toast({ title: 'Plan Created', description: `${name} is now live.` });
+      }
+
+      await loadPlans();
+      resetForm();
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Could not save plan',
+        description: error?.message || 'Please try again.',
+      });
     }
-    
-    resetForm();
   };
 
   const handleEdit = (plan: any) => {
@@ -134,21 +144,32 @@ export default function PricingManagement() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = (id: string, name: string) => {
-    if (!db || !window.confirm(`Are you sure you want to delete "${name}" plan?`)) return;
+  const handleDelete = async (id: string, name: string) => {
+    if (!window.confirm(`Are you sure you want to delete "${name}" plan?`)) return;
 
-    const docRef = doc(db, 'pricingPlans', id);
-    deleteDoc(docRef)
-      .then(() => {
-        toast({ title: "Plan Deleted", description: `${name} has been removed.` });
-      })
-      .catch(async (err) => {
-        const permissionError = new FirestorePermissionError({
-          path: docRef.path,
-          operation: 'delete',
-        });
-        errorEmitter.emit('permission-error', permissionError);
+    try {
+      const response = await fetch(`/api/admin/pricing/${id}`, {
+        method: 'DELETE',
       });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          router.push('/admin/login');
+          return;
+        }
+        const error = await response.json();
+        throw new Error(error?.error || 'Unable to delete plan');
+      }
+
+      toast({ title: 'Plan Deleted', description: `${name} has been removed.` });
+      await loadPlans();
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Delete failed',
+        description: error?.message || 'Please try again.',
+      });
+    }
   };
 
   if (userLoading || !user) return null;

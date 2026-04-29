@@ -1,9 +1,7 @@
 'use client';
 
-import { useState, useEffect, useMemo, useRef } from 'react';
-import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, useRef } from 'react';
+import { getConferences, createConference, updateConference, deleteConference } from '@/actions/conferences';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -36,13 +34,9 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError } from '@/firebase/errors';
+
 
 export default function EventsManagement() {
-  const { user, loading: userLoading } = useUser();
-  const db = useFirestore();
-  const router = useRouter();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const brochureInputRef = useRef<HTMLInputElement>(null);
@@ -85,16 +79,25 @@ export default function EventsManagement() {
   // UI Fields
   const [color, setColor] = useState('bg-blue-500');
 
-  const eventsQuery = useMemo(() => {
-    if (!db) return null;
-    return query(collection(db, 'conferences'), orderBy('order', 'asc'));
-  }, [db]);
+  const [events, setEvents] = useState<any[]>([]);
+  const [eventsLoading, setEventsLoading] = useState(true);
 
-  const { data: events, loading: eventsLoading } = useCollection(eventsQuery);
+  const loadData = async () => {
+    try {
+      setEventsLoading(true);
+      const data = await getConferences();
+      setEvents(data);
+    } catch (e) {
+      console.error(e);
+      toast({ variant: 'destructive', title: 'Failed to load events' });
+    } finally {
+      setEventsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (!userLoading && !user) router.push('/admin/login');
-  }, [user, userLoading, router]);
+    loadData();
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, target: 'image' | 'brochure' = 'image') => {
     const file = e.target.files?.[0];
@@ -136,14 +139,50 @@ export default function EventsManagement() {
     setPaperCategories(prev => prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat]);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (currentStep < 2) {
+  const validateStepOne = () => {
+    if (!title.trim() || !startDate || !venue.trim() || !country.trim()) {
+      toast({
+        variant: 'destructive',
+        title: 'Complete logistics first',
+        description: 'Title, start date, venue, and country are required before moving on.',
+      });
+      return false;
+    }
+
+    if (endDate && endDate < startDate) {
+      toast({
+        variant: 'destructive',
+        title: 'Invalid event dates',
+        description: 'End date cannot be earlier than the start date.',
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const goToAcademicContent = (e?: React.MouseEvent<HTMLButtonElement>) => {
+    e?.preventDefault();
+
+    if (!validateStepOne()) {
       return;
     }
 
-    if (!db) return;
+    setCurrentStep(2);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (currentStep !== 2) {
+      return;
+    }
+
+    if (!validateStepOne()) {
+      setCurrentStep(1);
+      return;
+    }
 
     const conferenceData = {
       title, shortTitle, theme, startDate, endDate, venue, country, modes, isActive,
@@ -151,37 +190,24 @@ export default function EventsManagement() {
       tracks, brochureUrl, keywords, submissionInstructions, submissionStartDate, abstractDeadline, 
       fullPaperDeadline, registrationDeadline, paperCategories, peerReviewMethod,
       color, order: parseInt(order) || 0, isFeatured,
-      updatedAt: serverTimestamp(),
-      // Legacy compatibility
       date: `${startDate}${endDate ? ` - ${endDate}` : ''}`,
       location: `${venue}, ${country}`,
       status: isActive ? 'Active' : 'Inactive'
     };
 
-    if (editingId) {
-      const docRef = doc(db, 'conferences', editingId);
-      updateDoc(docRef, conferenceData)
-        .then(() => {
-          toast({ title: "Update Success", description: `Conference "${title}" has been synchronized.` });
-          resetForm();
-        })
-        .catch(async (err) => {
-          errorEmitter.emit('permission-error', new FirestorePermissionError({
-            path: docRef.path, operation: 'update', requestResourceData: conferenceData
-          }));
-        });
-    } else {
-      const colRef = collection(db, 'conferences');
-      addDoc(colRef, { ...conferenceData, createdAt: serverTimestamp() })
-        .then(() => {
-          toast({ title: "Event Cataloged", description: `New conference "${title}" is now active.` });
-          resetForm();
-        })
-        .catch(async (err) => {
-          errorEmitter.emit('permission-error', new FirestorePermissionError({
-            path: colRef.path, operation: 'create', requestResourceData: conferenceData
-          }));
-        });
+    try {
+      if (editingId) {
+        await updateConference(Number(editingId), conferenceData);
+        toast({ title: "Update Success", description: `Conference "${title}" has been synchronized.` });
+      } else {
+        await createConference(conferenceData);
+        toast({ title: "Event Cataloged", description: `New conference "${title}" is now active.` });
+      }
+      resetForm();
+      loadData();
+    } catch (err) {
+      console.error(err);
+      toast({ variant: 'destructive', title: "Error", description: "Failed to save conference." });
     }
   };
 
@@ -200,15 +226,18 @@ export default function EventsManagement() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = (id: string, title: string) => {
-    if (!db || !window.confirm(`Are you sure you want to delete "${title}"?`)) return;
-    const docRef = doc(db, 'conferences', id);
-    deleteDoc(docRef).then(() => {
+  const handleDelete = async (id: string, title: string) => {
+    if (!window.confirm(`Are you sure you want to delete "${title}"?`)) return;
+    try {
+      await deleteConference(Number(id));
       toast({ title: "Record Deleted", description: `"${title}" has been removed.` });
-    });
+      loadData();
+    } catch (err) {
+      toast({ variant: 'destructive', title: "Error", description: "Failed to delete conference." });
+    }
   };
 
-  if (userLoading || !user) return null;
+
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 overflow-x-hidden">
@@ -234,7 +263,7 @@ export default function EventsManagement() {
             
             {/* Management Console (Multi-Step Form) */}
             <div className="lg:col-span-5" data-aos="fade-right">
-              <Card className="rounded-2xl border-none shadow-2xl bg-white overflow-hidden lg:sticky lg:top-32">
+              <Card className="rounded-2xl border-none shadow-2xl bg-white overflow-hidden lg:sticky lg:top-32 lg:max-h-[calc(100vh-9rem)] lg:overflow-y-auto">
                 <div className="bg-primary p-6 text-white">
                   <div className="flex justify-between items-center mb-4">
                     <h2 className="text-lg font-bold font-headline italic flex items-center gap-2">
@@ -261,11 +290,6 @@ export default function EventsManagement() {
 
                 <form 
                   onSubmit={handleSubmit} 
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && (e.target as HTMLElement).tagName !== 'TEXTAREA') {
-                      e.preventDefault();
-                    }
-                  }}
                   className="p-6 md:p-8 space-y-6"
                 >
                   
@@ -296,7 +320,7 @@ export default function EventsManagement() {
                           </div>
                           <div className="space-y-1.5">
                             <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">End Date</label>
-                            <Input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="rounded-xl h-11" />
+                            <Input type="date" value={endDate} min={startDate || undefined} onChange={(e) => setEndDate(e.target.value)} className="rounded-xl h-11" />
                           </div>
                         </div>
                       </div>
@@ -310,15 +334,15 @@ export default function EventsManagement() {
                           </div>
                           <div className="space-y-1.5">
                             <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Abstract Deadline</label>
-                            <Input type="date" value={abstractDeadline} onChange={(e) => setAbstractDeadline(e.target.value)} className="rounded-xl h-11" />
+                            <Input type="date" value={abstractDeadline} min={submissionStartDate || undefined} onChange={(e) => setAbstractDeadline(e.target.value)} className="rounded-xl h-11" />
                           </div>
                           <div className="space-y-1.5">
                             <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Full Paper Deadline</label>
-                            <Input type="date" value={fullPaperDeadline} onChange={(e) => setFullPaperDeadline(e.target.value)} className="rounded-xl h-11" />
+                            <Input type="date" value={fullPaperDeadline} min={abstractDeadline || submissionStartDate || undefined} onChange={(e) => setFullPaperDeadline(e.target.value)} className="rounded-xl h-11" />
                           </div>
                           <div className="space-y-1.5">
                             <label className="text-[9px] font-black uppercase text-primary/40 tracking-widest ml-1">Reg. Deadline</label>
-                            <Input type="date" value={registrationDeadline} onChange={(e) => setRegistrationDeadline(e.target.value)} className="rounded-xl h-11" />
+                            <Input type="date" value={registrationDeadline} min={fullPaperDeadline || abstractDeadline || submissionStartDate || undefined} onChange={(e) => setRegistrationDeadline(e.target.value)} className="rounded-xl h-11" />
                           </div>
                         </div>
                       </div>
@@ -465,7 +489,7 @@ export default function EventsManagement() {
                       </Button>
                     )}
                     {currentStep < 2 ? (
-                      <Button type="button" onClick={() => setCurrentStep(prev => prev + 1)} className="flex-1 bg-primary text-accent rounded-xl h-12 text-[10px] font-black uppercase tracking-widest">
+                      <Button type="button" onClick={goToAcademicContent} className="flex-1 bg-primary text-accent rounded-xl h-12 text-[10px] font-black uppercase tracking-widest">
                         Content & Deadlines <ChevronRight className="ml-2 h-4 w-4" />
                       </Button>
                     ) : (
@@ -516,7 +540,7 @@ export default function EventsManagement() {
                                 <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded-full ${event.isActive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                                   {event.isActive ? 'Active' : 'Inactive'}
                                 </span>
-                                <span className="text-[8px] font-black text-primary/30 uppercase tracking-widest">ID: {event.id.slice(0,8)}</span>
+                                <span className="text-[8px] font-black text-primary/30 uppercase tracking-widest">ID: {String(event.id).slice(0, 8)}</span>
                               </div>
                               <div className="flex gap-1.5">
                                 <Button size="icon" variant="ghost" onClick={() => handleEdit(event)} className="h-8 w-8 rounded-lg bg-slate-50 text-primary hover:bg-primary hover:text-white transition-all">

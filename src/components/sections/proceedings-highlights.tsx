@@ -4,30 +4,35 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { BookOpen, ExternalLink, RefreshCw, ArrowRight } from 'lucide-react';
-import { useFirestore, useCollection } from '@/firebase';
-import { collection, query, limit, where } from 'firebase/firestore';
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import Image from 'next/image';
 
 export function ProceedingsHighlights() {
-  const db = useFirestore();
-  
-  const proceedingsQuery = useMemo(() => {
-    if (!db) return null;
-    return query(
-      collection(db, 'journals'), 
-      where('isFeatured', '==', true),
-      limit(10) // Fetch slightly more to sort in memory
-    );
-  }, [db]);
+  const [journals, setJournals] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const { data: journals, loading } = useCollection(proceedingsQuery);
+  useEffect(() => {
+    const loadFeatured = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('/api/journals?featured=true');
+        if (response.ok) {
+          setJournals(await response.json());
+        } else {
+          setJournals([]);
+        }
+      } catch (_error) {
+        setJournals([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadFeatured();
+  }, []);
 
   const featuredJournals = useMemo(() => {
-    if (!journals) return [];
-    return [...journals]
-      .sort((a: any, b: any) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0))
-      .slice(0, 3);
+    return journals?.slice(0, 3) || [];
   }, [journals]);
 
   return (

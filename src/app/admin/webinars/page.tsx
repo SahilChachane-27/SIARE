@@ -1,9 +1,8 @@
 
 'use client';
 
-import { useState, useEffect, useMemo, useRef } from 'react';
-import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
+import { useState, useEffect, useRef } from 'react';
+import { useAdminSession } from '@/hooks/use-admin-session';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
@@ -29,12 +28,9 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError } from '@/firebase/errors';
 
 export default function WebinarsManagement() {
-  const { user, loading: userLoading } = useUser();
-  const db = useFirestore();
+  const { user, loading: userLoading } = useAdminSession();
   const router = useRouter();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -51,17 +47,33 @@ export default function WebinarsManagement() {
   const [order, setOrder] = useState('0');
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isFeatured, setIsFeatured] = useState(false);
+  const [webinars, setWebinars] = useState<any[]>([]);
+  const [webinarsLoading, setWebinarsLoading] = useState(true);
 
-  const webinarsQuery = useMemo(() => {
-    if (!db) return null;
-    return query(collection(db, 'webinars'), orderBy('order', 'asc'));
-  }, [db]);
-
-  const { data: webinars, loading: webinarsLoading } = useCollection(webinarsQuery);
+  const loadWebinars = async () => {
+    setWebinarsLoading(true);
+    try {
+      const response = await fetch('/api/events?type=webinar');
+      if (response.ok) {
+        const data = await response.json();
+        setWebinars(data);
+      } else {
+        setWebinars([]);
+      }
+    } catch (_error) {
+      setWebinars([]);
+    } finally {
+      setWebinarsLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (!userLoading && !user) router.push('/admin/login');
   }, [user, userLoading, router]);
+
+  useEffect(() => {
+    loadWebinars();
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -98,60 +110,59 @@ export default function WebinarsManagement() {
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!db) return;
 
     const webinarData = {
+      type: 'webinar',
       title,
       date,
       time,
       speaker,
-      joinLink,
+      link: joinLink,
       description,
       status,
       color,
-      order: parseInt(order) || 0,
+      order: parseInt(order, 10) || 0,
       imageUrl,
       isFeatured,
-      updatedAt: serverTimestamp(),
     };
 
-    if (editingId) {
-      const docRef = doc(db, 'webinars', editingId);
-      updateDoc(docRef, webinarData)
-        .then(() => {
-          toast({ title: "Update Success", description: `Webinar "${title}" has been updated.` });
-        })
-        .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: docRef.path,
-            operation: 'update',
-            requestResourceData: webinarData,
-          });
-          errorEmitter.emit('permission-error', permissionError);
-        });
-    } else {
-      const colRef = collection(db, 'webinars');
-      const newWebinar = {
-        ...webinarData,
-        createdAt: serverTimestamp(),
-      };
-      addDoc(colRef, newWebinar)
-        .then(() => {
-          toast({ title: "Webinar Cataloged", description: `New webinar "${title}" is now active.` });
-        })
-        .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: colRef.path,
-            operation: 'create',
-            requestResourceData: newWebinar,
-          });
-          errorEmitter.emit('permission-error', permissionError);
-        });
+    try {
+      const endpoint = editingId ? `/api/admin/events/${editingId}` : '/api/admin/events';
+      const method = editingId ? 'PUT' : 'POST';
+      const response = await fetch(endpoint, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(webinarData),
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          router.push('/admin/login');
+          return;
+        }
+        const error = await response.json();
+        throw new Error(error?.error || 'Unable to save webinar');
+      }
+
+      if (editingId) {
+        toast({ title: 'Webinar Updated', description: `Webinar "${title}" has been updated.` });
+      } else {
+        toast({ title: 'Webinar Cataloged', description: `New webinar "${title}" is now active.` });
+      }
+
+      await loadWebinars();
+      resetForm();
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Could not save webinar',
+        description: error?.message || 'Please try again.',
+      });
     }
-    
-    resetForm();
   };
 
   const handleEdit = (webinar: any) => {
@@ -160,7 +171,7 @@ export default function WebinarsManagement() {
     setDate(webinar.date);
     setTime(webinar.time || '');
     setSpeaker(webinar.speaker || '');
-    setJoinLink(webinar.joinLink || '');
+    setJoinLink(webinar.link || '');
     setDescription(webinar.description || '');
     setStatus(webinar.status || 'Registration Open');
     setColor(webinar.color || 'bg-purple-500');
@@ -170,21 +181,32 @@ export default function WebinarsManagement() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = (id: string, title: string) => {
-    if (!db || !window.confirm(`Are you sure you want to delete webinar "${title}"?`)) return;
+  const handleDelete = async (id: string, title: string) => {
+    if (!window.confirm(`Are you sure you want to delete webinar "${title}"?`)) return;
 
-    const docRef = doc(db, 'webinars', id);
-    deleteDoc(docRef)
-      .then(() => {
-        toast({ title: "Webinar Deleted", description: `"${title}" has been removed.` });
-      })
-      .catch(async (err) => {
-        const permissionError = new FirestorePermissionError({
-          path: docRef.path,
-          operation: 'delete',
-        });
-        errorEmitter.emit('permission-error', permissionError);
+    try {
+      const response = await fetch(`/api/admin/events/${id}`, {
+        method: 'DELETE',
       });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          router.push('/admin/login');
+          return;
+        }
+        const error = await response.json();
+        throw new Error(error?.error || 'Unable to delete webinar');
+      }
+
+      toast({ title: 'Webinar Deleted', description: `"${title}" has been removed.` });
+      await loadWebinars();
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Delete failed',
+        description: error?.message || 'Please try again.',
+      });
+    }
   };
 
   if (userLoading || !user) return null;
@@ -399,10 +421,10 @@ export default function WebinarsManagement() {
                           <User className="h-3.5 w-3.5 text-accent" /> {webinar.speaker}
                         </div>
 
-                        {webinar.joinLink && (
+                        {webinar.link && (
                           <div className="mb-4">
                             <Button variant="link" asChild className="p-0 h-auto text-[10px] font-black uppercase text-accent hover:text-primary">
-                              <a href={webinar.joinLink} target="_blank" className="flex items-center gap-1.5">
+                              <a href={webinar.link} target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
                                 Join/Reg URL <ExternalLink className="h-2.5 w-2.5" />
                               </a>
                             </Button>
@@ -414,7 +436,7 @@ export default function WebinarsManagement() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-between pt-4 mt-2 border-t border-slate-50 gap-2">
-                          <span className="text-[8px] font-black text-primary/20 uppercase tracking-[0.2em]">Session ID: {webinar.id.slice(0,8)}</span>
+                          <span className="text-[8px] font-black text-primary/20 uppercase tracking-[0.2em]">Session ID: {String(webinar.id).slice(0,8)}</span>
                           <div className="text-[10px] font-black text-primary/40 italic">Order: {webinar.order}</div>
                         </div>
                       </div>

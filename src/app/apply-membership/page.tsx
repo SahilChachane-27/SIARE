@@ -13,10 +13,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
-import { useFirestore } from '@/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError } from '@/firebase/errors';
 import { ShieldCheck, Users, GraduationCap, Landmark, Briefcase } from "lucide-react";
 
 const formSchema = z.object({
@@ -40,7 +36,6 @@ const tiers = [
 export default function ApplyMembershipPage() {
   const { toast } = useToast();
   const [isClient, setIsClient] = useState(false);
-  const db = useFirestore();
 
   useEffect(() => {
     setIsClient(true);
@@ -51,9 +46,7 @@ export default function ApplyMembershipPage() {
     defaultValues: { name: "", email: "", phone: "", institution: "", tier: undefined, statement: "" },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    if (!db) return;
-
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const data = {
       name: values.name,
       email: values.email,
@@ -63,25 +56,32 @@ export default function ApplyMembershipPage() {
       tier: values.tier,
       message: values.statement,
       status: 'pending',
-      createdAt: serverTimestamp(),
     };
 
-    addDoc(collection(db, 'inquiries'), data)
-      .then(() => {
-        toast({
-          title: "Application Submitted!",
-          description: "Our membership committee will review your application and contact you shortly.",
-        });
-        form.reset();
-      })
-      .catch(async (err) => {
-        const permissionError = new FirestorePermissionError({
-          path: 'inquiries',
-          operation: 'create',
-          requestResourceData: data,
-        });
-        errorEmitter.emit('permission-error', permissionError);
+    try {
+      const response = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
       });
+
+      if (!response.ok) {
+        const result = await response.json();
+        throw new Error(result?.error || 'Unable to submit your application');
+      }
+
+      toast({
+        title: "Application Submitted!",
+        description: "Our membership committee will review your application and contact you shortly.",
+      });
+      form.reset();
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Submission Failed',
+        description: error?.message || 'Please try again later.',
+      });
+    }
   }
 
   if (!isClient) return null;

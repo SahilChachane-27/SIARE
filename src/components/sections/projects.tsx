@@ -1,60 +1,72 @@
 'use client';
 
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Calendar, MapPin, ArrowRight, Star, RefreshCw, Video, GraduationCap, Presentation, User } from 'lucide-react';
-import { useFirestore, useCollection } from '@/firebase';
-import { collection, query, limit, where } from 'firebase/firestore';
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import Image from 'next/image';
 
 export function Projects() {
-  const db = useFirestore();
-  
-  // Fetch featured items from each category without server-side ordering to avoid index errors
-  const conferencesQuery = useMemo(() => {
-    if (!db) return null;
-    return query(
-      collection(db, 'conferences'), 
-      where('isFeatured', '==', true),
-      limit(5)
-    );
-  }, [db]);
+  const [conferences, setConferences] = useState<any[]>([]);
+  const [workshops, setWorkshops] = useState<any[]>([]);
+  const [webinars, setWebinars] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const workshopsQuery = useMemo(() => {
-    if (!db) return null;
-    return query(
-      collection(db, 'workshops'), 
-      where('isFeatured', '==', true),
-      limit(5)
-    );
-  }, [db]);
+  useEffect(() => {
+    const loadHomepageEvents = async () => {
+      setLoading(true);
+      try {
+        const [conferencesRes, workshopsRes, webinarsRes] = await Promise.all([
+          fetch('/api/conferences'),
+          fetch('/api/events?type=workshop'),
+          fetch('/api/events?type=webinar'),
+        ]);
 
-  const webinarsQuery = useMemo(() => {
-    if (!db) return null;
-    return query(
-      collection(db, 'webinars'), 
-      where('isFeatured', '==', true),
-      limit(5)
-    );
-  }, [db]);
+        setConferences(conferencesRes.ok ? await conferencesRes.json() : []);
+        setWorkshops(workshopsRes.ok ? await workshopsRes.json() : []);
+        setWebinars(webinarsRes.ok ? await webinarsRes.json() : []);
+      } catch (_error) {
+        setConferences([]);
+        setWorkshops([]);
+        setWebinars([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const { data: conferences, loading: confLoading } = useCollection(conferencesQuery);
-  const { data: workshops, loading: workLoading } = useCollection(workshopsQuery);
-  const { data: webinars, loading: webLoading } = useCollection(webinarsQuery);
+    loadHomepageEvents();
+  }, []);
 
   const allEvents = useMemo(() => {
     const combined = [
-      ...(conferences || []).map(item => ({ ...item, type: 'Conference', icon: Presentation, tagColor: 'bg-blue-500' })),
-      ...(workshops || []).map(item => ({ ...item, type: 'Workshop', icon: GraduationCap, tagColor: 'bg-amber-500' })),
-      ...(webinars || []).map(item => ({ ...item, type: 'Webinar', icon: Video, tagColor: 'bg-purple-500' }))
+      ...(conferences || []).map(item => ({
+        ...item,
+        type: 'Conference',
+        icon: Presentation,
+        displayDate: item.startDate || item.date || '',
+        displayLocation: item.location || item.venue || '',
+      })),
+      ...(workshops || []).map(item => ({
+        ...item,
+        type: 'Workshop',
+        icon: GraduationCap,
+        displayDate: item.date || '',
+        displayLocation: item.location || item.venue || '',
+      })),
+      ...(webinars || []).map(item => ({
+        ...item,
+        type: 'Webinar',
+        icon: Video,
+        displayDate: item.date || '',
+        displayLocation: item.location || item.venue || '',
+      }))
     ];
-    // Sort by order across types in JavaScript memory
+
     return combined.sort((a, b) => (a.order || 0) - (b.order || 0)).slice(0, 6);
   }, [conferences, workshops, webinars]);
 
-  const isLoading = confLoading || workLoading || webLoading;
+  const isLoading = loading;
 
   return (
     <section id="upcoming-events" className="py-12 md:py-20 bg-white overflow-hidden font-body">
@@ -73,78 +85,71 @@ export function Projects() {
             <p className="text-[10px] font-black uppercase tracking-widest text-primary/30">Synchronizing Registry...</p>
           </div>
         ) : allEvents.length > 0 ? (
-          <div className="relative w-full group" data-aos="fade-up">
-             {/* Edge Gradient Masks for smooth entrance/exit */}
-            <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-
-            <div className="flex animate-marquee whitespace-nowrap py-4 items-stretch w-max group-hover:[animation-play-state:paused]">
-              {/* Double the array for a seamless infinite loop */}
-              {[...allEvents, ...allEvents].map((event: any, index: number) => (
-                <div key={`${event.type}-${event.id}-${index}`} className="px-3 shrink-0 w-[240px] md:w-[300px]">
-                  <Card className="h-full overflow-hidden border-none shadow-xl rounded-2xl relative group bg-white hover:shadow-primary/5 transition-all duration-500">
-                    
-                    {/* Image Layer */}
-                    <div className="relative aspect-[4/5] w-full overflow-hidden bg-slate-50 shrink-0">
-                      {event.imageUrl ? (
-                        <Image 
-                          src={event.imageUrl} 
-                          alt={event.title} 
-                          fill 
-                          className="object-cover transition-transform duration-700 group-hover:scale-110" 
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center opacity-10">
-                          <event.icon className="h-12 w-12" />
-                        </div>
-                      )}
-                      
-                      {/* Floating Status Tag - Always visible on image */}
-                      {event.status && (
-                        <div className="absolute top-3 left-3 z-30 group-hover:opacity-0 transition-opacity duration-300">
-                          <div className="bg-accent text-accent-foreground text-[7px] md:text-[8px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter flex items-center gap-1 font-headline italic shadow-lg">
-                            <Star className="h-2 w-2 fill-current" /> {event.status}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Absolute Overlay (Details revealed on hover) */}
-                    <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-6 bg-gradient-to-t from-primary/95 via-primary/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out z-20">
-                      <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-in-out whitespace-normal">
-                        
-                        <div className="mb-1.5">
-                           <div className="bg-accent/20 text-accent text-[7px] font-black px-2 py-0.5 rounded-full uppercase inline-block italic mb-1.5">
-                             {event.type}
-                           </div>
-                        </div>
-
-                        <h4 className="text-sm md:text-lg font-bold text-white font-headline italic leading-tight mb-3 line-clamp-3">
-                          {event.title}
-                        </h4>
-                        
-                        <div className="space-y-1.5 mb-4">
-                          <div className="flex items-center gap-2 text-[9px] md:text-xs font-bold text-white/80 italic">
-                            <Calendar className="h-3 w-3 text-accent shrink-0" /> {event.date}
-                          </div>
-                          {event.location ? (
-                            <div className="flex items-center gap-2 text-[9px] md:text-xs font-bold text-white/80 italic">
-                              <MapPin className="h-3 w-3 text-accent shrink-0" /> {event.location}
-                            </div>
-                          ) : event.speaker ? (
-                            <div className="flex items-center gap-2 text-[9px] md:text-xs font-bold text-white/80 italic">
-                              <User className="h-3 w-3 text-accent shrink-0" /> {event.speaker}
-                            </div>
-                          ) : null}
-                        </div>
-
-                        <Button asChild className="w-full bg-accent hover:bg-white text-primary font-black uppercase text-[9px] tracking-widest h-8 md:h-10 rounded-xl transition-all">
-                          <Link href="/events">Register / Details</Link>
-                        </Button>
+          <div className="container mx-auto px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32" data-aos="fade-up">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+              {allEvents.map((event: any) => (
+                <Card
+                  key={`${event.type}-${event.id}`}
+                  className="overflow-hidden border border-slate-200 shadow-sm rounded-2xl bg-white h-full flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                >
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-50">
+                    {event.imageUrl ? (
+                      <Image
+                        src={event.imageUrl}
+                        alt={event.title}
+                        fill
+                        className="object-cover transition-transform duration-700 hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-slate-100 text-primary/20">
+                        <event.icon className="h-14 w-14" />
                       </div>
+                    )}
+
+                    <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                      <div className="bg-white/95 text-primary text-[8px] font-black px-2.5 py-1 rounded-full uppercase tracking-widest shadow-sm">
+                        {event.type}
+                      </div>
+                      {event.status ? (
+                        <div className="bg-accent text-accent-foreground text-[8px] font-black px-2.5 py-1 rounded-full uppercase tracking-widest flex items-center gap-1 shadow-sm">
+                          <Star className="h-2.5 w-2.5 fill-current" />
+                          {event.status}
+                        </div>
+                      ) : null}
                     </div>
-                  </Card>
-                </div>
+                  </div>
+
+                  <div className="p-5 md:p-6 flex flex-col flex-1">
+                    <h4 className="text-lg md:text-xl font-bold text-primary font-headline italic leading-tight line-clamp-2 mb-4">
+                      {event.title}
+                    </h4>
+
+                    <div className="space-y-2 text-xs text-foreground/75 mb-6 flex-1">
+                      {event.displayDate ? (
+                        <div className="flex items-center gap-2 font-medium">
+                          <Calendar className="h-3.5 w-3.5 text-accent shrink-0" />
+                          <span>{event.displayDate}</span>
+                        </div>
+                      ) : null}
+
+                      {event.displayLocation ? (
+                        <div className="flex items-center gap-2 font-medium">
+                          <MapPin className="h-3.5 w-3.5 text-accent shrink-0" />
+                          <span>{event.displayLocation}</span>
+                        </div>
+                      ) : event.speaker ? (
+                        <div className="flex items-center gap-2 font-medium">
+                          <User className="h-3.5 w-3.5 text-accent shrink-0" />
+                          <span>{event.speaker}</span>
+                        </div>
+                      ) : null}
+                    </div>
+
+                    <Button asChild className="w-full bg-primary hover:bg-accent text-white font-black uppercase text-[10px] tracking-widest h-10 rounded-xl mt-auto">
+                      <Link href="/events">Register / Details</Link>
+                    </Button>
+                  </div>
+                </Card>
               ))}
             </div>
           </div>

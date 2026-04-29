@@ -18,12 +18,13 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useFirestore, useCollection } from '@/firebase';
-import { collection, query, orderBy } from 'firebase/firestore';
 import { useMemo, useEffect, useState } from 'react';
 
 export default function EventsPage() {
-  const db = useFirestore();
+  const [allConfs, setAllConfs] = useState<any[]>([]);
+  const [allWorks, setAllWorks] = useState<any[]>([]);
+  const [allWebs, setAllWebs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [today, setToday] = useState(new Date());
 
   useEffect(() => {
@@ -40,13 +41,45 @@ export default function EventsPage() {
     return eventDate < now;
   };
 
-  const conferencesQuery = useMemo(() => db ? query(collection(db, 'conferences'), orderBy('order', 'asc')) : null, [db]);
-  const workshopsQuery = useMemo(() => db ? query(collection(db, 'workshops'), orderBy('order', 'asc')) : null, [db]);
-  const webinarsQuery = useMemo(() => db ? query(collection(db, 'webinars'), orderBy('order', 'asc')) : null, [db]);
+  useEffect(() => {
+    const loadEvents = async () => {
+      setLoading(true);
 
-  const { data: allConfs, loading: confLoading } = useCollection(conferencesQuery);
-  const { data: allWorks, loading: workLoading } = useCollection(workshopsQuery);
-  const { data: allWebs, loading: webLoading } = useCollection(webinarsQuery);
+      try {
+        const [confsRes, worksRes, websRes] = await Promise.all([
+          fetch('/api/conferences'),
+          fetch('/api/events?type=workshop'),
+          fetch('/api/events?type=webinar'),
+        ]);
+
+        if (confsRes.ok) {
+          setAllConfs(await confsRes.json());
+        } else {
+          setAllConfs([]);
+        }
+
+        if (worksRes.ok) {
+          setAllWorks(await worksRes.json());
+        } else {
+          setAllWorks([]);
+        }
+
+        if (websRes.ok) {
+          setAllWebs(await websRes.json());
+        } else {
+          setAllWebs([]);
+        }
+      } catch (_error) {
+        setAllConfs([]);
+        setAllWorks([]);
+        setAllWebs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadEvents();
+  }, []);
 
   // Filter Upcoming Events
   const upcomingConfs = useMemo(() => allConfs?.filter(c => !isPast(c.startDate || c.date)), [allConfs, today]);
@@ -66,8 +99,6 @@ export default function EventsPage() {
         return dateB - dateA; // Newest archived events first
       });
   }, [allConfs, allWorks, allWebs, today]);
-
-  const loading = confLoading || workLoading || webLoading;
 
   const EventCard = ({ event, isPastCard = false }: { event: any, isPastCard?: boolean }) => (
     <Card className={`flex flex-col border-0 border-l-4 overflow-hidden ${event.color || 'border-primary'} shadow-xl rounded-2xl bg-slate-50 hover:bg-white transition-all duration-300 group h-full`}>

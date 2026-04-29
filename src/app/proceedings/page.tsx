@@ -29,8 +29,6 @@ import {
   Layers,
   Check
 } from 'lucide-react';
-import { useCollection, useFirestore } from '@/firebase';
-import { collection, query, orderBy } from 'firebase/firestore';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -48,19 +46,29 @@ const categories = [
 export default function ProceedingsPage() {
   const [isClient, setIsClient] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [universityQuery, setUniversityQuery] = useState('');
+  const [issnQuery, setIssnQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-
-  const db = useFirestore();
-  
-  const journalsQuery = useMemo(() => {
-    if (!db) return null;
-    return query(collection(db, 'journals'), orderBy('createdAt', 'desc'));
-  }, [db]);
-
-  const { data: journals, loading } = useCollection(journalsQuery);
+  const [journals, setJournals] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const loadJournals = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('/api/journals');
+        if (response.ok) {
+          setJournals(await response.json());
+        } else {
+          setJournals([]);
+        }
+      } catch (_error) {
+        setJournals([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadJournals();
     setIsClient(true);
   }, []);
 
@@ -68,16 +76,16 @@ export default function ProceedingsPage() {
     if (!journals) return [];
     return journals.filter((j: any) => {
       const matchesName = (j.name || '').toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesUniversity = (j.university || '').toLowerCase().includes(universityQuery.toLowerCase());
+      const matchesIssn = (j.issn || '').toLowerCase().includes(issnQuery.toLowerCase());
       const matchesCategory = selectedCategory === 'All' || j.domain === selectedCategory;
 
-      return matchesName && matchesUniversity && matchesCategory;
+      return matchesName && matchesIssn && matchesCategory;
     });
-  }, [journals, searchQuery, universityQuery, selectedCategory]);
+  }, [journals, searchQuery, issnQuery, selectedCategory]);
 
   const resetFilters = () => {
     setSearchQuery('');
-    setUniversityQuery('');
+    setIssnQuery('');
     setSelectedCategory('All');
   };
 
@@ -283,6 +291,10 @@ export default function ProceedingsPage() {
                       <Input placeholder="Search name..." className="h-10 border-slate-200 rounded-xl bg-slate-50 focus:bg-white" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                     </div>
                     <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-primary/60 tracking-widest">ISSN</label>
+                      <Input placeholder="Search ISSN..." className="h-10 border-slate-200 rounded-xl bg-slate-50 focus:bg-white" value={issnQuery} onChange={(e) => setIssnQuery(e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
                       <label className="text-[10px] font-black uppercase text-primary/60 tracking-widest">Academic Domain</label>
                       <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                         <SelectTrigger className="h-10 border-slate-200 rounded-xl bg-slate-50 focus:bg-white"><SelectValue placeholder="All Domains" /></SelectTrigger>
@@ -316,7 +328,7 @@ export default function ProceedingsPage() {
                         <div className="absolute inset-0 flex flex-col justify-end p-5 bg-gradient-to-t from-primary/95 via-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out z-20">
                           <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
                             <h3 className="text-base font-bold text-white font-headline leading-tight italic mb-1">{journal.name}</h3>
-                            <p className="text-accent font-black uppercase text-[9px] tracking-widest mb-3">{journal.university}</p>
+                            <p className="text-accent font-black uppercase text-[9px] tracking-widest mb-3">ISSN: {journal.issn || 'Pending'}</p>
                             <Button asChild className="w-full bg-accent hover:bg-white text-primary font-black uppercase text-[10px] tracking-widest h-9 rounded-xl transition-all">
                               <a href={journal.link} target="_blank">View Series <ExternalLink className="ml-1.5 h-3 w-3" /></a>
                             </Button>

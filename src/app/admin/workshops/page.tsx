@@ -1,9 +1,8 @@
 
 'use client';
 
-import { useState, useEffect, useMemo, useRef } from 'react';
-import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
+import { useState, useEffect, useRef } from 'react';
+import { useAdminSession } from '@/hooks/use-admin-session';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
@@ -29,12 +28,9 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError } from '@/firebase/errors';
 
 export default function WorkshopsManagement() {
-  const { user, loading: userLoading } = useUser();
-  const db = useFirestore();
+  const { user, loading: userLoading } = useAdminSession();
   const router = useRouter();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -51,17 +47,33 @@ export default function WorkshopsManagement() {
   const [order, setOrder] = useState('0');
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isFeatured, setIsFeatured] = useState(false);
+  const [workshops, setWorkshops] = useState<any[]>([]);
+  const [workshopsLoading, setWorkshopsLoading] = useState(true);
 
-  const workshopsQuery = useMemo(() => {
-    if (!db) return null;
-    return query(collection(db, 'workshops'), orderBy('order', 'asc'));
-  }, [db]);
-
-  const { data: workshops, loading: workshopsLoading } = useCollection(workshopsQuery);
+  const loadWorkshops = async () => {
+    setWorkshopsLoading(true);
+    try {
+      const response = await fetch('/api/events?type=workshop');
+      if (response.ok) {
+        const data = await response.json();
+        setWorkshops(data);
+      } else {
+        setWorkshops([]);
+      }
+    } catch (_error) {
+      setWorkshops([]);
+    } finally {
+      setWorkshopsLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (!userLoading && !user) router.push('/admin/login');
   }, [user, userLoading, router]);
+
+  useEffect(() => {
+    loadWorkshops();
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -98,11 +110,11 @@ export default function WorkshopsManagement() {
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!db) return;
 
     const workshopData = {
+      type: 'workshop',
       title,
       date,
       time,
@@ -111,47 +123,46 @@ export default function WorkshopsManagement() {
       description,
       status,
       color,
-      order: parseInt(order) || 0,
+      order: parseInt(order, 10) || 0,
       imageUrl,
       isFeatured,
-      updatedAt: serverTimestamp(),
     };
 
-    if (editingId) {
-      const docRef = doc(db, 'workshops', editingId);
-      updateDoc(docRef, workshopData)
-        .then(() => {
-          toast({ title: "Update Success", description: `Workshop "${title}" has been updated.` });
-        })
-        .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: docRef.path,
-            operation: 'update',
-            requestResourceData: workshopData,
-          });
-          errorEmitter.emit('permission-error', permissionError);
-        });
-    } else {
-      const colRef = collection(db, 'workshops');
-      const newWorkshop = {
-        ...workshopData,
-        createdAt: serverTimestamp(),
-      };
-      addDoc(colRef, newWorkshop)
-        .then(() => {
-          toast({ title: "Workshop Cataloged", description: `New workshop "${title}" is now active.` });
-        })
-        .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: colRef.path,
-            operation: 'create',
-            requestResourceData: newWorkshop,
-          });
-          errorEmitter.emit('permission-error', permissionError);
-        });
+    try {
+      const endpoint = editingId ? `/api/admin/events/${editingId}` : '/api/admin/events';
+      const method = editingId ? 'PUT' : 'POST';
+      const response = await fetch(endpoint, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(workshopData),
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          router.push('/admin/login');
+          return;
+        }
+        const error = await response.json();
+        throw new Error(error?.error || 'Unable to save workshop');
+      }
+
+      if (editingId) {
+        toast({ title: 'Workshop Updated', description: `Workshop "${title}" has been updated.` });
+      } else {
+        toast({ title: 'Workshop Cataloged', description: `New workshop "${title}" is now active.` });
+      }
+
+      await loadWorkshops();
+      resetForm();
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Could not save workshop',
+        description: error?.message || 'Please try again.',
+      });
     }
-    
-    resetForm();
   };
 
   const handleEdit = (workshop: any) => {
@@ -170,21 +181,32 @@ export default function WorkshopsManagement() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = (id: string, title: string) => {
-    if (!db || !window.confirm(`Are you sure you want to delete workshop "${title}"?`)) return;
+  const handleDelete = async (id: string, title: string) => {
+    if (!window.confirm(`Are you sure you want to delete workshop "${title}"?`)) return;
 
-    const docRef = doc(db, 'workshops', id);
-    deleteDoc(docRef)
-      .then(() => {
-        toast({ title: "Workshop Deleted", description: `"${title}" has been removed.` });
-      })
-      .catch(async (err) => {
-        const permissionError = new FirestorePermissionError({
-          path: docRef.path,
-          operation: 'delete',
-        });
-        errorEmitter.emit('permission-error', permissionError);
+    try {
+      const response = await fetch(`/api/admin/events/${id}`, {
+        method: 'DELETE',
       });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          router.push('/admin/login');
+          return;
+        }
+        const error = await response.json();
+        throw new Error(error?.error || 'Unable to delete workshop');
+      }
+
+      toast({ title: 'Workshop Deleted', description: `"${title}" has been removed.` });
+      await loadWorkshops();
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Delete failed',
+        description: error?.message || 'Please try again.',
+      });
+    }
   };
 
   if (userLoading || !user) return null;
@@ -417,7 +439,7 @@ export default function WorkshopsManagement() {
                         </p>
 
                         <div className="flex items-center justify-between pt-4 mt-2 border-t border-slate-50">
-                          <span className="text-[8px] font-black text-primary/20 uppercase tracking-[0.2em]">ID: {workshop.id.slice(0,8)}</span>
+                          <span className="text-[8px] font-black text-primary/20 uppercase tracking-[0.2em]">ID: {String(workshop.id).slice(0,8)}</span>
                           <div className="text-[10px] font-black text-primary/40 italic">Order: {workshop.order}</div>
                         </div>
                       </div>

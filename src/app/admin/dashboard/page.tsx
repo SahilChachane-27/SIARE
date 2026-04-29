@@ -1,9 +1,8 @@
 
 'use client';
 
-import { useUser, useAuth, useFirestore, useCollection } from '@/firebase';
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Header } from '@/components/layout/header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -26,86 +25,72 @@ import {
   CreditCard
 } from 'lucide-react';
 import Link from 'next/link';
-import { collection, query, orderBy, limit, doc, deleteDoc } from 'firebase/firestore';
 import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
-import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError } from '@/firebase/errors';
+import { getJournals, deleteJournal } from '@/actions/journals';
+import { getConferences } from '@/actions/conferences';
+import { getMembers } from '@/actions/members';
+import { getInquiries } from '@/actions/inquiries';
+import { logoutAction } from '@/actions/auth';
 
 export default function AdminDashboard() {
-  const { user, loading } = useUser();
-  const auth = useAuth();
-  const db = useFirestore();
   const router = useRouter();
   const { toast } = useToast();
 
-  // Fetch all journals for stats
-  const journalsQuery = useMemo(() => {
-    if (!db) return null;
-    return query(collection(db, 'journals'), orderBy('createdAt', 'desc'));
-  }, [db]);
+  const [journals, setJournals] = useState<any[]>([]);
+  const [conferences, setConferences] = useState<any[]>([]);
+  const [members, setMembers] = useState<any[]>([]);
+  const [inquiries, setInquiries] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const { data: journals, loading: journalsLoading } = useCollection(journalsQuery);
-
-  // Fetch all conferences for stats
-  const confsQuery = useMemo(() => {
-    if (!db) return null;
-    return query(collection(db, 'conferences'));
-  }, [db]);
-
-  const { data: conferences, loading: confsLoading } = useCollection(confsQuery);
-
-  // Fetch all members for stats
-  const membersQuery = useMemo(() => {
-    if (!db) return null;
-    return query(collection(db, 'members'));
-  }, [db]);
-  const { data: members, loading: membersLoading } = useCollection(membersQuery);
-
-  // Fetch recent 5 journals for activity list
-  const recentQuery = useMemo(() => {
-    if (!db) return null;
-    return query(collection(db, 'journals'), orderBy('createdAt', 'desc'), limit(5));
-  }, [db]);
-
-  const { data: recentJournals, loading: recentLoading } = useCollection(recentQuery);
-
-  // Fetch count of pending inquiries
-  const inquiriesQuery = useMemo(() => {
-    if (!db) return null;
-    return query(collection(db, 'inquiries'));
-  }, [db]);
-  const { data: inquiries } = useCollection(inquiriesQuery);
-  const pendingInquiriesCount = inquiries?.filter((i: any) => i.status === 'pending').length || 0;
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/admin/login');
-    }
-  }, [user, loading, router]);
-
-  const handleLogout = () => {
-    if (auth) {
-      auth.signOut();
-      router.push('/admin/login');
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      const [jData, cData, mData, iData] = await Promise.all([
+        getJournals(),
+        getConferences(),
+        getMembers(),
+        getInquiries()
+      ]);
+      setJournals(jData);
+      setConferences(cData);
+      setMembers(mData);
+      setInquiries(iData);
+    } catch (e) {
+      console.error(e);
+      toast({ variant: 'destructive', title: 'Failed to load data' });
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleDeleteJournal = (id: string, name: string) => {
-    if (!db || !window.confirm(`Are you sure you want to delete "${name}"? This action cannot be undone.`)) return;
+  useEffect(() => {
+    loadData();
+  }, []);
 
-    const docRef = doc(db, 'journals', id);
-    deleteDoc(docRef)
-      .then(() => {
-        toast({ title: "Journal Deleted", description: `"${name}" has been removed from the system.` });
-      })
-      .catch(async (err) => {
-        const permissionError = new FirestorePermissionError({
-          path: docRef.path,
-          operation: 'delete',
-        });
-        errorEmitter.emit('permission-error', permissionError);
-      });
+  const recentJournals = journals.slice(0, 5);
+  const pendingInquiriesCount = inquiries.filter((i: any) => i.status === 'pending').length || 0;
+  
+  const journalsLoading = isLoading;
+  const confsLoading = isLoading;
+  const membersLoading = isLoading;
+  const recentLoading = isLoading;
+
+  const handleLogout = async () => {
+    await logoutAction();
+    router.push('/admin/login');
+  };
+
+  const handleDeleteJournal = async (id: number, name: string) => {
+    if (!window.confirm(`Are you sure you want to delete "${name}"? This action cannot be undone.`)) return;
+
+    try {
+      await deleteJournal(Number(id));
+      toast({ title: "Journal Deleted", description: `"${name}" has been removed from the system.` });
+      loadData();
+    } catch (err) {
+      toast({ variant: 'destructive', title: "Error", description: "Failed to delete journal." });
+    }
   };
 
   const stats = useMemo(() => {
@@ -145,13 +130,7 @@ export default function AdminDashboard() {
     ];
   }, [journals, journalsLoading, conferences, confsLoading, members, membersLoading, pendingInquiriesCount]);
 
-  if (loading || !user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
+
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50/50">
@@ -173,7 +152,7 @@ export default function AdminDashboard() {
               <div className="flex items-center gap-3">
                 <div className="h-1.5 w-1.5 rounded-full bg-green-500"></div>
                 <p className="text-muted-foreground text-[8px] font-black uppercase tracking-widest">
-                  Master System Console: {user.email}
+                  Master System Console
                 </p>
               </div>
             </div>
@@ -295,7 +274,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-4 sm:gap-2 shrink-0">
                           <div className="text-[8px] font-black text-primary/30 uppercase tracking-widest order-2 sm:order-1 bg-slate-100 px-2 py-0.5 rounded-full">
-                            {journal.createdAt?.seconds ? new Date(journal.createdAt.seconds * 1000).toLocaleDateString() : 'Just now'}
+                            {journal.createdAt ? new Date(journal.createdAt).toLocaleDateString() : 'Just now'}
                           </div>
                           <div className="flex items-center gap-2 order-1 sm:order-2">
                             <Button asChild size="sm" variant="ghost" className="h-8 px-3 text-[8px] font-black uppercase text-primary/60 hover:text-accent hover:bg-accent/5 rounded-lg transition-all">
@@ -336,9 +315,14 @@ export default function AdminDashboard() {
                   <p className="text-white/60 text-[10px] mb-8 leading-relaxed font-medium italic">
                     Manage the global directory of scholars, students, and institutional partners enrolled in SIARE.
                   </p>
-                  <Button asChild className="w-full bg-accent text-primary font-black uppercase text-[9px] tracking-[0.2em] rounded-lg hover:scale-[1.02] transition-transform shadow-2xl h-11">
-                    <Link href="/admin/members" className="flex items-center justify-center">Manage Directory <ChevronRight className="ml-2 h-4 w-4" /></Link>
-                  </Button>
+              <Button
+  asChild
+  className="w-full bg-accent text-primary font-black uppercase text-[9px] tracking-[0.2em] rounded-lg transition-transform shadow-2xl h-11"
+>
+  <Link href="/admin/members" className="flex items-center justify-center">
+    Manage Directory <ChevronRight className="ml-2 h-4 w-4" />
+  </Link>
+</Button>
                 </div>
               </Card>
 

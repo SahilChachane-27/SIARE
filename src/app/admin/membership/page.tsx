@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
-import { useUser, useFirestore, useCollection } from '@/firebase';
-import { collection, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
+import { useState, useEffect } from 'react';
+import { useAdminSession } from '@/hooks/use-admin-session';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 import { Button } from '@/components/ui/button';
@@ -21,12 +20,9 @@ import {
   Trash2
 } from 'lucide-react';
 import Link from 'next/link';
-import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError } from '@/firebase/errors';
 
 export default function MembershipManagement() {
-  const { user, loading: userLoading } = useUser();
-  const db = useFirestore();
+  const { user, loading: userLoading } = useAdminSession();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -38,16 +34,34 @@ export default function MembershipManagement() {
   const [description, setDescription] = useState('');
   const [benefits, setBenefits] = useState('');
   const [order, setOrder] = useState('0');
+  const [tiers, setTiers] = useState<any[]>([]);
+  const [tiersLoading, setTiersLoading] = useState(true);
 
-  const tiersQuery = useMemo(() => {
-    if (!db) return null;
-    return query(collection(db, 'membershipTiers'), orderBy('order', 'asc'));
-  }, [db]);
-
-  const { data: tiers, loading: tiersLoading } = useCollection(tiersQuery);
+  const loadTiers = async () => {
+    setTiersLoading(true);
+    try {
+      const response = await fetch('/api/admin/membership-tiers');
+      if (response.ok) {
+        setTiers(await response.json());
+      } else {
+        setTiers([]);
+      }
+    } catch (_error) {
+      setTiers([]);
+    } finally {
+      setTiersLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (!userLoading && !user) router.push('/admin/login');
+    if (!userLoading && !user) {
+      router.push('/admin/login');
+      return;
+    }
+
+    if (user) {
+      loadTiers();
+    }
   }, [user, userLoading, router]);
 
   const resetForm = () => {
@@ -61,9 +75,8 @@ export default function MembershipManagement() {
     setOrder('0');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!db) return;
 
     const tierData = {
       name,
@@ -71,46 +84,36 @@ export default function MembershipManagement() {
       priceINR,
       priceUSD,
       description,
-      benefits: benefits.split('\n').map(b => b.trim()).filter(Boolean),
-      order: parseInt(order) || 0,
-      updatedAt: serverTimestamp(),
+      benefits: benefits.split('\n').map((b) => b.trim()).filter(Boolean),
+      order: parseInt(order, 10) || 0,
     };
 
-    if (editingId) {
-      const docRef = doc(db, 'membershipTiers', editingId);
-      updateDoc(docRef, tierData)
-        .then(() => {
-          toast({ title: "Tier Updated", description: `${name} has been synchronized.` });
-        })
-        .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: docRef.path,
-            operation: 'update',
-            requestResourceData: tierData,
-          });
-          errorEmitter.emit('permission-error', permissionError);
-        });
-    } else {
-      const colRef = collection(db, 'membershipTiers');
-      const newTier = {
-        ...tierData,
-        createdAt: serverTimestamp(),
-      };
-      addDoc(colRef, newTier)
-        .then(() => {
-          toast({ title: "Tier Cataloged", description: `New membership tier "${name}" is now live.` });
-        })
-        .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: colRef.path,
-            operation: 'create',
-            requestResourceData: newTier,
-          });
-          errorEmitter.emit('permission-error', permissionError);
-        });
+    try {
+      const endpoint = editingId ? `/api/admin/membership-tiers/${editingId}` : '/api/admin/membership-tiers';
+      const method = editingId ? 'PUT' : 'POST';
+
+      const response = await fetch(endpoint, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(tierData),
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          router.push('/admin/login');
+          return;
+        }
+
+        const result = await response.json();
+        throw new Error(result?.error || 'Unable to save membership tier');
+      }
+
+      toast({ title: editingId ? 'Tier Updated' : 'Tier Cataloged', description: editingId ? `${name} has been synchronized.` : `New membership tier "${name}" is now live.` });
+      resetForm();
+      await loadTiers();
+    } catch (error: any) {
+      toast({ variant: 'destructive', title: 'Save failed', description: error?.message || 'Please try again.' });
     }
-    
-    resetForm();
   };
 
   const handleEdit = (tier: any) => {
@@ -125,21 +128,29 @@ export default function MembershipManagement() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = (id: string, name: string) => {
-    if (!db || !window.confirm(`Are you sure you want to delete "${name}" membership tier?`)) return;
+  const handleDelete = async (id: string, name: string) => {
+    if (!window.confirm(`Are you sure you want to delete "${name}" membership tier?`)) return;
 
-    const docRef = doc(db, 'membershipTiers', id);
-    deleteDoc(docRef)
-      .then(() => {
-        toast({ title: "Tier Deleted", description: `${name} has been removed.` });
-      })
-      .catch(async (err) => {
-        const permissionError = new FirestorePermissionError({
-          path: docRef.path,
-          operation: 'delete',
-        });
-        errorEmitter.emit('permission-error', permissionError);
+    try {
+      const response = await fetch(`/api/admin/membership-tiers/${id}`, {
+        method: 'DELETE',
       });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          router.push('/admin/login');
+          return;
+        }
+
+        const result = await response.json();
+        throw new Error(result?.error || 'Unable to delete membership tier');
+      }
+
+      toast({ title: "Tier Deleted", description: `${name} has been removed.` });
+      await loadTiers();
+    } catch (error: any) {
+      toast({ variant: 'destructive', title: 'Delete failed', description: error?.message || 'Please try again.' });
+    }
   };
 
   if (userLoading || !user) return null;

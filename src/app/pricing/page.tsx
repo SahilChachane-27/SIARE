@@ -18,25 +18,38 @@ import {
   CreditCard
 } from 'lucide-react';
 import Link from 'next/link';
-import { useState, useEffect, useMemo } from 'react';
-import { useFirestore, useCollection } from '@/firebase';
-import { collection, query, orderBy } from 'firebase/firestore';
+import { useState, useEffect } from 'react';
 
 export default function PricingPage() {
   const [currency, setCurrency] = useState<'INR' | 'USD'>('INR');
   const [isClient, setIsClient] = useState(false);
-  const db = useFirestore();
+  const [plans, setPlans] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  const plansQuery = useMemo(() => {
-    if (!db) return null;
-    return query(collection(db, 'pricingPlans'), orderBy('order', 'asc'));
-  }, [db]);
+  useEffect(() => {
+    const loadPlans = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('/api/pricing');
+        if (response.ok) {
+          const data = await response.json();
+          setPlans(data);
+        } else {
+          setPlans([]);
+        }
+      } catch (_error) {
+        setPlans([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const { data: plans, loading } = useCollection(plansQuery);
+    loadPlans();
+  }, []);
 
   if (!isClient) return null;
 
