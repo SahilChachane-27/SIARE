@@ -1,5 +1,5 @@
-# Firebase Studio
+# SIARE 
 
-This is a NextJS starter in Firebase Studio.
+Society of Integrated Academic Research and Education (SIARE)
 
-To get started, take a look at src/app/page.tsx.
+Integrating Knowledge. Empowering Scholars. Accelerating Global Research Impact through Peer-Reviewed Excellence.
